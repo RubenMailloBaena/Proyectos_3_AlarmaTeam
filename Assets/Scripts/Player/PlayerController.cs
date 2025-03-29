@@ -14,9 +14,11 @@ public class PlayerController : MonoBehaviour
     //Movement
     [Header("Movement Attributes")] 
     [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float leaningSpeed = 3f;
     
     private CharacterController charController;
     private Vector3 direction;
+    private bool isLeaning;
     
     //Camera
     [Header("Look Around Attributes")]
@@ -77,11 +79,16 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = (forward * input.y) + (right * input.x);
         movement.Normalize();
 
-        movement *= walkSpeed * Time.deltaTime;
+        float finalSpeed = walkSpeed;
+
+        if (isLeaning)
+            finalSpeed = leaningSpeed;
+
+        movement *= finalSpeed * Time.deltaTime;
 
         charController.Move(movement);
     }
-
+    
     public void LockCursor()
     {
         print("Locked Cursor!");
@@ -96,4 +103,6 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
         cameraLocked = true;
     }
+
+    public void SetIsLeaning(bool leaning) => isLeaning = leaning;
 }

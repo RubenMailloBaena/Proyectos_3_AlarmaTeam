@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BackStab : MonoBehaviour
+public class BackStabController : MonoBehaviour
 {
     [SerializeField] private InputActionReference attackInput;
 
