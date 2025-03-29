@@ -493,7 +493,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93fdfb0935c334469994860a8502833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
+  attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  attackRange: 1.5
+  backstabDotOffset: 0.65
+  maxViewAngle: 45
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0
