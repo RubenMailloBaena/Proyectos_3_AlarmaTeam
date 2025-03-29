@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     
     //Movement
     [Header("Movement Attributes")] 
-    [SerializeField] private float playerSpeed = 5f;
+    [SerializeField] private float walkSpeed = 6f;
     
     private CharacterController charController;
     private Vector3 direction;
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = (forward * input.y) + (right * input.x);
         movement.Normalize();
 
-        movement *= playerSpeed * Time.deltaTime;
+        movement *= walkSpeed * Time.deltaTime;
 
         charController.Move(movement);
     }

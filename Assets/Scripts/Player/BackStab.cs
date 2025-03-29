@@ -57,7 +57,7 @@ public class BackStab : MonoBehaviour
             float minDotView = Mathf.Cos(maxViewAngle * Mathf.Deg2Rad);
             if (dotView < minDotView) continue; 
 
-            // PONEMOS COMO TARGET AL ENEMIGO QUE ESTE MAS CENTRADO EN NUESTRA CAMARA
+            // SI HAY MAS DE UN ENEMIGO, PONEMOS COMO TARGET AL ENEMIGO QUE ESTE MAS CENTRADO EN NUESTRA CAMARA
             if (dotView > bestDot)
             {
                 bestDot = dotView;
