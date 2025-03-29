@@ -1,18 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BackStab : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    [Header("Backstab Attributes")] 
+    [SerializeField] private float backstabRadius = 2f;
+    
+    private SphereCollider backstabCollider;
+
+    void Awake()
     {
-        
+        backstabCollider = GetComponent<SphereCollider>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        backstabCollider.radius = backstabRadius;
+    }
+
+    
     void Update()
     {
         
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        if (other.CompareTag("Enemy"))
+        {
+            print(other.name);
+        }
     }
 }

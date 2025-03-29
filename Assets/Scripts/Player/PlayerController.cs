@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     
     private float m_Yaw;
     private float m_Pitch;
-    
+    private bool cameraLocked;
     
     private void Awake()
     {
@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        GameManager.GetInstance().SetPlayerController(this);
+        LockCursor();
         m_Yaw = transform.eulerAngles.y;
         m_Pitch = m_PitchController.eulerAngles.x;
     } 
@@ -49,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     private void CameraControl()
     {
+        if (cameraLocked) return;
+
         Vector2 mouseDelta = mouseInput.action.ReadValue<Vector2>(); 
         
         m_Yaw += (mouseDelta.x * sensitivity) * m_YawSpeed * Time.deltaTime;
@@ -76,5 +80,18 @@ public class PlayerController : MonoBehaviour
         movement *= playerSpeed * Time.deltaTime;
 
         charController.Move(movement);
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        cameraLocked = false;
+    }
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        cameraLocked = true;
     }
 }
