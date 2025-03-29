@@ -84,12 +84,14 @@ public class PlayerController : MonoBehaviour
 
     public void LockCursor()
     {
+        print("Locked Cursor!");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cameraLocked = false;
     }
     public void UnlockCursor()
     {
+        print("Unlocked Cursor!");
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         cameraLocked = true;
