@@ -9,13 +9,15 @@ public class PlayerLeanController : MonoBehaviour
 {
     [SerializeField] private InputActionReference leanInput;
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform pitchController;
+    
     private RaycastHit hit;
     private float input;
-    private PlayerMovementController _playerMovementController;
+    private PlayerMovementController playerMovementController;
 
     private void Awake()
     {
-        _playerMovementController = GetComponent<PlayerMovementController>();
+        playerMovementController = GetComponent<PlayerMovementController>();
     }
 
     private void Update()
@@ -25,28 +27,32 @@ public class PlayerLeanController : MonoBehaviour
 
     private void LeanPlayer()
     {
+        if (!playerMovementController.IsGrounded()) return;
+        
         input = leanInput.action.ReadValue<float>();
-
-        if (input < 0 && !Physics.Raycast(transform.position, -transform.right, out hit, 1f))
+        
+        Vector3 pos = new Vector3(transform.position.x, pitchController.position.y, transform.position.z);
+            
+        if (input < 0 && !Physics.Raycast(pos, -transform.right, out hit, 1f))
         {
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Right");
             animator.SetTrigger("Left");
-            _playerMovementController.SetIsLeaning(true);
+            playerMovementController.SetIsLeaning(true);
         }
-        else if (input > 0 && !Physics.Raycast(transform.position, transform.right, out hit, 1f))
+        else if (input > 0 && !Physics.Raycast(pos, transform.right, out hit, 1f))
         {
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Left");
             animator.SetTrigger("Right");
-            _playerMovementController.SetIsLeaning(true);
+            playerMovementController.SetIsLeaning(true);
         }
         else
         {
             animator.ResetTrigger("Right");
             animator.ResetTrigger("Left");
             animator.SetTrigger("Idle");
-            _playerMovementController.SetIsLeaning(false);
+            playerMovementController.SetIsLeaning(false);
         }
     }
 }

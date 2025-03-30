@@ -1,22 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    //References
     [SerializeField] private InputActionReference moveInput;
+    [SerializeField] private InputActionReference jumpInput;
     
-    //Movement
     [Header("Movement Attributes")] 
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float leaningSpeed = 3f;
+    [SerializeField] private float crouchSpeed = 3f;
 
+    [Header("Jump Attributes")] [SerializeField]
+    private float jumpHeight = 3f;
+    
+    [Header("Other Attributes")]
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float floorDrag = -2f;
+    [SerializeField] private float groundCheckRadius = 0.4f;
+    [SerializeField] private LayerMask groundMask;
+    
     private CharacterController charController;
     private Vector2 input;
+    private Vector3 velocity;
+    
     private bool isLeaning;
+    private bool isCrouching;
     
     private void Awake()
     {
@@ -26,6 +39,8 @@ public class PlayerMovementController : MonoBehaviour
     private void Update()
     {
         PlayerMovement();
+        PlayerJump();
+        PlayerGravity();
     }
 
     private void PlayerMovement()
@@ -34,13 +49,49 @@ public class PlayerMovementController : MonoBehaviour
         
         Vector3 moveDir = transform.right * input.x + transform.forward * input.y;
 
+        charController.Move(moveDir * (GetFinalSpeed() * Time.deltaTime));
+    }
+
+    private float GetFinalSpeed()
+    {
         float finalSpeed = walkSpeed;
+        
+        if (isLeaning) finalSpeed = leaningSpeed;
+        if (isCrouching) finalSpeed = crouchSpeed;
 
-        if (isLeaning) 
-            finalSpeed = leaningSpeed;
+        return finalSpeed;
+    }
 
-        charController.Move(moveDir * (finalSpeed * Time.deltaTime));
+    private void PlayerJump()
+    {
+        if (jumpInput.action.triggered && IsGrounded() && !isLeaning)
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+    }
+
+    private void PlayerGravity()
+    {
+        if(IsGrounded() && velocity.y < 0)
+            velocity.y = floorDrag;
+
+        velocity.y += gravity * Time.deltaTime;
+        charController.Move(velocity * Time.deltaTime);
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.CheckSphere(transform.position, groundCheckRadius, groundMask);
     }
 
     public void SetIsLeaning(bool leaning) => isLeaning = leaning;
+    public void SetIsCrouching(bool crouching) => isCrouching = crouching;
+
+    private void OnEnable()
+    {
+        jumpInput.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        jumpInput.action.Disable();
+    }
 }

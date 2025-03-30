@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4106830129612721001}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -163,7 +163,7 @@ Transform:
   m_GameObject: {fileID: 5430196722010759000}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.35, z: 0}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -484,6 +484,7 @@ GameObject:
   - component: {fileID: 579865797012302666}
   - component: {fileID: 7266428441928830748}
   - component: {fileID: 7035954892752691577}
+  - component: {fileID: 6730785830284631386}
   - component: {fileID: 3501777740460620051}
   - component: {fileID: 968289487564531204}
   - component: {fileID: 1216652762856930018}
@@ -529,8 +530,8 @@ MonoBehaviour:
   mouseInput: {fileID: -362946795993568614, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   pitchController: {fileID: 1882158348678663836}
-  sensitivity_X: 50
-  sensitivity_Y: 50
+  sensitivity_X: 25
+  sensitivity_Y: 25
   maxTopLook: 80
   maxBottomLook: -60
 --- !u!114 &7035954892752691577
@@ -547,8 +548,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInput: {fileID: -4534278319433424811, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
   walkSpeed: 6
   leaningSpeed: 2
+  crouchSpeed: 2
+  jumpHeight: 2
+  gravity: -19.62
+  groundCheckRadius: 0.3
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &6730785830284631386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e10f60fcae4392459228f88a2ed9c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crouchInput: {fileID: -335817351749785016, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  pitchController: {fileID: 1882158348678663836}
+  crouchSpeed: 5
+  cameraCrouchAmount: 0.6
+  charControllerHeight: 0.5
+  charControllerCrouchCenter: 0.5
+  checkIfCanStandUpRayDistance: 2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &3501777740460620051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +614,7 @@ MonoBehaviour:
   leanInput: {fileID: -6351387667773294716, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   animator: {fileID: 8841122099984166003}
+  pitchController: {fileID: 1882158348678663836}
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0
@@ -604,7 +638,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.6
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7568944375523593208
@@ -657,7 +691,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 1.5
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1978913200047557522
 Rigidbody:
@@ -682,7 +716,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
