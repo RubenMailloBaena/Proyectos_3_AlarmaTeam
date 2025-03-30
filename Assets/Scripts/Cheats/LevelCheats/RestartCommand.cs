@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RestartCommand : ICheatCommand
 {
-    public string Name => "restart";
+    public string Name => "r";
 
     public void Execute(string[] args)
     {

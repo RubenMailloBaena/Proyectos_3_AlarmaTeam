@@ -12,7 +12,7 @@ public class CheatUI : MonoBehaviour
     private bool isOpen = false;
     private Dictionary<string, ICheatCommand> cheatCommands;
 
-    void Start()
+    void Awake()
     {
         CloseConsole();
         RegisterCheats();
@@ -49,12 +49,6 @@ public class CheatUI : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private void RegisterCheats()
-    {
-        cheatCommands = new Dictionary<string, ICheatCommand>();
-        AddCommand(new RestartCommand());
-    }
-
     private void AddCommand(ICheatCommand command)
     {
         cheatCommands[command.Name.ToLower()] = command;
@@ -81,5 +75,13 @@ public class CheatUI : MonoBehaviour
         
         inputField.ActivateInputField(); // Reactivamos el field para evitar hacer clics manuales constantemente. 
 
+    }
+    
+    private void RegisterCheats()
+    {
+        cheatCommands = new Dictionary<string, ICheatCommand>();
+        AddCommand(new RestartCommand());
+        AddCommand(new BlockCameraCommand());
+        AddCommand(new UnblockCameraCommand());
     }
 }

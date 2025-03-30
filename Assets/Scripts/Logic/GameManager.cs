@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     private PlayerController playerController;
+    private CheatUI debugCheats;
 
     void Awake()
     {
@@ -18,28 +19,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    void Update()
-    {
-        DebugOptions();
-    }
-
-    private void DebugOptions()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-            playerController.LockCursor();
-
-        if (Input.GetKeyDown(KeyCode.U))
-            playerController.UnlockCursor();
-        
-    }
-
     #region Getters & Setters
     public static GameManager GetInstance() => instance;
-
     public PlayerController GetPlayerController() => playerController;
-
     public void SetPlayerController(PlayerController controller) => playerController = controller;
+    public void SetDebugCheats(CheatUI cheats) => debugCheats = cheats;
+    public CheatUI GetDebugCheats() => debugCheats;
     #endregion
 
 
