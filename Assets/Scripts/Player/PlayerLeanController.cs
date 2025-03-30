@@ -11,11 +11,11 @@ public class PlayerLeanController : MonoBehaviour
     [SerializeField] private Animator animator;
     private RaycastHit hit;
     private float input;
-    private PlayerController playerController;
+    private PlayerMovementController _playerMovementController;
 
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();
+        _playerMovementController = GetComponent<PlayerMovementController>();
     }
 
     private void Update()
@@ -32,21 +32,21 @@ public class PlayerLeanController : MonoBehaviour
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Right");
             animator.SetTrigger("Left");
-            playerController.SetIsLeaning(true);
+            _playerMovementController.SetIsLeaning(true);
         }
         else if (input > 0 && !Physics.Raycast(transform.position, transform.right, out hit, 1f))
         {
             animator.ResetTrigger("Idle");
             animator.ResetTrigger("Left");
             animator.SetTrigger("Right");
-            playerController.SetIsLeaning(true);
+            _playerMovementController.SetIsLeaning(true);
         }
         else
         {
             animator.ResetTrigger("Right");
             animator.ResetTrigger("Left");
             animator.SetTrigger("Idle");
-            playerController.SetIsLeaning(false);
+            _playerMovementController.SetIsLeaning(false);
         }
     }
 }
