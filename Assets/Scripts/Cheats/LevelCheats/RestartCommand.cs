@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class RestartCommand : ICheatCommand
 {
-    public string Name => "reset";
+    public string Name => "restart";
 
     public void Execute(string[] args)
     {
+        Debug.Log("Level Restarted!");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

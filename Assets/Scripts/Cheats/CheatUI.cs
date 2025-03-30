@@ -20,16 +20,16 @@ public class CheatUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        if (isOpen && Input.GetKeyDown(KeyCode.Return))
+        {
+            ExecuteCommand(inputField.text);
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (isOpen)
                 CloseConsole();
             else
                 OpenConsole();
-        }
-        if (isOpen && Input.GetKeyDown(KeyCode.Return))
-        {
-            ExecuteCommand(inputField.text);
         }
     }
 

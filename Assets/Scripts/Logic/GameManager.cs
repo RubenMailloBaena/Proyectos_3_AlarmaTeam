@@ -32,9 +32,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
             playerController.UnlockCursor();
         
-        /*if(Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        */
     }
 
     #region Getters & Setters
