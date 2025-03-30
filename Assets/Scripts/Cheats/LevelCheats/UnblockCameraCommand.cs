@@ -8,6 +8,7 @@ public class UnblockCameraCommand : ICheatCommand
 
     public void Execute(string[] args)
     {
-        GameManager.GetInstance().GetPlayerController().UnlockCursor();
+        Debug.Log("Unlocked Cursor!");
+        GameManager.GetInstance().GetPlayerLookController().UnlockCursor();
     }
 }
