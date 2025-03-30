@@ -20,7 +20,8 @@ public class PlayerMovementController : MonoBehaviour
     
     [Header("Other Attributes")]
     [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float floorDrag = -2f;
+    [SerializeField] private float fallFromCornerDrag = -2f;
+    [SerializeField] private float floorDrag = -10f;
     [SerializeField] private float groundCheckRadius = 0.4f;
     [SerializeField] private LayerMask groundMask;
     
@@ -54,12 +55,9 @@ public class PlayerMovementController : MonoBehaviour
 
     private float GetFinalSpeed()
     {
-        float finalSpeed = walkSpeed;
-        
-        if (isLeaning) finalSpeed = leaningSpeed;
-        if (isCrouching) finalSpeed = crouchSpeed;
-
-        return finalSpeed;
+        if (isLeaning) return leaningSpeed;
+        if (isCrouching) return crouchSpeed;
+        return walkSpeed;
     }
 
     private void PlayerJump()
@@ -70,8 +68,11 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerGravity()
     {
-        if(IsGrounded() && velocity.y < 0)
-            velocity.y = floorDrag;
+        //Si estamos en una rampa o en el suelo, estamos muy pegados al suelo, asi en las rampas no rebotamos.
+        //Si dejamos de estar en el suelo sin saltar, cayendo de una rampa por ejemplo, caemos normal, sim caer muy rapido
+        if (IsGrounded() && velocity.y < 0)
+            velocity.y = Physics.Raycast(transform.position, Vector3.down, groundCheckRadius) 
+                ? floorDrag : fallFromCornerDrag;
 
         velocity.y += gravity * Time.deltaTime;
         charController.Move(velocity * Time.deltaTime);
