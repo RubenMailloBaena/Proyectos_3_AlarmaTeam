@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8546083993960383726}
-  - component: {fileID: 8841122099984166003}
   m_Layer: 0
   m_Name: LeanParent
   m_TagString: Untagged
@@ -117,27 +116,6 @@ Transform:
   - {fileID: 8713268676017240965}
   m_Father: {fileID: 1882158348678663836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8841122099984166003
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5090218106449477318}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2a142de16d4416c47b0720f4a4b6c7ca, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5430196722010759000
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,8 +463,8 @@ GameObject:
   - component: {fileID: 7266428441928830748}
   - component: {fileID: 7035954892752691577}
   - component: {fileID: 6730785830284631386}
-  - component: {fileID: 3501777740460620051}
   - component: {fileID: 968289487564531204}
+  - component: {fileID: 3501777740460620051}
   - component: {fileID: 1216652762856930018}
   - component: {fileID: 7568944375523593208}
   - component: {fileID: 8641948435598695130}
@@ -555,6 +533,8 @@ MonoBehaviour:
   crouchSpeed: 2
   jumpHeight: 2
   gravity: -19.62
+  fallFromCornerDrag: -2
+  floorDrag: -10
   groundCheckRadius: 0.3
   groundMask:
     serializedVersion: 2
@@ -582,6 +562,25 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &968289487564531204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eceac898b03b25f418373b34767f286e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leanInput: {fileID: -6351387667773294716, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  pitchController: {fileID: 1882158348678663836}
+  leanParent: {fileID: 8546083993960383726}
+  moveAmount: 0.45
+  leanAngle: 20
+  leanSpeed: 5
 --- !u!114 &3501777740460620051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,22 +598,6 @@ MonoBehaviour:
   attackRange: 1.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
---- !u!114 &968289487564531204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7808489718877402067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eceac898b03b25f418373b34767f286e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leanInput: {fileID: -6351387667773294716, guid: e49e41b680fb6954ea8256b7b8ee8217,
-    type: 3}
-  animator: {fileID: 8841122099984166003}
-  pitchController: {fileID: 1882158348678663836}
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0
