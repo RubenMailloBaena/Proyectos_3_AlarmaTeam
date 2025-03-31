@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,12 +30,13 @@ public class PlayerCrouchController : MonoBehaviour
     
     private void Awake()
     {
-        playerMovement = GetComponent<PlayerMovementController>();
         charController = GetComponent<CharacterController>();
     }
-
+    
     private void Start()
     {
+        playerMovement = GameManager.GetInstance().GetPlayerMovement();
+        
         initialHeight = charController.height;
         initialCenter = charController.center;
         initialCameraPosition = pitchController.localPosition;

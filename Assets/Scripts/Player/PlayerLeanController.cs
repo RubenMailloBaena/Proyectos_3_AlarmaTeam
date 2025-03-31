@@ -18,13 +18,10 @@ public class PlayerLeanController : MonoBehaviour
     private Vector3 originalPosition, targetPosition;
     private Quaternion originalRotation, targetRotation;
 
-    private void Awake()
-    {
-        playerMovementController = GetComponent<PlayerMovementController>();
-    }
-
     private void Start()
     {
+        playerMovementController = GameManager.GetInstance().GetPlayerMovement();
+        
         originalPosition = leanParent.localPosition;
         originalRotation = leanParent.localRotation;
     }
@@ -46,15 +43,13 @@ public class PlayerLeanController : MonoBehaviour
         targetRotation = originalRotation;
         playerMovementController.SetIsLeaning(false);
 
-        Vector3 pos = new Vector3(transform.position.x, pitchController.position.y, transform.position.z);
-        
-        if (input < 0 && !Physics.Raycast(pos, -transform.right, 1f)) //LEFT
+        if (input < 0 && !Physics.Raycast(pitchController.position, -transform.right, 1f)) //LEFT
         {
             targetPosition += Vector3.left * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, leanAngle); 
             playerMovementController.SetIsLeaning(true);
         }
-        else if (input > 0  && !Physics.Raycast(pos, transform.right, 1f)) //RIGHT
+        else if (input > 0  && !Physics.Raycast(pitchController.position, transform.right, 1f)) //RIGHT
         {
             targetPosition += Vector3.right * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, -leanAngle); 

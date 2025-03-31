@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    private PlayerMovementController playerMovement;
     private PlayerLookController playerLookController;
-    private CheatUI debugCheats;
 
     void Awake()
     {
@@ -23,8 +23,9 @@ public class GameManager : MonoBehaviour
     public static GameManager GetInstance() => instance;
     public PlayerLookController GetPlayerLookController() => playerLookController;
     public void SetPlayerLookController(PlayerLookController movementController) => playerLookController = movementController;
-    public void SetDebugCheats(CheatUI cheats) => debugCheats = cheats;
-    public CheatUI GetDebugCheats() => debugCheats;
+    public PlayerMovementController GetPlayerMovement() => playerMovement;
+    public void SetPlayerMovement(PlayerMovementController controller) => playerMovement = controller;
+    
     #endregion
 
 

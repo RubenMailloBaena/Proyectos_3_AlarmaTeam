@@ -35,6 +35,7 @@ public class PlayerMovementController : MonoBehaviour
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+        GameManager.GetInstance().SetPlayerMovement(this);
     }
 
     private void Update()

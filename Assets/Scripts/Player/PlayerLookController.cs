@@ -18,10 +18,13 @@ public class PlayerLookController : MonoBehaviour
     private float xRotation = 0f;
     private bool cameraLocked;
 
-    
-    private void Start()
+    private void Awake()
     {
         GameManager.GetInstance().SetPlayerLookController(this);
+    }
+
+    private void Start()
+    {
         LockCursor();
     } 
 
