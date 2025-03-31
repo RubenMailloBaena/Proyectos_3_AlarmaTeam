@@ -9,8 +9,6 @@ public class RestartCommand : ICheatCommand
 
     public void Execute(string[] args)
     {
-        Debug.Log("Level Restarted!");
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

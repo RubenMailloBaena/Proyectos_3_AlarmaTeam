@@ -66,9 +66,12 @@ public class CheatUI : MonoBehaviour
             args[i - 1] = split[i];
         }
         // Recorremos el array separado para guardar todos los valores que no sean el nombre. En este caso sera 1 y guardaremos el "100".
-        
+
         if (cheatCommands.ContainsKey(commandName))
+        {
             cheatCommands[commandName].Execute(args);
+            Debug.Log("Command Executed: " + commandName);
+        }
         else
             Debug.LogWarning("Command does not exist: " + commandName);
 
