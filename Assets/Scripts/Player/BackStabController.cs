@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerController))]
 public class BackStabController : MonoBehaviour
 {
     [SerializeField] private InputActionReference attackInput;

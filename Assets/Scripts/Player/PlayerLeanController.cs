@@ -2,8 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerLeanController : MonoBehaviour
 {
+    private PlayerController pController;
+    
     [SerializeField] private InputActionReference leanInput;
     [SerializeField] private Transform pitchController;
     [SerializeField] private Transform leanParent;
@@ -14,14 +17,16 @@ public class PlayerLeanController : MonoBehaviour
     [SerializeField] private float leanSpeed = 5f;
 
     private float input;
-    private PlayerMovementController playerMovementController;
     private Vector3 originalPosition, targetPosition;
     private Quaternion originalRotation, targetRotation;
 
+    private void Awake()
+    {
+        pController = GetComponent<PlayerController>();
+    }
+
     private void Start()
     {
-        playerMovementController = GameManager.GetInstance().GetPlayerMovement();
-        
         originalPosition = leanParent.localPosition;
         originalRotation = leanParent.localRotation;
     }
@@ -34,26 +39,26 @@ public class PlayerLeanController : MonoBehaviour
 
     private void SetLeanTarget()
     {
-        if (!playerMovementController.IsGrounded()) return;
+        if (!pController.IsGrounded) return;
 
         input = leanInput.action.ReadValue<float>();
         
         //IDLE
         targetPosition = originalPosition;
         targetRotation = originalRotation;
-        playerMovementController.SetIsLeaning(false);
+        pController.SetLeaning(false);
 
         if (input < 0 && !Physics.Raycast(pitchController.position, -transform.right, 1f)) //LEFT
         {
             targetPosition += Vector3.left * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, leanAngle); 
-            playerMovementController.SetIsLeaning(true);
+            pController.SetLeaning(true);
         }
         else if (input > 0  && !Physics.Raycast(pitchController.position, transform.right, 1f)) //RIGHT
         {
             targetPosition += Vector3.right * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, -leanAngle); 
-            playerMovementController.SetIsLeaning(true);
+            pController.SetLeaning(true);
         }
     }
     

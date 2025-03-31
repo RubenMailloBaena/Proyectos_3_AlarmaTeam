@@ -3,8 +3,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerLookController : MonoBehaviour
 {
+    private PlayerController pController;
+    
     [SerializeField] private InputActionReference mouseInput;
     [SerializeField] private Transform pitchController;
     
@@ -20,7 +23,7 @@ public class PlayerLookController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().SetPlayerLookController(this);
+        pController = GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -60,5 +63,21 @@ public class PlayerLookController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         cameraLocked = true;
+    }
+
+    public void ChangeCameraLock(bool lockCam)
+    {
+        if(lockCam) LockCursor();
+        else UnlockCursor();
+    }
+
+    private void OnEnable()
+    {
+        pController.OnCameraLockChange += ChangeCameraLock;
+    }
+
+    private void OnDisable()
+    {
+        pController.OnCameraLockChange -= ChangeCameraLock;
     }
 }

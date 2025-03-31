@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerMovementController : MonoBehaviour
 {
+    private PlayerController pController;
+    
     [SerializeField] private InputActionReference moveInput;
     [SerializeField] private InputActionReference jumpInput;
     
@@ -22,20 +26,18 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float fallFromCornerDrag = -2f;
     [SerializeField] private float floorDrag = -10f;
-    [SerializeField] private float groundCheckRadius = 0.4f;
+    [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private LayerMask groundMask;
+    
     
     private CharacterController charController;
     private Vector2 input;
     private Vector3 velocity;
     
-    private bool isLeaning;
-    private bool isCrouching;
-    
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
-        GameManager.GetInstance().SetPlayerMovement(this);
+        pController = GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -56,14 +58,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private float GetFinalSpeed()
     {
-        if (isLeaning) return leaningSpeed;
-        if (isCrouching) return crouchSpeed;
+        if (pController.IsLeaning) return leaningSpeed;
+        if (pController.IsCrouching) return crouchSpeed;
         return walkSpeed;
     }
 
     private void PlayerJump()
     {
-        if (jumpInput.action.triggered && IsGrounded() && !isLeaning)
+        if (jumpInput.action.triggered && IsGrounded() && !pController.IsLeaning)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
@@ -81,11 +83,14 @@ public class PlayerMovementController : MonoBehaviour
 
     public bool IsGrounded()
     {
-        return Physics.CheckSphere(transform.position, groundCheckRadius, groundMask);
+        if (Physics.CheckSphere(transform.position, groundCheckRadius, groundMask))
+        {
+            pController.SetGrounded(true);
+            return true;
+        }
+        pController.SetGrounded(false);
+        return false;
     }
-
-    public void SetIsLeaning(bool leaning) => isLeaning = leaning;
-    public void SetIsCrouching(bool crouching) => isCrouching = crouching;
 
     private void OnEnable()
     {

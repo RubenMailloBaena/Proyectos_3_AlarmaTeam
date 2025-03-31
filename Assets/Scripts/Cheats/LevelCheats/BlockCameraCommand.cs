@@ -9,6 +9,6 @@ public class BlockCameraCommand : ICheatCommand
     public void Execute(string[] args)
     {
         Debug.Log("Locked Cursor!");
-        GameManager.GetInstance().GetPlayerLookController().LockCursor();
+        GameManager.GetInstance().GetPlayerController().LockCamera(true);
     }
 }

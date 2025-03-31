@@ -8,9 +8,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
-    private PlayerMovementController playerMovement;
-    private PlayerLookController playerLookController;
-
+    private PlayerController pController;
     void Awake()
     {
         if (instance == null)
@@ -21,12 +19,7 @@ public class GameManager : MonoBehaviour
 
     #region Getters & Setters
     public static GameManager GetInstance() => instance;
-    public PlayerLookController GetPlayerLookController() => playerLookController;
-    public void SetPlayerLookController(PlayerLookController movementController) => playerLookController = movementController;
-    public PlayerMovementController GetPlayerMovement() => playerMovement;
-    public void SetPlayerMovement(PlayerMovementController controller) => playerMovement = controller;
-    
+    public PlayerController GetPlayerController() => pController;
+    public void SetPlayerController(PlayerController info) => pController = info;
     #endregion
-
-
 }

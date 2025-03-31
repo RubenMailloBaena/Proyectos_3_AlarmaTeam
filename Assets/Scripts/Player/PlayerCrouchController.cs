@@ -3,8 +3,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerCrouchController : MonoBehaviour
 {
+    private PlayerController pController;
+    
     [SerializeField] private InputActionReference crouchInput;
     [SerializeField] private Transform pitchController;
 
@@ -25,18 +28,16 @@ public class PlayerCrouchController : MonoBehaviour
     private Vector3 targetCenter;
     private Vector3 targetCameraPosition;
     
-    private PlayerMovementController playerMovement;
     private CharacterController charController;
     
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+        pController = GetComponent<PlayerController>();
     }
     
     private void Start()
     {
-        playerMovement = GameManager.GetInstance().GetPlayerMovement();
-        
         initialHeight = charController.height;
         initialCenter = charController.center;
         initialCameraPosition = pitchController.localPosition;
@@ -68,7 +69,7 @@ public class PlayerCrouchController : MonoBehaviour
             }
         }
 
-        playerMovement.SetIsCrouching(isCrouching);
+        pController.SetCrouching(isCrouching);
     }
 
     private void SetCrouchTargets()
