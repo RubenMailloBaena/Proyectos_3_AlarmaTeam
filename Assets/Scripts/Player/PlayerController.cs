@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsVaulting { get; private set; }
+    public bool IsTeleporting { get; private set; }
 
     public event Action<bool> OnCameraLockChange;
     public event Action OnVaultCrouched;
@@ -32,4 +33,5 @@ public class PlayerController : MonoBehaviour
     public void SetCrouching(bool crouching) => IsCrouching = crouching;
     public void SetGrounded(bool grounded) => IsGrounded = grounded;
     public void SetVaulting(bool vaulting) => IsVaulting = vaulting;
+    public void SetTeleporting(bool teleporting) => IsTeleporting = teleporting;
 }

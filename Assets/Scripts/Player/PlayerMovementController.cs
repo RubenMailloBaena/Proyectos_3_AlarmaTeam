@@ -52,6 +52,8 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerMovement()
     {
+        if (pController.IsTeleporting) return;
+
         input = moveInput.action.ReadValue<Vector2>();
         
         Vector3 moveDir = transform.right * input.x + transform.forward * input.y;

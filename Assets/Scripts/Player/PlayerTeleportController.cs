@@ -10,7 +10,6 @@ public class PlayerTeleportController : MonoBehaviour
     private PlayerController pController;
 
     [SerializeField] private InputActionReference teleportAction;
-    //[SerializeField] private InputActionReference cancelTeleportAction;
 
     [Header("Teleport Attributes")]
     [Tooltip("Distancia m�nima para hacer un tp")]
@@ -25,9 +24,9 @@ public class PlayerTeleportController : MonoBehaviour
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
 
-    // private Coroutine teleportCoroutine;
-    // private bool isTeleporting = false;
+    private Coroutine teleportCoroutine;
     private IStatue currentStatue;
+    private float input;
 
     private void Awake()
     {
@@ -63,8 +62,48 @@ public class PlayerTeleportController : MonoBehaviour
 
     private void PerformTeleport()
     {
-        if (currentStatue != null && teleportAction.action.WasPerformedThisFrame())
+        if (currentStatue == null)
+        {
+            CancelTeleport();
+            return;
+        }
+       
+        input = teleportAction.action.ReadValue<float>();
+        
+        if (input>0 && !pController.IsTeleporting)
+        {
+            teleportCoroutine = StartCoroutine(TeleportAfterHold());
+        } 
+        else if(input == 0 && pController.IsTeleporting)
+        {
+            CancelTeleport();
+        }
+    }
+
+    private void CancelTeleport()
+    {
+        if (teleportCoroutine != null)
+            StopCoroutine(teleportCoroutine);
+
+        pController.SetTeleporting(false);
+    }
+
+    private IEnumerator TeleportAfterHold()
+    {
+        pController.SetTeleporting(true);
+        float elapsed = 0;
+
+        while (elapsed < holdTime)
+        {
+            elapsed += Time.deltaTime;
+            Debug.Log(elapsed);
+
+            yield return null;
+        }
+        if(currentStatue != null)
             transform.position = currentStatue.GetTPPoint();
+
+        pController.SetTeleporting(false);
     }
 
     private void OnDrawGizmosSelected()
@@ -73,15 +112,5 @@ public class PlayerTeleportController : MonoBehaviour
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(leanParent.position, leanParent.forward * teleportRange);
-    }
-
-    private void OnEnable()
-    {
-        teleportAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        teleportAction.action.Disable();
     }
 }
