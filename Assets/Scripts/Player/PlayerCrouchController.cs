@@ -58,15 +58,9 @@ public class PlayerCrouchController : MonoBehaviour
         if (crouchInput.action.triggered)
         {
             if (!isCrouching)
-            {
-                isCrouching = true;
                 SetCrouchTargets();
-            }
-            else if (CanStandUp())
-            {
-                isCrouching = false;
+            else
                 SetStandUpTargets();
-            }
         }
 
         pController.SetCrouching(isCrouching);
@@ -74,6 +68,7 @@ public class PlayerCrouchController : MonoBehaviour
 
     private void SetCrouchTargets()
     {
+        isCrouching = true;
         targetHeight = charControllerHeight;
         targetCenter = new Vector3(0, charControllerCrouchCenter, 0);
         targetCameraPosition = initialCameraPosition - new Vector3(0, cameraCrouchAmount, 0);
@@ -81,6 +76,9 @@ public class PlayerCrouchController : MonoBehaviour
 
     private void SetStandUpTargets()
     {
+        if (!CanStandUp()) return;
+        
+        isCrouching = false;
         targetHeight = initialHeight;
         targetCenter = initialCenter;
         targetCameraPosition = initialCameraPosition;
@@ -100,11 +98,13 @@ public class PlayerCrouchController : MonoBehaviour
 
     private void OnEnable()
     {
+        pController.OnVaultCrouched += SetStandUpTargets;
         crouchInput.action.Enable();
     }
 
     private void OnDisable()
     {
+        pController.OnVaultCrouched -= SetStandUpTargets;
         crouchInput.action.Disable();
     }
 }

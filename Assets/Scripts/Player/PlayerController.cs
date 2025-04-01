@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded { get; private set; }
     public bool IsVaulting { get; private set; }
 
-    public event Action<bool> OnCameraLockChange; 
+    public event Action<bool> OnCameraLockChange;
+    public event Action OnVaultCrouched;
     
     private void Awake()
     {
@@ -20,6 +21,11 @@ public class PlayerController : MonoBehaviour
     public void LockCamera(bool lockCam)
     {
         OnCameraLockChange?.Invoke(lockCam);
+    }
+
+    public void TryVaultCrouched()
+    {
+        OnVaultCrouched?.Invoke();
     }
     
     public void SetLeaning(bool leaning) => IsLeaning = leaning;

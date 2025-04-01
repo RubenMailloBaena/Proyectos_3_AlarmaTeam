@@ -30,10 +30,16 @@ public class PlayerVaultController : MonoBehaviour
     {
         if (pController.IsVaulting) return;
         
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,vaultCheckRayDistance, vaultLayer))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, vaultCheckRayDistance, vaultLayer))
         {
             if (jumpInput.action.triggered) //Perform Vault
             {
+                if (pController.IsCrouching)
+                {
+                    pController.TryVaultCrouched();
+                    return;
+                }
+                
                 if (hit.transform.TryGetComponent(out ICanVault vaultObject))
                 {
                     StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
