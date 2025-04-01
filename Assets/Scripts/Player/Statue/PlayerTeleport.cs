@@ -25,7 +25,6 @@ public class PlayerTeleport : MonoBehaviour
 
     // private Coroutine teleportCoroutine;
     // private bool isTeleporting = false;
-    // private bool isOnCooldwon = false;
     private Statue currentStatue;
 
     private void Awake()
@@ -89,9 +88,6 @@ public class PlayerTeleport : MonoBehaviour
             transform.position = currentStatue.teleportPoint.position;
         }
     }
-
-
-
 
     private void OnDrawGizmos()
     {
