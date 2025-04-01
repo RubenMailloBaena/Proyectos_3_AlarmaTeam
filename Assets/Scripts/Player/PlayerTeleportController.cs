@@ -45,10 +45,8 @@ public class PlayerTeleportController : MonoBehaviour
         Ray ray = new Ray(leanParent.position, leanParent.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, teleportRange, statueLayer))
         {
-            print("HERE");
             if (hit.transform.TryGetComponent(out IStatue statue))
             {
-                print("HERE2");
                 currentStatue = statue;
                 currentStatue.ShowUI(true);
             }
@@ -69,7 +67,7 @@ public class PlayerTeleportController : MonoBehaviour
             transform.position = currentStatue.GetTPPoint();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         if (leanParent == null) return;
 

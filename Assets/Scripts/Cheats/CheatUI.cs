@@ -46,7 +46,6 @@ public class CheatUI : MonoBehaviour
     {
         isOpen = false;
         cheatPanel.SetActive(false);
-        Time.timeScale = 1f;
     }
 
     private void AddCommand(ICheatCommand command)
@@ -69,6 +68,7 @@ public class CheatUI : MonoBehaviour
 
         if (cheatCommands.ContainsKey(commandName))
         {
+            Time.timeScale = 1f;
             cheatCommands[commandName].Execute(args);
             Debug.Log("Command Executed: " + commandName);
         }
@@ -86,5 +86,6 @@ public class CheatUI : MonoBehaviour
         AddCommand(new RestartCommand());
         AddCommand(new BlockCameraCommand());
         AddCommand(new UnblockCameraCommand());
+        AddCommand(new TimeScaleCommand());
     }
 }

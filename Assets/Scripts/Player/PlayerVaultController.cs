@@ -32,7 +32,6 @@ public class PlayerVaultController : MonoBehaviour
         
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,vaultCheckRayDistance, vaultLayer))
         {
-            print("Can Vault");
             if (jumpInput.action.triggered) //Perform Vault
             {
                 if (hit.transform.TryGetComponent(out ICanVault vaultObject))
