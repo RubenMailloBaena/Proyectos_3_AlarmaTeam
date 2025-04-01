@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 2849905158196457288}
   - component: {fileID: 6730785830284631386}
   - component: {fileID: 968289487564531204}
+  - component: {fileID: 6138097720569525296}
   - component: {fileID: 3501777740460620051}
   - component: {fileID: 1216652762856930018}
   - component: {fileID: 7568944375523593208}
@@ -540,7 +541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInput: {fileID: -4534278319433424811, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
-  runInput: {fileID: -3193849242157884098, guid: e49e41b680fb6954ea8256b7b8ee8217,
+  runInput: {fileID: -3146144219264645735, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
@@ -556,7 +557,7 @@ MonoBehaviour:
   groundCheckRadius: 0.3
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
 --- !u!114 &2849905158196457288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +619,26 @@ MonoBehaviour:
   moveAmount: 0.45
   leanAngle: 20
   leanSpeed: 5
+--- !u!114 &6138097720569525296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3327cb74b93a76d44af90480af99b850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teleportAction: {fileID: 777952427115579787, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  teleportRange: 15
+  holdTime: 2
+  statueLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  leanParent: {fileID: 8546083993960383726}
 --- !u!114 &3501777740460620051
 MonoBehaviour:
   m_ObjectHideFlags: 0
