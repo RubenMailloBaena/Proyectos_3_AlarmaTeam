@@ -18,18 +18,12 @@ public class PatrolState : State
 
     public override void InitializeState()
     {
-        Debug.Log("Enter Patrol");
         meshAgent.speed = patrolSpeed;
         meshAgent.SetDestination(patrolWayPoints[lastWayPoint].position);
     }
 
     public override State RunCurrentState()
     {
-        /*
-        if (alertState.CanHearPlayer())
-            return alertState;
-        */
-
         if (ArrivedToTarget())
         {
             IncrementIndex();

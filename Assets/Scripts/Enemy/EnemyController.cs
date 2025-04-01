@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private State currentState;
+    private State currentState, nextState;
 
     [Header("INITIAL STATE")]
     [SerializeField] private IdleState idleState;
+
+    public List<State> allStates;
 
     void Start()
     {
         SwitchToNextState(idleState);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         RunStateMachine();
     }
 
     private void RunStateMachine()
     {
-        State nextState = currentState?.RunCurrentState();
+        nextState = currentState?.RunCurrentState();
 
         if (nextState != null && nextState != currentState)
             SwitchToNextState(nextState);
