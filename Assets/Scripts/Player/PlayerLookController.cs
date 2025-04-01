@@ -38,7 +38,7 @@ public class PlayerLookController : MonoBehaviour
 
     private void CameraControl()
     {
-        if (cameraLocked) return;
+        if (cameraLocked || pController.IsVaulting) return;
 
         input = mouseInput.action.ReadValue<Vector2>();
 

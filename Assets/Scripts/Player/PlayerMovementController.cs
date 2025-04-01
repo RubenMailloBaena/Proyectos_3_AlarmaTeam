@@ -12,15 +12,18 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerController pController;
     
     [SerializeField] private InputActionReference moveInput;
+    [SerializeField] private InputActionReference runInput;
     [SerializeField] private InputActionReference jumpInput;
     
     [Header("Movement Attributes")] 
+    [SerializeField] private float runSpeed = 8f;
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float leaningSpeed = 3f;
     [SerializeField] private float crouchSpeed = 3f;
 
-    [Header("Jump Attributes")] [SerializeField]
-    private float jumpHeight = 3f;
+    [Header("Jump Attributes")] 
+    [SerializeField] private bool canJump;
+    [SerializeField] private float jumpHeight = 3f;
     
     [Header("Other Attributes")]
     [SerializeField] private float gravity = -9.81f;
@@ -60,11 +63,14 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsLeaning) return leaningSpeed;
         if (pController.IsCrouching) return crouchSpeed;
+        if (runInput.action.ReadValue<float>() > 0) return runSpeed;
         return walkSpeed;
     }
 
     private void PlayerJump()
     {
+        if (!canJump) return;
+        
         if (jumpInput.action.triggered && IsGrounded() && !pController.IsLeaning)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
