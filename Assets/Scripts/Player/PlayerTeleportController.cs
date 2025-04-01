@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,9 +34,13 @@ public class PlayerTeleportController : MonoBehaviour
         pController = GetComponent<PlayerController>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         HandleStatueDetection(); 
+    }
+
+    private void Update()
+    {
         PerformTeleport();
     }
 

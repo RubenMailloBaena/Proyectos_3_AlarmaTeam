@@ -28,9 +28,13 @@ public class BackStabController : MonoBehaviour
         backstabCollider.radius = attackRange; 
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         CheckIfCanBackstab();
+    }
+
+    void Update()
+    {
         PerformBackstab();
     }
 
@@ -108,7 +112,6 @@ public class BackStabController : MonoBehaviour
         enemies.Remove(enemy);
     }
 
-    // INPUTS
     private void OnEnable()
     {
         attackInput.action.Enable();

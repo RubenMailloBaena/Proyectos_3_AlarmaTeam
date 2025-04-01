@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 2849905158196457288}
   - component: {fileID: 6730785830284631386}
   - component: {fileID: 968289487564531204}
+  - component: {fileID: 2870653452863707992}
   - component: {fileID: 6138097720569525296}
   - component: {fileID: 3501777740460620051}
   - component: {fileID: 1216652762856930018}
@@ -620,6 +621,22 @@ MonoBehaviour:
   moveAmount: 0.45
   leanAngle: 20
   leanSpeed: 5
+--- !u!114 &2870653452863707992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f8d45cff53b934189a8a36b6a16294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  leanParent: {fileID: 8546083993960383726}
+  interactDistance: 10
 --- !u!114 &6138097720569525296
 MonoBehaviour:
   m_ObjectHideFlags: 0

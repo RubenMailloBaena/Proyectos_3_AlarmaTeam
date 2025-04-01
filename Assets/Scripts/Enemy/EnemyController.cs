@@ -8,7 +8,7 @@ public enum EnemyType{
     Priest,
     Knight
 }
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, ICanHear
 {
     private State currentState, nextState;
     
@@ -58,28 +58,44 @@ public class EnemyController : MonoBehaviour
         currentState?.SetReference(this);
         currentState?.InitializeState();
     }
+    //----------------------------ICanHear FUNCTIONS-----------------------------
+    
+    public void HeardObject(Vector3 soundPoint)
+    {
+        //TODO: implemantar la logica 
+        Debug.Log(transform.name + " Heard an object falling in pos: " + soundPoint);
+        SetAgentDestination(soundPoint);
+    }
+
+    public void HeardPlayer()
+    {
+        throw new NotImplementedException();
+    }
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
+    
+    public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
+    public void SetAgentDestination(Vector3 position) => meshAgent.SetDestination(position);
+
     public float GetWaitTime()
     {
         if (waypoints.Count == 0) 
             return 0.0f;
         return waypoints[waypointIndex].waitTime;
     }
-    
-    public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
-    public void SetAgentDestination(Vector3 position) => meshAgent.SetDestination(position);
-    
+   
     public Vector3 GoToWaypoint()
     {
         Vector3 pos = waypoints[waypointIndex].Position();
         meshAgent.SetDestination(pos);
         return pos;
     }
+   
     public bool ArrivedToPosition(Vector3 position)
     {
         return Vector3.Distance(transform.position, position) <= minDistanceToArrive;
     }
+   
     public void IncrementIndex()
     {
         waypointIndex++;
