@@ -463,6 +463,7 @@ GameObject:
   - component: {fileID: 6958942311931997098}
   - component: {fileID: 7266428441928830748}
   - component: {fileID: 7035954892752691577}
+  - component: {fileID: 2849905158196457288}
   - component: {fileID: 6730785830284631386}
   - component: {fileID: 968289487564531204}
   - component: {fileID: 3501777740460620051}
@@ -539,11 +540,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveInput: {fileID: -4534278319433424811, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  runInput: {fileID: -3193849242157884098, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  runSpeed: 10
   walkSpeed: 6
   leaningSpeed: 2
   crouchSpeed: 2
+  canJump: 0
   jumpHeight: 2
   gravity: -19.62
   fallFromCornerDrag: -2
@@ -552,6 +557,25 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2849905158196457288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8221e698525a08b4b8482edcd7a89224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  vaultSpeed: 5
+  vaultCheckRayDistance: 0.8
+  vaultLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &6730785830284631386
 MonoBehaviour:
   m_ObjectHideFlags: 0
