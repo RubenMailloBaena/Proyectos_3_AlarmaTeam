@@ -17,6 +17,6 @@ public class GoToState : State
 
     public override State RunCurrentState()
     {
-        
+        return this;
     }
 }
