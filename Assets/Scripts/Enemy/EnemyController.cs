@@ -34,9 +34,8 @@ public class EnemyController : MonoBehaviour, ICanHear
     private float minDistanceToArrive = 0.1f;
     
     //VARIABLES
-    [HideInInspector]
-    public bool soundWasAnObject;
-    public Vector3 soundPos;
+    [HideInInspector] public bool soundWasAnObject;
+    [HideInInspector] public Vector3 soundPos;
 
     void Awake()
     {
@@ -117,7 +116,7 @@ public class EnemyController : MonoBehaviour, ICanHear
         
         //Miramos si ya estamos alineados 
         float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
-        if (angleDiff < 10f)
+        if (angleDiff < 1f)
         {
             transform.rotation = targetDir;
             return true;
@@ -151,7 +150,6 @@ public class EnemyController : MonoBehaviour, ICanHear
             {
                 pathLength += Vector3.Distance(path.corners[i - 1], path.corners[i]);
             }
-
             Debug.LogWarning("Distance to sound: " + pathLength);
             return pathLength;
         }
