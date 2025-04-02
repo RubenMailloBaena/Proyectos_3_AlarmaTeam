@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
     public EnemyType enemyType;
+    public float rotationSpeed = 5f;
 
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
@@ -90,6 +91,20 @@ public class EnemyController : MonoBehaviour, ICanHear
         meshAgent.SetDestination(pos);
         return pos;
     }
+
+    public Vector3 GetLookDirection()
+    {
+        if (!waypoints[waypointIndex].rotateEnemy) 
+            return Vector3.zero;
+
+        return waypoints[waypointIndex].Direction();
+    }
+
+    public void RotateEnemy(Vector3 lookDir)
+    {
+        Quaternion targetDir = Quaternion.LookRotation(lookDir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
+    }
    
     public bool ArrivedToPosition(Vector3 position)
     {
@@ -108,7 +123,9 @@ public class EnemyController : MonoBehaviour, ICanHear
 [Serializable]
 public class Waypoint
 {
+    public bool rotateEnemy;
     public float waitTime = 0.0f;
     public Transform waypoint;
     public Vector3 Position() => waypoint.position;
+    public Vector3 Direction() => waypoint.forward;
 }
