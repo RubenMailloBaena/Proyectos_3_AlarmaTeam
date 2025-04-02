@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public enum EnemyType{
     Priest,
@@ -10,23 +12,31 @@ public enum EnemyType{
 }
 public class EnemyController : MonoBehaviour, ICanHear
 {
-    private State currentState, nextState;
+    private State currentState, nextState, lastState;
     
     private NavMeshAgent meshAgent;
     private PlayerController pController;
 
-    [Header("INITIAL STATE")]
+    [Header("DEBUG TEXT")]
+    [SerializeField] private TextMeshProUGUI debugText;
+
+    [Header("STATES")]
     [SerializeField] private IdleState idleState;
+    [SerializeField] private HearState hearState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
     public EnemyType enemyType;
-    public float rotationSpeed = 5f;
 
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
     private int waypointIndex;
     private float minDistanceToArrive = 0.1f;
+    
+    //VARIABLES
+    [HideInInspector]
+    public bool soundWasAnObject;
+    public Vector3 soundPos;
 
     void Awake()
     {
@@ -54,29 +64,30 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     public void SwitchToNextState(State nextState)
     {
-        print("Entering: " + nextState.name);
+        //DEBUG ONLY
+        debugText.text = nextState.name;
+        //
+        lastState = currentState;
         currentState = nextState;
         currentState?.SetReference(this);
         currentState?.InitializeState();
     }
     //----------------------------ICanHear FUNCTIONS-----------------------------
     
-    public void HeardObject(Vector3 soundPoint)
+    public void HeardSound(Vector3 soundPoint, bool isObject)
     {
-        //TODO: implemantar la logica 
-        Debug.Log(transform.name + " Heard an object falling in pos: " + soundPoint);
-        SetAgentDestination(soundPoint);
-    }
-
-    public void HeardPlayer()
-    {
-        throw new NotImplementedException();
+        soundWasAnObject = isObject;
+        soundPos = soundPoint;
+        soundPos.y = transform.position.y;
+        SwitchToNextState(hearState);
     }
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
     
     public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
     public void SetAgentDestination(Vector3 position) => meshAgent.SetDestination(position);
+    public void ReturnToLastState() => SwitchToNextState(lastState);
+    public void StopAgent() => meshAgent.ResetPath();
 
     public float GetWaitTime()
     {
@@ -100,10 +111,21 @@ public class EnemyController : MonoBehaviour, ICanHear
         return waypoints[waypointIndex].Direction();
     }
 
-    public void RotateEnemy(Vector3 lookDir)
+    public bool RotateEnemy(Vector3 lookDir, float rotationSpeed)
     {
         Quaternion targetDir = Quaternion.LookRotation(lookDir);
+        
+        //Miramos si ya estamos alineados 
+        float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
+        if (angleDiff < 10f)
+        {
+            transform.rotation = targetDir;
+            return true;
+        }
+        
+        //Si aun nos queda por girar seguimos 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
+        return false;
     }
    
     public bool ArrivedToPosition(Vector3 position)
@@ -116,6 +138,25 @@ public class EnemyController : MonoBehaviour, ICanHear
         waypointIndex++;
         if (waypointIndex >= waypoints.Count)
             waypointIndex = 0;
+    }
+
+    public float GetPathLegth(Vector3 targetPos)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        if (meshAgent.CalculatePath(targetPos, path) && path.status == NavMeshPathStatus.PathComplete) //Exists a path
+        {
+            float pathLength = 0.0f;
+            for (int i = 1; i < path.corners.Length; i++)
+            {
+                pathLength += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+
+            Debug.LogWarning("Distance to sound: " + pathLength);
+            return pathLength;
+        }
+
+        return -1f; //No path available
     }
 }
 

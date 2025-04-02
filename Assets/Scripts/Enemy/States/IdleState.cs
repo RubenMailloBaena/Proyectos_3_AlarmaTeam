@@ -7,6 +7,9 @@ public class IdleState : State
 {
     private float waitTime = 0.0f;
     private Vector3 lookDir;
+    
+    [Header("IDLE ATTRIBUTES")]
+    [SerializeField] private float idleRotationSpeed = 3f;
 
     [Header("STATES")]
     public PatrolState patrolState;
@@ -24,10 +27,10 @@ public class IdleState : State
 
     public override State RunCurrentState()
     {
-        if(eController.isIdleEnemy) return this;
-
         if(lookDir != Vector3.zero) 
-            eController.RotateEnemy(lookDir);
+            eController.RotateEnemy(lookDir, idleRotationSpeed);
+        
+        if(eController.isIdleEnemy) return this;
         
         waitTime -= Time.deltaTime;
 

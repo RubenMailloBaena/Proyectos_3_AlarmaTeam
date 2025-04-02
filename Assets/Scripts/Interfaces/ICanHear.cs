@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface ICanHear
 {
-    public void HeardObject(Vector3 soundPoint);
-    public void HeardPlayer();
+    public void HeardSound(Vector3 soundPoint, bool isObject);
 }

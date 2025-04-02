@@ -56,7 +56,7 @@ public class ThrowableObject : MonoBehaviour, IThrowableObject
         foreach (Collider enemy in hitColliders)
         {
             if (enemy.TryGetComponent(out ICanHear enemyController))
-                enemyController.HeardObject(transform.position);
+                enemyController.HeardSound(transform.position, true);
         }
     }
 
