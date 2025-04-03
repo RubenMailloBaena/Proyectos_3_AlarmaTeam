@@ -7,6 +7,9 @@ public class GoToState : State
     [Header("GoTo")]
     public float goToSpeed = 3f;
     private Vector3 targetPos;
+
+    [Header("STATES")] 
+    public CheckState checkState;
     
     public override void InitializeState()
     {
@@ -17,10 +20,7 @@ public class GoToState : State
     public override State RunCurrentState()
     {
         if (eController.ArrivedToPosition(targetPos))
-        {
-            //RETURN CHECK STATE
-            print("RETURN CHECK");
-        }
+            return checkState;
         return this;
     }
 }

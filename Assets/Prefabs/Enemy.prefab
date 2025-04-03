@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &512026040967191979
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6938946816654035343}
+  - component: {fileID: 5088701012656507873}
+  m_Layer: 9
+  m_Name: CheckState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6938946816654035343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512026040967191979}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 541269265630847884}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5088701012656507873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512026040967191979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28aab59823fda4c4fa80974064d9264b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1215523554127880672
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hearRotationSpeed: 5
-  maxDistanceToIgnore: 25
+  maxDistanceToIgnore: 50
   goToState: {fileID: 912456236795185405}
   lookAtState: {fileID: 546950031163888846}
 --- !u!1 &4080946042617911685
@@ -290,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goToSpeed: 3
+  checkState: {fileID: 0}
 --- !u!1 &4232428985292210471
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,8 +402,12 @@ MonoBehaviour:
   debugText: {fileID: 8327616120076495259}
   idleState: {fileID: 2107011259097926045}
   hearState: {fileID: 421644325986597779}
+  lookAtState: {fileID: 546950031163888846}
   isIdleEnemy: 0
   enemyType: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 448
   waypoints:
   - rotateEnemy: 0
     waitTime: 0
@@ -367,6 +416,7 @@ MonoBehaviour:
     waitTime: 3
     waypoint: {fileID: 4668463232812320241}
   soundWasAnObject: 0
+  inPlayerHearState: 1
   soundPos: {x: 0, y: 0, z: 0}
 --- !u!114 &3198350140110140839
 MonoBehaviour:
@@ -583,6 +633,7 @@ Transform:
   - {fileID: 5525756611397243251}
   - {fileID: 6889759670296540205}
   - {fileID: 849054474340323503}
+  - {fileID: 6938946816654035343}
   m_Father: {fileID: 313529658921198542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5884457741776083373
@@ -798,6 +849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3ba67cbf95ae0408515fe513e09998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goToSpeed: 3
+  checkState: {fileID: 5088701012656507873}
 --- !u!1 &6940533494523526818
 GameObject:
   m_ObjectHideFlags: 0

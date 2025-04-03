@@ -4,13 +4,29 @@ using UnityEngine;
 
 public class LookAtState : State
 {
+    [Header("LookAt")]
+    public float goToSpeed = 3f;
+    private Vector3 targetPos;
+
+    [Header("STATES")] 
+    public CheckState checkState;
+    
     public override void InitializeState()
     {
-        throw new System.NotImplementedException();
+        eController.SetAgentSpeed(goToSpeed);
+        targetPos = eController.GoToSoundSource();
+
+        if (eController.IsPointInVision(targetPos))
+        {
+            eController.StopAgent();
+            eController.SwitchToNextState(checkState);
+        }
     }
 
     public override State RunCurrentState()
     {
-        throw new System.NotImplementedException();
+        if (eController.IsPointInVision(targetPos))
+            return checkState;
+        return this;
     }
 }

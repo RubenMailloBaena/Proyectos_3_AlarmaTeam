@@ -23,10 +23,14 @@ public class EnemyController : MonoBehaviour, ICanHear
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
     [SerializeField] private HearState hearState;
+    [SerializeField] private LookAtState lookAtState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
     public EnemyType enemyType;
+    
+    [Header("CANT SEE THROUGH")]
+    public LayerMask groundLayer;
 
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
@@ -34,7 +38,8 @@ public class EnemyController : MonoBehaviour, ICanHear
     private float minDistanceToArrive = 0.1f;
     
     //VARIABLES
-    [HideInInspector] public bool soundWasAnObject;
+    [HideInInspector] public bool soundWasAnObject = true;
+    [HideInInspector] public bool inPlayerHearState = true;
     [HideInInspector] public Vector3 soundPos;
 
     void Awake()
@@ -46,6 +51,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
+        inPlayerHearState = true;
     }
 
     void Update()
@@ -75,9 +81,19 @@ public class EnemyController : MonoBehaviour, ICanHear
     
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
-        soundWasAnObject = isObject;
+        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f) 
+            return;
+        
         soundPos = soundPoint;
         soundPos.y = transform.position.y;
+
+        if (!soundWasAnObject && !isObject && !inPlayerHearState) 
+        {
+            SwitchToNextState(lookAtState);
+            return;
+        }
+
+        soundWasAnObject = isObject;
         SwitchToNextState(hearState);
     }
     
@@ -135,6 +151,20 @@ public class EnemyController : MonoBehaviour, ICanHear
     public bool ArrivedToPosition(Vector3 position)
     {
         return Vector3.Distance(transform.position, position) <= minDistanceToArrive;
+    }
+
+    public bool IsPointInVision(Vector3 targetPos)
+    {
+        print("IN HERE");
+        Vector3 origin = transform.position + new Vector3(0, 1.5f, 0); 
+        Vector3 target = targetPos + new Vector3(0, 1.5f, 0); 
+    
+        Vector3 dir = (target - origin).normalized;
+        float distance = Vector3.Distance(origin, target);
+    
+        Debug.DrawRay(origin, dir * distance, Color.green);
+
+        return !Physics.Raycast(origin, dir, distance, groundLayer);
     }
    
     public void IncrementIndex()

@@ -24,6 +24,12 @@ public class PlayerMovementController : MonoBehaviour
     [Header("Jump Attributes")] 
     [SerializeField] private bool canJump;
     [SerializeField] private float jumpHeight = 3f;
+
+    [Header("Sound Attributes")]
+    [SerializeField] private float walkingSoundRange = 5f;
+    [SerializeField] private float runningSoundRange = 8f;
+    [SerializeField] private LayerMask enemyLayer;
+    private float finalRange;
     
     [Header("Other Attributes")]
     [SerializeField] private float gravity = -9.81f;
@@ -35,7 +41,7 @@ public class PlayerMovementController : MonoBehaviour
     
     private CharacterController charController;
     private Vector2 input;
-    private Vector3 velocity;
+    private Vector3 velocity, sphereOffset = new Vector3(0f, 1f, 0f);
     
     private void Awake()
     {
@@ -48,6 +54,7 @@ public class PlayerMovementController : MonoBehaviour
         PlayerMovement();
         PlayerJump();
         PlayerGravity();
+        PlayerSound();
     }
 
     private void PlayerMovement()
@@ -65,7 +72,12 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsLeaning) return leaningSpeed;
         if (pController.IsCrouching) return crouchSpeed;
-        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision) return runSpeed;
+        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision)
+        {
+            finalRange = runningSoundRange;
+            return runSpeed;
+        }
+        finalRange = walkingSoundRange;
         return walkSpeed;
     }
 
@@ -98,6 +110,28 @@ public class PlayerMovementController : MonoBehaviour
         }
         pController.SetGrounded(false);
         return false;
+    }
+
+    private void PlayerSound()
+    {
+        if (pController.IsCrouching || input == Vector2.zero) return;
+        
+        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position + sphereOffset, finalRange, enemyLayer);
+
+        if (nearbyEnemies.Length > 0)
+        {
+            foreach (Collider nEnemy in nearbyEnemies)
+            {
+                if(nEnemy.TryGetComponent(out ICanHear enemy))
+                    enemy.HeardSound(transform.position, false);
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position + sphereOffset, finalRange);
     }
 
     private void OnEnable()

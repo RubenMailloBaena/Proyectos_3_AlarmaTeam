@@ -16,6 +16,9 @@ public class HearState : State
     
     public override void InitializeState()
     {
+        if (!eController.soundWasAnObject)
+            eController.inPlayerHearState = true;
+         
         targetPos = eController.soundPos;
         
         //SI el path esta muy lejos para llegar, ingoramos el sonido
@@ -30,6 +33,7 @@ public class HearState : State
     {
         if (eController.RotateEnemy(targetDir, hearRotationSpeed))
         {
+            eController.inPlayerHearState = false;
             if (eController.soundWasAnObject)
                 return goToState;
             return lookAtState;
