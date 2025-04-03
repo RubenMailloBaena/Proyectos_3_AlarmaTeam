@@ -1,22 +1,22 @@
-Shader "Custom/StencilWriter"
+Shader "Custom/HeartVision"
 {
     Properties
     {
-        _Color("Color", Color) = (1,1,1,1)
+        _Color("Color", Color) = (1, 0, 0, 1)
+        _Emission("Emission", Float) = 1
     }
 
         SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags { "RenderType" = "Transparent" "Queue" = "Overlay" }
+
+        ZTest Always      // Se dibuja aunque haya algo delante
+        ZWrite Off        // No escribe en el z-buffer
+        Cull Off          // Dibuja ambas caras
 
         Pass
         {
-            Stencil
-            {
-                Ref 1
-                Comp always
-                Pass replace
-            }
+            Blend SrcAlpha OneMinusSrcAlpha   // Blend normal (transparente), no suma el color
 
             CGPROGRAM
             #pragma vertex vert
@@ -32,6 +32,7 @@ Shader "Custom/StencilWriter"
             };
 
             fixed4 _Color;
+            float _Emission;
 
             v2f vert(appdata v) {
                 v2f o;
@@ -40,9 +41,12 @@ Shader "Custom/StencilWriter"
             }
 
             fixed4 frag(v2f i) : SV_Target {
-                return _Color;
+                fixed4 col = _Color;
+                col.rgb *= _Emission;  // Aplica leve brillo si quieres usar Bloom
+                return col;
             }
             ENDCG
         }
     }
+        FallBack "Diffuse"
 }
