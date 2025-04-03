@@ -65,7 +65,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsLeaning) return leaningSpeed;
         if (pController.IsCrouching) return crouchSpeed;
-        if (runInput.action.ReadValue<float>() > 0) return runSpeed;
+        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision) return runSpeed;
         return walkSpeed;
     }
 

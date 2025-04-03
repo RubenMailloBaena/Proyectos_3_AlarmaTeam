@@ -28,7 +28,7 @@ public class PlayerVaultController : MonoBehaviour
 
     private void CheckIfCanVault()
     {
-        if (pController.IsVaulting) return;
+        if (pController.IsVaulting || pController.IsUsingVision) return;
         
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, vaultCheckRayDistance, vaultLayer))
         {

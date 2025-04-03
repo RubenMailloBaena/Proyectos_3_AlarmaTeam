@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerController))]
 public class PlayerBackstabController : MonoBehaviour
 {
+    private PlayerController pController;
+
     [SerializeField] private InputActionReference attackInput;
 
     [Header("Backstab Attributes")]
@@ -17,9 +19,20 @@ public class PlayerBackstabController : MonoBehaviour
     private HashSet<ICanBackstab> enemies = new HashSet<ICanBackstab>();
     private ICanBackstab target;
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
+    private void Awake()
+    {
+        pController = GetComponent<PlayerController>();
+    }
 
     void Update()
     {
+        if (pController.IsUsingVision)
+        {
+            DisableVisual();
+            return;
+        }
+            
+        
         GatherEnemies();
         CheckIfCanBackstab();
         PerformBackstab();
@@ -96,9 +109,17 @@ public class PlayerBackstabController : MonoBehaviour
         }
     }
 
+    private void DisableVisual()
+    {
+        foreach (ICanBackstab enemy in enemies)
+        {
+            enemy.SetWeakSpot(false);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + sphereOffset, attackRange);
     }
 
