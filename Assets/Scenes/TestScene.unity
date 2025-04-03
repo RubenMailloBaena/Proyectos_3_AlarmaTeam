@@ -425,6 +425,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8881891
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.45947805
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 54.707
+      objectReference: {fileID: 0}
     - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
       propertyPath: isIdleEnemy
@@ -1808,11 +1833,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3501777740460620051, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
-        type: 3}
-      propertyPath: enemyLayer.m_Bits
-      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 7808489718877402067, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}

@@ -468,10 +468,9 @@ GameObject:
   - component: {fileID: 968289487564531204}
   - component: {fileID: 2870653452863707992}
   - component: {fileID: 6138097720569525296}
-  - component: {fileID: 3501777740460620051}
+  - component: {fileID: 541859556553828673}
   - component: {fileID: 1216652762856930018}
   - component: {fileID: 7568944375523593208}
-  - component: {fileID: 8641948435598695130}
   - component: {fileID: 1978913200047557522}
   - component: {fileID: 1454362342495625663}
   m_Layer: 0
@@ -657,7 +656,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   leanParent: {fileID: 8546083993960383726}
---- !u!114 &3501777740460620051
+--- !u!114 &541859556553828673
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -666,7 +665,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7808489718877402067}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a93fdfb0935c334469994860a8502833, type: 3}
+  m_Script: {fileID: 11500000, guid: e76bfd17e62a6e54cb93cf786bf2f384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
@@ -674,6 +673,9 @@ MonoBehaviour:
   attackRange: 1.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0
@@ -731,27 +733,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!135 &8641948435598695130
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7808489718877402067}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.5
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1978913200047557522
 Rigidbody:
   m_ObjectHideFlags: 0
