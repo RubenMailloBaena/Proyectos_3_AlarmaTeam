@@ -15,13 +15,9 @@ public class PlayerThrowController : MonoBehaviour
 
     private IThrowableObject target;
 
-    private void FixedUpdate()
-    {
-        CanInteract();
-    }
-
     private void Update()
     {
+        CanInteract();
         PerformInteraction();
     }
 

@@ -28,13 +28,9 @@ public class BackStabController : MonoBehaviour
         backstabCollider.radius = attackRange; 
     }
 
-    private void FixedUpdate()
-    {
-        CheckIfCanBackstab();
-    }
-
     void Update()
     {
+        CheckIfCanBackstab();
         PerformBackstab();
     }
 

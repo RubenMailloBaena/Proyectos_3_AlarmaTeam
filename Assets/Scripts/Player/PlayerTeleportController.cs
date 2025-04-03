@@ -34,13 +34,9 @@ public class PlayerTeleportController : MonoBehaviour
         pController = GetComponent<PlayerController>();
     }
 
-    private void FixedUpdate()
-    {
-        HandleStatueDetection(); 
-    }
-
     private void Update()
     {
+        HandleStatueDetection(); 
         PerformTeleport();
     }
 
