@@ -25,7 +25,7 @@ public class PlayerBackstabController : MonoBehaviour
         PerformBackstab();
     }
 
-    private void GatherEnemies()
+    private void GatherEnemies() //QUIZAS SE PUEDA OPTIMIZAR USANDO UN INVOKE PARA ESTA FUNCION
     {
         Collider[] enemiesAround = Physics.OverlapSphere(transform.position + sphereOffset, attackRange, enemyLayer);
         HashSet<ICanBackstab> newEnemies = new HashSet<ICanBackstab>();
@@ -61,11 +61,13 @@ public class PlayerBackstabController : MonoBehaviour
             Transform enemyTransform = enemy.GetTransform();
             enemy.SetWeakSpot(false);
 
+            //COMPROBAMOS SI ESTAMOS DETRAS
             Vector3 dirFromEnemyToPlayer = (transform.position - enemyTransform.position).normalized;
             float dotBackstab = Vector3.Dot(enemyTransform.forward, dirFromEnemyToPlayer);
 
             if (dotBackstab > -backstabDotOffset) continue;
 
+            //SI ESTA EN NUESTRO CONO DE VISION, Y SI HAY MAS DE UN ENEMIGO, ELEGIMOS AL QUE ESTAMOS MIRANDO
             Vector3 dirToEnemy = (enemyTransform.position - transform.position).normalized;
             float dotView = Vector3.Dot(transform.forward, dirToEnemy);
 
