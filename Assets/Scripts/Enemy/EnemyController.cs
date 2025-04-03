@@ -84,7 +84,6 @@ public class EnemyController : MonoBehaviour, ICanHear
     //---------------------------GENERAL FUNCTIONS-------------------------------
     
     public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
-    public void SetAgentDestination(Vector3 position) => meshAgent.SetDestination(position);
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public void StopAgent() => meshAgent.ResetPath();
 
@@ -100,6 +99,12 @@ public class EnemyController : MonoBehaviour, ICanHear
         Vector3 pos = waypoints[waypointIndex].Position();
         meshAgent.SetDestination(pos);
         return pos;
+    }
+
+    public Vector3 GoToSoundSource()
+    {
+        meshAgent.SetDestination(soundPos);
+        return soundPos;
     }
 
     public Vector3 GetLookDirection()

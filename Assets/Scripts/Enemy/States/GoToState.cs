@@ -11,12 +11,16 @@ public class GoToState : State
     public override void InitializeState()
     {
         eController.SetAgentSpeed(goToSpeed);
-        //targetPos
-        //ACABAR LOGICA
+        targetPos = eController.GoToSoundSource();
     }
 
     public override State RunCurrentState()
     {
+        if (eController.ArrivedToPosition(targetPos))
+        {
+            //RETURN CHECK STATE
+            print("RETURN CHECK");
+        }
         return this;
     }
 }
