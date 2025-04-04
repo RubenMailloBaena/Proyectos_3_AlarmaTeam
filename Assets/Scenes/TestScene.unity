@@ -267,6 +267,56 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.3549926
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9348691
+      objectReference: {fileID: 0}
+    - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 138.414
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: viewAngle
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: isIdleEnemy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: attackDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: maxViewDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: enemyEyesOffset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: waypoints.Array.data[0].waitTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: waypoints.Array.data[1].rotateEnemy
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5310336912434866460, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -321,6 +371,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002061076791752716, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

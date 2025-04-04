@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Transform pitchController;
+    
     public bool IsCrouching { get; private set; }
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
@@ -29,7 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         OnVaultCrouched?.Invoke();
     }
-    
+
+    public Vector3 GetPlayerPosition() => pitchController.position;
     public void SetLeaning(bool leaning) => IsLeaning = leaning;
     public void SetCrouching(bool crouching) => IsCrouching = crouching;
     public void SetGrounded(bool grounded) => IsGrounded = grounded;

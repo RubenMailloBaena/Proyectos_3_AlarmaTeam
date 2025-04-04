@@ -32,9 +32,13 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     [Header("ENEMY VISION CONE")] 
     [SerializeField] private float viewAngle = 60f;
-    [SerializeField] private float viewDistance = 10f;   
+    [SerializeField] private float maxViewDistance = 15f;   
+    [SerializeField] private float minViewDistance = 10f; 
+    [SerializeField] private float attackDistance = 5f; 
     [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
     [SerializeField] private float minAngleDiffToRotate = 5f;    
+    [SerializeField] private Vector3 enemyEyesOffset = new Vector3(0f, 1f, 0f);
+    private Vector3 enemyPos;
     
     [Header("CANT SEE THROUGH")]
     public LayerMask groundLayer;
@@ -66,6 +70,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     void Update()
     {
         RunStateMachine();
+        CanSeePlayer();
     }
 
     private void RunStateMachine()
@@ -85,6 +90,13 @@ public class EnemyController : MonoBehaviour, ICanHear
         currentState = nextState;
         currentState?.SetReference(this);
         currentState?.InitializeState();
+    }
+
+    private void CanSeePlayer()
+    {
+        enemyPos = transform.position + enemyEyesOffset;
+        
+        
     }
     //----------------------------ICanHear FUNCTIONS-----------------------------
     
@@ -179,10 +191,10 @@ public class EnemyController : MonoBehaviour, ICanHear
         Vector3 dir = (target - origin).normalized;
         float distance = Vector3.Distance(origin, target);
         
-        Debug.DrawRay(origin, dir * viewDistance, Color.green);
+        Debug.DrawRay(origin, dir * maxViewDistance, Color.green);
 
         //ESTA MAS LEJOS QUE EL RANGO DE VISION MAXIMO
-        if (distance > viewDistance)
+        if (distance > maxViewDistance)
             return false;
 
         //SI ESTA FUERA DEL CONO DE VISION
@@ -220,11 +232,20 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     private void OnDrawGizmosSelected()
     {
+        //MAX DISTANCE
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewDistance);
+        Gizmos.DrawWireSphere(transform.position, maxViewDistance);
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, minViewDistance);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
 
-        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * viewDistance;
-        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward * viewDistance;
+        
+        //VISION CONE
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * maxViewDistance;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward * maxViewDistance;
 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
