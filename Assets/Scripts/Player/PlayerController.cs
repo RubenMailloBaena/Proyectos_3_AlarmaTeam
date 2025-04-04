@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
         OnVaultCrouched?.Invoke();
     }
 
-    public Vector3 GetPlayerPosition() => pitchController.position;
+    public Vector3 GetPlayerEyesPosition() => pitchController.position;
+    public Vector3 GetPlayerPosition() => transform.position;
     public void SetLeaning(bool leaning) => IsLeaning = leaning;
     public void SetCrouching(bool crouching) => IsCrouching = crouching;
     public void SetGrounded(bool grounded) => IsGrounded = grounded;

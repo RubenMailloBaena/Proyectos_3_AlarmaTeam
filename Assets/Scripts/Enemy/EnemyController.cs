@@ -33,8 +33,8 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     [Header("ENEMY VISION CONE")] 
     [SerializeField] private float viewAngle = 60f;
-    [SerializeField] private float maxViewDistance = 15f;   
-    [SerializeField] private float minViewDistance = 10f; 
+    [SerializeField] public float maxViewDistance = 15f;   
+    [SerializeField] public float minViewDistance = 10f; 
     [SerializeField] private float attackDistance = 5f; 
     [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
     [SerializeField] private float minAngleDiffToRotate = 5f;    
@@ -98,15 +98,15 @@ public class EnemyController : MonoBehaviour, ICanHear
     private void CanSeePlayer()
     {
         enemyPos = transform.position + enemyEyesOffset;
-        distanceToPlayer = Vector3.Distance(enemyPos, pController.GetPlayerPosition());
+        distanceToPlayer = Vector3.Distance(enemyPos, pController.GetPlayerEyesPosition());
 
         if (distanceToPlayer <= maxViewDistance) //JUGADOR DENTRO DEL RANGO MINIMO DEL ENEMIGO
         {
-            Vector3 dir = (pController.GetPlayerPosition() - enemyPos).normalized;
+            Vector3 dir = (pController.GetPlayerEyesPosition() - enemyPos).normalized;
             if (Vector3.Angle(transform.forward, dir) <= viewAngle / 2f) //EL JUGADOR ESTA DENTRO DE NUESTRO CONO DE VISION
             {
                 if (!Physics.Raycast(enemyPos, dir, maxViewDistance, groundLayer)) //SI NO HAY PAREDES EN MEDIO, ESTAMOS VIENDO AL PLAYER
-                    SwitchToNextState(seenState);
+                 SwitchToNextState(seenState);
             }
         }
     }
@@ -163,6 +163,12 @@ public class EnemyController : MonoBehaviour, ICanHear
     {
         meshAgent.SetDestination(enemyPosBeforeMoving);
         return enemyPosBeforeMoving;
+    }
+
+    public float GoToPlayerPosition()
+    {
+        meshAgent.SetDestination(pController.GetPlayerPosition());
+        return Vector3.Distance(transform.position, pController.GetPlayerPosition());
     }
 
     public Vector3 GetLookDirection()

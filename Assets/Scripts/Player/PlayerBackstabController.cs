@@ -31,7 +31,6 @@ public class PlayerBackstabController : MonoBehaviour
             DisableVisual();
             return;
         }
-            
         
         GatherEnemies();
         CheckIfCanBackstab();
