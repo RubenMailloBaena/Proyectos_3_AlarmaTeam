@@ -25,6 +25,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [SerializeField] private IdleState idleState;
     [SerializeField] private HearState hearState;
     [SerializeField] private LookAtState lookAtState;
+    [SerializeField] private SeenState seenState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
@@ -38,7 +39,9 @@ public class EnemyController : MonoBehaviour, ICanHear
     [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
     [SerializeField] private float minAngleDiffToRotate = 5f;    
     [SerializeField] private Vector3 enemyEyesOffset = new Vector3(0f, 1f, 0f);
+    
     private Vector3 enemyPos;
+    private float distanceToPlayer;
     
     [Header("CANT SEE THROUGH")]
     public LayerMask groundLayer;
@@ -95,8 +98,17 @@ public class EnemyController : MonoBehaviour, ICanHear
     private void CanSeePlayer()
     {
         enemyPos = transform.position + enemyEyesOffset;
-        
-        
+        distanceToPlayer = Vector3.Distance(enemyPos, pController.GetPlayerPosition());
+
+        if (distanceToPlayer <= maxViewDistance) //JUGADOR DENTRO DEL RANGO MINIMO DEL ENEMIGO
+        {
+            Vector3 dir = (pController.GetPlayerPosition() - enemyPos).normalized;
+            if (Vector3.Angle(transform.forward, dir) <= viewAngle / 2f) //EL JUGADOR ESTA DENTRO DE NUESTRO CONO DE VISION
+            {
+                if (!Physics.Raycast(enemyPos, dir, maxViewDistance, groundLayer)) //SI NO HAY PAREDES EN MEDIO, ESTAMOS VIENDO AL PLAYER
+                    SwitchToNextState(seenState);
+            }
+        }
     }
     //----------------------------ICanHear FUNCTIONS-----------------------------
     
