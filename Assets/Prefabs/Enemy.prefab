@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28aab59823fda4c4fa80974064d9264b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingIdleTime: 0.3
+  checkRotateSpeed: 1.5
+  checkAngle: 60
+  returnState: {fileID: 244550683810553594}
 --- !u!1 &1215523554127880672
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +131,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2065166044817612278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3031443897459640164}
+  - component: {fileID: 244550683810553594}
+  m_Layer: 9
+  m_Name: ReturnState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3031443897459640164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065166044817612278}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 541269265630847884}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &244550683810553594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065166044817612278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb363f3733b22e949955fb93993ffdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnSpeed: 3
+  idleState: {fileID: 2107011259097926045}
+  patrolState: {fileID: 7523371514856595429}
 --- !u!1 &2120101094472224392
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,13 +285,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2193027070282569349}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.034631692, z: -0, w: 0.9994002}
+  m_LocalRotation: {x: -0, y: 0.99626213, z: -0, w: -0.08638158}
   m_LocalPosition: {x: 3.5, y: 0, z: 12.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6066459231724853449}
-  m_LocalEulerAnglesHint: {x: 0, y: 3.969, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 189.911, z: 0}
 --- !u!1 &2450816047589064726
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hearRotationSpeed: 5
-  maxDistanceToIgnore: 50
+  maxDistanceToIgnore: 30
   goToState: {fileID: 912456236795185405}
   lookAtState: {fileID: 546950031163888846}
 --- !u!1 &4080946042617911685
@@ -334,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goToSpeed: 3
-  checkState: {fileID: 0}
+  checkState: {fileID: 5088701012656507873}
 --- !u!1 &4232428985292210471
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,21 +454,31 @@ MonoBehaviour:
   idleState: {fileID: 2107011259097926045}
   hearState: {fileID: 421644325986597779}
   lookAtState: {fileID: 546950031163888846}
-  isIdleEnemy: 0
+  isIdleEnemy: 1
   enemyType: 0
+  viewAngle: 60
+  viewDistance: 15
+  minAngleDiffToRotate: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 448
   waypoints:
-  - rotateEnemy: 0
+  - rotateEnemy: 1
     waitTime: 0
     waypoint: {fileID: 8706938362578404423}
   - rotateEnemy: 1
-    waitTime: 3
+    waitTime: 1
     waypoint: {fileID: 4668463232812320241}
+  - rotateEnemy: 1
+    waitTime: 3
+    waypoint: {fileID: 4377165567167018255}
+  - rotateEnemy: 1
+    waitTime: 3
+    waypoint: {fileID: 6171546293217643729}
   soundWasAnObject: 0
   inPlayerHearState: 1
   soundPos: {x: 0, y: 0, z: 0}
+  enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
 --- !u!114 &3198350140110140839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,11 +525,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 50
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 500
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -634,6 +695,7 @@ Transform:
   - {fileID: 6889759670296540205}
   - {fileID: 849054474340323503}
   - {fileID: 6938946816654035343}
+  - {fileID: 3031443897459640164}
   m_Father: {fileID: 313529658921198542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5884457741776083373

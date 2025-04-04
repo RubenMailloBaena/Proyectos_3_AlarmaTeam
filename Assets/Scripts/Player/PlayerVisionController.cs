@@ -45,7 +45,6 @@ public class PlayerVisionController : MonoBehaviour
                 newEnemies.Add(enemy);
                 enemy.SetVisiblity(true);
             }
-                
         }
 
         foreach (IVisible enemy in enemies)
@@ -61,9 +60,8 @@ public class PlayerVisionController : MonoBehaviour
     private void ClearEnemies()
     {
         foreach (IVisible enemy in enemies)
-        {
             enemy.SetVisiblity(false);
-        }
+        
         pController.SetUsingVision(false);
     }
 

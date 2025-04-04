@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -28,6 +29,12 @@ public class EnemyController : MonoBehaviour, ICanHear
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
     public EnemyType enemyType;
+
+    [Header("ENEMY VISION CONE")] 
+    [SerializeField] private float viewAngle = 60f;
+    [SerializeField] private float viewDistance = 10f;   
+    [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
+    [SerializeField] private float minAngleDiffToRotate = 5f;    
     
     [Header("CANT SEE THROUGH")]
     public LayerMask groundLayer;
@@ -41,6 +48,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [HideInInspector] public bool soundWasAnObject = true;
     [HideInInspector] public bool inPlayerHearState = true;
     [HideInInspector] public Vector3 soundPos;
+    [HideInInspector] public Vector3 enemyPosBeforeMoving;
 
     void Awake()
     {
@@ -52,6 +60,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     {
         pController = GameManager.GetInstance().GetPlayerController();
         inPlayerHearState = true;
+        enemyPosBeforeMoving = Vector3.zero;
     }
 
     void Update()
@@ -83,6 +92,9 @@ public class EnemyController : MonoBehaviour, ICanHear
     {
         if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f) 
             return;
+
+        if (enemyPosBeforeMoving == Vector3.zero)
+            enemyPosBeforeMoving = transform.position;
         
         soundPos = soundPoint;
         soundPos.y = transform.position.y;
@@ -123,6 +135,12 @@ public class EnemyController : MonoBehaviour, ICanHear
         return soundPos;
     }
 
+    public Vector3 GoToPreviousPosition()
+    {
+        meshAgent.SetDestination(enemyPosBeforeMoving);
+        return enemyPosBeforeMoving;
+    }
+
     public Vector3 GetLookDirection()
     {
         if (!waypoints[waypointIndex].rotateEnemy) 
@@ -137,7 +155,7 @@ public class EnemyController : MonoBehaviour, ICanHear
         
         //Miramos si ya estamos alineados 
         float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
-        if (angleDiff < 1f)
+        if (angleDiff < minAngleDiffToRotate)
         {
             transform.rotation = targetDir;
             return true;
@@ -155,18 +173,26 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     public bool IsPointInVision(Vector3 targetPos)
     {
-        print("IN HERE");
         Vector3 origin = transform.position + new Vector3(0, 1.5f, 0); 
         Vector3 target = targetPos + new Vector3(0, 1.5f, 0); 
     
         Vector3 dir = (target - origin).normalized;
         float distance = Vector3.Distance(origin, target);
-    
-        Debug.DrawRay(origin, dir * distance, Color.green);
+        
+        Debug.DrawRay(origin, dir * viewDistance, Color.green);
 
-        return !Physics.Raycast(origin, dir, distance, groundLayer);
+        //ESTA MAS LEJOS QUE EL RANGO DE VISION MAXIMO
+        if (distance > viewDistance)
+            return false;
+
+        //SI ESTA FUERA DEL CONO DE VISION
+        if (Vector3.Angle(transform.forward, dir) > viewAngle / 2f)
+            return false;
+
+        //NO HAY NADA ENTRE MEDIO
+        return !Physics.Raycast(origin, dir, distance, groundLayer); 
     }
-   
+    
     public void IncrementIndex()
     {
         waypointIndex++;
@@ -188,10 +214,24 @@ public class EnemyController : MonoBehaviour, ICanHear
             Debug.LogWarning("Distance to sound: " + pathLength);
             return pathLength;
         }
-
         return -1f; //No path available
     }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, viewDistance);
+
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * viewDistance;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward * viewDistance;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
+        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+    }
 }
+
 
 
 [Serializable]

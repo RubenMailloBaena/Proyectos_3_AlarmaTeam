@@ -73,11 +73,11 @@ public class CheatUI : MonoBehaviour
             Debug.Log("Command Executed: " + commandName);
         }
         else
+        {
+            Time.timeScale = 1f;
             Debug.LogWarning("Command does not exist: " + commandName);
-
-        
+        }
         inputField.ActivateInputField(); // Reactivamos el field para evitar hacer clics manuales constantemente. 
-
     }
     
     private void RegisterCheats()

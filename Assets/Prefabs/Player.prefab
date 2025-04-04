@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 2870653452863707992}
   - component: {fileID: 6138097720569525296}
   - component: {fileID: 541859556553828673}
+  - component: {fileID: 8164220615881500944}
   - component: {fileID: 1216652762856930018}
   - component: {fileID: 7568944375523593208}
   - component: {fileID: 1978913200047557522}
@@ -552,6 +553,11 @@ MonoBehaviour:
   crouchSpeed: 2
   canJump: 0
   jumpHeight: 2
+  walkingSoundRange: 5
+  runningSoundRange: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
   gravity: -19.62
   fallFromCornerDrag: -2
   floorDrag: -10
@@ -673,6 +679,24 @@ MonoBehaviour:
   attackRange: 1.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
+--- !u!114 &8164220615881500944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1241b90402b715a4d9a1ef9e342421f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionInput: {fileID: 8498098662107780541, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  range: 20
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
