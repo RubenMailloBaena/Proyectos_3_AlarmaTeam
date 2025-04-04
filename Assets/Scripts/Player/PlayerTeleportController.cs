@@ -19,9 +19,6 @@ public class PlayerTeleportController : MonoBehaviour
     [Tooltip("Tiempo de canalizaci�n del tp")]
     [SerializeField] private float holdTime = 2f;
     
-    [Tooltip("Capa que usan las estatuas para ser detectadas por el Raycast")] 
-    [SerializeField] private LayerMask statueLayer;
-
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
 
@@ -43,21 +40,31 @@ public class PlayerTeleportController : MonoBehaviour
     private void HandleStatueDetection()
     {
         Ray ray = new Ray(leanParent.position, leanParent.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, teleportRange, statueLayer))
+       
+        if (Physics.Raycast(ray, out RaycastHit hit, teleportRange))
         {
             if (hit.transform.TryGetComponent(out IStatue statue))
             {
                 currentStatue = statue;
                 currentStatue.ShowUI(true);
             }
+            else
+            {
+               ClearTarget();
+            }
         }
         else
         {
-            if (currentStatue != null)
-            {
-                currentStatue.ShowUI(false);
-                currentStatue = null;
-            }
+            ClearTarget();
+        }
+    }
+
+    void ClearTarget()
+    {
+        if (currentStatue != null)
+        {
+            currentStatue.ShowUI(false);
+            currentStatue = null;
         }
     }
 
