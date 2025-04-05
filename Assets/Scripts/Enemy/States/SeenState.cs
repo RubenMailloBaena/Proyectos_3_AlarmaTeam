@@ -12,7 +12,7 @@ public class SeenState : State
     [SerializeField] private float barMaxCapacity = 100f;
     private float currentFillValue = 0f;
     private float fillRate = 0f;
-    private float distanceToPlayer;
+    private Vector3 playerPos;
     private bool firstTimeIn = false;
     
     [Header("STATES")]
@@ -21,6 +21,9 @@ public class SeenState : State
     
     public override void InitializeState()
     {
+        if (eController.isChasingPlayer)
+            eController.SwitchToNextState(chaseState);
+        
         if (!firstTimeIn)
         {
             firstTimeIn = true;
@@ -33,10 +36,10 @@ public class SeenState : State
     {
         if (eController.isPlayerInVision)
         {
-            distanceToPlayer = eController.GoToPlayerPosition();
+            playerPos = eController.GoToPlayerPosition();
+            float distanceToPlayer = Vector3.Distance(playerPos, transform.position);
 
             fillRate = MapFunction(distanceToPlayer, eController.maxViewDistance, eController.minViewDistance,baseFillPerSecond,maxFillPerSecond);
-            
             currentFillValue += fillRate * Time.deltaTime;
 
             if (currentFillValue >= barMaxCapacity)

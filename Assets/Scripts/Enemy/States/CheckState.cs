@@ -19,6 +19,7 @@ public class CheckState : State
     public override void InitializeState()
     {
         eController.soundWasAnObject = true; //RESTART PLAYER HEAR
+        eController.isChasingPlayer = false;
         eController.StopAgent();
 
         startingForward = transform.forward;

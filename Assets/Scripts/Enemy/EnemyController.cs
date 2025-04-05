@@ -2,10 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public enum EnemyType{
     Priest,
@@ -27,6 +26,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [SerializeField] private LookAtState lookAtState;
     [SerializeField] private SeenState seenState;
     [SerializeField] private ChaseState chaseState;
+    [SerializeField] private AttackState attackState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
@@ -42,7 +42,6 @@ public class EnemyController : MonoBehaviour, ICanHear
     [SerializeField] private Vector3 enemyEyesOffset = new Vector3(0f, 1f, 0f);
     
     private Vector3 enemyPos;
-    private float distanceToPlayer;
     
     [Header("CANT SEE THROUGH")]
     public LayerMask groundLayer;
@@ -57,8 +56,10 @@ public class EnemyController : MonoBehaviour, ICanHear
     [HideInInspector] public bool inPlayerHearState = true;
     [HideInInspector] public bool isPlayerInVision;
     [HideInInspector] public bool ignorePlayerInMinVision;
+    [HideInInspector] public bool isChasingPlayer;
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
+    [HideInInspector] public float distanceToPlayer;
 
     void Awake()
     {
@@ -89,8 +90,6 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     public void SwitchToNextState(State nextState)
     {
-        //if (nextState == currentState) return;
-        
         //DEBUG ONLY
         debugText.text = nextState.name;
         //
@@ -124,7 +123,10 @@ public class EnemyController : MonoBehaviour, ICanHear
             isPlayerInVision = true;
             SetPositionBeforeMoving();
             
-            if(distanceToPlayer <= minViewDistance)
+            if (distanceToPlayer <= attackDistance) 
+                print(attackState);
+                //SwitchToNextState(attackState);
+            else if(distanceToPlayer <= minViewDistance)
                 SwitchToNextState(chaseState);
             else if(!ignorePlayerInMinVision)
                 SwitchToNextState(seenState); 
@@ -141,7 +143,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
-        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f) 
+        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f || isChasingPlayer) 
             return;
 
         SetPositionBeforeMoving();
@@ -160,8 +162,13 @@ public class EnemyController : MonoBehaviour, ICanHear
     }
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
-    
-    public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
+
+    public void SetAgentSpeed(float speed)
+    {
+        if (isChasingPlayer) return;
+        meshAgent.speed = speed;
+    }
+
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public void StopAgent() => meshAgent.ResetPath();
 
@@ -191,10 +198,10 @@ public class EnemyController : MonoBehaviour, ICanHear
         return enemyPosBeforeMoving;
     }
 
-    public float GoToPlayerPosition()
+    public Vector3 GoToPlayerPosition()
     {
         meshAgent.SetDestination(pController.GetPlayerPosition());
-        return Vector3.Distance(transform.position, pController.GetPlayerPosition());
+        return pController.GetPlayerPosition();
     }
 
     public Vector3 GetLookDirection()

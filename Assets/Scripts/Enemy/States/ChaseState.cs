@@ -1,16 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChaseState : State
 {
+    [Header("ChaseAttributes")]
+    [SerializeField] private float knightSpeed = 10f;
+    [SerializeField] private float priestSpeed = 6f;
+    [SerializeField] private float chaseTimeAfterLoosingVision = 0.5f;
+    private float currentTime;
+    private Vector3 playerPosition;
+
+    [Header("STATES")] 
+    public GoToState goToState;
+    public LookAtState lookAtState;
+    
     public override void InitializeState()
     {
-        throw new System.NotImplementedException();
+        switch (eController.enemyType)
+        {
+            case EnemyType.Knight: eController.SetAgentSpeed(knightSpeed);
+                break;
+            default: eController.SetAgentSpeed(priestSpeed); 
+                break;
+        }
+        eController.isChasingPlayer = true;
+        currentTime = chaseTimeAfterLoosingVision;
+        SetSoundPosition();
     }
 
     public override State RunCurrentState()
     {
-        throw new System.NotImplementedException();
+        if (eController.isPlayerInVision)
+            currentTime = chaseTimeAfterLoosingVision;
+
+        if (currentTime <= 0.0f)
+        {
+            switch (eController.enemyType)
+            {
+                case EnemyType.Knight: return goToState;
+                default: return lookAtState;
+            }
+        }
+        
+        currentTime -= Time.deltaTime;
+        SetSoundPosition();
+        return this;
+    }
+
+
+
+    private void SetSoundPosition()
+    {
+        eController.soundPos = eController.GoToPlayerPosition();
     }
 }
