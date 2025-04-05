@@ -1,39 +1,49 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class BridgeController : MonoBehaviour
-{
-    [SerializeField] private Transform finalpoint;
-    [SerializeField] private float duration = 1f;
 
-    private bool isMoving = false;
-    private float elapsedTime = 0f;
+public class BridgeController : MonoBehaviour, IInteractuable
+{
+    [SerializeField] private float distance = 5f; 
+    [SerializeField] private float speed = 5f; 
+
+    private Vector3 startingPos, finalPos;
+
+    private bool isMoving;
+
+    void Start()
+    {
+        startingPos = transform.position;
+        finalPos = startingPos + transform.forward * distance;
+    }
+
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && !isMoving)
+        Interact();
+        PerformInteraction();
+    }
+
+    private void PerformInteraction()
+    {
+        Vector3 targetPos = isMoving ? finalPos : startingPos;
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * speed);
+    }
+
+
+
+    public void Interact()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            StartCoroutine(MoveBridge());
+            isMoving = !isMoving;
+            Debug.Log(isMoving);
         }
     }
 
-    IEnumerator MoveBridge()
+    public void ShowInteract()
     {
-        isMoving = true;
-        elapsedTime = 0f;
-
-        Vector3 start = transform.position;
-        Vector3 end = new Vector3(finalpoint.position.x, transform.position.y, finalpoint.position.z);
-
-        while (elapsedTime < duration)
-        {
-            float t = elapsedTime / duration;
-            transform.position = Vector3.Lerp(start, end, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = end;
-        isMoving = false;
+        throw new System.NotImplementedException();
     }
 }
