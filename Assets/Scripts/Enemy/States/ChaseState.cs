@@ -21,6 +21,7 @@ public class ChaseState : State
     
     public override void InitializeState()
     {
+        eController.ManualRotation(true);
         eController.SetLight(false);
         switch (eController.enemyType)
         {

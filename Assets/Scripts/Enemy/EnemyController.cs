@@ -100,6 +100,7 @@ public class EnemyController : MonoBehaviour, ICanHear
         //DEBUG ONLY
         debugText.text = nextState.name;
         //
+        Debug.LogError(nextState.name);
         lastState = currentState;
         currentState = nextState;
         currentState?.SetReference(this);
@@ -132,9 +133,9 @@ public class EnemyController : MonoBehaviour, ICanHear
             
             if(distanceToPlayer <= attackDistance && currentState != attackState)
                 SwitchToNextState(attackState);
-            else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance)
+            else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance && currentState != chaseState)
                 SwitchToNextState(chaseState);
-            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance)
+            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && currentState != seenState)
                 SwitchToNextState(seenState); 
         }
     }
@@ -180,6 +181,11 @@ public class EnemyController : MonoBehaviour, ICanHear
     public void SetLight(bool active) => lightSource.SetActive(active);
 
     public Vector3 GetEnemyVelocity() => meshAgent.velocity;
+
+    public void ManualRotation(bool active)
+    {
+        meshAgent.updateRotation = active;
+    }
 
     public float GetWaitTime()
     {

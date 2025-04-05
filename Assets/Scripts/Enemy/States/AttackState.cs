@@ -7,6 +7,7 @@ public class AttackState : State
 {
     [Header("Attack Attributes")]
     [SerializeField] private float priestSpeed = 1.5f;
+    [SerializeField] private float rotationSpeed = 5f;
 
     [Header("STATES")] 
     public ChaseState chaseState;
@@ -16,6 +17,7 @@ public class AttackState : State
     
     public override void InitializeState()
     {
+        eController.ManualRotation(false);
         eController.isChasingPlayer = false;
         pController = GameManager.GetInstance().GetPlayerController();
         
@@ -32,6 +34,9 @@ public class AttackState : State
     {
         playerPos = eController.GoToPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPos);
+
+        Vector3 dir = (playerPos - transform.position).normalized;
+        eController.RotateEnemy(dir, rotationSpeed);
         
         if (eController.isPlayerInVision && distanceToPlayer <= eController.attackDistance)
         {
