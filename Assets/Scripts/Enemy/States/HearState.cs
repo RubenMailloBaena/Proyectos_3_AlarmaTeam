@@ -18,6 +18,8 @@ public class HearState : State
     {
         if (!eController.soundWasAnObject)
             eController.inPlayerHearState = true;
+        else
+            eController.ignorePlayerInMinVision = true;
          
         targetPos = eController.soundPos;
         
@@ -34,6 +36,7 @@ public class HearState : State
         if (eController.RotateEnemy(targetDir, hearRotationSpeed))
         {
             eController.inPlayerHearState = false;
+            eController.ignorePlayerInMinVision = false;
             if (eController.soundWasAnObject)
                 return goToState;
             return lookAtState;

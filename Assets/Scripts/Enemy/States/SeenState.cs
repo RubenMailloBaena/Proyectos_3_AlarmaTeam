@@ -39,7 +39,7 @@ public class SeenState : State
             
             currentFillValue += fillRate * Time.deltaTime;
 
-            if (distanceToPlayer <= eController.minViewDistance || currentFillValue >= barMaxCapacity)
+            if (currentFillValue >= barMaxCapacity)
             {
                 firstTimeIn = false;
                 return chaseState;

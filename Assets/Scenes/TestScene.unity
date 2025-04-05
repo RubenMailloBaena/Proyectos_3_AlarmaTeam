@@ -139,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 7297445692785365027, guid: 7826aa450d17e9846bf3e1d533bade40,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.41
+      value: 4.9
       objectReference: {fileID: 0}
     - target: {fileID: 7297445692785365027, guid: 7826aa450d17e9846bf3e1d533bade40,
         type: 3}
@@ -149,7 +149,7 @@ PrefabInstance:
     - target: {fileID: 7297445692785365027, guid: 7826aa450d17e9846bf3e1d533bade40,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.8
+      value: 10.89
       objectReference: {fileID: 0}
     - target: {fileID: 7297445692785365027, guid: 7826aa450d17e9846bf3e1d533bade40,
         type: 3}
@@ -270,12 +270,12 @@ PrefabInstance:
     - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.53
+      value: 1.67
       objectReference: {fileID: 0}
     - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.56
+      value: 9.22
       objectReference: {fileID: 0}
     - target: {fileID: 313529658921198542, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
@@ -292,6 +292,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 182.481
       objectReference: {fileID: 0}
+    - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
+        type: 3}
+      propertyPath: chaseState
+      value: 
+      objectReference: {fileID: 554016387}
     - target: {fileID: 1500339323587940785, guid: 32e5ecc96550e1740a76adba7a6f9933,
         type: 3}
       propertyPath: isIdleEnemy
@@ -407,6 +412,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32e5ecc96550e1740a76adba7a6f9933, type: 3}
+--- !u!114 &554016387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8922528984838122405, guid: 32e5ecc96550e1740a76adba7a6f9933,
+    type: 3}
+  m_PrefabInstance: {fileID: 288553612}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e936c7b68c0d2a3478bce4e6c219beb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &653190069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1753,7 @@ PrefabInstance:
     - target: {fileID: 579865797012302666, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9
+      value: 6.44
       objectReference: {fileID: 0}
     - target: {fileID: 579865797012302666, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}
@@ -1746,7 +1763,7 @@ PrefabInstance:
     - target: {fileID: 579865797012302666, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.23
+      value: -3.49
       objectReference: {fileID: 0}
     - target: {fileID: 579865797012302666, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}
@@ -1782,6 +1799,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2870653452863707992, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
+        type: 3}
+      propertyPath: interactDistance
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7808489718877402067, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
         type: 3}

@@ -26,6 +26,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [SerializeField] private HearState hearState;
     [SerializeField] private LookAtState lookAtState;
     [SerializeField] private SeenState seenState;
+    [SerializeField] private ChaseState chaseState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
@@ -55,6 +56,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     [HideInInspector] public bool soundWasAnObject = true;
     [HideInInspector] public bool inPlayerHearState = true;
     [HideInInspector] public bool isPlayerInVision;
+    [HideInInspector] public bool ignorePlayerInMinVision;
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
 
@@ -121,7 +123,11 @@ public class EnemyController : MonoBehaviour, ICanHear
         {
             isPlayerInVision = true;
             SetPositionBeforeMoving();
-            SwitchToNextState(seenState); 
+            
+            if(distanceToPlayer <= minViewDistance)
+                SwitchToNextState(chaseState);
+            else if(!ignorePlayerInMinVision)
+                SwitchToNextState(seenState); 
         }
     }
 
