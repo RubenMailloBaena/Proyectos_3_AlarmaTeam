@@ -41,12 +41,15 @@ public class PlayerLeanController : MonoBehaviour
     {
         if (!pController.IsGrounded) return;
 
-        input = leanInput.action.ReadValue<float>();
-        
-        //IDLE
         targetPosition = originalPosition;
         targetRotation = originalRotation;
         pController.SetLeaning(false);
+
+        if (pController.IsVaulting) return; //SI VAULTEAMOS QUITAMOS EL LEAN
+        
+        input = leanInput.action.ReadValue<float>();
+        
+        //IDLE
 
         if (input < 0 && !Physics.Raycast(pitchController.position, -transform.right, 1f)) //LEFT
         {
@@ -61,7 +64,7 @@ public class PlayerLeanController : MonoBehaviour
             pController.SetLeaning(true);
         }
     }
-    
+
     private void LeanPlayer()
     {
         leanParent.localPosition = Vector3.Lerp(leanParent.localPosition, targetPosition, Time.deltaTime * leanSpeed);

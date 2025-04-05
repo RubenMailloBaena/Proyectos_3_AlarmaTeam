@@ -54,6 +54,7 @@ public class EnemyController : MonoBehaviour, ICanHear
     //VARIABLES
     [HideInInspector] public bool soundWasAnObject = true;
     [HideInInspector] public bool inPlayerHearState = true;
+    [HideInInspector] public bool isPlayerInVision;
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
 
@@ -86,6 +87,8 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     public void SwitchToNextState(State nextState)
     {
+        //if (nextState == currentState) return;
+        
         //DEBUG ONLY
         debugText.text = nextState.name;
         //
@@ -97,19 +100,37 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     private void CanSeePlayer()
     {
+        Vector3 playerEyes = pController.GetPlayerEyesPosition();
         enemyPos = transform.position + enemyEyesOffset;
-        distanceToPlayer = Vector3.Distance(enemyPos, pController.GetPlayerEyesPosition());
+        distanceToPlayer = Vector3.Distance(enemyPos, playerEyes);
 
-        if (distanceToPlayer <= maxViewDistance) //JUGADOR DENTRO DEL RANGO MINIMO DEL ENEMIGO
+        isPlayerInVision = false; 
+
+        //JUGADOR DENTRO DEL RANGO MINIMO DEL ENEMIGO
+        if (distanceToPlayer > maxViewDistance)
+            return;
+
+        Vector3 directionToPlayer = (playerEyes - enemyPos).normalized;
+
+        //EL JUGADOR ESTA DENTRO DE NUESTRO CONO DE VISION
+        if (Vector3.Angle(transform.forward, directionToPlayer) > viewAngle / 2f)
+            return;
+
+        //SI NO HAY PAREDES EN MEDIO, ESTAMOS VIENDO AL PLAYER
+        if (!Physics.Raycast(enemyPos, directionToPlayer, distanceToPlayer, groundLayer))
         {
-            Vector3 dir = (pController.GetPlayerEyesPosition() - enemyPos).normalized;
-            if (Vector3.Angle(transform.forward, dir) <= viewAngle / 2f) //EL JUGADOR ESTA DENTRO DE NUESTRO CONO DE VISION
-            {
-                if (!Physics.Raycast(enemyPos, dir, maxViewDistance, groundLayer)) //SI NO HAY PAREDES EN MEDIO, ESTAMOS VIENDO AL PLAYER
-                 SwitchToNextState(seenState);
-            }
+            isPlayerInVision = true;
+            SetPositionBeforeMoving();
+            SwitchToNextState(seenState); 
         }
     }
+
+    private void SetPositionBeforeMoving()
+    {
+        if (enemyPosBeforeMoving == Vector3.zero)
+            enemyPosBeforeMoving = transform.position;
+    }
+
     //----------------------------ICanHear FUNCTIONS-----------------------------
     
     public void HeardSound(Vector3 soundPoint, bool isObject)
@@ -117,8 +138,7 @@ public class EnemyController : MonoBehaviour, ICanHear
         if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f) 
             return;
 
-        if (enemyPosBeforeMoving == Vector3.zero)
-            enemyPosBeforeMoving = transform.position;
+        SetPositionBeforeMoving();
         
         soundPos = soundPoint;
         soundPos.y = transform.position.y;
