@@ -59,7 +59,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (pController.IsTeleporting) return;
+        if (pController.IsTeleporting || pController.IsPlayerDead) return;
 
         input = moveInput.action.ReadValue<Vector2>();
         
@@ -114,7 +114,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerSound()
     {
-        if (pController.IsCrouching || input == Vector2.zero) return;
+        if (pController.IsCrouching || input == Vector2.zero || pController.IsPlayerDead) return;
         
         Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position + sphereOffset, finalRange, enemyLayer);
 

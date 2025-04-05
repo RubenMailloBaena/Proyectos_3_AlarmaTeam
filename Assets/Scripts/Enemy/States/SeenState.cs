@@ -59,7 +59,7 @@ public class SeenState : State
             }
         }
 
-        print(fillRate + " " + currentFillValue);
+        //print(fillRate + " " + currentFillValue);
         return this;
     }
     

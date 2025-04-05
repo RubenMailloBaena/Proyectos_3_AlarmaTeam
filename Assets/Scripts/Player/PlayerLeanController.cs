@@ -39,7 +39,7 @@ public class PlayerLeanController : MonoBehaviour
 
     private void SetLeanTarget()
     {
-        if (!pController.IsGrounded) return;
+        if (!pController.IsGrounded || pController.IsPlayerDead) return;
 
         targetPosition = originalPosition;
         targetRotation = originalRotation;

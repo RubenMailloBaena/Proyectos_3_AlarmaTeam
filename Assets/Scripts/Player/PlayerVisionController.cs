@@ -27,6 +27,8 @@ public class PlayerVisionController : MonoBehaviour
     
     void Update()
     {
+        if (pController.IsPlayerDead) return;
+        
         if (visionInput.action.ReadValue<float>() > 0) 
             GatherEnemies();
         else

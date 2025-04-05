@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class ChaseState : State
@@ -11,13 +12,16 @@ public class ChaseState : State
     [SerializeField] private float chaseTimeAfterLoosingVision = 0.5f;
     private float currentTime;
     private Vector3 playerPosition;
+    private Vector3 playerPos;
 
     [Header("STATES")] 
+    public AttackState attackState;
     public GoToState goToState;
     public LookAtState lookAtState;
     
     public override void InitializeState()
     {
+        eController.SetLight(false);
         switch (eController.enemyType)
         {
             case EnemyType.Knight: eController.SetAgentSpeed(knightSpeed);
@@ -34,7 +38,7 @@ public class ChaseState : State
     {
         if (eController.isPlayerInVision)
             currentTime = chaseTimeAfterLoosingVision;
-
+        
         if (currentTime <= 0.0f)
         {
             switch (eController.enemyType)
@@ -43,7 +47,7 @@ public class ChaseState : State
                 default: return lookAtState;
             }
         }
-        
+
         currentTime -= Time.deltaTime;
         SetSoundPosition();
         return this;
@@ -53,6 +57,7 @@ public class ChaseState : State
 
     private void SetSoundPosition()
     {
-        eController.soundPos = eController.GoToPlayerPosition();
+        playerPos = eController.GoToPlayerPosition();
+        eController.soundPos = playerPos;
     }
 }

@@ -25,7 +25,7 @@ public class LookAtState : State
 
     public override State RunCurrentState()
     {
-        if (eController.IsPointInVision(targetPos))
+        if (eController.IsPointInVision(targetPos) || eController.GetEnemyVelocity() == Vector3.zero)
             return checkState;
         return this;
     }
