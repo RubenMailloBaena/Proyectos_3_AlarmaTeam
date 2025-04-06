@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7686394054036879498}
   - component: {fileID: 5450754807734215109}
   - component: {fileID: 9090560557715276110}
+  - component: {fileID: 7718756006002540929}
   m_Layer: 0
   m_Name: Render
   m_TagString: Untagged
@@ -28,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 2414606741059941055}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.8}
-  m_LocalScale: {x: 0.4, y: 2.8, z: 2.8}
+  m_LocalPosition: {x: 0, y: -0.037, z: -0.423}
+  m_LocalScale: {x: 0.40000004, y: 2.1903841, z: 1.42209}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6114157979302692990}
+  m_Father: {fileID: 6561688052648229044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7686394054036879498
 MeshFilter:
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0c610e6f00bf8a24b9cd662e76a891e2, type: 2}
+  - {fileID: 2100000, guid: 286d0b28f6e681c4995755786ce60bb5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,6 +106,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7718756006002540929
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2414606741059941055}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3424104617798278465
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6561688052648229044}
+  - component: {fileID: 3387219035571249655}
   m_Layer: 0
   m_Name: Curtain
   m_TagString: Untagged
@@ -131,56 +149,23 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 18.39, y: 1.63, z: -16.855}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6114157979302692990}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1 &5215169862893519619
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6114157979302692990}
-  - component: {fileID: 8095128942875506352}
-  m_Layer: 0
-  m_Name: Logic
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6114157979302692990
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5215169862893519619}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7499995, y: 0, z: -0.45453754}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0165, y: 2.0165, z: 2.0165}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8996407298349561752}
-  m_Father: {fileID: 6561688052648229044}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8095128942875506352
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &3387219035571249655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5215169862893519619}
+  m_GameObject: {fileID: 3424104617798278465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1661aff6d287040428685ac79be468d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 38a979a531ffa114da0a4a1c5b39686f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 3.6
-  speed: 2
+  distance: 2.6
+  speed: 5

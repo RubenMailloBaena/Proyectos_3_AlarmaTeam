@@ -41,7 +41,8 @@ public class AttackState : State
         if (eController.isPlayerInVision && distanceToPlayer <= eController.attackDistance)
         {
             eController.SetLight(true);
-            if (pController.TakeDamage())
+            pController.TakeDamage();
+            if (pController.IsPlayerDead)
                 StartCoroutine(KillPlayer());
             return this;
         }
@@ -50,10 +51,24 @@ public class AttackState : State
 
     private IEnumerator KillPlayer()
     {
-        eController.killingPlayer = true;
         GameManager.GetInstance().GetPlayerController().SetIsPlayerDead(true);
+        Transform playerTrans = GameManager.GetInstance().GetPlayerController().GetPlayerTransform();
+        eController.killingPlayer = true;
         eController.StopAgent();
-        
+
+        Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
+        directionToEnemy.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
+        float rotationSpeed = 5f;
+
+        while (Quaternion.Angle(playerTrans.rotation, targetRotation) > 0.3f)
+        {
+            playerTrans.rotation = Quaternion.Slerp(playerTrans.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            yield return null;
+        }
+        playerTrans.rotation = targetRotation;
+
         Debug.LogError("PLAYER DEAD");
         yield return null;
     }

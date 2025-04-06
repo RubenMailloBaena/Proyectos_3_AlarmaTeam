@@ -100,7 +100,6 @@ public class EnemyController : MonoBehaviour, ICanHear
         //DEBUG ONLY
         debugText.text = nextState.name;
         //
-        Debug.LogError(nextState.name);
         lastState = currentState;
         currentState = nextState;
         currentState?.SetReference(this);

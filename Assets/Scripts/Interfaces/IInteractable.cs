@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IThrowableObject
+public interface IInteractable 
 {
+    float InteractDistance { get; }
     public void SelectObject(bool select);
-    public void ThrowObject();
+    public void Interact();
 }

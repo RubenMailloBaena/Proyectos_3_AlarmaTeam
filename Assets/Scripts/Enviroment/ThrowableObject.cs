@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ThrowableObject : MonoBehaviour, IThrowableObject
+public class ThrowableObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject interactVisual;
     [SerializeField] private float throwForce = 5f;
     [SerializeField] private float soundRadius = 10f;
     [SerializeField] private LayerMask enemyLayer;
+    
+    [Space(10)] [SerializeField] private float interactDistance;
+    public float InteractDistance => interactDistance;
 
     private bool thrown, done; 
     private Rigidbody rb;
@@ -19,6 +22,7 @@ public class ThrowableObject : MonoBehaviour, IThrowableObject
         rb = GetComponent<Rigidbody>();
     }
 
+
     public void SelectObject(bool select)
     {
         if (thrown) return;
@@ -26,7 +30,7 @@ public class ThrowableObject : MonoBehaviour, IThrowableObject
         interactVisual.SetActive(select);
     }
 
-    public void ThrowObject()
+    public  void Interact()
     {
         if (thrown) return;
         

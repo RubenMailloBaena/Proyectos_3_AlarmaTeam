@@ -5,30 +5,41 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerThrowController : MonoBehaviour
+public class PlayerInteractController : MonoBehaviour
 {
+    private PlayerController pController;
+    
     [SerializeField] private InputActionReference attackInput;
     [SerializeField] private Transform leanParent;
+    
+    [Header("Interact Attributes")] 
+    [SerializeField] private float interactObjectDistance = 30f;
+    
+    private IInteractable target;
 
-    [Header("Throw Objects Attributes")] 
-    [SerializeField] private float interactDistance = 10f;
-
-    private IThrowableObject target;
-
+    private void Awake()
+    {
+        pController = GetComponent<PlayerController>();
+    }
+    
     private void Update()
     {
         CanInteract();
         PerformInteraction();
     }
-
+    
     private void CanInteract()
     {
-        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, interactDistance))
+        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, interactObjectDistance))
         {
-            if (hit.transform.TryGetComponent(out IThrowableObject tObject))
+            if (hit.transform.TryGetComponent(out IInteractable interactable))
             {
-                target = tObject;
-                target.SelectObject(true);
+                float distance = Vector3.Distance(hit.point, transform.position);
+                if (distance <= interactable.InteractDistance)
+                {
+                    target = interactable;
+                    target.SelectObject(true);
+                }
             }
             else 
                 ClearTarget();
@@ -36,7 +47,7 @@ public class PlayerThrowController : MonoBehaviour
         else
             ClearTarget();
     }
-
+    
     private void ClearTarget()
     {
         if (target != null)
@@ -45,20 +56,20 @@ public class PlayerThrowController : MonoBehaviour
             target = null;
         }
     }
-
+    
     private void PerformInteraction()
     {
         if (target != null && attackInput.action.triggered)
         {
-            target.ThrowObject();
+            target.Interact();
             ClearTarget();
         }
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(leanParent.position, leanParent.forward * interactDistance);
+        Gizmos.DrawRay(leanParent.position, leanParent.forward * interactObjectDistance);
     }
 
     private void OnEnable()

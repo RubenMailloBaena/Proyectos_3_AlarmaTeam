@@ -445,8 +445,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 313529658921198542}
-  - component: {fileID: 1455560259350936064}
   - component: {fileID: 1500339323587940785}
+  - component: {fileID: 1455560259350936064}
   - component: {fileID: 3198350140110140839}
   - component: {fileID: 4960590780963898895}
   - component: {fileID: 5836080000088407331}
@@ -466,7 +466,7 @@ Transform:
   m_GameObject: {fileID: 4232428985292210471}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99976575, z: -0, w: -0.021644901}
-  m_LocalPosition: {x: 1.67, y: 0, z: 9.22}
+  m_LocalPosition: {x: -13.65, y: 0, z: 14.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -475,19 +475,6 @@ Transform:
   - {fileID: 5948105548490794338}
   m_Father: {fileID: 5310336912434866460}
   m_LocalEulerAnglesHint: {x: 0, y: 182.481, z: 0}
---- !u!114 &1455560259350936064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4232428985292210471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879929ca7cc6e0a49a27df5d8fdf2263, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weakSpotRenderer: {fileID: 2120101094472224392}
 --- !u!114 &1500339323587940785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +495,7 @@ MonoBehaviour:
   chaseState: {fileID: 8922528984838122405}
   attackState: {fileID: 7758888343413713369}
   isIdleEnemy: 1
-  enemyType: 0
+  enemyType: 1
   lightSource: {fileID: 5811311653973899021}
   viewAngle: 60
   maxViewDistance: 15
@@ -541,6 +528,19 @@ MonoBehaviour:
   soundPos: {x: 0, y: 0, z: 0}
   enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
   distanceToPlayer: 0
+--- !u!114 &1455560259350936064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4232428985292210471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 879929ca7cc6e0a49a27df5d8fdf2263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weakSpotRenderer: {fileID: 2120101094472224392}
 --- !u!114 &3198350140110140839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,7 +1154,7 @@ GameObject:
   - component: {fileID: 5310336912434866460}
   - component: {fileID: 5174566935751831690}
   m_Layer: 9
-  m_Name: Enemy
+  m_Name: KnightEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1169,7 +1169,7 @@ Transform:
   m_GameObject: {fileID: 6940533494523526818}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.93013, y: 1, z: 0}
+  m_LocalPosition: {x: -0.032417297, y: 0, z: 8.056862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1261,7 +1261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 53bf3758f7d1dba47a45ce392c991596, type: 2}
+  - {fileID: 2100000, guid: 853b05da855458645b686c28e34bc2d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
