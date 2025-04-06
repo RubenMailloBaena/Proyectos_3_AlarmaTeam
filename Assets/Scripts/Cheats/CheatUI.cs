@@ -87,5 +87,7 @@ public class CheatUI : MonoBehaviour
         AddCommand(new BlockCameraCommand());
         AddCommand(new UnblockCameraCommand());
         AddCommand(new TimeScaleCommand());
+        AddCommand(new GhostCommand());
+        AddCommand(new ResetVaseCommand());
     }
 }

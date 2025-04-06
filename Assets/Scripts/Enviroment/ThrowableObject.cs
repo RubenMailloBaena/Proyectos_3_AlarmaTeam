@@ -65,4 +65,22 @@ public class ThrowableObject : MonoBehaviour, IThrowableObject
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, soundRadius);
     }
+
+    #region Cheat
+    
+    public void ResetObject()
+    {
+        thrown = false;
+        done = false;
+       
+        if (interactVisual != null)
+            interactVisual.SetActive(true);
+
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+    }
+#endregion
 }
