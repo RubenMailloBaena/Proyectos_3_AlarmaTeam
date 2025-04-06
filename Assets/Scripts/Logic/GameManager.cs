@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+    
+    [SerializeField] private GameObject panel;
 
     private PlayerController pController;
     void Awake()
@@ -17,6 +19,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (pController.IsPlayerDead)
+            panel.SetActive(true);
+    }
     #region Getters & Setters
     public static GameManager GetInstance() => instance;
     public PlayerController GetPlayerController() => pController;

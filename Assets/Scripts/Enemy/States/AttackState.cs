@@ -51,7 +51,6 @@ public class AttackState : State
 
     private IEnumerator KillPlayer()
     {
-        GameManager.GetInstance().GetPlayerController().SetIsPlayerDead(true);
         Transform playerTrans = GameManager.GetInstance().GetPlayerController().GetPlayerTransform();
         eController.killingPlayer = true;
         eController.StopAgent();
