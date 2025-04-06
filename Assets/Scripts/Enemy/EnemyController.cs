@@ -11,7 +11,7 @@ public enum EnemyType{
     Priest,
     Knight
 }
-public class EnemyController : MonoBehaviour, ICanHear
+public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 {
     private State currentState, nextState, lastState;
     
@@ -20,6 +20,10 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     [Header("DEBUG TEXT")]
     [SerializeField] private TextMeshProUGUI debugText;
+
+    [Header("REFERENCES")]
+    [SerializeField] private GameObject weakSpotRenderer;
+    [SerializeField] private GameObject heart;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -72,6 +76,8 @@ public class EnemyController : MonoBehaviour, ICanHear
 
     void Start()
     {
+        GameManager.GetInstance().GetPlayerController().AddEnemy(this);
+        GameManager.GetInstance().GetPlayerController().AddVisible(this);
         pController = GameManager.GetInstance().GetPlayerController();
         inPlayerHearState = true;
         enemyPosBeforeMoving = Vector3.zero;
@@ -145,7 +151,7 @@ public class EnemyController : MonoBehaviour, ICanHear
             enemyPosBeforeMoving = transform.position;
     }
 
-    //----------------------------ICanHear FUNCTIONS-----------------------------
+    //----------------------------Hear FUNCTIONS-----------------------------
     
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
@@ -166,6 +172,19 @@ public class EnemyController : MonoBehaviour, ICanHear
         soundWasAnObject = isObject;
         SwitchToNextState(hearState);
     }
+    //----------------------------BackStab FUNCTIONS-----------------------------
+
+    public void SetWeakSpot(bool active)
+    {
+        weakSpotRenderer.SetActive(active);
+    }
+
+    public void Backstab()
+    {
+        Destroy(gameObject);
+    }
+    
+    //----------------------------MindControl FUNCTIONS-----------------------------
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
 
@@ -315,6 +334,16 @@ public class EnemyController : MonoBehaviour, ICanHear
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+    }
+
+    public Vector3 GetPosition() => transform.position;
+    public Transform GetTransform() => transform;
+    public void SetVisiblity(bool active) => heart.SetActive(active);
+    public Vector3 GetVisionPosition() => transform.position;
+    private void OnDestroy()
+    {
+        pController.RemoveEnemy(this);
+        pController.RemoveVisible(this);
     }
 }
 

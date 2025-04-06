@@ -116,15 +116,10 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsCrouching || input == Vector2.zero || pController.IsPlayerDead) return;
         
-        Collider[] nearbyEnemies = Physics.OverlapSphere(transform.position + sphereOffset, finalRange, enemyLayer);
-
-        if (nearbyEnemies.Length > 0)
+        foreach (IEnemyInteractions enemy in pController.GetEnemies())
         {
-            foreach (Collider nEnemy in nearbyEnemies)
-            {
-                if(nEnemy.TryGetComponent(out ICanHear enemy))
-                    enemy.HeardSound(transform.position, false);
-            }
+            if(pController.GetDistance(enemy.GetPosition()) <= finalRange)
+                enemy.HeardSound(transform.position, false);
         }
     }
 

@@ -16,8 +16,7 @@ public class PlayerBackstabController : MonoBehaviour
     [SerializeField] private float maxViewAngle = 60;
     [SerializeField] private LayerMask enemyLayer;
 
-    private HashSet<ICanBackstab> enemies = new HashSet<ICanBackstab>();
-    private ICanBackstab target;
+    private IEnemyInteractions target;
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
     private void Awake()
     {
@@ -28,48 +27,22 @@ public class PlayerBackstabController : MonoBehaviour
     {
         if (pController.IsUsingVision)
         {
-            DisableVisual();
+            //DisableVisual();
             return;
         }
-        
-        GatherEnemies();
         CheckIfCanBackstab();
         PerformBackstab();
     }
 
-    private void GatherEnemies() //QUIZAS SE PUEDA OPTIMIZAR USANDO UN INVOKE PARA ESTA FUNCION
-    {
-        Collider[] enemiesAround = Physics.OverlapSphere(transform.position + sphereOffset, attackRange, enemyLayer);
-        HashSet<ICanBackstab> newEnemies = new HashSet<ICanBackstab>();
-
-        foreach (Collider collider in enemiesAround)
-        {
-            if (collider.TryGetComponent(out ICanBackstab enemy))
-                newEnemies.Add(enemy);
-        }
-
-        foreach (ICanBackstab enemy in enemies)
-        {
-            if (!newEnemies.Contains(enemy))
-                enemy.SetWeakSpot(false);
-        }
-
-        enemies = newEnemies;
-    }
-
     private void CheckIfCanBackstab()
     {
-        if (enemies.Count == 0)
-        {
-            target = null;
-            return;
-        }
-
         float bestDot = -1f;
         target = null;
-
-        foreach (ICanBackstab enemy in enemies)
+        
+        foreach (IEnemyInteractions enemy in pController.GetEnemies())
         {
+            if (pController.GetDistance(enemy.GetPosition()) > attackRange) continue;
+            
             Transform enemyTransform = enemy.GetTransform();
             enemy.SetWeakSpot(false);
 
@@ -92,7 +65,7 @@ public class PlayerBackstabController : MonoBehaviour
                 target = enemy;
             }
         }
-
+        
         if (target != null)
             target.SetWeakSpot(true);
     }
@@ -102,7 +75,6 @@ public class PlayerBackstabController : MonoBehaviour
         if (target != null && attackInput.action.triggered)
         {
             target.Backstab();
-            enemies.Remove(target);
             target.SetWeakSpot(false);
             target = null;
         }
@@ -110,7 +82,7 @@ public class PlayerBackstabController : MonoBehaviour
 
     private void DisableVisual()
     {
-        foreach (ICanBackstab enemy in enemies)
+        foreach (IEnemyInteractions enemy in pController.GetEnemies())
         {
             enemy.SetWeakSpot(false);
         }

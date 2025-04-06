@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ThrowableObject : MonoBehaviour, IInteractable
 {
+    private PlayerController pController;
+    
     [SerializeField] private GameObject interactVisual;
     [SerializeField] private float throwForce = 5f;
     [SerializeField] private float soundRadius = 10f;
@@ -22,6 +24,10 @@ public class ThrowableObject : MonoBehaviour, IInteractable
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        pController = GameManager.GetInstance().GetPlayerController();
+    }
 
     public void SelectObject(bool select)
     {
@@ -53,14 +59,11 @@ public class ThrowableObject : MonoBehaviour, IInteractable
 
     private void CheckIfEnemiesCanHear()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, soundRadius, enemyLayer);
-
-        if (hitColliders.Length == 0) return;
-        
-        foreach (Collider enemy in hitColliders)
+        foreach (IEnemyInteractions enemy in pController.GetEnemies())
         {
-            if (enemy.TryGetComponent(out ICanHear enemyController))
-                enemyController.HeardSound(transform.position, true);
+            float distance = Vector3.Distance(transform.position, enemy.GetPosition());
+            if(distance <= soundRadius)
+                enemy.HeardSound(transform.position, true);
         }
     }
 

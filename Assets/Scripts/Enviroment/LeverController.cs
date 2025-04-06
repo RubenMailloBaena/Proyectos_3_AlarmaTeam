@@ -27,7 +27,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
 
     private void Start()
     {
-        AddVisible();
+        GameManager.GetInstance().GetPlayerController().AddVisible(this);
     }
 
     private void CalculateLineRenderPositions()
@@ -57,17 +57,12 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
             item.Interact();
     }
 
-    public void AddVisible()
-    {
-        GameManager.GetInstance().GetPlayerController().AddVisible(this);
-    }
-
     public void SetVisiblity(bool active)
     {
         selectVisual.SetActive(active);
     }
 
-    public Vector3 GetPosition()
+    public Vector3 GetVisionPosition()
     {
         return transform.position;
     }

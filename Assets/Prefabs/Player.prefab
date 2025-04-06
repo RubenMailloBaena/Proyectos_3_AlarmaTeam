@@ -971,7 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
-  attackRange: 1.5
+  attackRange: 2.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
   enemyLayer:
@@ -992,9 +992,6 @@ MonoBehaviour:
   visionInput: {fileID: 8498098662107780541, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   range: 20
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0

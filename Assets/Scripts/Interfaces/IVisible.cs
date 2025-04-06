@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IVisible
 {
-    public void AddVisible();
     public void SetVisiblity(bool active);
-    public Vector3 GetPosition();
+    public Vector3 GetVisionPosition();
 }

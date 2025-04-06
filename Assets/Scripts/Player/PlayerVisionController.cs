@@ -15,7 +15,6 @@ public class PlayerVisionController : MonoBehaviour
     [Header("Vision Attributes")]
     [SerializeField] private float range = 10f;
 
-    private HashSet<IVisible> enemies = new HashSet<IVisible>();
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
 
     private float input;
@@ -36,10 +35,9 @@ public class PlayerVisionController : MonoBehaviour
 
     private void GatherEnemies()
     {
-        foreach (IVisible vision in enemies)
+        foreach (IVisible vision in pController.GetVisionObjects())
         {
-            float distance = Vector3.Distance(transform.position, vision.GetPosition());
-            if (distance <= range)
+            if (pController.GetDistance(vision.GetVisionPosition()) <= range)
                 vision.SetVisiblity(true);
             else
                 vision.SetVisiblity(false);
@@ -50,7 +48,7 @@ public class PlayerVisionController : MonoBehaviour
 
     private void ClearEnemies()
     {
-        foreach (IVisible enemy in enemies)
+        foreach (IVisible enemy in pController.GetVisionObjects())
             enemy.SetVisiblity(false);
         
         pController.SetUsingVision(false);
@@ -60,20 +58,5 @@ public class PlayerVisionController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + sphereOffset, range);
-    }
-
-    private void AddVision(IVisible visible)
-    {
-        enemies.Add(visible);
-    }
-
-    private void OnEnable()
-    {
-        pController.onVisionSubsrcribe += AddVision;
-    }
-
-    private void OnDisable()
-    {
-        pController.onVisionSubsrcribe -= AddVision;
     }
 }

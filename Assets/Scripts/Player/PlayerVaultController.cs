@@ -41,9 +41,7 @@ public class PlayerVaultController : MonoBehaviour
                 }
                 
                 if (hit.transform.TryGetComponent(out ICanVault vaultObject))
-                {
                     StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
-                }
             }
         }
     }

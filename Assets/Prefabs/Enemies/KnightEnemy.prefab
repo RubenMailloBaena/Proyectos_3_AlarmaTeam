@@ -363,8 +363,6 @@ GameObject:
   m_Component:
   - component: {fileID: 313529658921198542}
   - component: {fileID: 1500339323587940785}
-  - component: {fileID: 1455560259350936064}
-  - component: {fileID: 3198350140110140839}
   - component: {fileID: 4960590780963898895}
   - component: {fileID: 5836080000088407331}
   m_Layer: 9
@@ -405,6 +403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 8327616120076495259}
+  weakSpotRenderer: {fileID: 6829042291137179311}
+  heart: {fileID: 6829042291137179311}
   idleState: {fileID: 2107011259097926045}
   hearState: {fileID: 421644325986597779}
   lookAtState: {fileID: 546950031163888846}
@@ -445,32 +445,6 @@ MonoBehaviour:
   soundPos: {x: 0, y: 0, z: 0}
   enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
   distanceToPlayer: 0
---- !u!114 &1455560259350936064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4232428985292210471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 879929ca7cc6e0a49a27df5d8fdf2263, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weakSpotRenderer: {fileID: 6829042291137179311}
---- !u!114 &3198350140110140839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4232428985292210471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cae12214ce1a79344827ae575c2d014e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heart: {fileID: 6829042291137179311}
 --- !u!136 &4960590780963898895
 CapsuleCollider:
   m_ObjectHideFlags: 0
