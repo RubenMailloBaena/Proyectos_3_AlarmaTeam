@@ -66,7 +66,6 @@ public class PlayerHealthController : MonoBehaviour
 
     private void SetAlphaToMax()
     {
-        print("HERE");
         Color newColor = playerHurt.color;
         newColor.a = maxHurtAlpha;
         playerHurt.color = newColor;

@@ -40,6 +40,7 @@ public class PlayerInteractController : MonoBehaviour
                     target = interactable;
                     target.SelectObject(true);
                 }
+                else ClearTarget();
             }
             else 
                 ClearTarget();

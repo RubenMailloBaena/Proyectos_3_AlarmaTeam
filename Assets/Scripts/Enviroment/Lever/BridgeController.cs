@@ -11,6 +11,8 @@ public class BridgeController : MonoBehaviour, IObjects
     [SerializeField] private GameObject meshBlock1;
     [SerializeField] private GameObject meshBlock2;
     [SerializeField] private Transform movingObject;
+    [SerializeField] private GameObject visualSelect;
+    [SerializeField] private Transform cablePosition;
 
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
@@ -41,7 +43,10 @@ public class BridgeController : MonoBehaviour, IObjects
         movingObject.position = Vector3.MoveTowards(movingObject.position, targetPos, Time.deltaTime * speed);
 
         float distanceToTarget = Vector3.Distance(movingObject.position, targetPos);
-
+        
+        if(distanceToTarget >= 0.3f)
+            ShowInteract(false);
+        
         if (isMoving)
         {
             if (isExtending && distanceToTarget > distanceToConsiderArrive)
@@ -72,8 +77,13 @@ public class BridgeController : MonoBehaviour, IObjects
         isExtending = isMoving; 
     }
 
-    public void ShowInteract()
+    public void ShowInteract(bool interact)
     {
-        throw new System.NotImplementedException();
+        visualSelect.SetActive(interact);
+    }
+
+    public Vector3 GetCablePosition()
+    {
+        return cablePosition.position;
     }
 }

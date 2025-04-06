@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IObjects
 {
     void Interact();
-
-    void ShowInteract();
+    void ShowInteract(bool interact);
+    Vector3 GetCablePosition();
 }
