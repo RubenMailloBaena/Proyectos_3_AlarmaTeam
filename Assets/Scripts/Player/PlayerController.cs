@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Transform pitchController;
+    [SerializeField] private Transform playerEyes;
     public bool IsCrouching { get; private set; }
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
@@ -18,28 +18,18 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnCameraLockChange;
     public event Action OnVaultCrouched;
     public event Action OnTakeDamage;
+    public event Action<IVisible> onVisionSubsrcribe;
     
     private void Awake()
     {
         GameManager.GetInstance().SetPlayerController(this);
     }
 
-    public void LockCamera(bool lockCam)
-    {
-        OnCameraLockChange?.Invoke(lockCam);
-    }
-
-    public void TryVaultCrouched()
-    {
-        OnVaultCrouched?.Invoke();
-    }
-
-    public void TakeDamage()
-    {
-        OnTakeDamage?.Invoke();
-    }
-
-    public Vector3 GetPlayerEyesPosition() => pitchController.position;
+    public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);
+    public void TryVaultCrouched() => OnVaultCrouched?.Invoke();
+    public void TakeDamage() => OnTakeDamage?.Invoke();
+    public void AddVisible(IVisible visible) => onVisionSubsrcribe?.Invoke(visible);
+    public Vector3 GetPlayerEyesPosition() => playerEyes.position;
     public Vector3 GetPlayerPosition() => transform.position;
     public Transform GetPlayerTransform() => transform;
     public void SetLeaning(bool leaning) => IsLeaning = leaning;

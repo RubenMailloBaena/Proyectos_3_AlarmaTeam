@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverController : MonoBehaviour, IInteractable
+public class LeverController : MonoBehaviour, IInteractable, IVisible
 {
     [SerializeField] private GameObject selectVisual;
     
@@ -23,6 +23,11 @@ public class LeverController : MonoBehaviour, IInteractable
                 objects.Add(item);
 
         CalculateLineRenderPositions();
+    }
+
+    private void Start()
+    {
+        AddVisible();
     }
 
     private void CalculateLineRenderPositions()
@@ -50,6 +55,21 @@ public class LeverController : MonoBehaviour, IInteractable
     {
         foreach (IObjects item in objects)
             item.Interact();
+    }
+
+    public void AddVisible()
+    {
+        GameManager.GetInstance().GetPlayerController().AddVisible(this);
+    }
+
+    public void SetVisiblity(bool active)
+    {
+        selectVisual.SetActive(active);
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }
     

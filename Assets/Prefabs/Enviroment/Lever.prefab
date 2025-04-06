@@ -282,7 +282,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectVisual: {fileID: 1651454171367874534}
   interactDistance: 10
-  objectsToActivate: []
+  objectsToActivate:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &4690628589100095989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -325,7 +327,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
+  - {fileID: 2100000, guid: 3cce3ded055f5024eb5bf92574116f76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

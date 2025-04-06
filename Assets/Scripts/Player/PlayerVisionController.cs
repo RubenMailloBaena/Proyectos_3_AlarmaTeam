@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,11 +14,9 @@ public class PlayerVisionController : MonoBehaviour
 
     [Header("Vision Attributes")]
     [SerializeField] private float range = 10f;
-    [SerializeField] private LayerMask enemyLayer;
 
     private HashSet<IVisible> enemies = new HashSet<IVisible>();
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
-
 
     private float input;
     private void Awake()
@@ -37,25 +36,15 @@ public class PlayerVisionController : MonoBehaviour
 
     private void GatherEnemies()
     {
-        Collider[] enemiesAround = Physics.OverlapSphere(transform.position + sphereOffset, range, enemyLayer);
-        HashSet<IVisible> newEnemies = new HashSet<IVisible>();
-
-        foreach (Collider collider in enemiesAround)
+        foreach (IVisible vision in enemies)
         {
-            if (collider.TryGetComponent(out IVisible enemy))
-            {
-                newEnemies.Add(enemy);
-                enemy.SetVisiblity(true);
-            }
+            float distance = Vector3.Distance(transform.position, vision.GetPosition());
+            if (distance <= range)
+                vision.SetVisiblity(true);
+            else
+                vision.SetVisiblity(false);
         }
-
-        foreach (IVisible enemy in enemies)
-        {
-            if (!newEnemies.Contains(enemy))
-                enemy.SetVisiblity(false);
-        }
-
-        enemies = newEnemies;
+        
         pController.SetUsingVision(true);
     }
 
@@ -66,10 +55,25 @@ public class PlayerVisionController : MonoBehaviour
         
         pController.SetUsingVision(false);
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + sphereOffset, range);
+    }
+
+    private void AddVision(IVisible visible)
+    {
+        enemies.Add(visible);
+    }
+
+    private void OnEnable()
+    {
+        pController.onVisionSubsrcribe += AddVision;
+    }
+
+    private void OnDisable()
+    {
+        pController.onVisionSubsrcribe -= AddVision;
     }
 }
