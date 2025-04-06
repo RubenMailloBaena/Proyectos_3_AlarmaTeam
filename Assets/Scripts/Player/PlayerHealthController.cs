@@ -11,15 +11,19 @@ public class PlayerHealthController : MonoBehaviour
     
     [SerializeField] private float secondsThatCanTakeDamage = 5f;
     [SerializeField] private float cooldownToHealPlayer = 2f;
-    [SerializeField] private RawImage playerHurt;
     [SerializeField] private float maxHurtAlpha = 0.5f;
     private float currentHealth;
     private float timeTillLastDamage = 0.0f;
-    
-    
+    private RawImage playerHurt;
+
     private void Awake()
     {
         pController = GetComponent<PlayerController>();
+    }
+
+    private void Start()
+    {
+        playerHurt = GameManager.GetInstance().GetPlayerHurtHud();
         currentHealth = secondsThatCanTakeDamage;
     }
 
@@ -39,8 +43,11 @@ public class PlayerHealthController : MonoBehaviour
         currentHealth -= Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
 
-        if(currentHealth <= 0.0f)
+        if (currentHealth <= 0.0f)
+        {
             pController.SetIsPlayerDead(true);
+            GameManager.GetInstance().PlayerDead();
+        }
     }
 
     private void HealPlayer()

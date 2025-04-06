@@ -9,4 +9,5 @@ public interface IEnemyInteractions
     public void Backstab();
     public Vector3 GetPosition();
     public Transform GetTransform();
+    public void SetTargetVisual(bool active);
 }

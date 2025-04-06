@@ -42,11 +42,9 @@ public class PlayerInteractController : MonoBehaviour
                 }
                 else ClearTarget();
             }
-            else 
-                ClearTarget();
+            else ClearTarget();
         }
-        else
-            ClearTarget();
+        else ClearTarget();
     }
     
     private void ClearTarget()

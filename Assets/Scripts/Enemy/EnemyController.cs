@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [Header("REFERENCES")]
     [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
+    [SerializeField] private GameObject targetVisual;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -185,6 +186,11 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     }
     
     //----------------------------MindControl FUNCTIONS-----------------------------
+
+    public void SetTargetVisual(bool active)
+    {
+        targetVisual.SetActive(active);
+    }
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
 

@@ -11,6 +11,11 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void ExitGame()
     {
         Application.Quit();
