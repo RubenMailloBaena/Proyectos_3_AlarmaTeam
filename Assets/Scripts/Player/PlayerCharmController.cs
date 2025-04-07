@@ -19,6 +19,9 @@ public class PlayerCharmController : MonoBehaviour
     [Header("Charm Attributes")]
     [SerializeField] private float charmRange = 25f;
 
+    [Header("Visual circle")]
+    [SerializeField] private GameObject visionCircle;
+
     private RawImage charmImage;
     private IEnemyInteractions mouseTarget;
     private IEnemyInteractions lockedTarget;
@@ -33,6 +36,12 @@ public class PlayerCharmController : MonoBehaviour
     private void Start()
     {
         charmImage = GameManager.GetInstance().GetPlayerCharmingImage();
+        if (visionCircle != null)
+        {
+            float diameter = charmRange * 2f;
+            float scaleFactor = diameter / 10f;
+            visionCircle.transform.localScale = new Vector3(scaleFactor, 1f, scaleFactor);
+        }
     }
 
     private void Update()
@@ -41,6 +50,12 @@ public class PlayerCharmController : MonoBehaviour
         CharmingMode();
         UpdateLockedTarget();
         CharmedTargetLogic();
+    }
+
+    private void showCircle(bool show)
+    {
+        if (visionCircle != null)
+            visionCircle.SetActive(show);
     }
 
     private void GatherInput()
@@ -70,6 +85,7 @@ public class PlayerCharmController : MonoBehaviour
     {
         inCharmingMode = !inCharmingMode;
         charmImage.enabled = inCharmingMode;
+        showCircle(inCharmingMode);
     }
 
     private void CharmingMode()
