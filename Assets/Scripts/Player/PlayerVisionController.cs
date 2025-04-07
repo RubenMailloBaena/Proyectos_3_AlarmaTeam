@@ -15,6 +15,9 @@ public class PlayerVisionController : MonoBehaviour
     [Header("Vision Attributes")]
     [SerializeField] private float range = 10f;
 
+    [Header("Visual circle")]
+    [SerializeField] private GameObject visionCircle;
+
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
 
     private float input;
@@ -22,15 +25,42 @@ public class PlayerVisionController : MonoBehaviour
     {
         pController = GetComponent<PlayerController>();
     }
-    
+
+    private void Start()
+    {
+        if (visionCircle != null)
+        {
+            float diameter = range * 2f;
+            float scaleFactor = diameter / 10f;
+            visionCircle.transform.localScale = new Vector3(scaleFactor, 1f, scaleFactor);
+        }
+    }
+
     void Update()
     {
-        if (pController.IsPlayerDead ) return;
+        if (pController.IsPlayerDead)
+        {
+            showCircle(false);
+            return;
+        }
         
-        if (visionInput.action.ReadValue<float>() > 0) 
+        if (visionInput.action.ReadValue<float>() > 0)
+        {
             GatherEnemies();
+            showCircle(true);
+        }
         else
+        {
             ClearEnemies();
+            showCircle(false);
+        }
+            
+    }
+
+    private void showCircle(bool show)
+    {
+        if (visionCircle != null)
+            visionCircle.SetActive(show);
     }
 
     private void GatherEnemies()
