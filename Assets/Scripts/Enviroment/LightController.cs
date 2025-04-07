@@ -24,6 +24,7 @@ public class LightController : MonoBehaviour
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
 
+            print(hit.collider.name);
             if (hit.collider.CompareTag("Player"))
                 pController.TakeDamage();
         }

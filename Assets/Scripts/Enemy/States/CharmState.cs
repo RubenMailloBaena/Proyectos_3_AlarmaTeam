@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CharmState : State
+{
+    [Header("Charm Attributes")] 
+    [SerializeField] private float charmSpeed = 2f;
+    [SerializeField] private float rotateSpeed = 3f;
+    [SerializeField] private float distanceToInteract = 2f;
+    private Vector3 targetPos, direction;
+    private bool setDestination;
+
+    [Header("STATES")] 
+    public CheckState checkState;
+    
+    public override void InitializeState()
+    {
+        eController.StopAgent();
+        eController.SetAgentSpeed(charmSpeed);
+        targetPos = eController.targetLever.GetPosition();
+        direction = (targetPos - transform.position).normalized;
+        setDestination = false;
+    }
+
+    public override State RunCurrentState()
+    {
+        if (eController.RotateEnemy(direction, rotateSpeed))
+        {
+            if (!setDestination)
+            {
+                setDestination = true;
+                eController.GoToLever();
+            }
+
+            if (eController.ArrivedToPosition(targetPos))
+            {
+                eController.targetLever.Interact();
+                return checkState;
+            }
+        }
+        return this;
+    }
+}

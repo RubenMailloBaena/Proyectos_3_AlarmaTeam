@@ -492,6 +492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 579865797012302666}
   - component: {fileID: 6958942311931997098}
+  - component: {fileID: 4153049210001435534}
   - component: {fileID: 4168146840197414768}
   - component: {fileID: 7869160548830627615}
   - component: {fileID: 7266428441928830748}
@@ -544,6 +545,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerEyes: {fileID: 4405723549971208627}
+--- !u!114 &4153049210001435534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7808489718877402067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba97bffeba22f8428b88cb9d40dd40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charmInput: {fileID: -4561072131462227954, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
+    type: 3}
+  leanParent: {fileID: 8546083993960383726}
+  charmRange: 25
 --- !u!114 &4168146840197414768
 MonoBehaviour:
   m_ObjectHideFlags: 0

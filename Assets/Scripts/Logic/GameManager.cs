@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RawImage PlayerCharmingImage;
 
     private PlayerController pController;
+    private HashSet<IInteractable> levers = new HashSet<IInteractable>();
+    
     void Awake()
     {
         if (instance == null)
@@ -30,6 +32,9 @@ public class GameManager : MonoBehaviour
     }
     
     #region Getters & Setters
+
+    public void AddInteractable(IInteractable interactable) => levers.Add(interactable);
+    public HashSet<IInteractable> GetInteractables() => levers;
     public RawImage GetPlayerHurtHud() => PlayerHurtPanel;
     public RawImage GetPlayerCharmingImage() => PlayerCharmingImage;
     public static GameManager GetInstance() => instance;

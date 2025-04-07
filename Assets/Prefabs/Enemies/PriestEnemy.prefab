@@ -697,6 +697,54 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3024986904091228250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5647334415923144622}
+  - component: {fileID: 155338100445197595}
+  m_Layer: 9
+  m_Name: CharmState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5647334415923144622
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024986904091228250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2211874453515563989}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &155338100445197595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024986904091228250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5087c738f17d3db48931244a887d760a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charmSpeed: 2
+  rotateSpeed: 3
+  distanceToInteract: 2
+  checkState: {fileID: 908810801637645102}
 --- !u!1 &3603757996701612577
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,6 +1005,7 @@ Transform:
   - {fileID: 6198394416225310566}
   - {fileID: 47052502106733566}
   - {fileID: 387582958740324543}
+  - {fileID: 5647334415923144622}
   m_Father: {fileID: 8167465397700286712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4549608537462766079
@@ -1210,7 +1259,9 @@ MonoBehaviour:
   seenState: {fileID: 1251762883612095128}
   chaseState: {fileID: 1869309124396401437}
   attackState: {fileID: 5374991467294882211}
-  isIdleEnemy: 1
+  charmState: {fileID: 155338100445197595}
+  interactDistance: 10
+  isIdleEnemy: 0
   enemyType: 0
   lightSource: {fileID: 2400503892314693966}
   viewAngle: 60
@@ -1223,18 +1274,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   waypoints:
-  - rotateEnemy: 0
+  - rotateEnemy: 1
     waitTime: 0
     waypoint: {fileID: 1655147142492596864}
-  - rotateEnemy: 0
+  - rotateEnemy: 1
     waitTime: 3
     waypoint: {fileID: 4005170822320818172}
-  - rotateEnemy: 0
-    waitTime: 0
-    waypoint: {fileID: 316439283489824333}
-  - rotateEnemy: 0
-    waitTime: 0
-    waypoint: {fileID: 3552916270616436564}
   soundWasAnObject: 0
   inPlayerHearState: 1
   isPlayerInVision: 0

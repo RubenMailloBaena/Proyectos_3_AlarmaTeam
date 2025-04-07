@@ -10,4 +10,8 @@ public interface IEnemyInteractions
     public Vector3 GetPosition();
     public Transform GetTransform();
     public void SetTargetVisual(bool active);
+    public bool IsInChaseOrAttack();
+    public List<IInteractable> ActivateIntarectables();
+    public void ClearIntarectables();
+    public void SetCharmedState(IInteractable lever);
 }

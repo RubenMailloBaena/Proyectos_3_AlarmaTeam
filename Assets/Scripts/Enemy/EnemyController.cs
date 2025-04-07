@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [Header("REFERENCES")]
     [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
-    [SerializeField] private GameObject targetVisual;
+    [SerializeField] public GameObject targetVisual;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -33,8 +33,10 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [SerializeField] private SeenState seenState;
     [SerializeField] private ChaseState chaseState;
     [SerializeField] private AttackState attackState;
+    [SerializeField] private CharmState charmState;
 
     [Header("ENEMY OPTIONS")] 
+    public float interactDistance = 10f;
     public bool isIdleEnemy;
     public EnemyType enemyType;
     [SerializeField] private GameObject lightSource;
@@ -68,6 +70,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
     [HideInInspector] public float distanceToPlayer;
+    [HideInInspector] public IInteractable targetLever;
 
     void Awake()
     {
@@ -106,6 +109,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         
         //DEBUG ONLY
         debugText.text = nextState.name;
+        print(nextState.name);
         //
         lastState = currentState;
         currentState = nextState;
@@ -115,6 +119,8 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     private void CanSeePlayer()
     {
+        if (currentState == charmState) return;
+        
         Vector3 playerEyes = pController.GetPlayerEyesPosition();
         enemyPos = transform.position + enemyEyesOffset;
         distanceToPlayer = Vector3.Distance(enemyPos, playerEyes);
@@ -156,7 +162,8 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
-        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f || isChasingPlayer || currentState == attackState) 
+        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f 
+            || isChasingPlayer || currentState == attackState || currentState == charmState) 
             return;
 
         SetPositionBeforeMoving();
@@ -189,7 +196,50 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     public void SetTargetVisual(bool active)
     {
+        if (enemyType == EnemyType.Knight || currentState == attackState || currentState == chaseState) return;
         targetVisual.SetActive(active);
+    }
+
+    public bool IsInChaseOrAttack()
+    {
+        if (currentState == attackState || currentState == chaseState)
+        {
+            targetVisual.SetActive(false);
+            return true;
+        }
+        return false;
+    }
+
+    public List<IInteractable> ActivateIntarectables()
+    {
+        List<IInteractable> interactables = new List<IInteractable>();
+        foreach (IInteractable lever in GameManager.GetInstance().GetInteractables())
+        {
+            float distance = Vector3.Distance(transform.position, lever.GetPosition());
+
+            if (distance <= interactDistance)
+            {
+                lever.SelectObject(true);
+                interactables.Add(lever);
+            }
+            else
+                lever.SelectObject(false);
+        }
+
+        return interactables;
+    }
+
+    public void ClearIntarectables()
+    {
+        foreach (IInteractable lever in GameManager.GetInstance().GetInteractables())
+            lever.SelectObject(false);
+    }
+
+    public void SetCharmedState(IInteractable lever)
+    {
+        targetLever = lever;
+        SetPositionBeforeMoving();
+        SwitchToNextState(charmState);
     }
     
     //---------------------------GENERAL FUNCTIONS-------------------------------
@@ -223,6 +273,12 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         Vector3 pos = waypoints[waypointIndex].Position();
         meshAgent.SetDestination(pos);
         return pos;
+    }
+
+    public Vector3 GoToLever()
+    {
+        meshAgent.SetDestination(targetLever.GetPosition());
+        return targetLever.GetPosition();
     }
 
     public Vector3 GoToSoundSource()
@@ -331,7 +387,9 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
-
+        
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, interactDistance);
         
         //VISION CONE
         Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * maxViewDistance;

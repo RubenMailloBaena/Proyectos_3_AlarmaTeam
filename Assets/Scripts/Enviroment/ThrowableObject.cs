@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class ThrowableObject : MonoBehaviour, IInteractable
 {
     private PlayerController pController;
@@ -46,6 +45,8 @@ public class ThrowableObject : MonoBehaviour, IInteractable
         rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
     }
 
+        
+
     private void OnCollisionEnter(Collision other)
     {
         if (!thrown || done) return;
@@ -67,11 +68,15 @@ public class ThrowableObject : MonoBehaviour, IInteractable
         }
     }
 
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, soundRadius);
     }
+    
+    public Vector3 GetPosition() => transform.position;
+
 
     #region Cheat
     
