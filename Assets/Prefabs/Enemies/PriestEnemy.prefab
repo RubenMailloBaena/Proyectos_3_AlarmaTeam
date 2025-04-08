@@ -236,6 +236,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleRotationSpeed: 3
   patrolState: {fileID: 3423234586950922554}
+  material: {fileID: 2100000, guid: 9aadf5a2c64637d4ea1cbb74f2a038c1, type: 2}
 --- !u!1 &804898311271477869
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +371,7 @@ MonoBehaviour:
   attackState: {fileID: 5374991467294882211}
   goToState: {fileID: 8951609958660427535}
   lookAtState: {fileID: 6265010557902181238}
+  material: {fileID: 2100000, guid: a4450acad6b12a74897a24c9ec5a9d31, type: 2}
 --- !u!1 &2140094195769098541
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +451,7 @@ MonoBehaviour:
   checkRotateSpeed: 1.5
   checkAngle: 60
   returnState: {fileID: 1899071911990194964}
+  material: {fileID: 2100000, guid: 492393ab04716954992bf42d5cd648d3, type: 2}
 --- !u!1 &2400503892314693966
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,6 +617,7 @@ MonoBehaviour:
   priestSpeed: 1.5
   rotationSpeed: 30
   chaseState: {fileID: 1869309124396401437}
+  material: {fileID: 2100000, guid: 95456ddfead4d3649b9c429b564c47a8, type: 2}
 --- !u!1 &2813004306488210731
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,6 +749,7 @@ MonoBehaviour:
   rotateSpeed: 3
   distanceToInteract: 2
   checkState: {fileID: 908810801637645102}
+  material: {fileID: 2100000, guid: 5cd168ce4eb869948a9653f4d1a39f49, type: 2}
 --- !u!1 &3603757996701612577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1061,7 @@ MonoBehaviour:
   maxDistanceToIgnore: 30
   goToState: {fileID: 8951609958660427535}
   lookAtState: {fileID: 6265010557902181238}
+  material: {fileID: 2100000, guid: a0e3d4bef3fb7734b81c0475c6d7246f, type: 2}
 --- !u!1 &4577519689679229194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1200,6 +1206,7 @@ MonoBehaviour:
   returnSpeed: 3
   idleState: {fileID: 1875053179892342218}
   patrolState: {fileID: 3423234586950922554}
+  material: {fileID: 2100000, guid: 89031da817c3c534fa4a4982ee129d05, type: 2}
 --- !u!1 &8034548957631012766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1280,6 +1287,7 @@ MonoBehaviour:
   - rotateEnemy: 1
     waitTime: 3
     waypoint: {fileID: 4005170822320818172}
+  renderer: {fileID: 5811706993926382402}
   soundWasAnObject: 0
   inPlayerHearState: 1
   isPlayerInVision: 0
@@ -1477,6 +1485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goToSpeed: 3
   checkState: {fileID: 908810801637645102}
+  material: {fileID: 2100000, guid: 7b7e7b51de2b4f14e95ebdb86edc7350, type: 2}
 --- !u!1 &8898229080114985500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1537,7 @@ MonoBehaviour:
   barMaxCapacity: 100
   checkState: {fileID: 908810801637645102}
   chaseState: {fileID: 1869309124396401437}
+  material: {fileID: 2100000, guid: 2d6153f16c74a7e469e929d4dbf72c8d, type: 2}
 --- !u!1 &9076177832192737061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolSpeed: 3
   idleState: {fileID: 1875053179892342218}
+  material: {fileID: 2100000, guid: 18262d66febfdee468d67a3bbff105e7, type: 2}
 --- !u!1 &9122541816938060799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,3 +1631,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goToSpeed: 3
   checkState: {fileID: 908810801637645102}
+  material: {fileID: 2100000, guid: 6d88f379daaef6f4da80e86fd3f72b45, type: 2}
