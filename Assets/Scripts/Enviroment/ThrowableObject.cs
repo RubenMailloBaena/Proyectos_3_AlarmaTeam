@@ -6,8 +6,12 @@ using UnityEngine;
 public class ThrowableObject : MonoBehaviour, IInteractable
 {
     private PlayerController pController;
-    
-    [SerializeField] private GameObject interactVisual;
+
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
+
+    [SerializeField] private Renderer renderer;
+
     [SerializeField] private float throwForce = 5f;
     [SerializeField] private float soundRadius = 10f;
     [SerializeField] private LayerMask enemyLayer;
@@ -31,8 +35,11 @@ public class ThrowableObject : MonoBehaviour, IInteractable
     public void SelectObject(bool select)
     {
         if (thrown) return;
-        
-        interactVisual.SetActive(select);
+
+        if (select)
+            renderer.material = visualMaterial;
+        else
+            renderer.material = defaultMaterial;
     }
 
     public  void Interact()
@@ -40,8 +47,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable
         if (thrown) return;
         
         thrown = true;
-        interactVisual.SetActive(false);
-        
+        renderer.material = defaultMaterial;
         rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
     }
 
@@ -84,9 +90,9 @@ public class ThrowableObject : MonoBehaviour, IInteractable
     {
         thrown = false;
         done = false;
-       
-        if (interactVisual != null)
-            interactVisual.SetActive(true);
+
+        if (renderer != null)
+            renderer.material = defaultMaterial;
 
         if (rb != null)
         {

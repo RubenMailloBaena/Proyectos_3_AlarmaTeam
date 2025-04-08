@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour, IInteractable, IVisible
 {
-    [SerializeField] private GameObject selectVisual;
-    
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
+
+    [SerializeField] private Renderer leverRenderer;
+    [SerializeField] private Renderer baseRenderer;
+
     [SerializeField] private float interactDistance;
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
     
     private LineRenderer lineRender;
     private List<IObjects> objects = new List<IObjects>();
-    
+
     public float InteractDistance => interactDistance;
 
     private void Awake()
@@ -46,7 +50,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     
     public void SelectObject(bool select)
     {
-        selectVisual.SetActive(select);
+        SetVisiblity(select);
         lineRender.enabled = select;
         foreach (IObjects item in objects)
             item.ShowInteract(select);
@@ -61,7 +65,17 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     //VISION
     public void SetVisiblity(bool active)
     {
-        selectVisual.SetActive(active);
+        Debug.Log("Cambiando visibilidad a: " + active);
+        if (active)
+        {
+            leverRenderer.material = visualMaterial;
+            baseRenderer.material = visualMaterial;
+        }
+        else
+        {
+            leverRenderer.material = defaultMaterial;
+            baseRenderer.material = defaultMaterial;
+        }
     }
 
     public Vector3 GetVisionPosition()

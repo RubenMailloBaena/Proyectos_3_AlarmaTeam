@@ -11,8 +11,12 @@ public class BridgeController : MonoBehaviour, IObjects
     [SerializeField] private GameObject meshBlock1;
     [SerializeField] private GameObject meshBlock2;
     [SerializeField] private Transform movingObject;
-    [SerializeField] private GameObject visualSelect;
     [SerializeField] private Transform cablePosition;
+
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
+
+    [SerializeField] private Renderer bridgeRenderer;
 
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
@@ -79,7 +83,10 @@ public class BridgeController : MonoBehaviour, IObjects
 
     public void ShowInteract(bool interact)
     {
-        visualSelect.SetActive(interact);
+        if (interact)
+            bridgeRenderer.material = visualMaterial;
+        else
+            bridgeRenderer.material = defaultMaterial;
     }
 
     public Vector3 GetCablePosition()
