@@ -6,7 +6,12 @@ public class Doors : MonoBehaviour, IObjects
 {
     [SerializeField] private Transform moveObject;
     [SerializeField] private Transform cablePosition;
-    [SerializeField] private GameObject visualSelect;
+
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
+
+    [SerializeField] private Renderer doorRenderer;
+
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
 
@@ -41,7 +46,10 @@ public class Doors : MonoBehaviour, IObjects
 
     public void ShowInteract(bool interact)
     {
-        visualSelect.SetActive(interact);
+        if (interact)
+            doorRenderer.material = visualMaterial;
+        else
+            doorRenderer.material = defaultMaterial;
     }
 
     public Vector3 GetCablePosition()

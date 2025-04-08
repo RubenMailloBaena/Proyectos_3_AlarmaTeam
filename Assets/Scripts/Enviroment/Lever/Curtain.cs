@@ -5,7 +5,12 @@ using UnityEngine;
 public class Curtain : MonoBehaviour
 {
     [SerializeField] private Transform moveObject;
-    [SerializeField] private GameObject visualSelect;
+
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
+
+    [SerializeField] private Renderer curtainRenderer;
+
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
 
@@ -38,6 +43,9 @@ public class Curtain : MonoBehaviour
     {
         if (moveObject.position != targetPos)
             interact = false;
-        visualSelect.SetActive(interact);
+        if (interact)
+            curtainRenderer.material = visualMaterial;
+        else
+            curtainRenderer.material = defaultMaterial;
     }
 }
