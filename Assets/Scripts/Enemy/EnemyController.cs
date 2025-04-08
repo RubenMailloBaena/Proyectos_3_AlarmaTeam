@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         if (killingPlayer) return;
         
         //DEBUG ONLY
-        debugText.text = nextState.name;
+        debugText.text = nextState.name.ToUpper();
         print(nextState.name);
         //
         lastState = currentState;
