@@ -7,13 +7,16 @@ public class Statue : MonoBehaviour, IStatue
     [Tooltip("Punto en el que se produce el tp")]
     [SerializeField] private Transform teleportPoint;
 
-    [Tooltip("Icono o Elemento que se muestra cuando el jugador puede hacer tp")]
-    [SerializeField] GameObject uiIcon;
+    [SerializeField] private Renderer renderer;
+    [SerializeField] private Material visualMaterial;
+    [SerializeField] private Material defaultMaterial;
 
     public void ShowUI(bool show)
     {
-        if(uiIcon != null)
-            uiIcon.SetActive(show);
+        if (show)
+            renderer.material = visualMaterial;
+        else
+            renderer.material = defaultMaterial;
     }
 
     public Vector3 GetTPPoint()
