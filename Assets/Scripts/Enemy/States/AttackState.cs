@@ -14,9 +14,12 @@ public class AttackState : State
 
     private Vector3 playerPos;
     private PlayerController pController;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         eController.ManualRotation(false);
         eController.isChasingPlayer = false;
         pController = GameManager.GetInstance().GetPlayerController();

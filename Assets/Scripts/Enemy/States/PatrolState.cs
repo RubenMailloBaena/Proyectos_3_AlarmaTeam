@@ -11,11 +11,14 @@ public class PatrolState : State
     
     [Header("STATES")]
     public IdleState idleState;
-    
+
+    public Material material;
+
     public override void InitializeState()
     {
         eController.SetAgentSpeed(patrolSpeed);
         targetPos = eController.GoToWaypoint();
+        eController.renderer.material = material;
     }
 
     public override State RunCurrentState()

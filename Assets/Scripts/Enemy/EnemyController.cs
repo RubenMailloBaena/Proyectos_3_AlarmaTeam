@@ -59,6 +59,9 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [SerializeField] private List<Waypoint> waypoints;
     private int waypointIndex;
     private float minDistanceToArrive = 0.1f;
+
+    [Header("ENEMY RENDERER")]
+    public Renderer renderer;
     
     //VARIABLES
     [HideInInspector] public bool soundWasAnObject = true;

@@ -10,9 +10,12 @@ public class LookAtState : State
 
     [Header("STATES")] 
     public CheckState checkState;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();
 

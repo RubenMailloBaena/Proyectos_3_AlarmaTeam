@@ -13,9 +13,12 @@ public class CharmState : State
 
     [Header("STATES")] 
     public CheckState checkState;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         eController.StopAgent();
         eController.SetAgentSpeed(charmSpeed);
         targetPos = eController.targetLever.GetPosition();

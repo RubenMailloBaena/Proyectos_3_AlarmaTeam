@@ -18,9 +18,11 @@ public class SeenState : State
     [Header("STATES")]
     public CheckState checkState;
     public ChaseState chaseState;
-    
+
+    public Material material;
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         if (eController.isChasingPlayer)
             eController.SwitchToNextState(chaseState);
         

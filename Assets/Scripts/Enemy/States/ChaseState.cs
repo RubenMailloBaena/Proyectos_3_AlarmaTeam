@@ -18,9 +18,12 @@ public class ChaseState : State
     public AttackState attackState;
     public GoToState goToState;
     public LookAtState lookAtState;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         eController.ManualRotation(true);
         eController.SetLight(false);
         switch (eController.enemyType)

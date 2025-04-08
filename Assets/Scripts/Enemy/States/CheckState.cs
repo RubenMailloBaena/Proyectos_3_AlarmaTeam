@@ -15,9 +15,12 @@ public class CheckState : State
 
     private bool lookingLeft, finishedWaiting, returningToStart;
     private Vector3 startingForward, rightLookDir, leftLookDir;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         eController.soundWasAnObject = true; //RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
         eController.StopAgent();

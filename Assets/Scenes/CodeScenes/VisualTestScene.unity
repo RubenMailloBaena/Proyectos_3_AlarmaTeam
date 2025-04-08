@@ -1164,6 +1164,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804416745}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &832223234 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5811706993926382402, guid: af67785d09cba1843a9dec320345f1ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 6707093971825905748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &887981769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3203,11 +3209,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155338100445197595, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 5cd168ce4eb869948a9653f4d1a39f49, type: 2}
+    - target: {fileID: 908810801637645102, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 492393ab04716954992bf42d5cd648d3, type: 2}
     - target: {fileID: 1135148330418635968, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: m_Name
       value: PriestEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1251762883612095128, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 2d6153f16c74a7e469e929d4dbf72c8d, type: 2}
     - target: {fileID: 1693947760163632215, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3258,6 +3279,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1869309124396401437, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: a4450acad6b12a74897a24c9ec5a9d31, type: 2}
+    - target: {fileID: 1875053179892342218, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 9aadf5a2c64637d4ea1cbb74f2a038c1, type: 2}
+    - target: {fileID: 1899071911990194964, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 89031da817c3c534fa4a4982ee129d05, type: 2}
+    - target: {fileID: 2988693754222058349, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: renderer
+      value: 
+      objectReference: {fileID: 832223234}
+    - target: {fileID: 3423234586950922554, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 18262d66febfdee468d67a3bbff105e7, type: 2}
+    - target: {fileID: 3617487205632319562, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: a0e3d4bef3fb7734b81c0475c6d7246f, type: 2}
+    - target: {fileID: 5374991467294882211, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 95456ddfead4d3649b9c429b564c47a8, type: 2}
+    - target: {fileID: 6265010557902181238, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 7b7e7b51de2b4f14e95ebdb86edc7350, type: 2}
+    - target: {fileID: 8951609958660427535, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: material
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d88f379daaef6f4da80e86fd3f72b45, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

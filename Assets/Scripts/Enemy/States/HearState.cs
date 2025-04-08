@@ -13,9 +13,13 @@ public class HearState : State
     [Header("STATES")]
     public GoToState goToState;
     public LookAtState lookAtState;
-    
+
+    public Material material;
+
     public override void InitializeState()
     {
+        eController.renderer.material = material;
+
         if (!eController.soundWasAnObject)
             eController.inPlayerHearState = true;
         else

@@ -14,6 +14,8 @@ public class IdleState : State
     [Header("STATES")]
     public PatrolState patrolState;
 
+    public Material material;
+
     private void Start()
     {
         if(!eController.isIdleEnemy) eController.SwitchToNextState(patrolState);
@@ -23,6 +25,7 @@ public class IdleState : State
     {
         waitTime = eController.GetWaitTime();
         lookDir = eController.GetLookDirection();
+        eController.renderer.material = material;
     }
 
     public override State RunCurrentState()

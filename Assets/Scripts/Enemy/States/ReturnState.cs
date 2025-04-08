@@ -12,9 +12,12 @@ public class ReturnState : State
     [Header("STATES")]
     public IdleState idleState;
     public PatrolState patrolState;
+
+    public Material material;
     
     public override void InitializeState()
     {
+        eController.renderer.material = material;
         if (!eController.isIdleEnemy)
         {
             eController.SwitchToNextState(patrolState);
