@@ -18,6 +18,7 @@ public class PlayerTeleportController : MonoBehaviour
     
     [Tooltip("Tiempo de canalizaci�n del tp")]
     [SerializeField] private float holdTime = 2f;
+
     
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
@@ -93,7 +94,8 @@ public class PlayerTeleportController : MonoBehaviour
     {
         if (teleportCoroutine != null)
             StopCoroutine(teleportCoroutine);
-
+        
+        pController.HideProgressBar();
         pController.SetTeleporting(false);
     }
 
@@ -106,7 +108,7 @@ public class PlayerTeleportController : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             Debug.Log(elapsed);
-
+            pController.UpdateProgressBar(elapsed);
             yield return null;
         }
         if(currentStatue != null)

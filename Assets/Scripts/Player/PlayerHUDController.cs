@@ -34,6 +34,7 @@ public class PlayerHUDController : MonoBehaviour
     {
         pController = GameManager.GetInstance().GetPlayerController();
         playerInput = pController.GetPlayerInput();
+        UIProgressBar.transform.localScale = new Vector3(0, UIProgressBar.transform.localScale.y, UIProgressBar.transform.localScale.z);
     }
 
     private void Update()
@@ -85,16 +86,33 @@ public class PlayerHUDController : MonoBehaviour
     {
         UIText.enabled = false;
     }
+
+    private void UpdateProgressBar(float progress)
+    {
+        float normalizedProgress = Mathf.Clamp01(progress/2f);
+        Vector3 currentScale = UIProgressBar.transform.localScale;
+        currentScale.x = normalizedProgress;
+        UIProgressBar.transform.localScale = currentScale;
+    }
+
+    private void HideProgressBar()
+    {
+        UIProgressBar.enabled = false;
+    }
     
     private void OnEnable()
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract += SetInteractionText;
         GameManager.GetInstance().GetPlayerController().OnHideInteraction += HideInteract;
+        GameManager.GetInstance().GetPlayerController().OnProgressBar += UpdateProgressBar;
+        GameManager.GetInstance().GetPlayerController().OnHideBar += HideProgressBar;
     }
 
     private void OnDisable()
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract -= SetInteractionText;
         GameManager.GetInstance().GetPlayerController().OnHideInteraction -= HideInteract;
+        GameManager.GetInstance().GetPlayerController().OnProgressBar -= UpdateProgressBar;
+        GameManager.GetInstance().GetPlayerController().OnHideBar -= HideProgressBar;
     }
 }
