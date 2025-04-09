@@ -25,11 +25,7 @@ public class PlayerBackstabController : MonoBehaviour
 
     void Update()
     {
-        if (pController.IsUsingVision)
-        {
-            //DisableVisual();
-            return;
-        }
+        if (pController.IsUsingVision) return;
         CheckIfCanBackstab();
         PerformBackstab();
     }
@@ -65,9 +61,12 @@ public class PlayerBackstabController : MonoBehaviour
                 target = enemy;
             }
         }
-        
+
         if (target != null)
+        {
             target.SetWeakSpot(true);
+            pController.CanInteract(attackInput.action, InputType.Press);
+        }
     }
 
     private void PerformBackstab()
@@ -77,14 +76,6 @@ public class PlayerBackstabController : MonoBehaviour
             target.Backstab();
             target.SetWeakSpot(false);
             target = null;
-        }
-    }
-
-    private void DisableVisual()
-    {
-        foreach (IEnemyInteractions enemy in pController.GetEnemies())
-        {
-            enemy.SetWeakSpot(false);
         }
     }
 

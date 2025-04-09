@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnCameraLockChange;
     public event Action OnVaultCrouched;
     public event Action OnTakeDamage;
+    public event Action<InputAction, InputType> OnCanInteract;
     
     private void Awake()
     {
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);
     public void TryVaultCrouched() => OnVaultCrouched?.Invoke();
     public void TakeDamage() => OnTakeDamage?.Invoke();
+    public void CanInteract(InputAction input, InputType inputType) => OnCanInteract?.Invoke(input, inputType);
     
     public Vector3 GetPlayerEyesPosition() => playerEyes.position;
     public Vector3 GetPlayerHeadPosition() => playerHead.position;

@@ -112,7 +112,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         
         //DEBUG ONLY
         debugText.text = nextState.name.ToUpper();
-        print(nextState.name);
         //
         lastState = currentState;
         currentState = nextState;

@@ -7,7 +7,6 @@ public class CharmState : State
     [Header("Charm Attributes")] 
     [SerializeField] private float charmSpeed = 2f;
     [SerializeField] private float rotateSpeed = 3f;
-    [SerializeField] private float distanceToInteract = 2f;
     private Vector3 targetPos, direction;
     private bool setDestination;
 

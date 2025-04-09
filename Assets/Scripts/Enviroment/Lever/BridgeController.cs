@@ -1,11 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
-
-using System;
-using UnityEngine;
-
 public class BridgeController : MonoBehaviour, IObjects
 {
     [SerializeField] private GameObject meshBlock1;

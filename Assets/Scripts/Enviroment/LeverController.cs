@@ -65,7 +65,6 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     //VISION
     public void SetVisiblity(bool active)
     {
-        Debug.Log("Cambiando visibilidad a: " + active);
         if (active)
         {
             leverRenderer.material = visualMaterial;
