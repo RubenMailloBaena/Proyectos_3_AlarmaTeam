@@ -27,6 +27,9 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private InputActionReference testInput;
     private PlayerInput playerInput;
 
+    [Header("Teleport Bar")]
+    [SerializeField] private RawImage UIProgressBar;
+
     private void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
