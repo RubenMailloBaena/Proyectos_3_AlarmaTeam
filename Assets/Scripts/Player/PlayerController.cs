@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnCameraLockChange;
     public event Action OnVaultCrouched;
     public event Action OnTakeDamage;
+    public event Action OnHideInteraction;
     public event Action<InputAction, InputType> OnCanInteract;
     
     private void Awake()
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);
     public void TryVaultCrouched() => OnVaultCrouched?.Invoke();
     public void TakeDamage() => OnTakeDamage?.Invoke();
+    public void HideInteract() => OnHideInteraction?.Invoke();
     public void CanInteract(InputAction input, InputType inputType) => OnCanInteract?.Invoke(input, inputType);
     
     public Vector3 GetPlayerEyesPosition() => playerEyes.position;

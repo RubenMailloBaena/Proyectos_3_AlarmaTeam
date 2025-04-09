@@ -41,6 +41,7 @@ public class PlayerBackstabController : MonoBehaviour
             
             Transform enemyTransform = enemy.GetTransform();
             enemy.SetWeakSpot(false);
+            pController.HideInteract();
 
             //COMPROBAMOS SI ESTAMOS DETRAS
             Vector3 dirFromEnemyToPlayer = (transform.position - enemyTransform.position).normalized;
@@ -67,6 +68,8 @@ public class PlayerBackstabController : MonoBehaviour
             target.SetWeakSpot(true);
             pController.CanInteract(attackInput.action, InputType.Press);
         }
+        else
+            pController.HideInteract();
     }
 
     private void PerformBackstab()
@@ -75,6 +78,7 @@ public class PlayerBackstabController : MonoBehaviour
         {
             target.Backstab();
             target.SetWeakSpot(false);
+            pController.HideInteract();
             target = null;
         }
     }

@@ -77,14 +77,21 @@ public class PlayerHUDController : MonoBehaviour
         UIText.enabled = true;
         UIText.text = result;
     }
+
+    private void HideInteract()
+    {
+        UIText.enabled = false;
+    }
     
     private void OnEnable()
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract += SetInteractionText;
+        GameManager.GetInstance().GetPlayerController().OnHideInteraction += HideInteract;
     }
 
     private void OnDisable()
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract -= SetInteractionText;
+        GameManager.GetInstance().GetPlayerController().OnHideInteraction -= HideInteract;
     }
 }
