@@ -25,14 +25,17 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private String messageText;
     [SerializeField] private TextMeshProUGUI UIText;
     [SerializeField] private InputActionReference testInput;
+    private PlayerInput playerInput;
 
     private void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
+        playerInput = pController.GetPlayerInput();
     }
 
     private void Update()
     {
+        print(playerInput.currentControlScheme);
         HandleSoundVisuals();
     }
 
@@ -56,13 +59,23 @@ public class PlayerHUDController : MonoBehaviour
 
     private void SetInteractionText(InputAction input, InputType type)
     {
-        string bindingPath = input.bindings[1].effectivePath;
+        string currentControl = playerInput.currentControlScheme;
+        string bindingPath = "";
+        
+        if(currentControl.Equals("Keyboard&Mouse"))
+            bindingPath = input.bindings[0].effectivePath;
+        else
+            bindingPath = input.bindings[1].effectivePath;
 
         string displayString = InputControlPath.ToHumanReadableString(bindingPath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
 
-        UIText.text = displayString;
-    }    
+        string result = "";
+        result = type == InputType.Press ? "Press '" : "Hold '";
+        
+        result += displayString + "' to interact";
+        UIText.text = result;
+    }
 
     private void OnEnable()
     {
@@ -73,19 +86,4 @@ public class PlayerHUDController : MonoBehaviour
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract -= SetInteractionText;
     }
-    
-    /*private void CanInteractText()
-    {
-
-        foreach (InputBinding binding in testInput.action.bindings)
-        {
-            string bindingPath = binding.effectivePath;
-
-            string displayString = InputControlPath.ToHumanReadableString(bindingPath,
-                InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-            Debug.Log("Binding: " + displayString);
-            UIText.text = displayString;
-        }
-    }*/
 }

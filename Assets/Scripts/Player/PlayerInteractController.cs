@@ -39,6 +39,7 @@ public class PlayerInteractController : MonoBehaviour
                 {
                     target = interactable;
                     target.SelectObject(true);
+                    pController.CanInteract(attackInput, InputType.Press);
                 }
                 else ClearTarget();
             }

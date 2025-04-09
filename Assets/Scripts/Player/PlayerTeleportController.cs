@@ -47,6 +47,7 @@ public class PlayerTeleportController : MonoBehaviour
             {
                 currentStatue = statue;
                 currentStatue.ShowUI(true);
+                pController.CanInteract(teleportAction, InputType.Hold);
             }
             else
             {

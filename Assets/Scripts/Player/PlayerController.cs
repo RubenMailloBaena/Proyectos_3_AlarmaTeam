@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerEyes;
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
+    private PlayerInput playerInput;
     public bool IsCrouching { get; private set; }
     public bool IsIdle { get; private set; }
     public bool IsRunning { get; private set; }
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         GameManager.GetInstance().SetPlayerController(this);
+        playerInput = GetComponent<PlayerInput>();
     }
 
     public float GetDistance(Vector3 targetPos) => Vector3.Distance(transform.position, targetPos);
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetPlayerBodyPosition() => playerBody.position;
     public Vector3 GetPlayerPosition() => transform.position;
     public Transform GetPlayerTransform() => transform;
+    public PlayerInput GetPlayerInput() => playerInput;
     
     public void AddVisible(IVisible visible) => visionObjects.Add(visible);
     public void RemoveVisible(IVisible visible) => visionObjects.Remove(visible);
