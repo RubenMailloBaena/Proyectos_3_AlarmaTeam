@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3414637674878049471}
+  - component: {fileID: 3600508686036414903}
   - component: {fileID: 860584985175622488}
   - component: {fileID: 3634111090000766558}
-  - component: {fileID: 3600508686036414903}
+  - component: {fileID: 7183154400630342186}
   m_Layer: 0
   m_Name: DamagingLight
   m_TagString: Untagged
@@ -34,6 +35,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 14.76, y: -90.577, z: 1.481}
+--- !u!114 &3600508686036414903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878206534338111522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27969a67b27455646a05e07a83f466e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!108 &860584985175622488
 Light:
   m_ObjectHideFlags: 0
@@ -119,16 +132,24 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!114 &3600508686036414903
-MonoBehaviour:
+--- !u!65 &7183154400630342186
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3878206534338111522}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27969a67b27455646a05e07a83f466e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerOffset: 0.8
+  serializedVersion: 3
+  m_Size: {x: 9.643968, y: 8.31, z: 38.041992}
+  m_Center: {x: 0.00000002477708, y: 0.89003223, z: 18.21401}
