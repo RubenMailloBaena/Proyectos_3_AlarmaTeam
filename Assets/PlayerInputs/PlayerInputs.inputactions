@@ -78,15 +78,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Vision",
-                    "type": "Value",
-                    "id": "b85147a5-212f-4768-845b-6a64faf5af96",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Charm",
                     "type": "Button",
                     "id": "4f3ecbec-4fef-4e58-8e5a-7e5a240805ef",
@@ -468,17 +459,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "787621e0-9baa-46f0-90c0-faa075a1bbba",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Vision",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -10,14 +10,14 @@ public class PlayerVisionController : MonoBehaviour
 {
     private PlayerController pController;
 
-    [SerializeField] private InputActionReference visionInput;
+    [SerializeField] private InputActionReference charmInput;
 
     [Header("Vision Attributes")]
     [SerializeField] private float range = 10f;
 
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
-
     private float input;
+    private bool inVisionMode;
 
     private void Awake()
     {
@@ -27,12 +27,19 @@ public class PlayerVisionController : MonoBehaviour
     void Update()
     {
         if (pController.IsPlayerDead) return;
-        
+
+        ChangeMode();
         if (visionInput.action.ReadValue<float>() > 0)
             GatherEnemies();
         
         else
             ClearEnemies();
+    }
+
+    private void ChangeMode()
+    {
+        if (charmInput.action.triggered)
+            inVisionMode = !inVisionMode;
     }
 
     private void GatherEnemies()
@@ -60,5 +67,15 @@ public class PlayerVisionController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + sphereOffset, range);
+    }
+
+    private void OnEnable()
+    {
+        charmInput.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        charmInput.action.Disable();
     }
 }
