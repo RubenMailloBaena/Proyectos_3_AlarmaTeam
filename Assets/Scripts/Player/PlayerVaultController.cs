@@ -12,6 +12,7 @@ public class PlayerVaultController : MonoBehaviour
     [SerializeField] private InputActionReference jumpInput;
 
     [Header("Vault Attributes")] 
+    [SerializeField] private bool standUpWhenVaulting;
     [SerializeField] private float vaultSpeed = 5f;
     [SerializeField] private float vaultCheckRayDistance = 1f;
     [SerializeField] private LayerMask vaultLayer;
@@ -34,7 +35,7 @@ public class PlayerVaultController : MonoBehaviour
         {
             if (jumpInput.action.triggered) //Perform Vault
             {
-                if (pController.IsCrouching)
+                if (pController.IsCrouching && standUpWhenVaulting)
                 {
                     pController.TryVaultCrouched();
                     return;

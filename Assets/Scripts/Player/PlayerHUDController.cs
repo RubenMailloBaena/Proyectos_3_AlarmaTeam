@@ -74,9 +74,10 @@ public class PlayerHUDController : MonoBehaviour
         result = type == InputType.Press ? "Press '" : "Hold '";
         
         result += displayString + "' to interact";
+        UIText.enabled = true;
         UIText.text = result;
     }
-
+    
     private void OnEnable()
     {
         GameManager.GetInstance().GetPlayerController().OnCanInteract += SetInteractionText;
