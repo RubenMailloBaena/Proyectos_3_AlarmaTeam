@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform playerEyes;
+    [SerializeField] private Transform playerHead;
+    [SerializeField] private Transform playerBody;
     public bool IsCrouching { get; private set; }
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage() => OnTakeDamage?.Invoke();
     
     public Vector3 GetPlayerEyesPosition() => playerEyes.position;
+    public Vector3 GetPlayerHeadPosition() => playerHead.position;
+    public Vector3 GetPlayerBodyPosition() => playerBody.position;
     public Vector3 GetPlayerPosition() => transform.position;
     public Transform GetPlayerTransform() => transform;
     
