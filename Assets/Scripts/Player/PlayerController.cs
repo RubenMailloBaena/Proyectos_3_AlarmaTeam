@@ -28,7 +28,9 @@ public class PlayerController : MonoBehaviour
     public event Action OnTakeDamage;
     public event Action OnHideInteraction;
     public event Action<InputAction, InputType> OnCanInteract;
-    
+    public event Action<float> OnProgressBar;
+    public event Action OnHideBar;
+
     private void Awake()
     {
         GameManager.GetInstance().SetPlayerController(this);
@@ -41,7 +43,9 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage() => OnTakeDamage?.Invoke();
     public void HideInteract() => OnHideInteraction?.Invoke();
     public void CanInteract(InputAction input, InputType inputType) => OnCanInteract?.Invoke(input, inputType);
-    
+    public void UpdateProgressBar(float progress) => OnProgressBar?.Invoke(progress);
+    public void HideProgressBar() => OnHideBar?.Invoke();
+
     public Vector3 GetPlayerEyesPosition() => playerEyes.position;
     public Vector3 GetPlayerHeadPosition() => playerHead.position;
     public Vector3 GetPlayerBodyPosition() => playerBody.position;
