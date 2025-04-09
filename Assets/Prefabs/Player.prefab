@@ -705,7 +705,6 @@ GameObject:
   - component: {fileID: 968289487564531204}
   - component: {fileID: 6138097720569525296}
   - component: {fileID: 541859556553828673}
-  - component: {fileID: 8164220615881500944}
   - component: {fileID: 1216652762856930018}
   - component: {fileID: 7568944375523593208}
   - component: {fileID: 1978913200047557522}
@@ -768,6 +767,7 @@ MonoBehaviour:
     type: 3}
   leanParent: {fileID: 8546083993960383726}
   charmRange: 25
+  visionRange: 15
   visionCircle: {fileID: 4268144653167810000}
 --- !u!114 &4168146840197414768
 MonoBehaviour:
@@ -954,21 +954,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &8164220615881500944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7808489718877402067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1241b90402b715a4d9a1ef9e342421f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charmInput: {fileID: -4561072131462227954, guid: e49e41b680fb6954ea8256b7b8ee8217,
-    type: 3}
-  range: 20
 --- !u!143 &1216652762856930018
 CharacterController:
   m_ObjectHideFlags: 0

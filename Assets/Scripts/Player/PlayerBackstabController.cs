@@ -37,10 +37,10 @@ public class PlayerBackstabController : MonoBehaviour
         
         foreach (IEnemyInteractions enemy in pController.GetEnemies())
         {
+            enemy.SetWeakSpot(false);
             if (pController.GetDistance(enemy.GetPosition()) > attackRange) continue;
             
             Transform enemyTransform = enemy.GetTransform();
-            enemy.SetWeakSpot(false);
             pController.HideInteract();
 
             //COMPROBAMOS SI ESTAMOS DETRAS

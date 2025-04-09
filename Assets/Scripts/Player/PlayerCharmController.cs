@@ -18,14 +18,17 @@ public class PlayerCharmController : MonoBehaviour
     
     [Header("Charm Attributes")]
     [SerializeField] private float charmRange = 25f;
-
+    
+    [Header("Vision Attributes")]
+    [SerializeField] private float visionRange = 15f;
+    
     [Header("Visual circle")]
     [SerializeField] private GameObject visionCircle;
 
     private RawImage charmImage;
     private IEnemyInteractions mouseTarget;
     private IEnemyInteractions lockedTarget;
-    private List<IInteractable> interactables;
+    private List<IInteractable> interactables = new List<IInteractable>();
     private bool inCharmingMode;
 
     private void Awake()
@@ -48,6 +51,7 @@ public class PlayerCharmController : MonoBehaviour
     {
         GatherInput();
         CharmingMode();
+        GatherVisionEnemies();
         UpdateLockedTarget();
         CharmedTargetLogic();
     }
@@ -61,15 +65,7 @@ public class PlayerCharmController : MonoBehaviour
     private void GatherInput()
     {
         if (charmInput.action.triggered)
-        {
             SwapMode();
-
-            if (!inCharmingMode)
-            {
-                ClearMouseTarget();
-                ClearLockedTarget(); 
-            }
-        }
 
         if (attackInput.action.triggered)
         {
@@ -86,6 +82,12 @@ public class PlayerCharmController : MonoBehaviour
         inCharmingMode = !inCharmingMode;
         charmImage.enabled = inCharmingMode;
         showCircle(inCharmingMode);
+        if (!inCharmingMode)
+        {
+            ClearMouseTarget();
+            ClearLockedTarget(); 
+            ClearVisionEnemies();
+        }
     }
 
     private void CharmingMode()
@@ -112,6 +114,21 @@ public class PlayerCharmController : MonoBehaviour
         }
         else
             ClearMouseTarget();
+    }
+
+    private void GatherVisionEnemies()
+    {
+        if (!inCharmingMode) return;
+        
+        foreach (IVisible vision in pController.GetVisionObjects())
+        {
+            if (pController.GetDistance(vision.GetVisionPosition()) <= visionRange)
+                vision.SetVisiblity(true);
+            else
+                vision.SetVisiblity(false);
+        }
+        
+        pController.SetUsingVision(true);
     }
 
     private void UpdateLockedTarget()
@@ -147,6 +164,14 @@ public class PlayerCharmController : MonoBehaviour
         }
     }
 
+    private void ClearVisionEnemies()
+    {
+        foreach (IVisible enemy in pController.GetVisionObjects())
+            enemy.SetVisiblity(false);
+        
+        pController.SetUsingVision(false);
+    }
+
     private void CharmedTargetLogic()
     {
         if (lockedTarget != null)
@@ -171,6 +196,9 @@ public class PlayerCharmController : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, charmRange);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, visionRange);
     }
 
     private void OnEnable()
