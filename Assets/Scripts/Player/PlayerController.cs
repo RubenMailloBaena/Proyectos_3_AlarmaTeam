@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
     public bool IsCrouching { get; private set; }
+    public bool IsIdle { get; private set; }
+    public bool IsRunning { get; private set; }
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsVaulting { get; private set; }
@@ -52,4 +54,6 @@ public class PlayerController : MonoBehaviour
     public void SetTeleporting(bool teleporting) => IsTeleporting = teleporting;
     public void SetUsingVision(bool vision) => IsUsingVision = vision;
     public void SetIsPlayerDead(bool dead) => IsPlayerDead = dead;
+    public void SetIsIdle(bool idle) => IsIdle = idle;
+    public void SetIsRunning(bool running) => IsRunning = running;
 }

@@ -62,6 +62,10 @@ public class PlayerMovementController : MonoBehaviour
         if (pController.IsTeleporting || pController.IsPlayerDead) return;
 
         input = moveInput.action.ReadValue<Vector2>();
+
+        pController.SetIsIdle(false);
+        if(input == Vector2.zero) 
+            pController.SetIsIdle(true);
         
         Vector3 moveDir = transform.right * input.x + transform.forward * input.y;
 
@@ -75,9 +79,11 @@ public class PlayerMovementController : MonoBehaviour
         if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision)
         {
             finalRange = runningSoundRange;
+            pController.SetIsRunning(true);
             return runSpeed;
         }
         finalRange = walkingSoundRange;
+        pController.SetIsRunning(false);
         return walkSpeed;
     }
 

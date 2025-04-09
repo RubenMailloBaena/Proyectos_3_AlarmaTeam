@@ -16,18 +16,6 @@ public class LightController : MonoBehaviour
     void Update()
     {
         LightPlayer();
-        /*Vector3 playerPosition = pController.GetPlayerPosition();
-        playerPosition.y += playerOffset;
-        Vector3 direction = (playerPosition - transform.position).normalized;
-
-        if(Physics.Raycast(transform.position, direction, out RaycastHit hit))
-        {
-            Debug.DrawLine(transform.position, hit.point, Color.cyan);
-
-            print(hit.collider.name);
-            if (hit.collider.CompareTag("Player"))
-                pController.TakeDamage();
-        }*/
     }
 
     private void LightPlayer()
