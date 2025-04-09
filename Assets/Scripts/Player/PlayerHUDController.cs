@@ -28,18 +28,17 @@ public class PlayerHUDController : MonoBehaviour
     private PlayerInput playerInput;
 
     [Header("Teleport Bar")]
+    [SerializeField] private GameObject UIFatherBar;
     [SerializeField] private RawImage UIProgressBar;
 
     private void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
         playerInput = pController.GetPlayerInput();
-        UIProgressBar.transform.localScale = new Vector3(0, UIProgressBar.transform.localScale.y, UIProgressBar.transform.localScale.z);
     }
 
     private void Update()
     {
-        print(playerInput.currentControlScheme);
         HandleSoundVisuals();
     }
 
@@ -89,6 +88,7 @@ public class PlayerHUDController : MonoBehaviour
 
     private void UpdateProgressBar(float progress)
     {
+        UIFatherBar.SetActive(true);
         float normalizedProgress = Mathf.Clamp01(progress/2f);
         Vector3 currentScale = UIProgressBar.transform.localScale;
         currentScale.x = normalizedProgress;
@@ -97,7 +97,7 @@ public class PlayerHUDController : MonoBehaviour
 
     private void HideProgressBar()
     {
-        UIProgressBar.enabled = false;
+        UIFatherBar.SetActive(false);
     }
     
     private void OnEnable()

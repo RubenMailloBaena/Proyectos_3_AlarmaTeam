@@ -93,10 +93,14 @@ public class PlayerTeleportController : MonoBehaviour
     private void CancelTeleport()
     {
         if (teleportCoroutine != null)
+        {
             StopCoroutine(teleportCoroutine);
+            pController.HideProgressBar();
+        }
         
-        pController.HideProgressBar();
+        
         pController.SetTeleporting(false);
+       
     }
 
     private IEnumerator TeleportAfterHold()
