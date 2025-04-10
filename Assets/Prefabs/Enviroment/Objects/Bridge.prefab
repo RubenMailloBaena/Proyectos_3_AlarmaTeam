@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7418170108502512556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CablePosition
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 737870205121296400}
   - component: {fileID: 6963980175110311079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlockNavMesh2
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 1285628305270377011}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.72, y: 0.8, z: 2.8}
+  m_LocalPosition: {x: -0.72, y: 0.8, z: 15.12}
   m_LocalScale: {x: 2.1138, y: 1, z: 0.6910554}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6642411181895642526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Logic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 5198649700865259830}
   - component: {fileID: 7726684841874862834}
   - component: {fileID: 7574381990216041046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,8 +140,8 @@ Transform:
   m_GameObject: {fileID: 5306801189906498892}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 0, z: -2.25}
-  m_LocalScale: {x: 2.4999995, y: 1, z: 3.6}
+  m_LocalPosition: {x: -0.74, y: -0.04, z: -8.58}
+  m_LocalScale: {x: 2.4999995, y: 1, z: 16.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6642411181895642526}
@@ -227,9 +227,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8049437670940241581}
   - component: {fileID: 6902793950411240784}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bridge
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -271,8 +271,8 @@ MonoBehaviour:
   visualMaterial: {fileID: 2100000, guid: c1831f7b12b9d6541a52b00877c6eefc, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 0c610e6f00bf8a24b9cd662e76a891e2, type: 2}
   bridgeRenderer: {fileID: 7726684841874862834}
-  distance: 3.6
-  speed: 2
+  distance: 16.2
+  speed: 4
 --- !u!1 &7541372749710478319
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8171189599303004682}
   - component: {fileID: 8675158774685758625}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlockNavMesh
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
