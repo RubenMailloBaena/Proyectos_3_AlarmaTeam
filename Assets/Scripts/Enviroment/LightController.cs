@@ -7,6 +7,7 @@ public class LightController : MonoBehaviour
 {
     private PlayerController pController;
     private bool playerInLight;
+    public LayerMask allLayer;
 
     void Start()
     {
@@ -30,7 +31,7 @@ public class LightController : MonoBehaviour
     {
         Vector3 direction = (target - transform.position).normalized;
         
-        if (Physics.Raycast(transform.position, direction, out RaycastHit hit))
+        if (Physics.Raycast(transform.position, direction, out RaycastHit hit, allLayer))
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             if (hit.collider.CompareTag("Player"))

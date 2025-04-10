@@ -15,6 +15,7 @@ public class PlayerLeanController : MonoBehaviour
     [SerializeField] private float moveAmount = 0.45f;
     [SerializeField] private float leanAngle = 20f;
     [SerializeField] private float leanSpeed = 5f;
+    [SerializeField] private LayerMask allLayer;
 
     private float input;
     private Vector3 originalPosition, targetPosition;
@@ -51,13 +52,13 @@ public class PlayerLeanController : MonoBehaviour
         
         //IDLE
 
-        if (input < 0 && !Physics.Raycast(pitchController.position, -transform.right, 1f)) //LEFT
+        if (input < 0 && !Physics.Raycast(pitchController.position, -transform.right, 1f, allLayer)) //LEFT
         {
             targetPosition += Vector3.left * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, leanAngle); 
             pController.SetLeaning(true);
         }
-        else if (input > 0  && !Physics.Raycast(pitchController.position, transform.right, 1f)) //RIGHT
+        else if (input > 0  && !Physics.Raycast(pitchController.position, transform.right, 1f, allLayer)) //RIGHT
         {
             targetPosition += Vector3.right * moveAmount; 
             targetRotation *= Quaternion.Euler(0, 0, -leanAngle); 

@@ -14,6 +14,7 @@ public class PlayerInteractController : MonoBehaviour
     
     [Header("Interact Attributes")] 
     [SerializeField] private float interactObjectDistance = 30f;
+    [SerializeField] private LayerMask allLayer;
     
     private IInteractable target;
 
@@ -30,7 +31,7 @@ public class PlayerInteractController : MonoBehaviour
     
     private void CanInteract()
     {
-        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, interactObjectDistance))
+        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, interactObjectDistance, allLayer))
         {
             if (hit.transform.TryGetComponent(out IInteractable interactable))
             {

@@ -21,8 +21,9 @@ public class PlayerCharmController : MonoBehaviour
     
     [Header("Vision Attributes")]
     [SerializeField] private float visionRange = 15f;
-    
-    [Header("Visual circle")]
+
+    [Header("Visual circle")] 
+    [SerializeField] private LayerMask allLayers;
     [SerializeField] private GameObject visionCircle;
 
     private RawImage charmImage;
@@ -98,7 +99,7 @@ public class PlayerCharmController : MonoBehaviour
             return;
         }
 
-        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, charmRange))
+        if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, charmRange, allLayers))
         {
             if (hit.transform.TryGetComponent(out IEnemyInteractions enemy))
             {
@@ -177,7 +178,7 @@ public class PlayerCharmController : MonoBehaviour
         if (lockedTarget != null)
         {
             interactables = lockedTarget.ActivateIntarectables();
-            if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit))
+            if (Physics.Raycast(leanParent.position, leanParent.forward, out RaycastHit hit, int.MaxValue, allLayers))
             {
                 if (hit.transform.TryGetComponent(out IInteractable lever))
                 {

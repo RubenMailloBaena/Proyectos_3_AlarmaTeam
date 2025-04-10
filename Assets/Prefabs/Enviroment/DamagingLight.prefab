@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 860584985175622488}
   - component: {fileID: 3634111090000766558}
   - component: {fileID: 7183154400630342186}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DamagingLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27969a67b27455646a05e07a83f466e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allLayer:
+    serializedVersion: 2
+    m_Bits: 1015
 --- !u!108 &860584985175622488
 Light:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GhostCommand : ICheatCommand
 {
-    public string Name => "ghost";
+    public string Name => "g";
 
     private static bool isGhostMode = false;
 
@@ -42,19 +42,19 @@ public class GhostCommand : ICheatCommand
         if (newGhostMode)
         {
             // ACTIVAR GHOST MODE:
-            // 1. Posicionar la GhostCamera en la posición del Player (transferir solo el yaw)
+            // 1. Posicionar la GhostCamera en la posiciï¿½n del Player (transferir solo el yaw)
             ghostCameraObj.transform.position = player.transform.position;
             ghostCameraObj.transform.rotation = Quaternion.Euler(0, player.transform.eulerAngles.y, 0);
             ghostCameraObj.SetActive(true);
 
-            // 2. Mover el Player a la SafeZone para que no le afecten cosas mientras está en ghost
+            // 2. Mover el Player a la SafeZone para que no le afecten cosas mientras estï¿½ en ghost
             player.transform.position = safeZone.transform.position;
             player.transform.rotation = safeZone.transform.rotation;
         }
         else
         {
             // DESACTIVAR GHOST MODE:
-            // Teletransportar al Player a la posición donde ha quedado la GhostCamera
+            // Teletransportar al Player a la posiciï¿½n donde ha quedado la GhostCamera
             player.transform.position = ghostCameraObj.transform.position;
             player.transform.rotation = Quaternion.Euler(0, ghostCameraObj.transform.eulerAngles.y, 0);
             ghostCameraObj.SetActive(false);
@@ -74,7 +74,7 @@ public class GhostCommand : ICheatCommand
         Debug.Log(isGhostMode ? "Ghost Mode ON" : "Ghost Mode OFF");
     }
 
-    // Método auxiliar para buscar objetos por nombre, incluso si están desactivados
+    // Mï¿½todo auxiliar para buscar objetos por nombre, incluso si estï¿½n desactivados
     private GameObject FindGameObjectByName(string name)
     {
         foreach (GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)))

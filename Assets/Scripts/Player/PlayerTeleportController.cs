@@ -18,6 +18,7 @@ public class PlayerTeleportController : MonoBehaviour
     
     [Tooltip("Tiempo de canalizaci�n del tp")]
     [SerializeField] private float holdTime = 2f;
+    [SerializeField] private LayerMask allLayers;
 
     
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
@@ -42,7 +43,7 @@ public class PlayerTeleportController : MonoBehaviour
     {
         Ray ray = new Ray(leanParent.position, leanParent.forward);
        
-        if (Physics.Raycast(ray, out RaycastHit hit, teleportRange))
+        if (Physics.Raycast(ray, out RaycastHit hit, teleportRange, allLayers))
         {
             if (hit.transform.TryGetComponent(out IStatue statue))
             {

@@ -768,6 +768,9 @@ MonoBehaviour:
   leanParent: {fileID: 8546083993960383726}
   charmRange: 25
   visionRange: 15
+  allLayers:
+    serializedVersion: 2
+    m_Bits: 1015
   visionCircle: {fileID: 4268144653167810000}
 --- !u!114 &4168146840197414768
 MonoBehaviour:
@@ -785,6 +788,9 @@ MonoBehaviour:
     type: 3}
   leanParent: {fileID: 8546083993960383726}
   interactObjectDistance: 30
+  allLayer:
+    serializedVersion: 2
+    m_Bits: 1015
 --- !u!114 &7869160548830627615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,6 +923,9 @@ MonoBehaviour:
   moveAmount: 0.45
   leanAngle: 20
   leanSpeed: 5
+  allLayer:
+    serializedVersion: 2
+    m_Bits: 1015
 --- !u!114 &6138097720569525296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,6 +942,9 @@ MonoBehaviour:
     type: 3}
   teleportRange: 50
   holdTime: 2
+  allLayers:
+    serializedVersion: 2
+    m_Bits: 1015
   leanParent: {fileID: 8546083993960383726}
 --- !u!114 &541859556553828673
 MonoBehaviour:
