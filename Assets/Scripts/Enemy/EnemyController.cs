@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
     private int waypointIndex;
-    private float minDistanceToArrive = 0.1f;
+    private float minDistanceToArrive = 0.3f;
 
     [Header("ENEMY RENDERER")]
     public Renderer renderer;

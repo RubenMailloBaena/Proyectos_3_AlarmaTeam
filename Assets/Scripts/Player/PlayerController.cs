@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public HashSet<IEnemyInteractions> enemies = new HashSet<IEnemyInteractions>();
     public HashSet<IVisible> visionObjects = new HashSet<IVisible>();
     public event Action<bool> OnCameraLockChange;
+    public event Action onGodMode;
     public event Action OnVaultCrouched;
     public event Action OnTakeDamage;
     public event Action OnHideInteraction;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public void CanInteract(InputAction input, InputType inputType) => OnCanInteract?.Invoke(input, inputType);
     public void UpdateProgressBar(float progress) => OnProgressBar?.Invoke(progress);
     public void HideProgressBar() => OnHideBar?.Invoke();
+    public void SwapGodMode() => onGodMode?.Invoke();
 
     public Vector3 GetPlayerEyesPosition() => playerEyes.position;
     public Vector3 GetPlayerHeadPosition() => playerHead.position;

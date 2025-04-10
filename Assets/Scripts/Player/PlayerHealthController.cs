@@ -15,6 +15,7 @@ public class PlayerHealthController : MonoBehaviour
     private float currentHealth;
     private float timeTillLastDamage = 0.0f;
     private RawImage playerHurt;
+    private bool isGodMode;
 
     private void Awake()
     {
@@ -40,6 +41,8 @@ public class PlayerHealthController : MonoBehaviour
     
     public void TakeDamage()
     {
+        if (isGodMode) return;
+        
         currentHealth -= Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
 
@@ -78,13 +81,21 @@ public class PlayerHealthController : MonoBehaviour
         playerHurt.color = newColor;
     }
 
+    private void GodMode()
+    {
+        isGodMode = !isGodMode;
+        Debug.Log("GodMode: " + isGodMode);
+    }
+
     private void OnEnable()
     {
         pController.OnTakeDamage += TakeDamage;
+        pController.onGodMode += GodMode;
     }
 
     private void OnDisable()
     {
         pController.OnTakeDamage -= TakeDamage;
+        pController.onGodMode += GodMode;
     }
 }

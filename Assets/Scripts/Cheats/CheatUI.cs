@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CheatUI : MonoBehaviour
@@ -88,6 +89,7 @@ public class CheatUI : MonoBehaviour
         AddCommand(new UnblockCameraCommand());
         AddCommand(new TimeScaleCommand());
         AddCommand(new GhostCommand());
+        AddCommand(new GodModeCommand());
         //AddCommand(new ResetVaseCommand());
     }
 }
