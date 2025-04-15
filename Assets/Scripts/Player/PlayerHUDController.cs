@@ -62,6 +62,7 @@ public class PlayerHUDController : MonoBehaviour
 
     private void SetInteractionText(InputAction input, InputType type)
     {
+        print("HERERERER");
         string currentControl = playerInput.currentControlScheme;
         string bindingPath = "";
         
@@ -83,6 +84,7 @@ public class PlayerHUDController : MonoBehaviour
 
     private void HideInteract()
     {
+        print("HERE");
         UIText.enabled = false;
     }
 

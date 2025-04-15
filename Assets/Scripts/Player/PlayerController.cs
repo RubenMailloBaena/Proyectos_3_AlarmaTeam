@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
     private PlayerInput playerInput;
+    private IPlayerComponent HUDActivator; //EL COMPONENTE QUE HA ACTIVADO EL TEXTO DE INPUTS; SOLO EL PUEDE DESACTIVARLO
     public bool IsCrouching { get; private set; }
     public bool IsIdle { get; private set; }
     public bool IsRunning { get; private set; }
@@ -42,8 +43,19 @@ public class PlayerController : MonoBehaviour
     public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);
     public void TryVaultCrouched() => OnVaultCrouched?.Invoke();
     public void TakeDamage() => OnTakeDamage?.Invoke();
-    public void HideInteract() => OnHideInteraction?.Invoke();
-    public void CanInteract(InputAction input, InputType inputType) => OnCanInteract?.Invoke(input, inputType);
+    public void HideInteract(IPlayerComponent playerComponent)
+    {
+        if (playerComponent != HUDActivator) return;
+        HUDActivator = null;
+        OnHideInteraction?.Invoke();
+    } 
+
+    public void CanInteract(InputAction input, InputType inputType, IPlayerComponent playerComponent)
+    {
+        if (HUDActivator != null) return;
+        HUDActivator = playerComponent;
+        OnCanInteract?.Invoke(input, inputType);
+    }
     public void UpdateProgressBar(float progress) => OnProgressBar?.Invoke(progress);
     public void HideProgressBar() => OnHideBar?.Invoke();
     public void SwapGodMode() => onGodMode?.Invoke();

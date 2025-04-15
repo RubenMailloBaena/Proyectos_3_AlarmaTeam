@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerBackstabController : MonoBehaviour
+public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
 {
     private PlayerController pController;
 
@@ -41,7 +41,6 @@ public class PlayerBackstabController : MonoBehaviour
             if (pController.GetDistance(enemy.GetPosition()) > attackRange) continue;
             
             Transform enemyTransform = enemy.GetTransform();
-            pController.HideInteract();
 
             //COMPROBAMOS SI ESTAMOS DETRAS
             Vector3 dirFromEnemyToPlayer = (transform.position - enemyTransform.position).normalized;
@@ -66,10 +65,10 @@ public class PlayerBackstabController : MonoBehaviour
         if (target != null)
         {
             target.SetWeakSpot(true);
-            pController.CanInteract(attackInput.action, InputType.Press);
+            pController.CanInteract(attackInput.action, InputType.Press, this);
         }
         else
-            pController.HideInteract();
+            pController.HideInteract(this);
     }
 
     private void PerformBackstab()
@@ -78,7 +77,6 @@ public class PlayerBackstabController : MonoBehaviour
         {
             target.Backstab();
             target.SetWeakSpot(false);
-            pController.HideInteract();
             target = null;
         }
     }

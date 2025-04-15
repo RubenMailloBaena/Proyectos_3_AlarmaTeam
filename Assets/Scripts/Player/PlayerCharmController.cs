@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerCharmController : MonoBehaviour
+public class PlayerCharmController : MonoBehaviour, IPlayerComponent
 {
     private PlayerController pController;
 
@@ -109,6 +109,7 @@ public class PlayerCharmController : MonoBehaviour
                     mouseTarget = enemy;
                     mouseTarget.SetTargetVisual(true);
                 }
+                pController.CanInteract(attackInput, InputType.Press, this);
             }
             else
                 ClearMouseTarget();
@@ -150,6 +151,7 @@ public class PlayerCharmController : MonoBehaviour
         if (mouseTarget != null)
         {
             mouseTarget.SetTargetVisual(false);
+            pController.HideInteract(this);
             mouseTarget = null;
         }
     }
@@ -162,6 +164,7 @@ public class PlayerCharmController : MonoBehaviour
             interactables.Clear();
             lockedTarget.SetTargetVisual(false);
             lockedTarget = null;
+            pController.HideInteract(this);
         }
     }
 
@@ -182,12 +185,17 @@ public class PlayerCharmController : MonoBehaviour
             {
                 if (hit.transform.TryGetComponent(out IInteractable lever))
                 {
+                    pController.CanInteract(attackInput, InputType.Press, this);
                     if (attackInput.action.triggered && interactables.Contains(lever))
                     {
                         lockedTarget.SetCharmedState(lever);
                         ClearLockedTarget();
                         SwapMode();
                     }
+                }
+                else
+                {
+                    pController.HideInteract(this);
                 }
             }
         }

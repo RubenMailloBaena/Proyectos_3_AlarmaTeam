@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerInteractController : MonoBehaviour
+public class PlayerInteractController : MonoBehaviour, IPlayerComponent
 {
     private PlayerController pController;
     
@@ -40,11 +40,12 @@ public class PlayerInteractController : MonoBehaviour
                 {
                     target = interactable;
                     target.SelectObject(true);
-                    pController.CanInteract(attackInput, InputType.Press);
+                    pController.CanInteract(attackInput, InputType.Press, this);
                 }
                 else ClearTarget();
             }
-            else ClearTarget();
+            else 
+                ClearTarget();
         }
         else ClearTarget();
     }
@@ -54,6 +55,7 @@ public class PlayerInteractController : MonoBehaviour
         if (target != null)
         {
             target.SelectObject(false);
+            pController.HideInteract(this);
             target = null;
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerTeleportController : MonoBehaviour
+public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 {
     private PlayerController pController;
 
@@ -49,17 +49,13 @@ public class PlayerTeleportController : MonoBehaviour
             {
                 currentStatue = statue;
                 currentStatue.ShowUI(true);
-                pController.CanInteract(teleportAction, InputType.Hold);
+                pController.CanInteract(teleportAction, InputType.Hold, this);
             }
             else
-            {
                ClearTarget();
-            }
         }
         else
-        {
             ClearTarget();
-        }
     }
 
     void ClearTarget()
@@ -68,6 +64,7 @@ public class PlayerTeleportController : MonoBehaviour
         {
             currentStatue.ShowUI(false);
             currentStatue = null;
+            pController.HideInteract(this);
         }
     }
 
@@ -82,13 +79,10 @@ public class PlayerTeleportController : MonoBehaviour
         input = teleportAction.action.ReadValue<float>();
         
         if (input>0 && !pController.IsTeleporting)
-        {
             teleportCoroutine = StartCoroutine(TeleportAfterHold());
-        } 
+        
         else if(input == 0 && pController.IsTeleporting)
-        {
             CancelTeleport();
-        }
     }
 
     private void CancelTeleport()
@@ -98,10 +92,7 @@ public class PlayerTeleportController : MonoBehaviour
             StopCoroutine(teleportCoroutine);
             pController.HideProgressBar();
         }
-        
-        
         pController.SetTeleporting(false);
-       
     }
 
     private IEnumerator TeleportAfterHold()

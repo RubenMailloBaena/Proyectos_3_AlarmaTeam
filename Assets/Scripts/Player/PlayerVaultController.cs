@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerController))]
-public class PlayerVaultController : MonoBehaviour
+public class PlayerVaultController : MonoBehaviour, IPlayerComponent
 {
     private PlayerController pController;
     
@@ -29,7 +29,11 @@ public class PlayerVaultController : MonoBehaviour
 
     private void CheckIfCanVault()
     {
-        if (pController.IsVaulting || pController.IsUsingVision) return;
+        if (pController.IsVaulting || pController.IsUsingVision)
+        {
+            pController.HideInteract(this);
+            return;
+        }
         
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, vaultCheckRayDistance, vaultLayer))
         {
@@ -45,8 +49,10 @@ public class PlayerVaultController : MonoBehaviour
                     StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
             }
 
-            pController.CanInteract(jumpInput, InputType.Press);
+            pController.CanInteract(jumpInput, InputType.Press, this);
         }
+        else
+            pController.HideInteract(this);
     }
 
     private IEnumerator PerformVault(Vector3 targetPosition)
