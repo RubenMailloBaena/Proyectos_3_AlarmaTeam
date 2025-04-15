@@ -766,8 +766,8 @@ MonoBehaviour:
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   leanParent: {fileID: 8546083993960383726}
-  charmRange: 25
-  visionRange: 15
+  charmRange: 20
+  visionRange: 35
   allLayers:
     serializedVersion: 2
     m_Bits: 1015
@@ -803,8 +803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cfb032220e0600479474d8929c74dd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsThatCanTakeDamage: 2
-  cooldownToHealPlayer: 1
+  secondsThatCanTakeDamage: 3
+  cooldownToHealPlayer: 3
   maxHurtAlpha: 0.4
 --- !u!114 &7266428441928830748
 MonoBehaviour:
@@ -843,14 +843,14 @@ MonoBehaviour:
     type: 3}
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
-  runSpeed: 10
-  walkSpeed: 6
+  runSpeed: 6
+  walkSpeed: 4
   leaningSpeed: 2
-  crouchSpeed: 2
+  crouchSpeed: 3.5
   canJump: 0
   jumpHeight: 2
-  walkingSoundRange: 5
-  runningSoundRange: 8
+  walkingSoundRange: 4
+  runningSoundRange: 7
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -960,7 +960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
-  attackRange: 2.5
+  attackRange: 3.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
   enemyLayer:
