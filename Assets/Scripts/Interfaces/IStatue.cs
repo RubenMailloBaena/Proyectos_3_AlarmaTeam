@@ -7,4 +7,6 @@ public interface IStatue
     public void ShowUI(bool show);
 
     public Vector3 GetTPPoint();
+
+    public Quaternion GetTPRotation();
 }

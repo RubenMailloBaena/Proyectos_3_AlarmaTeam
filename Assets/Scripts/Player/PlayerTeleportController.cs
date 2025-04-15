@@ -107,8 +107,13 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             pController.UpdateProgressBar(elapsed);
             yield return null;
         }
-        if(currentStatue != null)
+
+        if (currentStatue != null)
+        {
             transform.position = currentStatue.GetTPPoint();
+            transform.rotation = currentStatue.GetTPRotation();
+        }
+            
 
         pController.SetTeleporting(false);
     }
