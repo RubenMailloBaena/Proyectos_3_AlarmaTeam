@@ -7,7 +7,9 @@ public class CurtainAdapter : MonoBehaviour, IObjects
 {
     [SerializeField] private Transform cablePosition;
     [SerializeField] private List<Curtain> curtains;
-    
+
+    public IInteractable lever { get; set; }
+
     public void Interact()
     {
         foreach (Curtain curtain in curtains)

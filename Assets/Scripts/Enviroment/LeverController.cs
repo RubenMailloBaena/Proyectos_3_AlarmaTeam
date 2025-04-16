@@ -24,7 +24,10 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
         lineRender = GetComponent<LineRenderer>();
         for(int i=0; i < objectsToActivate.Count; i++)
             if (objectsToActivate[i].TryGetComponent(out IObjects item))
+            {
+                item.lever = this;
                 objects.Add(item);
+            }
 
         CalculateLineRenderPositions();
     }

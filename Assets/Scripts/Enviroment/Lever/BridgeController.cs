@@ -21,6 +21,8 @@ public class BridgeController : MonoBehaviour, IObjects
     private bool isExtending; 
 
     private float distanceToConsiderArrive = 0.1f; 
+    
+    public IInteractable lever { get; set; }
 
     void Start()
     {
@@ -69,6 +71,8 @@ public class BridgeController : MonoBehaviour, IObjects
             }
         }
     }
+
+    
 
     public void Interact()
     {

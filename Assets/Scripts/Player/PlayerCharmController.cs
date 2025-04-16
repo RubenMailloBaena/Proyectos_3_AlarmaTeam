@@ -193,6 +193,16 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
                         SwapMode();
                     }
                 }
+                else if (hit.transform.TryGetComponent(out IProxy item)) //El proxy es el IObject que nos llega desde el render del objeto
+                {
+                    pController.CanInteract(attackInput, InputType.Press, this);
+                    if (attackInput.action.triggered && interactables.Contains(item.GetObject().lever))
+                    {
+                        lockedTarget.SetCharmedState(item.GetObject().lever);
+                        ClearLockedTarget();
+                        SwapMode();
+                    }
+                }
                 else
                 {
                     pController.HideInteract(this);

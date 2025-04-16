@@ -18,6 +18,8 @@ public class Doors : MonoBehaviour, IObjects
     private Vector3 startingPos, finalPos;
     private bool isMoving;
     
+    public IInteractable lever { get; set; }
+    
     void Start()
     {
         startingPos = moveObject.position;
@@ -38,7 +40,8 @@ public class Doors : MonoBehaviour, IObjects
             ShowInteract(false);
         }
     }
-    
+
+
     public void Interact()
     {
         isMoving = !isMoving;
