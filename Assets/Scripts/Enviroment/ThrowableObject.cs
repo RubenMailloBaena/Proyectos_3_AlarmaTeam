@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowableObject : MonoBehaviour, IInteractable
+public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
 {
     private PlayerController pController;
 
@@ -30,6 +30,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable
     private void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
+        GameManager.GetInstance().GetPlayerController().AddVisible(this);
     }
 
     public void SelectObject(bool select)
@@ -100,5 +101,18 @@ public class ThrowableObject : MonoBehaviour, IInteractable
             rb.angularVelocity = Vector3.zero;
         }
     }
-#endregion
+
+    public void SetVisiblity(bool active)
+    {
+        if (active)
+            renderer.material = visualMaterial;
+        else
+            renderer.material = defaultMaterial;
+    }
+
+    public Vector3 GetVisionPosition()
+    {
+        return transform.position;
+    }
+    #endregion
 }
