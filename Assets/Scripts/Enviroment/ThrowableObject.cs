@@ -19,6 +19,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
     
     [Space(10)] [SerializeField] private float interactDistance;
     public float InteractDistance => interactDistance;
+    public bool isLocked { get; set; }
 
     private bool thrown, done; 
     private Rigidbody rb;
@@ -52,8 +53,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         renderer.material = defaultMaterial;
         rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
     }
-
-        
 
     private void OnCollisionEnter(Collision other)
     {

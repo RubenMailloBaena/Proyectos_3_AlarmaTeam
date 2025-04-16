@@ -19,7 +19,7 @@ public class Doors : MonoBehaviour, IObjects
     private bool isMoving;
     
     public IInteractable lever { get; set; }
-    
+    public Material lockedMaterial { get; set; }
     void Start()
     {
         startingPos = moveObject.position;
@@ -35,10 +35,6 @@ public class Doors : MonoBehaviour, IObjects
     {
         Vector3 targetPos = isMoving ? finalPos : startingPos;
         moveObject.position = Vector3.MoveTowards(moveObject.position, targetPos, Time.deltaTime * speed);
-        if (moveObject.position != targetPos)
-        {
-            ShowInteract(false);
-        }
     }
 
 
@@ -47,16 +43,29 @@ public class Doors : MonoBehaviour, IObjects
         isMoving = !isMoving;
     }
 
-    public void ShowInteract(bool interact)
+    public void ShowInteract(bool interact, bool locked)
     {
         if (interact)
-            doorRenderer.material = visualMaterial;
+        {
+            if(locked)
+                doorRenderer.material = lockedMaterial;
+            else
+                doorRenderer.material = visualMaterial;
+        }
+            
         else
             doorRenderer.material = defaultMaterial;
+    }
+    
+    public void SetLocked(bool active)
+    {
+        throw new System.NotImplementedException();
     }
 
     public Vector3 GetCablePosition()
     {
         return cablePosition.position;
     }
+
+    
 }

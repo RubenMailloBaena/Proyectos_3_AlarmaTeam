@@ -7,6 +7,8 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
 {
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material lockedMaterial;
+    private Material lineRenderPreviousMat;
 
     [SerializeField] private Renderer leverRenderer;
     [SerializeField] private Renderer baseRenderer;
@@ -18,26 +20,24 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     private List<IObjects> objects = new List<IObjects>();
 
     public float InteractDistance => interactDistance;
+    public bool isLocked { get; set; }
 
     private void Awake()
     {
         lineRender = GetComponent<LineRenderer>();
+        lineRenderPreviousMat = lineRender.material;
+        
         for(int i=0; i < objectsToActivate.Count; i++)
             if (objectsToActivate[i].TryGetComponent(out IObjects item))
             {
                 item.lever = this;
+                item.lockedMaterial = lockedMaterial;
                 objects.Add(item);
             }
 
         CalculateLineRenderPositions();
     }
-
-    private void Start()
-    {
-        GameManager.GetInstance().GetPlayerController().AddVisible(this);
-        GameManager.GetInstance().AddInteractable(this);
-    }
-
+    
     private void CalculateLineRenderPositions()
     {
         lineRender.positionCount = objects.Count * 2;
@@ -50,13 +50,19 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
                 lineRender.SetPosition(i, objects[i/2].GetCablePosition());
         }
     }
+
+    private void Start()
+    {
+        GameManager.GetInstance().GetPlayerController().AddVisible(this);
+        GameManager.GetInstance().AddInteractable(this);
+    }
     
     public void SelectObject(bool select)
     {
         SetVisiblity(select);
         lineRender.enabled = select;
         foreach (IObjects item in objects)
-            item.ShowInteract(select);
+            item.ShowInteract(select, isLocked);
     }
 
     public void Interact()
@@ -70,14 +76,25 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     {
         if (active)
         {
-            leverRenderer.material = visualMaterial;
-            baseRenderer.material = visualMaterial;
+            if (isLocked)
+            {
+                ChangeMaterial(lockedMaterial);
+                lineRender.material = lockedMaterial;
+            }
+            else
+            {
+                ChangeMaterial(visualMaterial);
+                lineRender.material = lineRenderPreviousMat;
+            }
         }
-        else
-        {
-            leverRenderer.material = defaultMaterial;
-            baseRenderer.material = defaultMaterial;
-        }
+        else  
+            ChangeMaterial(defaultMaterial);
+    }
+
+    private void ChangeMaterial(Material mat)
+    {
+        leverRenderer.material = mat;
+        baseRenderer.material = mat;
     }
 
     public Vector3 GetVisionPosition()
@@ -86,5 +103,6 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     }
     
     public Vector3 GetPosition() => transform.position;
+    
 }
     

@@ -23,6 +23,8 @@ public class BridgeController : MonoBehaviour, IObjects
     private float distanceToConsiderArrive = 0.1f; 
     
     public IInteractable lever { get; set; }
+    public Material lockedMaterial { get; set; }
+
 
     void Start()
     {
@@ -44,9 +46,6 @@ public class BridgeController : MonoBehaviour, IObjects
         movingObject.position = Vector3.MoveTowards(movingObject.position, targetPos, Time.deltaTime * speed);
 
         float distanceToTarget = Vector3.Distance(movingObject.position, targetPos);
-        
-        if(distanceToTarget >= 0.3f)
-            ShowInteract(false);
         
         if (isMoving)
         {
@@ -72,7 +71,6 @@ public class BridgeController : MonoBehaviour, IObjects
         }
     }
 
-    
 
     public void Interact()
     {
@@ -80,12 +78,22 @@ public class BridgeController : MonoBehaviour, IObjects
         isExtending = isMoving; 
     }
 
-    public void ShowInteract(bool interact)
+    public void ShowInteract(bool interact, bool locked)
     {
         if (interact)
-            bridgeRenderer.material = visualMaterial;
+        {
+            if (locked)
+                bridgeRenderer.material = lockedMaterial;
+            else
+                bridgeRenderer.material = visualMaterial;
+        }
         else
             bridgeRenderer.material = defaultMaterial;
+    }
+    
+    public void SetLocked(bool active)
+    {
+        throw new System.NotImplementedException();
     }
 
     public Vector3 GetCablePosition()

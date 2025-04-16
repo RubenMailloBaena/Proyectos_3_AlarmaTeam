@@ -39,12 +39,17 @@ public class Curtain : MonoBehaviour
         isMoving = !isMoving;
     }
 
-    public void ShowInteract(bool interact)
+    public void ShowInteract(bool interact, bool locked, Material lockedMat)
     {
         if (moveObject.position != targetPos)
             interact = false;
         if (interact)
-            curtainRenderer.material = visualMaterial;
+        {
+            if(locked)
+                curtainRenderer.material = lockedMat;
+            else 
+                curtainRenderer.material = visualMaterial;
+        }
         else
             curtainRenderer.material = defaultMaterial;
     }

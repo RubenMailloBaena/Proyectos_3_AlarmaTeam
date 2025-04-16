@@ -22,7 +22,9 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [Header("REFERENCES")]
     [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
-    [SerializeField] public GameObject targetVisual;
+    [SerializeField] public Renderer targetVisual;
+    [SerializeField] public Material lockedMat;
+    private Material prevoiusMat;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -86,6 +88,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         pController = GameManager.GetInstance().GetPlayerController();
         inPlayerHearState = true;
         enemyPosBeforeMoving = Vector3.zero;
+        prevoiusMat = targetVisual.material;
     }
 
     void Update()
@@ -196,16 +199,18 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     public void SetTargetVisual(bool active)
     {
-        if (enemyType == EnemyType.Knight || currentState == attackState || currentState == charmState) 
-            return;
-        targetVisual.SetActive(active);
+        //if (enemyType == EnemyType.Knight || currentState == attackState || IsCharmed())
+        if (enemyType == EnemyType.Knight || currentState == attackState)
+            targetVisual.enabled = false;
+        else
+            targetVisual.enabled = active;
     }
 
     public bool IsInChaseOrAttack()
     {
         if (currentState == attackState || currentState == chaseState)
         {
-            targetVisual.SetActive(false);
+            SetTargetVisual(false);
             return true;
         }
         return false;
@@ -238,11 +243,26 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     public void SetCharmedState(IInteractable lever)
     {
+        print("CHARMED");
         targetLever = lever;
+        SetLockedVisual(true);
         SetPositionBeforeMoving();
         SwitchToNextState(charmState);
+        SetTargetVisual(false);
+    }
+
+    public void SetLockedVisual(bool active)
+    {
+        targetLever.isLocked = active;
+
+        if (active)
+            targetVisual.material = lockedMat;
+        else
+            targetVisual.material = prevoiusMat;
     }
     
+    public bool IsCharmed() => currentState == charmState;
+   
     //---------------------------GENERAL FUNCTIONS-------------------------------
 
     public void SetAgentSpeed(float speed)
