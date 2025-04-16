@@ -9,6 +9,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
 
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material selectMaterial;
 
     [SerializeField] private Renderer renderer;
 
@@ -38,7 +39,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         if (thrown) return;
 
         if (select)
-            renderer.material = visualMaterial;
+            renderer.material = selectMaterial;
         else
             renderer.material = defaultMaterial;
     }

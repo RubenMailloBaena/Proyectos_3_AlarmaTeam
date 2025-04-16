@@ -10,6 +10,7 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     [SerializeField] private Renderer renderer;
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material selectMaterial;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     public void ShowUI(bool show)
     {
         if (show)
-            renderer.material = visualMaterial;
+            renderer.material = selectMaterial;
         else
             renderer.material = defaultMaterial;
     }
