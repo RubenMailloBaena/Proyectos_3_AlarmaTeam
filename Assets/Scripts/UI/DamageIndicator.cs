@@ -1,24 +1,101 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageIndicator : MonoBehaviour
 {
-    [SerializeField] private Transform enemyLocation;
+    [Header("Sprites")]
+    [SerializeField] private Sprite arrowSprite; // Debe apuntar hacia ARRIBA en su orientación natural
+    [SerializeField] private Sprite crossSprite;
 
-    [SerializeField] private Transform playerObject;
+    [Header("Target")]
+    public Vector3 targetPosition;
 
-    [SerializeField] private Transform indicatorImagePivot;
+    [Header("UI Components")]
+    private RectTransform pointerRectTransform;
+    private Image pointerImage;
 
-    void Start()
+    [Header("Settings")]
+    [SerializeField] private float screenEdgeBuffer = 40f;
+    [SerializeField] private float smoothRotationSpeed = 5f;
+    [SerializeField] private float smoothPositionSpeed = 15f;
+
+    private float previousAngle;
+
+    private void Awake()
     {
-        
+        pointerRectTransform = transform.Find("Pointer").GetComponent<RectTransform>();
+        pointerImage = transform.Find("Pointer").GetComponent<Image>();
+        previousAngle = 0;
     }
 
-    void Update()
+    private void Update()
     {
-        Vector3 direction = (enemyLocation.position - playerObject.position).normalized;
-        float angle = (Vector3.SignedAngle(direction, playerObject.forward, Vector3.up));
-        indicatorImagePivot.transform.localEulerAngles = new Vector3(0, 0, angle);
+        Vector3 targetScreenPoint = Camera.main.WorldToScreenPoint(targetPosition);
+        bool isOffscreen = targetScreenPoint.z <= 0 ||
+                         targetScreenPoint.x <= 0 || targetScreenPoint.x >= Screen.width ||
+                         targetScreenPoint.y <= 0 || targetScreenPoint.y >= Screen.height;
+
+        if (!isOffscreen)
+        {
+            pointerImage.sprite = crossSprite;
+            pointerRectTransform.position = Vector3.Lerp(pointerRectTransform.position, targetScreenPoint, smoothPositionSpeed * Time.deltaTime);
+            pointerRectTransform.localEulerAngles = Vector3.zero;
+            previousAngle = 0;
+        }
+        else
+        {
+            pointerImage.sprite = arrowSprite;
+
+            // Posición suavizada
+            Vector2 clampedPosition = GetClampedScreenPosition(targetScreenPoint);
+            pointerRectTransform.position = Vector2.Lerp(pointerRectTransform.position, clampedPosition, smoothPositionSpeed * Time.deltaTime);
+
+            // Cálculo de dirección (relativo al centro de pantalla)
+            Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Vector2 screenTarget = GetCorrectedScreenPoint(targetScreenPoint);
+            Vector2 direction = (screenTarget - screenCenter).normalized;
+
+            // Calcular ángulo (0° = arriba, 90° = derecha) - ajustado para sprite que apunta arriba
+            float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+
+            // Suavizado de rotación
+            float deltaAngle = Mathf.DeltaAngle(previousAngle, targetAngle);
+            float smoothDelta = Mathf.Lerp(0, deltaAngle, smoothRotationSpeed * Time.deltaTime);
+            float newAngle = previousAngle + smoothDelta;
+
+            pointerRectTransform.localEulerAngles = new Vector3(0, 0, -newAngle); // Invertido por sistema de coordenadas UI
+            previousAngle = newAngle;
+        }
+    }
+
+    private Vector2 GetClampedScreenPosition(Vector3 screenPoint)
+    {
+        Vector2 corrected = GetCorrectedScreenPoint(screenPoint);
+        return new Vector2(
+            Mathf.Clamp(corrected.x, screenEdgeBuffer, Screen.width - screenEdgeBuffer),
+            Mathf.Clamp(corrected.y, screenEdgeBuffer, Screen.height - screenEdgeBuffer)
+        );
+    }
+
+    private Vector2 GetCorrectedScreenPoint(Vector3 screenPoint)
+    {
+        if (screenPoint.z < 0)
+        {
+            // Proyectar al borde opuesto si está detrás de la cámara
+            screenPoint.x = Screen.width - screenPoint.x;
+            screenPoint.y = Screen.height - screenPoint.y;
+        }
+        return new Vector2(screenPoint.x, screenPoint.y);
+    }
+
+    public void Show(Vector3 newTargetPosition)
+    {
+        gameObject.SetActive(true);
+        targetPosition = newTargetPosition;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
