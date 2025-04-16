@@ -196,7 +196,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     public void SetTargetVisual(bool active)
     {
-        if (enemyType == EnemyType.Knight || currentState == attackState || currentState == chaseState) 
+        if (enemyType == EnemyType.Knight || currentState == attackState || currentState == charmState) 
             return;
         targetVisual.SetActive(active);
     }
