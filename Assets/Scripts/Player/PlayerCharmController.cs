@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,7 +25,6 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     [SerializeField] private LayerMask allLayers;
     [SerializeField] private GameObject visionCircle;
 
-    private RawImage charmImage;
     private IEnemyInteractions hoveredTarget;
     private IEnemyInteractions charmedTarget;
     private List<IInteractable> interactables = new List<IInteractable>();
@@ -41,8 +39,6 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
 
     private void Start()
     {
-        charmImage = GameManager.GetInstance().GetPlayerCharmingImage();
-
         if (visionCircle != null)
         {
             float scaleFactor = (charmRange * 2f) / 10f;
@@ -90,14 +86,14 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     private void EnterCharmingMode()
     {
         isCharming = true;
-        charmImage.enabled = true;
+        pController.SetCharmingVisual(true);
         visionCircle.SetActive(true);
     }
 
     private void ExitCharmingMode()
     {
         isCharming = false;
-        charmImage.enabled = false;
+        pController.SetCharmingVisual(false);
         visionCircle.SetActive(false);
         ClearHoveredTarget();
         ClearCharmedTarget();

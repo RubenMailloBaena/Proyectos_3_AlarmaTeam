@@ -8,10 +8,9 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     
     [SerializeField] private GameObject GameOverPanel;
-    [SerializeField] private RawImage PlayerHurtPanel;
-    [SerializeField] private RawImage PlayerCharmingImage;
 
     private PlayerController pController;
+    private PlayerHUDController pHud;
     private HashSet<IInteractable> levers = new HashSet<IInteractable>();
     
     void Awake()
@@ -33,10 +32,10 @@ public class GameManager : MonoBehaviour
 
     public void AddInteractable(IInteractable interactable) => levers.Add(interactable);
     public HashSet<IInteractable> GetInteractables() => levers;
-    public RawImage GetPlayerHurtHud() => PlayerHurtPanel;
-    public RawImage GetPlayerCharmingImage() => PlayerCharmingImage;
     public static GameManager GetInstance() => instance;
     public PlayerController GetPlayerController() => pController;
     public void SetPlayerController(PlayerController info) => pController = info;
+    public PlayerHUDController GetPlayerHUD() => pHud;
+    public void SetPlayerHUD(PlayerHUDController pHud) => this.pHud = pHud;
     #endregion
 }

@@ -1737,8 +1737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverPanel: {fileID: 6413546803400886232}
-  PlayerHurtPanel: {fileID: 7560648798112887124}
-  PlayerCharmingImage: {fileID: 3191482913737237095}
 --- !u!114 &1384760390671406752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,7 +1958,7 @@ GameObject:
   - component: {fileID: 5469624447602252371}
   - component: {fileID: 3488959134206533251}
   m_Layer: 5
-  m_Name: UIPanel
+  m_Name: GameLogicUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2561,12 +2559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccab265e09f35345b795bd70e2be2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowSprite: {fileID: 21300000, guid: 9291803b56c472d46834418e93ea6d47, type: 3}
-  crossSprite: {fileID: 21300000, guid: 1f1f5cf3fd1606f4eaf97cef757680eb, type: 3}
-  targetPosition: {x: 7, y: 2.21, z: -23}
-  screenEdgeBuffer: 100
-  smoothRotationSpeed: 200
-  smoothPositionSpeed: 15
 --- !u!1 &7766498529394629645
 GameObject:
   m_ObjectHideFlags: 0
@@ -2887,6 +2879,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5581813317707723849}
   - component: {fileID: 1536882286809814395}
+  - component: {fileID: 4192210588643488702}
   - component: {fileID: 5512132135802100069}
   - component: {fileID: 7808553341266660634}
   m_Layer: 5
@@ -2938,12 +2931,25 @@ MonoBehaviour:
   sound2: {fileID: 2800000, guid: 8941b812c8ce62644aa17620e70fccc3, type: 3}
   sound3: {fileID: 2800000, guid: 929bac26b5bf9f2468dbf0ef0f47e796, type: 3}
   UIImage: {fileID: 6064425359257871567}
-  messageText: Press 'X' to do someting
   UIText: {fileID: 8711726836832124030}
   testInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   UIFatherBar: {fileID: 7766498529394629645}
   UIProgressBar: {fileID: 7596003766963345992}
+  playerHurtPanel: {fileID: 7560648798112887124}
+  playerCharmingImage: {fileID: 3191482913737237095}
+--- !u!114 &4192210588643488702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577077411745984412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f57a239d1a3c14e9e6422f7cee3870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &5512132135802100069
 CanvasRenderer:
   m_ObjectHideFlags: 0

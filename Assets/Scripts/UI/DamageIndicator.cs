@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class DamageIndicator : MonoBehaviour
 {
-    [Header("Sprites")]
-    [SerializeField] private Sprite arrowSprite; // Debe apuntar hacia ARRIBA en su orientación natural
+    /*[Header("Sprites")]
+    [SerializeField] private Sprite arrowSprite; // Debe apuntar hacia ARRIBA en su orientaciï¿½n natural
     [SerializeField] private Sprite crossSprite;
 
     [Header("Target")]
@@ -46,19 +46,19 @@ public class DamageIndicator : MonoBehaviour
         {
             pointerImage.sprite = arrowSprite;
 
-            // Posición suavizada
+            // Posiciï¿½n suavizada
             Vector2 clampedPosition = GetClampedScreenPosition(targetScreenPoint);
             pointerRectTransform.position = Vector2.Lerp(pointerRectTransform.position, clampedPosition, smoothPositionSpeed * Time.deltaTime);
 
-            // Cálculo de dirección (relativo al centro de pantalla)
+            // Cï¿½lculo de direcciï¿½n (relativo al centro de pantalla)
             Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             Vector2 screenTarget = GetCorrectedScreenPoint(targetScreenPoint);
             Vector2 direction = (screenTarget - screenCenter).normalized;
 
-            // Calcular ángulo (0° = arriba, 90° = derecha) - ajustado para sprite que apunta arriba
+            // Calcular ï¿½ngulo (0ï¿½ = arriba, 90ï¿½ = derecha) - ajustado para sprite que apunta arriba
             float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
 
-            // Suavizado de rotación
+            // Suavizado de rotaciï¿½n
             float deltaAngle = Mathf.DeltaAngle(previousAngle, targetAngle);
             float smoothDelta = Mathf.Lerp(0, deltaAngle, smoothRotationSpeed * Time.deltaTime);
             float newAngle = previousAngle + smoothDelta;
@@ -81,7 +81,7 @@ public class DamageIndicator : MonoBehaviour
     {
         if (screenPoint.z < 0)
         {
-            // Proyectar al borde opuesto si está detrás de la cámara
+            // Proyectar al borde opuesto si estï¿½ detrï¿½s de la cï¿½mara
             screenPoint.x = Screen.width - screenPoint.x;
             screenPoint.y = Screen.height - screenPoint.y;
         }
@@ -97,5 +97,5 @@ public class DamageIndicator : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
-    }
+    }*/
 }

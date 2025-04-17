@@ -14,7 +14,6 @@ public class PlayerHealthController : MonoBehaviour
     [SerializeField] private float maxHurtAlpha = 0.5f;
     private float currentHealth;
     private float timeTillLastDamage = 0.0f;
-    private RawImage playerHurt;
     private bool isGodMode;
 
     private void Awake()
@@ -24,7 +23,6 @@ public class PlayerHealthController : MonoBehaviour
 
     private void Start()
     {
-        playerHurt = GameManager.GetInstance().GetPlayerHurtHud();
         currentHealth = secondsThatCanTakeDamage;
     }
 
@@ -69,16 +67,16 @@ public class PlayerHealthController : MonoBehaviour
         float normalizedHealth = Mathf.Clamp01(currentHealth / secondsThatCanTakeDamage);
         float alpha = (1f - normalizedHealth) * maxHurtAlpha;
 
-        Color newColor = playerHurt.color;
+        Color newColor = pController.GetHurtVisualColor();
         newColor.a = alpha;
-        playerHurt.color = newColor;
+        pController.SetHurtVisualColor(newColor);
     }
 
     private void SetAlphaToMax()
     {
-        Color newColor = playerHurt.color;
+        Color newColor = pController.GetHurtVisualColor();
         newColor.a = maxHurtAlpha;
-        playerHurt.color = newColor;
+        pController.SetHurtVisualColor(newColor);
     }
 
     private void GodMode()

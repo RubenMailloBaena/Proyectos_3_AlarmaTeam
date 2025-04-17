@@ -22,7 +22,6 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private RawImage UIImage;
 
     [Header("Interactions Text")] 
-    [SerializeField] private String messageText;
     [SerializeField] private TextMeshProUGUI UIText;
     [SerializeField] private InputActionReference testInput;
     private PlayerInput playerInput;
@@ -30,17 +29,31 @@ public class PlayerHUDController : MonoBehaviour
     [Header("Teleport Bar")]
     [SerializeField] private GameObject UIFatherBar;
     [SerializeField] private RawImage UIProgressBar;
+    
+    [Header("Player Hurt Visuals")]
+    [SerializeField] private RawImage playerHurtPanel;
+    
+    [Header("Player Charm Visuals")]
+    [SerializeField] private RawImage playerCharmingImage;
+
+    private void Awake()
+    {
+        GameManager.GetInstance().SetPlayerHUD(this);
+    }
 
     private void Start()
     {
         pController = GameManager.GetInstance().GetPlayerController();
         playerInput = pController.GetPlayerInput();
     }
-
+    
     private void Update()
     {
         HandleSoundVisuals();
     }
+
+
+    #region Sound Functions
 
     private void HandleSoundVisuals()
     {
@@ -60,7 +73,11 @@ public class PlayerHUDController : MonoBehaviour
         return sound3;
     }
 
-    private void SetInteractionText(InputAction input, InputType type)
+    #endregion
+
+    #region InteractionTexts
+
+    public void SetInteractionText(InputAction input, InputType type)
     {
         string currentControl = playerInput.currentControlScheme;
         string bindingPath = "";
@@ -81,12 +98,16 @@ public class PlayerHUDController : MonoBehaviour
         UIText.text = result;
     }
 
-    private void HideInteract()
+    public void HideInteract()
     {
         UIText.enabled = false;
     }
 
-    private void UpdateProgressBar(float progress)
+    #endregion
+
+    #region TpProgressBar
+
+    public void UpdateProgressBar(float progress)
     {
         UIFatherBar.SetActive(true);
         float normalizedProgress = Mathf.Clamp01(progress/2f);
@@ -95,24 +116,23 @@ public class PlayerHUDController : MonoBehaviour
         UIProgressBar.transform.localScale = currentScale;
     }
 
-    private void HideProgressBar()
+    public void HideProgressBar()
     {
         UIFatherBar.SetActive(false);
     }
-    
-    private void OnEnable()
-    {
-        GameManager.GetInstance().GetPlayerController().OnCanInteract += SetInteractionText;
-        GameManager.GetInstance().GetPlayerController().OnHideInteraction += HideInteract;
-        GameManager.GetInstance().GetPlayerController().OnProgressBar += UpdateProgressBar;
-        GameManager.GetInstance().GetPlayerController().OnHideBar += HideProgressBar;
-    }
 
-    private void OnDisable()
-    {
-        GameManager.GetInstance().GetPlayerController().OnCanInteract -= SetInteractionText;
-        GameManager.GetInstance().GetPlayerController().OnHideInteraction -= HideInteract;
-        GameManager.GetInstance().GetPlayerController().OnProgressBar -= UpdateProgressBar;
-        GameManager.GetInstance().GetPlayerController().OnHideBar -= HideProgressBar;
-    }
+    #endregion
+
+    #region CharmingVisual
+
+    public void SetCharmingVisualActive(bool active) => playerCharmingImage.enabled = active;
+
+    #endregion
+    
+    #region PlayerHurtVisual
+
+    public void SetHurtVisualColor(Color color) => playerHurtPanel.color = color;
+    public Color GetHurtVisualColor() => playerHurtPanel.color;
+
+    #endregion
 }
