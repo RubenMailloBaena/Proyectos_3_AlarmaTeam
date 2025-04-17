@@ -18,6 +18,7 @@ public class HearState : State
 
     public override void InitializeState()
     {
+        eController.HideArrow();
         eController.renderer.material = material;
 
         if (!eController.soundWasAnObject)
