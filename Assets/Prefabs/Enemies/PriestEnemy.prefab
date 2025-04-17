@@ -1327,6 +1327,7 @@ MonoBehaviour:
   ignorePlayerInMinVision: 0
   isChasingPlayer: 0
   killingPlayer: 0
+  exclamationShown: 0
   soundPos: {x: 0, y: 0, z: 0}
   enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
   distanceToPlayer: 0
@@ -1567,7 +1568,7 @@ MonoBehaviour:
   substractPerSecond: 5
   baseFillPerSecond: 5
   maxFillPerSecond: 10
-  barMaxCapacity: 50
+  barMaxCapacity: 20
   checkState: {fileID: 908810801637645102}
   chaseState: {fileID: 1869309124396401437}
   material: {fileID: 2100000, guid: 2d6153f16c74a7e469e929d4dbf72c8d, type: 2}
