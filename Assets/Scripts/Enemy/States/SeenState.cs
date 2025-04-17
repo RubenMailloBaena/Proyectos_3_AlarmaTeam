@@ -13,7 +13,6 @@ public class SeenState : State
     private float currentFillValue = 0f;
     private float fillRate = 0f;
     private Vector3 playerPos;
-    private bool firstTimeIn = false;
     
     [Header("STATES")]
     public CheckState checkState;
@@ -23,15 +22,12 @@ public class SeenState : State
     public override void InitializeState()
     {
         eController.renderer.material = material;
+        eController.ActivateSeenArrow();
         if (eController.isChasingPlayer)
             eController.SwitchToNextState(chaseState);
         
-        if (!firstTimeIn)
-        {
-            firstTimeIn = true;
-            eController.SetAgentSpeed(seenSpeed);
-            currentFillValue = baseFillPerSecond;
-        }
+        eController.SetAgentSpeed(seenSpeed);
+        currentFillValue = baseFillPerSecond;
     }
 
     public override State RunCurrentState()
@@ -46,7 +42,6 @@ public class SeenState : State
 
             if (currentFillValue >= barMaxCapacity)
             {
-                firstTimeIn = false;
                 return chaseState;
             }
         }
@@ -56,12 +51,12 @@ public class SeenState : State
 
             if (currentFillValue <= 0.0f)
             {
-                firstTimeIn = false;
+                eController.HideArrow();
                 return checkState;
             }
         }
-
-        //print(fillRate + " " + currentFillValue);
+        
+        eController.UpdateSeenAmount(currentFillValue, barMaxCapacity);
         return this;
     }
     

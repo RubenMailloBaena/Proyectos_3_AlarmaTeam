@@ -15,6 +15,7 @@ public class LookAtState : State
     
     public override void InitializeState()
     {
+        eController.exclamationShown = false;
         eController.renderer.material = material;
         eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();

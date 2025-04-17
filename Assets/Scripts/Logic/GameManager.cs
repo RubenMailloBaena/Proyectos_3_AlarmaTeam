@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerController pController;
     private PlayerHUDController pHud;
+    private EnemySeenHUD eHud;
     private HashSet<IInteractable> levers = new HashSet<IInteractable>();
     
     void Awake()
@@ -37,5 +38,7 @@ public class GameManager : MonoBehaviour
     public void SetPlayerController(PlayerController info) => pController = info;
     public PlayerHUDController GetPlayerHUD() => pHud;
     public void SetPlayerHUD(PlayerHUDController pHud) => this.pHud = pHud;
+    public EnemySeenHUD GetEnemySeenHUD() => eHud;
+    public void SetEnemySeenHUD(EnemySeenHUD hud) => eHud = hud;
     #endregion
 }

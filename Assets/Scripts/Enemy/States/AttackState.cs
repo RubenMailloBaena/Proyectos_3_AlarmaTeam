@@ -19,6 +19,7 @@ public class AttackState : State
     
     public override void InitializeState()
     {
+        eController.ActivateExclamation();
         eController.renderer.material = material;
         eController.ManualRotation(false);
         eController.isChasingPlayer = false;

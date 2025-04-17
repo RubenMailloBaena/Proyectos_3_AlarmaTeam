@@ -21,6 +21,7 @@ public class ChaseState : State
     
     public override void InitializeState()
     {
+        eController.ActivateExclamation();
         eController.renderer.material = material;
         eController.ManualRotation(true);
         eController.SetLight(false);
@@ -35,6 +36,7 @@ public class ChaseState : State
         currentTime = chaseTimeAfterLoosingVision;
         SetSoundPosition();
     }
+    
 
     public override State RunCurrentState()
     {

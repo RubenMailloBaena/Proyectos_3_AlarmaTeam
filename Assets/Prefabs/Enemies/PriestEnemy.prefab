@@ -784,6 +784,7 @@ Transform:
   - {fileID: 2782574975934682066}
   - {fileID: 1281662808526766569}
   - {fileID: 4497834819078944486}
+  - {fileID: 4326708774793196384}
   m_Father: {fileID: 8167465397700286712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5110426574989002090
@@ -836,6 +837,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3931731248956220484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4326708774793196384}
+  m_Layer: 9
+  m_Name: SeenExclamationPos
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4326708774793196384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931731248956220484}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.742, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 896784581908525001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4110676845864397315
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,6 +1288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugText: {fileID: 9088748697047975570}
+  seenExclamationPos: {fileID: 4326708774793196384}
   weakSpotRenderer: {fileID: 27192882656951439}
   heart: {fileID: 27192882656951439}
   targetVisual: {fileID: 5256804741832479153}
@@ -1530,11 +1563,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2330e02781c99a94bba147810d847aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seenSpeed: 1
+  seenSpeed: 0
   substractPerSecond: 5
   baseFillPerSecond: 5
   maxFillPerSecond: 10
-  barMaxCapacity: 100
+  barMaxCapacity: 50
   checkState: {fileID: 908810801637645102}
   chaseState: {fileID: 1869309124396401437}
   material: {fileID: 2100000, guid: 2d6153f16c74a7e469e929d4dbf72c8d, type: 2}

@@ -15,11 +15,13 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     
     private NavMeshAgent meshAgent;
     private PlayerController pController;
+    private EnemySeenHUD eHUD;
 
     [Header("DEBUG TEXT")]
     [SerializeField] private TextMeshProUGUI debugText;
 
     [Header("REFERENCES")]
+    [SerializeField] public Transform seenExclamationPos;
     [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
     [SerializeField] public Renderer targetVisual;
@@ -70,6 +72,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [HideInInspector] public bool ignorePlayerInMinVision;
     [HideInInspector] public bool isChasingPlayer;
     [HideInInspector] public bool killingPlayer;
+    [HideInInspector] public bool exclamationShown;
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
     [HideInInspector] public float distanceToPlayer;
@@ -86,6 +89,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         GameManager.GetInstance().GetPlayerController().AddEnemy(this);
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
         pController = GameManager.GetInstance().GetPlayerController();
+        eHUD = GameManager.GetInstance().GetEnemySeenHUD();
         inPlayerHearState = true;
         enemyPosBeforeMoving = Vector3.zero;
         prevoiusMat = targetVisual.material;
@@ -150,7 +154,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
                 SwitchToNextState(attackState);
             else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance && currentState != chaseState)
                 SwitchToNextState(chaseState);
-            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && currentState != seenState)
+            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && currentState != chaseState && currentState != seenState)
                 SwitchToNextState(seenState); 
         }
     }
@@ -262,6 +266,35 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     }
     
     public bool IsCharmed() => currentState == charmState;
+    
+    //----------------------------SEEN HUD FUNCTIONS-----------------------------
+    public void ActivateSeenArrow()
+    {
+        eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
+    }
+    public void UpdateSeenAmount(float amount, float maxAmount)
+    {
+        eHUD.UpdateArrowFillAmount(gameObject.GetInstanceID(), amount, maxAmount);
+    }
+    public void HideArrow()
+    {
+        eHUD.HideArrow(gameObject.GetInstanceID());
+    }
+
+    public void ShowExclamation()
+    {
+        eHUD.ShowExclamation(gameObject.GetInstanceID());
+    }
+
+    public void ActivateExclamation()
+    {
+        if (exclamationShown) return;
+        exclamationShown = true;
+        
+        if (lastState != seenState)
+            ActivateSeenArrow();
+        ShowExclamation();
+    }
    
     //---------------------------GENERAL FUNCTIONS-------------------------------
 
@@ -274,7 +307,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public void StopAgent() => meshAgent.ResetPath();
     public void SetLight(bool active) => lightSource.SetActive(active);
-
     public Vector3 GetEnemyVelocity() => meshAgent.velocity;
 
     public void ManualRotation(bool active)
