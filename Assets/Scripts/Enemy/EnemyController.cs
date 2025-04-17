@@ -278,9 +278,8 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     }
     public void HideArrow()
     {
-        if (lastState != seenState ||currentState == seenState) return;
-            
-        eHUD.HideArrow(gameObject.GetInstanceID());
+        if (lastState == seenState || currentState == seenState)
+            eHUD.HideArrow(gameObject.GetInstanceID());
     }
 
     public void ShowExclamation()

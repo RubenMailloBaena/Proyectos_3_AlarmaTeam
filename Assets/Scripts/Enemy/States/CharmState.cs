@@ -17,6 +17,7 @@ public class CharmState : State
     
     public override void InitializeState()
     {
+        eController.HideArrow();
         eController.renderer.material = material;
         eController.StopAgent();
         eController.SetAgentSpeed(charmSpeed);
