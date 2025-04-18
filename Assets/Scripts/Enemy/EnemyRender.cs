@@ -8,6 +8,8 @@ public class EnemyRender : MonoBehaviour
     [SerializeField] private Renderer eRenderer;
     [SerializeField] private Renderer targetVisual;
     [SerializeField] private Material lockedMat;
+    [SerializeField] private GameObject lightSource;
+
     private Material previousMat;
 
     public void SetRenderer()
@@ -32,4 +34,6 @@ public class EnemyRender : MonoBehaviour
         else
             targetVisual.material = previousMat;
     }
+    
+    public void SetLight(bool active) => lightSource.SetActive(active);
 }

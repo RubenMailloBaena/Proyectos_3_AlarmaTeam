@@ -1249,6 +1249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8167465397700286712}
   - component: {fileID: 2988693754222058349}
+  - component: {fileID: 3604509806120283806}
   - component: {fileID: 1616027638105557089}
   - component: {fileID: 6868808229459138712}
   - component: {fileID: 5017602444377308105}
@@ -1302,19 +1303,8 @@ MonoBehaviour:
   chaseState: {fileID: 1869309124396401437}
   attackState: {fileID: 5374991467294882211}
   charmState: {fileID: 155338100445197595}
-  interactDistance: 10
   isIdleEnemy: 0
   enemyType: 0
-  lightSource: {fileID: 2400503892314693966}
-  viewAngle: 60
-  maxViewDistance: 15
-  minViewDistance: 10.01
-  attackDistance: 10
-  minAngleDiffToRotate: 1
-  enemyEyesOffset: {x: 0, y: 1.5, z: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 448
   waypoints:
   - rotateEnemy: 1
     waitTime: 0
@@ -1324,14 +1314,34 @@ MonoBehaviour:
     waypoint: {fileID: 4005170822320818172}
   soundWasAnObject: 0
   inPlayerHearState: 1
-  isPlayerInVision: 0
-  ignorePlayerInMinVision: 0
   isChasingPlayer: 0
   killingPlayer: 0
   exclamationShown: 0
   soundPos: {x: 0, y: 0, z: 0}
   enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
+--- !u!114 &3604509806120283806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034548957631012766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee57c1d8b7e37b44e9dd0444f96d68d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAngle: 60
+  maxViewDistance: 15
+  minViewDistance: 10.01
+  attackDistance: 10
+  enemyEyesOffset: {x: 0, y: 1.5, z: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 448
   distanceToPlayer: 0
+  isPlayerInVision: 0
+  ignorePlayerInMinVision: 0
 --- !u!114 &1616027638105557089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1344,6 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25ba855de26a92348b8e32dcc506625e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactDistance: 10
 --- !u!114 &6868808229459138712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1359,6 +1370,7 @@ MonoBehaviour:
   eRenderer: {fileID: 5811706993926382402}
   targetVisual: {fileID: 5256804741832479153}
   lockedMat: {fileID: 2100000, guid: 266201ff5dd5a2e45bbe3ed304d0f2f1, type: 2}
+  lightSource: {fileID: 2400503892314693966}
 --- !u!114 &5017602444377308105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,6 +1383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8333fa997b45ab949afc8fad822d3c29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minAngleDiffToRotate: 1
   minDistanceToArrive: 0.3
 --- !u!136 &4210055942558311745
 CapsuleCollider:

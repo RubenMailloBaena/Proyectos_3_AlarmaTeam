@@ -24,7 +24,7 @@ public class HearState : State
         if (!eController.soundWasAnObject)
             eController.inPlayerHearState = true;
         else
-            eController.ignorePlayerInMinVision = true;
+            eController.Vision.ignorePlayerInMinVision = true;
          
         targetPos = eController.soundPos;
         
@@ -38,10 +38,10 @@ public class HearState : State
 
     public override State RunCurrentState()
     {
-        if (eController.RotateEnemy(targetDir, hearRotationSpeed))
+        if (eController.Movement.RotateEnemy(targetDir, hearRotationSpeed))
         {
             eController.inPlayerHearState = false;
-            eController.ignorePlayerInMinVision = false;
+            eController.Vision.ignorePlayerInMinVision = false;
             if (eController.soundWasAnObject)
                 return goToState;
             return lookAtState;

@@ -46,12 +46,12 @@ public class CheckState : State
         {
             if (!lookingLeft) //MIRAMOS A LA DERECHA 
             {
-                if (eController.RotateEnemy(rightLookDir, checkRotateSpeed))
+                if (eController.Movement.RotateEnemy(rightLookDir, checkRotateSpeed))
                     lookingLeft = true;
             }
             else //MIRAMOS A LA IZQUIERDA
             {
-                if (eController.RotateEnemy(leftLookDir, checkRotateSpeed))
+                if (eController.Movement.RotateEnemy(leftLookDir, checkRotateSpeed))
                 {
                     lookingLeft = false;
                     returningToStart = true; 
@@ -61,7 +61,7 @@ public class CheckState : State
         //QUIZAS QUITARLO
         else //CUANDO HEMOS MIRADO A LOS DOS LADOS, VOLVEMOS A MIRAR ADELANTE ANTES DE CAMBIAR DE ESTADO
         {
-            if (eController.RotateEnemy(startingForward, checkRotateSpeed))
+            if (eController.Movement.RotateEnemy(startingForward, checkRotateSpeed))
                 return returnState;
         }
         return this;

@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     
     private List<Waypoint> waypoints;
     private int waypointIndex;
+    [SerializeField] private float minAngleDiffToRotate = 5f;    
     [SerializeField] private float minDistanceToArrive = 0.3f;
 
     public void SetMovement(EnemyController enemyController)
@@ -111,6 +112,23 @@ public class EnemyMovement : MonoBehaviour
     {
         meshAgent.SetDestination(pController.GetPlayerPosition());
         return pController.GetPlayerPosition();
+    }
+    
+    public bool RotateEnemy(Vector3 lookDir, float rotationSpeed)
+    {
+        Quaternion targetDir = Quaternion.LookRotation(lookDir);
+        
+        //Miramos si ya estamos alineados 
+        float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
+        if (angleDiff < minAngleDiffToRotate)
+        {
+            transform.rotation = targetDir;
+            return true;
+        }
+        
+        //Si aun nos queda por girar seguimos 
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
+        return false;
     }
 }
 

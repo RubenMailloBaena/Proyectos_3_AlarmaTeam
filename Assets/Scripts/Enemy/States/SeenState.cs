@@ -32,12 +32,12 @@ public class SeenState : State
 
     public override State RunCurrentState()
     {
-        if (eController.isPlayerInVision)
+        if (eController.Vision.isPlayerInVision)
         {
             playerPos = eController.Movement.GoToPlayerPosition();
             float distanceToPlayer = Vector3.Distance(playerPos, transform.position);
 
-            fillRate = MapFunction(distanceToPlayer, eController.maxViewDistance, eController.minViewDistance,baseFillPerSecond,maxFillPerSecond);
+            fillRate = MapFunction(distanceToPlayer, eController.Vision.GetMaxViewDis(), eController.Vision.GetMinViewDis(),baseFillPerSecond,maxFillPerSecond);
             currentFillValue += fillRate * Time.deltaTime;
 
             if (currentFillValue >= barMaxCapacity)

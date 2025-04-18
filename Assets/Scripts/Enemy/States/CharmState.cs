@@ -29,7 +29,7 @@ public class CharmState : State
 
     public override State RunCurrentState()
     {
-        if (eController.RotateEnemy(direction, rotateSpeed))
+        if (eController.Movement.RotateEnemy(direction, rotateSpeed))
         {
             if (!setDestination)
             {

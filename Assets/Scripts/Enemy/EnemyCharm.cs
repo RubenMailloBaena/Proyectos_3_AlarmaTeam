@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,12 +76,15 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
     
     public bool IsCharmed() => eController.IsCharmed();
 
-    public float GetInteractDistance() => interactDistance;
-    
     public Vector3 GetPosition() => transform.position;
 
     public Vector3 GetLeverPosition() => targetLever.GetPosition();
 
     public void InteractLever() => targetLever.Interact();
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, interactDistance);
+    }
 }

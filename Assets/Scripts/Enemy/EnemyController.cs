@@ -36,21 +36,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
     public EnemyType enemyType;
-    [SerializeField] private GameObject lightSource;
-
-    [Header("ENEMY VISION CONE")] 
-    [SerializeField] private float viewAngle = 60f;
-    [SerializeField] public float maxViewDistance = 15f;   
-    [SerializeField] public float minViewDistance = 10f; 
-    [SerializeField] public float attackDistance = 5f; 
-    [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
-    [SerializeField] private float minAngleDiffToRotate = 5f;    
-    [SerializeField] private Vector3 enemyEyesOffset = new Vector3(0f, 1f, 0f);
-    
-    private Vector3 enemyPos;
-    
-    [Header("CANT SEE THROUGH")]
-    public LayerMask groundLayer;
 
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
@@ -58,29 +43,29 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     //VARIABLES
     [HideInInspector] public bool soundWasAnObject = true;
     [HideInInspector] public bool inPlayerHearState = true;
-    [HideInInspector] public bool isPlayerInVision;
-    [HideInInspector] public bool ignorePlayerInMinVision;
     [HideInInspector] public bool isChasingPlayer;
     [HideInInspector] public bool killingPlayer;
     [HideInInspector] public bool exclamationShown;
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
-    [HideInInspector] public float distanceToPlayer;
     
     //ENEMY COMPONENTS
     public EnemyMovement Movement { get; private set; }
     public EnemyRender Renderer { get; private set; }
     public EnemyCharm Charm { get; private set; }
+    public EnemyVision Vision { get; private set; }
 
     void Awake()
     {
         Movement = GetComponent<EnemyMovement>();
         Renderer = GetComponent<EnemyRender>();
         Charm = GetComponent<EnemyCharm>();
+        Vision = GetComponent<EnemyVision>();
 
         Movement.SetMovement(this);
         Renderer.SetRenderer();
         Charm.SetCharm(this);
+        Vision.SetVision(this);
         
         SwitchToNextState(idleState);
     }
@@ -98,7 +83,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     void Update()
     {
         RunStateMachine();
-        CanSeePlayer();
     }
 
     private void RunStateMachine()
@@ -124,41 +108,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         currentState?.InitializeState();
     }
 
-    private void CanSeePlayer()
-    {
-        if (currentState == charmState) return;
-        
-        Vector3 playerEyes = pController.GetPlayerEyesPosition();
-        enemyPos = transform.position + enemyEyesOffset;
-        distanceToPlayer = Vector3.Distance(enemyPos, playerEyes);
-
-        isPlayerInVision = false; 
-
-        //JUGADOR DENTRO DEL RANGO MINIMO DEL ENEMIGO
-        if (distanceToPlayer > maxViewDistance)
-            return;
-
-        Vector3 directionToPlayer = (playerEyes - enemyPos).normalized;
-
-        //EL JUGADOR ESTA DENTRO DE NUESTRO CONO DE VISION
-        if (Vector3.Angle(transform.forward, directionToPlayer) > viewAngle / 2f)
-            return;
-
-        //SI NO HAY PAREDES EN MEDIO, ESTAMOS VIENDO AL PLAYER
-        if (!Physics.Raycast(enemyPos, directionToPlayer, distanceToPlayer, groundLayer))
-        {
-            isPlayerInVision = true;
-            SetPositionBeforeMoving();
-            
-            if(distanceToPlayer <= attackDistance && currentState != attackState)
-                SwitchToNextState(attackState);
-            else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance && currentState != chaseState)
-                SwitchToNextState(chaseState);
-            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && currentState != chaseState && currentState != seenState)
-                SwitchToNextState(seenState); 
-        }
-    }
-    
     public void SetPositionBeforeMoving()
     {
         if (enemyPosBeforeMoving == Vector3.zero)
@@ -199,13 +148,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         Destroy(gameObject);
     }
     
-    //----------------------------MindControl FUNCTIONS-----------------------------
-    
-    public bool IsCharmed() => currentState == charmState;
-    public bool IsAttacking() => currentState == attackState;
-    public bool IsChasing() => currentState == chaseState;
-    public void SwitchToCharmState() => SwitchToNextState(charmState);
-    
     //----------------------------SEEN HUD FUNCTIONS-----------------------------
     public void ActivateSeenArrow()
     {
@@ -237,82 +179,16 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     }
    
     //---------------------------GENERAL FUNCTIONS-------------------------------
-
+    public bool IsCharmed() => currentState == charmState;
+    public bool IsAttacking() => currentState == attackState;
+    public bool IsChasing() => currentState == chaseState;
+    public bool InSeenState() => currentState == seenState;
+    public void SwitchToCharmState() => SwitchToNextState(charmState);
+    public void SwitchToAttackState() => SwitchToNextState(attackState);
+    public void SwitchToChaseState() => SwitchToNextState(chaseState);
+    public void SwitchToSeenState() => SwitchToNextState(seenState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
-    public void SetLight(bool active) => lightSource.SetActive(active);
-    
-
-    public bool RotateEnemy(Vector3 lookDir, float rotationSpeed)
-    {
-        Quaternion targetDir = Quaternion.LookRotation(lookDir);
-        
-        //Miramos si ya estamos alineados 
-        float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
-        if (angleDiff < minAngleDiffToRotate)
-        {
-            transform.rotation = targetDir;
-            return true;
-        }
-        
-        //Si aun nos queda por girar seguimos 
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
-        return false;
-    }
-    
-
-    public bool IsPointInVision(Vector3 targetPos)
-    {
-        Vector3 origin = transform.position + new Vector3(0, 1.5f, 0); 
-        Vector3 target = targetPos + new Vector3(0, 1.5f, 0); 
-    
-        Vector3 dir = (target - origin).normalized;
-        float distance = Vector3.Distance(origin, target);
-        
-        Debug.DrawRay(origin, dir * maxViewDistance, Color.green);
-
-        //ESTA MAS LEJOS QUE EL RANGO DE VISION MAXIMO
-        if (distance > maxViewDistance)
-            return false;
-
-        //SI ESTA FUERA DEL CONO DE VISION
-        if (Vector3.Angle(transform.forward, dir) > viewAngle / 2f)
-            return false;
-
-        //NO HAY NADA ENTRE MEDIO
-        return !Physics.Raycast(origin, dir, distance, groundLayer); 
-    }
-    
-
     public List<Waypoint> getWayPoints() => waypoints;
-
-
-    private void OnDrawGizmosSelected()
-    {
-        //MAX DISTANCE
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, maxViewDistance);
-        
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, minViewDistance);
-        
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackDistance);
-        
-        if(Charm != null)
-        {
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, Charm.GetInteractDistance());
-        }
-        
-        //VISION CONE
-        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * maxViewDistance;
-        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward * maxViewDistance;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
-    }
-
     public Vector3 GetPosition() => transform.position;
     public Transform GetTransform() => transform;
     public void SetVisiblity(bool active) => heart.SetActive(active);

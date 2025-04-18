@@ -42,11 +42,11 @@ public class AttackState : State
         float distanceToPlayer = Vector3.Distance(transform.position, playerPos);
 
         Vector3 dir = (playerPos - transform.position).normalized;
-        eController.RotateEnemy(dir, rotationSpeed);
+        eController.Movement.RotateEnemy(dir, rotationSpeed);
         
-        if (eController.isPlayerInVision && distanceToPlayer <= eController.attackDistance)
+        if (eController.Vision.isPlayerInVision && distanceToPlayer <= eController.Vision.GetAttackDis())
         {
-            eController.SetLight(true);
+            eController.Renderer.SetLight(true);
             pController.TakeDamage(damage);
             if (pController.IsPlayerDead)
                 StartCoroutine(KillPlayer());

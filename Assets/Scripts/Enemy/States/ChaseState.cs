@@ -24,7 +24,7 @@ public class ChaseState : State
         eController.ActivateExclamation();
         eController.Renderer.ChangeMaterial(material);
         eController.Movement.ManualRotation(false);
-        eController.SetLight(false);
+        eController.Renderer.SetLight(false);
         switch (eController.enemyType)
         {
             case EnemyType.Knight: eController.Movement.SetAgentSpeed(knightSpeed);
@@ -40,7 +40,7 @@ public class ChaseState : State
 
     public override State RunCurrentState()
     {
-        if (eController.isPlayerInVision)
+        if (eController.Vision.isPlayerInVision)
             currentTime = chaseTimeAfterLoosingVision;
         
         if (currentTime <= 0.0f)

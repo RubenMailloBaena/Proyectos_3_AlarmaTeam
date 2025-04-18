@@ -31,7 +31,7 @@ public class IdleState : State
     public override State RunCurrentState()
     {
         if(lookDir != Vector3.zero) 
-            eController.RotateEnemy(lookDir, idleRotationSpeed);
+            eController.Movement.RotateEnemy(lookDir, idleRotationSpeed);
         
         if(eController.isIdleEnemy) return this;
         

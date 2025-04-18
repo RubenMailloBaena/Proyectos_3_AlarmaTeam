@@ -21,7 +21,7 @@ public class LookAtState : State
             eController.Movement.SetAgentSpeed(goToSpeed);
         targetPos = eController.Movement.GoToSoundSource();
 
-        if (eController.IsPointInVision(targetPos))
+        if (eController.Vision.IsPointInVision(targetPos))
         {
             eController.Movement.StopAgent();
             eController.SwitchToNextState(checkState);
@@ -30,7 +30,7 @@ public class LookAtState : State
 
     public override State RunCurrentState()
     {
-        if (eController.IsPointInVision(targetPos) || eController.Movement.GetEnemyVelocity() == Vector3.zero)
+        if (eController.Vision.IsPointInVision(targetPos) || eController.Movement.GetEnemyVelocity() == Vector3.zero)
             return checkState;
         return this;
     }
