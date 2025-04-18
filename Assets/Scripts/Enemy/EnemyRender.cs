@@ -24,6 +24,7 @@ public class EnemyRender : MonoBehaviour
 
     public void SetTargetVisualActive(bool active)
     {
+        if (targetVisual == null) return;
         targetVisual.enabled = active;
     }
 
