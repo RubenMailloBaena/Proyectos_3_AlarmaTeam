@@ -15,7 +15,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float minAngleDiffToRotate = 5f;    
     [SerializeField] private float minDistanceToArrive = 0.3f;
     
-    [HideInInspector] public Vector3 enemyPosBeforeMoving;
+    private Vector3 enemyPosBeforeMoving;
 
     public void SetMovement(EnemyController enemyController)
     {
@@ -75,6 +75,12 @@ public class EnemyMovement : MonoBehaviour
         meshAgent.SetDestination(target);
         return target;
     }
+    
+    public Vector3 GoToPreviousPosition()
+    {
+        meshAgent.SetDestination(enemyPosBeforeMoving);
+        return enemyPosBeforeMoving;
+    }
 
     public float GetPathLength(Vector3 target)
     {
@@ -91,30 +97,6 @@ public class EnemyMovement : MonoBehaviour
             return pathLength;
         }
         return -1f;
-    }
-    
-    public Vector3 GoToLever()
-    {
-        meshAgent.SetDestination(eController.Charm.GetLeverPosition());
-        return eController.Charm.GetLeverPosition();
-    }
-
-    public Vector3 GoToSoundSource()
-    {
-        meshAgent.SetDestination(eController.Hear.soundPos);
-        return eController.Hear.soundPos;
-    }
-
-    public Vector3 GoToPreviousPosition()
-    {
-        meshAgent.SetDestination(enemyPosBeforeMoving);
-        return enemyPosBeforeMoving;
-    }
-
-    public Vector3 GoToPlayerPosition()
-    {
-        meshAgent.SetDestination(pController.GetPlayerPosition());
-        return pController.GetPlayerPosition();
     }
     
     public bool RotateEnemy(Vector3 lookDir, float rotationSpeed)
@@ -138,6 +120,12 @@ public class EnemyMovement : MonoBehaviour
     {
         if (enemyPosBeforeMoving == Vector3.zero)
             enemyPosBeforeMoving = transform.position;
+    }
+
+    public Vector3 EnemyPosBeforeMoving
+    {
+        get => enemyPosBeforeMoving;
+        set => enemyPosBeforeMoving = value;
     }
 }
 

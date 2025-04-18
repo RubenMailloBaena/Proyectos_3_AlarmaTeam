@@ -18,9 +18,9 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
     public void SetTargetVisual(bool active)
     {
         if (eController.IsAttacking())
-            eController.Renderer.SetTargetVisualActive(false);
+            eController.SetTargetVisualActive(false);
         else
-            eController.Renderer.SetTargetVisualActive(active);
+            eController.SetTargetVisualActive(active);
     }
 
     public bool IsInChaseOrAttack()
@@ -62,7 +62,7 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
     {
         targetLever = lever;
         SetLockedVisual(true);
-        eController.Movement.SetPositionBeforeMoving();
+        eController.SetPositionBeforeMoving();
         eController.SwitchToCharmState();
         SetTargetVisual(false);
     }
@@ -71,7 +71,7 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
     public void SetLockedVisual(bool active)
     {
         targetLever.isLocked = active;
-        eController.Renderer.SetLockedVisual(active);
+        eController.SetLockedVisual(active);
     }
     
     public bool IsCharmed() => eController.IsCharmed();

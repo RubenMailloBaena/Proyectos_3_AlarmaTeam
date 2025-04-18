@@ -23,15 +23,15 @@ public class IdleState : State
 
     public override void InitializeState()
     {
-        waitTime = eController.Movement.GetWaitTime();
-        lookDir = eController.Movement.GetLookDirection();
-        eController.Renderer.ChangeMaterial(material);
+        waitTime = eController.GetWaitTime();
+        lookDir = eController.GetLookDirection();
+        eController.ChangeMaterial(material);
     }
     
     public override State RunCurrentState()
     {
         if(lookDir != Vector3.zero) 
-            eController.Movement.RotateEnemy(lookDir, idleRotationSpeed);
+            eController.RotateEnemy(lookDir, idleRotationSpeed);
         
         if(eController.isIdleEnemy) return this;
         
@@ -39,7 +39,7 @@ public class IdleState : State
 
         if (waitTime <= 0.0f)
         {
-            eController.Movement.IncrementIndex();
+            eController.IncrementIndex();
             return patrolState;
         }
         

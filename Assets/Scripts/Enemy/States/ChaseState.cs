@@ -22,14 +22,14 @@ public class ChaseState : State
     public override void InitializeState()
     {
         eController.ActivateExclamation();
-        eController.Renderer.ChangeMaterial(material);
-        eController.Movement.ManualRotation(false);
-        eController.Renderer.SetLight(false);
+        eController.ChangeMaterial(material);
+        eController.ManualRotation(false);
+        eController.SetLight(false);
         switch (eController.enemyType)
         {
-            case EnemyType.Knight: eController.Movement.SetAgentSpeed(knightSpeed);
+            case EnemyType.Knight: eController.SetAgentSpeed(knightSpeed);
                 break;
-            default: eController.Movement.SetAgentSpeed(priestSpeed); 
+            default: eController.SetAgentSpeed(priestSpeed); 
                 break;
         }
         eController.isChasingPlayer = true;
@@ -40,7 +40,7 @@ public class ChaseState : State
 
     public override State RunCurrentState()
     {
-        if (eController.Vision.isPlayerInVision)
+        if (eController.IsPlayerInVision())
             currentTime = chaseTimeAfterLoosingVision;
         
         if (currentTime <= 0.0f)
@@ -57,11 +57,9 @@ public class ChaseState : State
         return this;
     }
 
-
-
     private void SetSoundPosition()
     {
-        playerPos = eController.Movement.GoToPlayerPosition();
-        eController.Hear.soundPos = playerPos;
+        playerPos = eController.GoToPlayerPosition();
+        eController.SetSoundPos(playerPos);
     }
 }

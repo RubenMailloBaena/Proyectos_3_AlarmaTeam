@@ -7,9 +7,9 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
 {
     private EnemyController eController;
 
-    [HideInInspector] public bool soundWasAnObject = true;
-    [HideInInspector] public Vector3 soundPos;
-    [HideInInspector] public bool inPlayerHearState = true;
+    private bool soundWasAnObject = true;
+    private Vector3 soundPos;
+    private bool inPlayerHearState = true;
     
     public void SetHear(EnemyController enemyController)
     {
@@ -24,12 +24,12 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
             || eController.isChasingPlayer || eController.IsAttacking() || eController.IsCharmed()) 
             return;
 
-        eController.Movement.SetPositionBeforeMoving();
+        eController.SetPositionBeforeMoving();
         
         soundPos = soundPoint;
         soundPos.y = transform.position.y;
 
-        if (!soundWasAnObject && !isObject && !inPlayerHearState) 
+        if (ShouldIgnoreSound(isObject)) 
         {
             eController.SwitchToLookAtState();
             return;
@@ -39,6 +39,11 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
         eController.SwitchToHearState();
     }
 
+    private bool ShouldIgnoreSound(bool isObject)
+    {
+        return !soundWasAnObject && !isObject && !inPlayerHearState;
+    }
+
     private void OnDestroy()
     {
         GameManager.GetInstance().GetPlayerController().RemoveHearEnemy(this);
@@ -46,5 +51,22 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
 
     public Vector3 GetPosition() => transform.position;
     
+    public bool SoundWasAnObject
+    {
+        get => soundWasAnObject;
+        set => soundWasAnObject = value;
+    }
+
+    public Vector3 SoundPos
+    {
+        get => soundPos;
+        set => soundPos = value;
+    }
+
+    public bool InPlayerHearState
+    {
+        get => inPlayerHearState;
+        set => inPlayerHearState = value;
+    }
     
 }

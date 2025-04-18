@@ -15,14 +15,14 @@ public class GoToState : State
     
     public override void InitializeState()
     {
-        eController.Renderer.ChangeMaterial(material);
-        eController.Movement.SetAgentSpeed(goToSpeed);
-        targetPos = eController.Movement.GoToSoundSource();
+        eController.ChangeMaterial(material);
+        eController.SetAgentSpeed(goToSpeed);
+        targetPos = eController.GoToSoundSource();
     }
 
     public override State RunCurrentState()
     {
-        if (eController.Movement.ArrivedToPosition(targetPos))
+        if (eController.ArrivedToPosition(targetPos))
             return checkState;
         return this;
     }

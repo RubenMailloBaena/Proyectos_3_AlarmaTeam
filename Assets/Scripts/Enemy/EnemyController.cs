@@ -46,11 +46,11 @@ public class EnemyController : MonoBehaviour, IVisible
     
     
     //ENEMY COMPONENTS
-    public EnemyMovement Movement { get; private set; }
-    public EnemyRender Renderer { get; private set; }
-    public EnemyCharm Charm { get; private set; }
-    public EnemyVision Vision { get; private set; }
-    public EnemyHear Hear { get; private set; }
+    private EnemyMovement Movement { get; set; }
+    private EnemyRender Renderer { get; set; }
+    private EnemyCharm Charm { get; set; }
+    private EnemyVision Vision { get; set; }
+    private EnemyHear Hear { get; set; }
 
     void Awake()
     {
@@ -119,20 +119,67 @@ public class EnemyController : MonoBehaviour, IVisible
     public List<Waypoint> getWayPoints() => waypoints;
     private void OnDestroy() => pController.RemoveVisible(this);
     
-    //----------------------------VISION FUNCTIONS-----------------------------
+    //----------------------------ENEMY VISION FUNCTIONS-----------------------------
+    public bool IsPointInVision(Vector3 target) => Vision.IsPointInVision(target);
+    public float GetAttackDis() => Vision.GetAttackDis();
+    public float GetMaxViewDis() => Vision.GetMaxViewDis();
+    public float GetMinViewDis() => Vision.GetMinViewDis();
+    public bool IsPlayerInVision() => Vision.IsPlayerInVision;
+    public bool IgnorePlayerInMinVision() => Vision.IgnorePlayerInMinVision;
+    public bool SetIgnorePlayerInMinVision(bool b) => Vision.IgnorePlayerInMinVision = b;
+    
+    //----------------------------IVISION FUNCTIONS-----------------------------
     public void SetVisiblity(bool active) => heart.SetActive(active);
     public Vector3 GetVisionPosition() => transform.position;
+    
+    //----------------------------HEAR FUNCTIONS-----------------------------
+    public Vector3 SoundPos() => Hear.SoundPos;
+    public Vector3 SetSoundPos(Vector3 soundPos) => Hear.SoundPos = soundPos;
+    public bool SoundWasAnObject() => Hear.SoundWasAnObject;
+    public bool SetSoundWasAnObject(bool b) => Hear.SoundWasAnObject = b;
+    public bool InPlayerHearState() => Hear.InPlayerHearState;
+    public bool SetInPlayerHearState(bool b) => Hear.InPlayerHearState = b;
+    
+    //----------------------------CHARM FUNCTIONS-----------------------------
+    public Vector3 GetLeverPosition() => Charm.GetPosition();
+    public void InteractLever() => Charm.InteractLever();
+    public void SetCharmLockedVisual(bool active) => Charm.SetLockedVisual(active);
+    
+    //----------------------------RENDER FUNCTIONS-----------------------------
+    public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);
+    public void SetTargetVisualActive(bool active) => Renderer.SetTargetVisualActive(active);
+    public void SetLockedVisual(bool active) => Renderer.SetLockedVisual(active);
+    public void SetLight(bool active) => Renderer.SetLight(active);
+    
+    //----------------------------MOVEMENT FUNCTIONS-----------------------------
+    public float GetWaitTime() => Movement.GetWaitTime();
+    public Vector3 GoToWaypoint() => Movement.GoToWaypoint();
+    public Vector3 GetLookDirection() => Movement.GetLookDirection();
+    public bool ArrivedToPosition(Vector3 position) => Movement.ArrivedToPosition(position);
+    public void IncrementIndex() => Movement.IncrementIndex();
+    public void SetAgentSpeed(float speed) => Movement.SetAgentSpeed(speed);
+    public void StopAgent() => Movement.StopAgent();
+    public Vector3 GetEnemyVelocity() => Movement.GetEnemyVelocity();
+    public void ManualRotation(bool active) => Movement.ManualRotation(active);
+    public Vector3 GoToLever() => Movement.GoToDestination(Charm.GetLeverPosition());
+    public Vector3 GoToSoundSource() => Movement.GoToDestination(Hear.SoundPos);
+    public Vector3 GoToPreviousPosition() => Movement.GoToPreviousPosition();
+    public Vector3 GoToPlayerPosition() => Movement.GoToDestination(pController.GetPlayerPosition());
+    public float GetPathLength(Vector3 target) => Movement.GetPathLength(target);
+    public bool RotateEnemy(Vector3 lookDir, float rotationSpeed) => Movement.RotateEnemy(lookDir, rotationSpeed);
+    public void SetPositionBeforeMoving() => Movement.SetPositionBeforeMoving();
+    public Vector3 SetEnemyPosBeforeMoving(Vector3 pos) => Movement.EnemyPosBeforeMoving = pos;
     
     //----------------------------SEEN HUD FUNCTIONS-----------------------------
     public void ActivateSeenArrow() => eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
     public void UpdateSeenAmount(float amount, float maxAmount) => eHUD.UpdateArrowFillAmount(gameObject.GetInstanceID(), amount, maxAmount);
+    public void ShowExclamation() => eHUD.ShowExclamation(gameObject.GetInstanceID());
     public void HideArrow()
     {
         if (lastState == seenState || currentState == seenState)
             eHUD.HideArrow(gameObject.GetInstanceID());
     }
     
-    public void ShowExclamation() => eHUD.ShowExclamation(gameObject.GetInstanceID());
     
     public void ActivateExclamation()
     {

@@ -22,8 +22,8 @@ public class AttackState : State
     public override void InitializeState()
     {
         eController.ActivateExclamation();
-        eController.Renderer.ChangeMaterial(material);
-        eController.Movement.ManualRotation(true);
+        eController.ChangeMaterial(material);
+        eController.ManualRotation(true);
         eController.isChasingPlayer = false;
         pController = GameManager.GetInstance().GetPlayerController();
         
@@ -31,22 +31,22 @@ public class AttackState : State
             StartCoroutine(KillPlayer());
         else
         {
-            eController.Movement.SetAgentSpeed(priestSpeed);
-            playerPos = eController.Movement.GoToPlayerPosition();
+            eController.SetAgentSpeed(priestSpeed);
+            playerPos = eController.GoToPlayerPosition();
         }
     }
 
     public override State RunCurrentState()
     {
-        playerPos = eController.Movement.GoToPlayerPosition();
+        playerPos = eController.GoToPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPos);
 
         Vector3 dir = (playerPos - transform.position).normalized;
-        eController.Movement.RotateEnemy(dir, rotationSpeed);
+        eController.RotateEnemy(dir, rotationSpeed);
         
-        if (eController.Vision.isPlayerInVision && distanceToPlayer <= eController.Vision.GetAttackDis())
+        if (eController.IsPlayerInVision() && distanceToPlayer <= eController.GetAttackDis())
         {
-            eController.Renderer.SetLight(true);
+            eController.SetLight(true);
             pController.TakeDamage(damage);
             if (pController.IsPlayerDead)
                 StartCoroutine(KillPlayer());
@@ -59,7 +59,7 @@ public class AttackState : State
     {
         Transform playerTrans = GameManager.GetInstance().GetPlayerController().GetPlayerTransform();
         eController.killingPlayer = true;
-        eController.Movement.StopAgent();
+        eController.StopAgent();
 
         Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
         directionToEnemy.y = 0f;

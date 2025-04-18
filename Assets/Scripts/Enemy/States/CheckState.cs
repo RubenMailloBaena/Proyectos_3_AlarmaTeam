@@ -20,10 +20,10 @@ public class CheckState : State
     
     public override void InitializeState()
     {
-        eController.Renderer.ChangeMaterial(material);
-        eController.Hear.soundWasAnObject = true; //RESTART PLAYER HEAR
+        eController.ChangeMaterial(material);
+        eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
-        eController.Movement.StopAgent();
+        eController.StopAgent();
 
         startingForward = transform.forward;
         rightLookDir = Quaternion.Euler(0, checkAngle, 0) * startingForward;
@@ -46,12 +46,12 @@ public class CheckState : State
         {
             if (!lookingLeft) //MIRAMOS A LA DERECHA 
             {
-                if (eController.Movement.RotateEnemy(rightLookDir, checkRotateSpeed))
+                if (eController.RotateEnemy(rightLookDir, checkRotateSpeed))
                     lookingLeft = true;
             }
             else //MIRAMOS A LA IZQUIERDA
             {
-                if (eController.Movement.RotateEnemy(leftLookDir, checkRotateSpeed))
+                if (eController.RotateEnemy(leftLookDir, checkRotateSpeed))
                 {
                     lookingLeft = false;
                     returningToStart = true; 
@@ -61,7 +61,7 @@ public class CheckState : State
         //QUIZAS QUITARLO
         else //CUANDO HEMOS MIRADO A LOS DOS LADOS, VOLVEMOS A MIRAR ADELANTE ANTES DE CAMBIAR DE ESTADO
         {
-            if (eController.Movement.RotateEnemy(startingForward, checkRotateSpeed))
+            if (eController.RotateEnemy(startingForward, checkRotateSpeed))
                 return returnState;
         }
         return this;

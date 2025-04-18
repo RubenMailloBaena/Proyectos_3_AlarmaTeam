@@ -16,21 +16,21 @@ public class LookAtState : State
     public override void InitializeState()
     {
         eController.exclamationShown = false;
-        eController.Renderer.ChangeMaterial(material);
+        eController.ChangeMaterial(material);
         if(!eController.isChasingPlayer)
-            eController.Movement.SetAgentSpeed(goToSpeed);
-        targetPos = eController.Movement.GoToSoundSource();
+            eController.SetAgentSpeed(goToSpeed);
+        targetPos = eController.GoToSoundSource();
 
-        if (eController.Vision.IsPointInVision(targetPos))
+        if (eController.IsPointInVision(targetPos))
         {
-            eController.Movement.StopAgent();
+            eController.StopAgent();
             eController.SwitchToNextState(checkState);
         }
     }
 
     public override State RunCurrentState()
     {
-        if (eController.Vision.IsPointInVision(targetPos) || eController.Movement.GetEnemyVelocity() == Vector3.zero)
+        if (eController.IsPointInVision(targetPos) || eController.GetEnemyVelocity() == Vector3.zero)
             return checkState;
         return this;
     }

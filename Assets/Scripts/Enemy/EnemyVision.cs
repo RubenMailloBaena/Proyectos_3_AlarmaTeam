@@ -20,9 +20,9 @@ public class EnemyVision : MonoBehaviour
     [Header("CANT SEE THROUGH")]
     public LayerMask groundLayer;
     
-    [HideInInspector] public float distanceToPlayer;
-    [HideInInspector] public bool isPlayerInVision;
-    [HideInInspector] public bool ignorePlayerInMinVision;
+    private float distanceToPlayer;
+    private bool isPlayerInVision;
+    private bool ignorePlayerInMinVision;
 
     public void SetVision(EnemyController enemyController)
     {
@@ -59,7 +59,7 @@ public class EnemyVision : MonoBehaviour
         if (!Physics.Raycast(enemyPos, directionToPlayer, distanceToPlayer, groundLayer))
         {
             isPlayerInVision = true;
-            eController.Movement.SetPositionBeforeMoving();
+            eController.SetPositionBeforeMoving();
             
             if(distanceToPlayer <= attackDistance && !eController.IsAttacking())
                 eController.SwitchToAttackState();
@@ -116,4 +116,22 @@ public class EnemyVision : MonoBehaviour
     public float GetAttackDis() => attackDistance;
     public float GetMaxViewDis() => maxViewDistance;
     public float GetMinViewDis() => minViewDistance;
+    
+    public float DistanceToPlayer
+    {
+        get => distanceToPlayer;
+        set => distanceToPlayer = value;
+    }
+
+    public bool IsPlayerInVision
+    {
+        get => isPlayerInVision;
+        set => isPlayerInVision = value;
+    }
+
+    public bool IgnorePlayerInMinVision
+    {
+        get => ignorePlayerInMinVision;
+        set => ignorePlayerInMinVision = value;
+    }
 }
