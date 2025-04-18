@@ -13,7 +13,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 {
     private State currentState, nextState, lastState;
     
-    private NavMeshAgent meshAgent;
     private PlayerController pController;
     private EnemySeenHUD eHUD;
 
@@ -24,9 +23,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [SerializeField] public Transform seenExclamationPos;
     [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
-    [SerializeField] public Renderer targetVisual;
-    [SerializeField] public Material lockedMat;
-    private Material prevoiusMat;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -38,7 +34,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [SerializeField] private CharmState charmState;
 
     [Header("ENEMY OPTIONS")] 
-    public float interactDistance = 10f;
     public bool isIdleEnemy;
     public EnemyType enemyType;
     [SerializeField] private GameObject lightSource;
@@ -59,11 +54,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     [Header("WAY POINTS")] 
     [SerializeField] private List<Waypoint> waypoints;
-    private int waypointIndex;
-    private float minDistanceToArrive = 0.3f;
-
-    [Header("ENEMY RENDERER")]
-    public Renderer renderer;
     
     //VARIABLES
     [HideInInspector] public bool soundWasAnObject = true;
@@ -76,11 +66,22 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [HideInInspector] public Vector3 soundPos;
     [HideInInspector] public Vector3 enemyPosBeforeMoving;
     [HideInInspector] public float distanceToPlayer;
-    [HideInInspector] public IInteractable targetLever;
+    
+    //ENEMY COMPONENTS
+    public EnemyMovement Movement { get; private set; }
+    public EnemyRender Renderer { get; private set; }
+    public EnemyCharm Charm { get; private set; }
 
     void Awake()
     {
-        meshAgent = GetComponent<NavMeshAgent>();
+        Movement = GetComponent<EnemyMovement>();
+        Renderer = GetComponent<EnemyRender>();
+        Charm = GetComponent<EnemyCharm>();
+
+        Movement.SetMovement(this);
+        Renderer.SetRenderer();
+        Charm.SetCharm(this);
+        
         SwitchToNextState(idleState);
     }
 
@@ -92,7 +93,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         eHUD = GameManager.GetInstance().GetEnemySeenHUD();
         inPlayerHearState = true;
         enemyPosBeforeMoving = Vector3.zero;
-        prevoiusMat = targetVisual.material;
     }
 
     void Update()
@@ -159,7 +159,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         }
     }
     
-    private void SetPositionBeforeMoving()
+    public void SetPositionBeforeMoving()
     {
         if (enemyPosBeforeMoving == Vector3.zero)
             enemyPosBeforeMoving = transform.position;
@@ -200,72 +200,11 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     }
     
     //----------------------------MindControl FUNCTIONS-----------------------------
-
-    public void SetTargetVisual(bool active)
-    {
-        //if (enemyType == EnemyType.Knight || currentState == attackState || IsCharmed())
-        if (enemyType == EnemyType.Knight || currentState == attackState)
-            targetVisual.enabled = false;
-        else
-            targetVisual.enabled = active;
-    }
-
-    public bool IsInChaseOrAttack()
-    {
-        if (currentState == attackState || currentState == chaseState)
-        {
-            SetTargetVisual(false);
-            return true;
-        }
-        return false;
-    }
-
-    public List<IInteractable> ActivateIntarectables()
-    {
-        List<IInteractable> interactables = new List<IInteractable>();
-        foreach (IInteractable lever in GameManager.GetInstance().GetInteractables())
-        {
-            float distance = Vector3.Distance(transform.position, lever.GetPosition());
-
-            if (distance <= interactDistance)
-            {
-                lever.SelectObject(true);
-                interactables.Add(lever);
-            }
-            else
-                lever.SelectObject(false);
-        }
-
-        return interactables;
-    }
-
-    public void ClearIntarectables()
-    {
-        foreach (IInteractable lever in GameManager.GetInstance().GetInteractables())
-            lever.SelectObject(false);
-    }
-
-    public void SetCharmedState(IInteractable lever)
-    {
-        print("CHARMED");
-        targetLever = lever;
-        SetLockedVisual(true);
-        SetPositionBeforeMoving();
-        SwitchToNextState(charmState);
-        SetTargetVisual(false);
-    }
-
-    public void SetLockedVisual(bool active)
-    {
-        targetLever.isLocked = active;
-
-        if (active)
-            targetVisual.material = lockedMat;
-        else
-            targetVisual.material = prevoiusMat;
-    }
     
     public bool IsCharmed() => currentState == charmState;
+    public bool IsAttacking() => currentState == attackState;
+    public bool IsChasing() => currentState == chaseState;
+    public void SwitchToCharmState() => SwitchToNextState(charmState);
     
     //----------------------------SEEN HUD FUNCTIONS-----------------------------
     public void ActivateSeenArrow()
@@ -299,67 +238,9 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
    
     //---------------------------GENERAL FUNCTIONS-------------------------------
 
-    public void SetAgentSpeed(float speed)
-    {
-        if (isChasingPlayer) return;
-        meshAgent.speed = speed;
-    }
-
     public void ReturnToLastState() => SwitchToNextState(lastState);
-    public void StopAgent() => meshAgent.ResetPath();
     public void SetLight(bool active) => lightSource.SetActive(active);
-    public Vector3 GetEnemyVelocity() => meshAgent.velocity;
-
-    public void ManualRotation(bool active)
-    {
-        meshAgent.updateRotation = active;
-    }
-
-    public float GetWaitTime()
-    {
-        if (waypoints.Count == 0) 
-            return 0.0f;
-        return waypoints[waypointIndex].waitTime;
-    }
-   
-    public Vector3 GoToWaypoint()
-    {
-        Vector3 pos = waypoints[waypointIndex].Position();
-        meshAgent.SetDestination(pos);
-        return pos;
-    }
-
-    public Vector3 GoToLever()
-    {
-        meshAgent.SetDestination(targetLever.GetPosition());
-        return targetLever.GetPosition();
-    }
-
-    public Vector3 GoToSoundSource()
-    {
-        meshAgent.SetDestination(soundPos);
-        return soundPos;
-    }
-
-    public Vector3 GoToPreviousPosition()
-    {
-        meshAgent.SetDestination(enemyPosBeforeMoving);
-        return enemyPosBeforeMoving;
-    }
-
-    public Vector3 GoToPlayerPosition()
-    {
-        meshAgent.SetDestination(pController.GetPlayerPosition());
-        return pController.GetPlayerPosition();
-    }
-
-    public Vector3 GetLookDirection()
-    {
-        if (!waypoints[waypointIndex].rotateEnemy) 
-            return Vector3.zero;
-
-        return waypoints[waypointIndex].Direction();
-    }
+    
 
     public bool RotateEnemy(Vector3 lookDir, float rotationSpeed)
     {
@@ -377,11 +258,7 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
         return false;
     }
-   
-    public bool ArrivedToPosition(Vector3 position)
-    {
-        return Vector3.Distance(transform.position, position) <= minDistanceToArrive;
-    }
+    
 
     public bool IsPointInVision(Vector3 targetPos)
     {
@@ -405,29 +282,8 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         return !Physics.Raycast(origin, dir, distance, groundLayer); 
     }
     
-    public void IncrementIndex()
-    {
-        waypointIndex++;
-        if (waypointIndex >= waypoints.Count)
-            waypointIndex = 0;
-    }
 
-    public float GetPathLegth(Vector3 targetPos)
-    {
-        NavMeshPath path = new NavMeshPath();
-
-        if (meshAgent.CalculatePath(targetPos, path) && path.status == NavMeshPathStatus.PathComplete) //Exists a path
-        {
-            float pathLength = 0.0f;
-            for (int i = 1; i < path.corners.Length; i++)
-            {
-                pathLength += Vector3.Distance(path.corners[i - 1], path.corners[i]);
-            }
-            Debug.LogWarning("Distance to sound: " + pathLength);
-            return pathLength;
-        }
-        return -1f; //No path available
-    }
+    public List<Waypoint> getWayPoints() => waypoints;
 
 
     private void OnDrawGizmosSelected()
@@ -442,8 +298,11 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
         
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, interactDistance);
+        if(Charm != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, Charm.GetInteractDistance());
+        }
         
         //VISION CONE
         Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * maxViewDistance;
@@ -467,12 +326,4 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
 
 
-[Serializable]
-public class Waypoint
-{
-    public bool rotateEnemy;
-    public float waitTime = 0.0f;
-    public Transform waypoint;
-    public Vector3 Position() => waypoint.position;
-    public Vector3 Direction() => waypoint.forward;
-}
+

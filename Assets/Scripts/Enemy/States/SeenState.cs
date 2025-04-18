@@ -21,12 +21,12 @@ public class SeenState : State
     public Material material;
     public override void InitializeState()
     {
-        eController.renderer.material = material;
+        eController.Renderer.ChangeMaterial(material);
         eController.ActivateSeenArrow();
         if (eController.isChasingPlayer)
             eController.SwitchToNextState(chaseState);
         
-        eController.SetAgentSpeed(seenSpeed);
+        eController.Movement.SetAgentSpeed(seenSpeed);
         currentFillValue = baseFillPerSecond;
     }
 
@@ -34,7 +34,7 @@ public class SeenState : State
     {
         if (eController.isPlayerInVision)
         {
-            playerPos = eController.GoToPlayerPosition();
+            playerPos = eController.Movement.GoToPlayerPosition();
             float distanceToPlayer = Vector3.Distance(playerPos, transform.position);
 
             fillRate = MapFunction(distanceToPlayer, eController.maxViewDistance, eController.minViewDistance,baseFillPerSecond,maxFillPerSecond);

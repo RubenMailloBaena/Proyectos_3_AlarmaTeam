@@ -19,7 +19,7 @@ public class HearState : State
     public override void InitializeState()
     {
         eController.HideArrow();
-        eController.renderer.material = material;
+        eController.Renderer.ChangeMaterial(material);
 
         if (!eController.soundWasAnObject)
             eController.inPlayerHearState = true;
@@ -29,10 +29,10 @@ public class HearState : State
         targetPos = eController.soundPos;
         
         //SI el path esta muy lejos para llegar, ingoramos el sonido
-        if(eController.GetPathLegth(targetPos) > maxDistanceToIgnore)
+        if(eController.Movement.GetPathLength(targetPos) > maxDistanceToIgnore)
             eController.ReturnToLastState();
 
-        eController.StopAgent();
+        eController.Movement.StopAgent();
         targetDir = (targetPos - transform.position).normalized;
     }
 

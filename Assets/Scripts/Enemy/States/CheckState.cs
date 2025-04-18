@@ -20,10 +20,10 @@ public class CheckState : State
     
     public override void InitializeState()
     {
-        eController.renderer.material = material;
+        eController.Renderer.ChangeMaterial(material);
         eController.soundWasAnObject = true; //RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
-        eController.StopAgent();
+        eController.Movement.StopAgent();
 
         startingForward = transform.forward;
         rightLookDir = Quaternion.Euler(0, checkAngle, 0) * startingForward;

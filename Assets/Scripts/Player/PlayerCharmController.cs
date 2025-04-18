@@ -24,10 +24,10 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     [SerializeField] private LayerMask allLayers;
     [SerializeField] private GameObject visionCircle;
 
-    private IEnemyInteractions hoveredTarget;
-    private IEnemyInteractions charmedTarget;
+    private ICharmEnemy hoveredTarget;
+    private ICharmEnemy charmedTarget;
     private List<IInteractable> interactables = new List<IInteractable>();
-    private List<IEnemyInteractions> charmedEnemies = new List<IEnemyInteractions>();
+    private List<ICharmEnemy> charmedEnemies = new List<ICharmEnemy>();
     private List<IInteractable> charmedInteractables = new List<IInteractable>();
     private bool isCharming;
 
@@ -112,7 +112,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
             return;
         }
 
-        if (RaycastForward(charmRange, out RaycastHit hit) && hit.transform.TryGetComponent(out IEnemyInteractions enemy))
+        if (RaycastForward(charmRange, out RaycastHit hit) && hit.transform.TryGetComponent(out ICharmEnemy enemy))
         {
             if (!enemy.IsCharmed())
             {

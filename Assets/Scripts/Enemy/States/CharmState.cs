@@ -18,10 +18,10 @@ public class CharmState : State
     public override void InitializeState()
     {
         eController.HideArrow();
-        eController.renderer.material = material;
-        eController.StopAgent();
-        eController.SetAgentSpeed(charmSpeed);
-        targetPos = eController.targetLever.GetPosition();
+        eController.Renderer.ChangeMaterial(material);
+        eController.Movement.StopAgent();
+        eController.Movement.SetAgentSpeed(charmSpeed);
+        targetPos = eController.Charm.GetLeverPosition();
         targetPos.y = transform.position.y;
         direction = (targetPos - transform.position).normalized;
         setDestination = false;
@@ -34,13 +34,13 @@ public class CharmState : State
             if (!setDestination)
             {
                 setDestination = true;
-                eController.GoToLever();
+                eController.Movement.GoToLever();
             }
 
-            if (eController.ArrivedToPosition(targetPos))
+            if (eController.Movement.ArrivedToPosition(targetPos))
             {
-                eController.targetLever.Interact();
-                eController.SetLockedVisual(false);
+                eController.Charm.InteractLever();
+                eController.Charm.SetLockedVisual(false);
                 return checkState;
             }
         }

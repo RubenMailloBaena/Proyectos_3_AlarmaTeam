@@ -22,8 +22,8 @@ public class AttackState : State
     public override void InitializeState()
     {
         eController.ActivateExclamation();
-        eController.renderer.material = material;
-        eController.ManualRotation(false);
+        eController.Renderer.ChangeMaterial(material);
+        eController.Movement.ManualRotation(true);
         eController.isChasingPlayer = false;
         pController = GameManager.GetInstance().GetPlayerController();
         
@@ -31,14 +31,14 @@ public class AttackState : State
             StartCoroutine(KillPlayer());
         else
         {
-            eController.SetAgentSpeed(priestSpeed);
-            playerPos = eController.GoToPlayerPosition();
+            eController.Movement.SetAgentSpeed(priestSpeed);
+            playerPos = eController.Movement.GoToPlayerPosition();
         }
     }
 
     public override State RunCurrentState()
     {
-        playerPos = eController.GoToPlayerPosition();
+        playerPos = eController.Movement.GoToPlayerPosition();
         float distanceToPlayer = Vector3.Distance(transform.position, playerPos);
 
         Vector3 dir = (playerPos - transform.position).normalized;
@@ -59,7 +59,7 @@ public class AttackState : State
     {
         Transform playerTrans = GameManager.GetInstance().GetPlayerController().GetPlayerTransform();
         eController.killingPlayer = true;
-        eController.StopAgent();
+        eController.Movement.StopAgent();
 
         Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
         directionToEnemy.y = 0f;

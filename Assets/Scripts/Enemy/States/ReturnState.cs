@@ -17,20 +17,20 @@ public class ReturnState : State
     
     public override void InitializeState()
     {
-        eController.renderer.material = material;
+        eController.Renderer.ChangeMaterial(material);
         if (!eController.isIdleEnemy)
         {
             eController.SwitchToNextState(patrolState);
             return;
         }
         
-        eController.SetAgentSpeed(returnSpeed);
-        targetPos = eController.GoToPreviousPosition();
+        eController.Movement.SetAgentSpeed(returnSpeed);
+        targetPos = eController.Movement.GoToPreviousPosition();
     }
 
     public override State RunCurrentState()
     {
-        if (eController.ArrivedToPosition(targetPos))
+        if (eController.Movement.ArrivedToPosition(targetPos))
         {
             eController.enemyPosBeforeMoving = Vector3.zero;
             return idleState;

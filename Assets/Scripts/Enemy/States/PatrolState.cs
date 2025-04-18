@@ -16,14 +16,14 @@ public class PatrolState : State
 
     public override void InitializeState()
     {
-        eController.SetAgentSpeed(patrolSpeed);
-        targetPos = eController.GoToWaypoint();
-        eController.renderer.material = material;
+        eController.Movement.SetAgentSpeed(patrolSpeed);
+        targetPos = eController.Movement.GoToWaypoint();
+        eController.Renderer.ChangeMaterial(material);
     }
 
     public override State RunCurrentState()
     {
-        if (eController.ArrivedToPosition(targetPos))
+        if (eController.Movement.ArrivedToPosition(targetPos))
             return idleState;
         return this;
     }
