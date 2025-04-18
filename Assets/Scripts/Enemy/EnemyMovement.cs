@@ -8,7 +8,6 @@ public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent meshAgent;
     private EnemyController eController;
-    private PlayerController pController;
     
     private List<Waypoint> waypoints;
     private int waypointIndex;
@@ -23,11 +22,6 @@ public class EnemyMovement : MonoBehaviour
         waypoints = eController.getWayPoints();
         meshAgent = GetComponent<NavMeshAgent>();
         enemyPosBeforeMoving = Vector3.zero;
-    }
-
-    private void Start()
-    {
-        pController = GameManager.GetInstance().GetPlayerController();
     }
 
     //WAYPOINTS

@@ -106,6 +106,8 @@ public class EnemyController : MonoBehaviour, IVisible
     }
 
     //---------------------------GENERAL FUNCTIONS-------------------------------
+
+    #region General Functions
     public bool IsCharmed() => currentState == charmState;
     public bool IsAttacking() => currentState == attackState;
     public bool IsChasing() => currentState == chaseState;
@@ -119,38 +121,56 @@ public class EnemyController : MonoBehaviour, IVisible
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> getWayPoints() => waypoints;
     private void OnDestroy() => pController.RemoveVisible(this);
+    #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
+
+    #region Vision Functions
     public bool IsPointInVision(Vector3 target) => Vision.IsPointInVision(target);
     public float GetAttackDis() => Vision.GetAttackDis();
     public float GetMaxViewDis() => Vision.GetMaxViewDis();
     public float GetMinViewDis() => Vision.GetMinViewDis();
     public bool IsPlayerInVision() => Vision.IsPlayerInVision;
     public bool SetIgnorePlayerInMinVision(bool b) => Vision.IgnorePlayerInMinVision = b;
+    #endregion
     
     //----------------------------IVISION FUNCTIONS-----------------------------
+    
+    #region IVision
     public void SetVisiblity(bool active) => heart.SetActive(active);
     public Vector3 GetVisionPosition() => transform.position;
+    #endregion
     
     //----------------------------HEAR FUNCTIONS-----------------------------
+
+    #region Hear Functions
     public Vector3 SoundPos() => Hear.SoundPos;
     public Vector3 SetSoundPos(Vector3 soundPos) => Hear.SoundPos = soundPos;
     public bool SoundWasAnObject() => Hear.SoundWasAnObject;
     public bool SetSoundWasAnObject(bool b) => Hear.SoundWasAnObject = b;
     public bool SetInPlayerHearState(bool b) => Hear.InPlayerHearState = b;
+    #endregion
     
     //----------------------------CHARM FUNCTIONS-----------------------------
+
+    #region Charm Functions
     public Vector3 GetLeverPosition() => Charm.GetLeverPosition();
     public void InteractLever() => Charm.InteractLever();
     public void SetCharmLockedVisual(bool active) => Charm.SetLockedVisual(active);
+    #endregion
     
     //----------------------------RENDER FUNCTIONS-----------------------------
+
+    #region Render Functions
     public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);
     public void SetTargetVisualActive(bool active) => Renderer.SetTargetVisualActive(active);
     public void SetLockedVisual(bool active) => Renderer.SetLockedVisual(active);
     public void SetLight(bool active) => Renderer.SetLight(active);
+    #endregion
     
     //----------------------------MOVEMENT FUNCTIONS-----------------------------
+
+    #region Movement Functions
     public float GetWaitTime() => Movement.GetWaitTime();
     public Vector3 GoToWaypoint() => Movement.GoToWaypoint();
     public Vector3 GetLookDirection() => Movement.GetLookDirection();
@@ -172,8 +192,11 @@ public class EnemyController : MonoBehaviour, IVisible
         if (isChasingPlayer) return;
         Movement.SetAgentSpeed(speed);
     }
+    #endregion
     
     //----------------------------SEEN HUD FUNCTIONS-----------------------------
+
+    #region See HUD Functions
     public void ActivateSeenArrow() => eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
     public void UpdateSeenAmount(float amount, float maxAmount) => eHUD.UpdateArrowFillAmount(gameObject.GetInstanceID(), amount, maxAmount);
     public void ShowExclamation() => eHUD.ShowExclamation(gameObject.GetInstanceID());
@@ -192,9 +215,11 @@ public class EnemyController : MonoBehaviour, IVisible
             ActivateSeenArrow();
         ShowExclamation();
     }
+    #endregion
     
     //----------------------------PLAYER TP WHILE CHASING FUNCTIONS-----------------------------
 
+    #region PlayerTP on Chasing or Attacking
     private void SwapToCheckIfTP()
     {
         if (IsChasing() || IsAttacking())
@@ -210,4 +235,6 @@ public class EnemyController : MonoBehaviour, IVisible
     {
         GameManager.GetInstance().GetPlayerController().OnPlayerTP -= SwapToCheckIfTP;
     }
+    #endregion
+
 }
