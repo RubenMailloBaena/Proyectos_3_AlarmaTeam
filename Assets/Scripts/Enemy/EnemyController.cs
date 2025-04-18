@@ -98,7 +98,6 @@ public class EnemyController : MonoBehaviour, IVisible
         
         //DEBUG ONLY
         debugText.text = nextState.name.ToUpper();
-        Debug.LogError(nextState.name.ToUpper());
         
         lastState = currentState;
         currentState = nextState;
