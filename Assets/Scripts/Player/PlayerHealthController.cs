@@ -37,11 +37,12 @@ public class PlayerHealthController : MonoBehaviour
         UpdateHUD();
     }
     
-    public void TakeDamage()
+    public void TakeDamage(float damage)
     {
         if (isGodMode) return;
         
-        currentHealth -= Time.deltaTime;
+        currentHealth -= damage * Time.deltaTime;
+        Debug.Log(currentHealth);
         timeTillLastDamage = cooldownToHealPlayer;
 
         if (currentHealth <= 0.0f)

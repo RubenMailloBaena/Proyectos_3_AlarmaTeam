@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     public event Action<bool> OnCameraLockChange;
     public event Action onGodMode;
     public event Action OnVaultCrouched;
-    public event Action OnTakeDamage;
+    public event Action<float> OnTakeDamage;
 
 
     private void Awake()
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);
     public void TryVaultCrouched() => OnVaultCrouched?.Invoke();
     public float GetDistance(Vector3 targetPos) => Vector3.Distance(transform.position, targetPos);
-    public void TakeDamage() => OnTakeDamage?.Invoke();
+    public void TakeDamage(float damage) => OnTakeDamage?.Invoke(damage);
     public void SwapGodMode() => onGodMode?.Invoke();
 
     // ------------------ HUD ------------------

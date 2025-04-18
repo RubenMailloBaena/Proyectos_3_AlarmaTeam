@@ -9,6 +9,8 @@ public class AttackState : State
     [SerializeField] private float priestSpeed = 1.5f;
     [SerializeField] private float rotationSpeed = 5f;
 
+    public float damage;
+
     [Header("STATES")] 
     public ChaseState chaseState;
 
@@ -45,7 +47,7 @@ public class AttackState : State
         if (eController.isPlayerInVision && distanceToPlayer <= eController.attackDistance)
         {
             eController.SetLight(true);
-            pController.TakeDamage();
+            pController.TakeDamage(damage);
             if (pController.IsPlayerDead)
                 StartCoroutine(KillPlayer());
             return this;

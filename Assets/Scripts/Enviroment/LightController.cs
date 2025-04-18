@@ -8,6 +8,7 @@ public class LightController : MonoBehaviour
     private PlayerController pController;
     private bool playerInLight;
     public LayerMask allLayer;
+    public float damage;
 
     void Start()
     {
@@ -36,7 +37,7 @@ public class LightController : MonoBehaviour
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             if (hit.collider.CompareTag("Player"))
             {
-                pController.TakeDamage();
+                pController.TakeDamage(damage);
                 return true;
             }
         }
