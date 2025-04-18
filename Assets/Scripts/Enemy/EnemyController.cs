@@ -9,7 +9,7 @@ public enum EnemyType{
     Priest,
     Knight
 }
-public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
+public class EnemyController : MonoBehaviour, IVisible
 {
     private State currentState, nextState, lastState;
     
@@ -21,7 +21,6 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
 
     [Header("REFERENCES")]
     [SerializeField] public Transform seenExclamationPos;
-    [SerializeField] private GameObject weakSpotRenderer;
     [SerializeField] private GameObject heart;
 
     [Header("STATES")]
@@ -41,19 +40,17 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     [SerializeField] private List<Waypoint> waypoints;
     
     //VARIABLES
-    [HideInInspector] public bool soundWasAnObject = true;
-    [HideInInspector] public bool inPlayerHearState = true;
     [HideInInspector] public bool isChasingPlayer;
     [HideInInspector] public bool killingPlayer;
     [HideInInspector] public bool exclamationShown;
-    [HideInInspector] public Vector3 soundPos;
-    [HideInInspector] public Vector3 enemyPosBeforeMoving;
+    
     
     //ENEMY COMPONENTS
     public EnemyMovement Movement { get; private set; }
     public EnemyRender Renderer { get; private set; }
     public EnemyCharm Charm { get; private set; }
     public EnemyVision Vision { get; private set; }
+    public EnemyHear Hear { get; private set; }
 
     void Awake()
     {
@@ -61,23 +58,22 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         Renderer = GetComponent<EnemyRender>();
         Charm = GetComponent<EnemyCharm>();
         Vision = GetComponent<EnemyVision>();
+        Hear = GetComponent<EnemyHear>();
 
         Movement.SetMovement(this);
         Renderer.SetRenderer();
         Charm.SetCharm(this);
         Vision.SetVision(this);
+        Hear.SetHear(this);
         
         SwitchToNextState(idleState);
     }
 
     void Start()
     {
-        GameManager.GetInstance().GetPlayerController().AddEnemy(this);
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
         pController = GameManager.GetInstance().GetPlayerController();
         eHUD = GameManager.GetInstance().GetEnemySeenHUD();
-        inPlayerHearState = true;
-        enemyPosBeforeMoving = Vector3.zero;
     }
 
     void Update()
@@ -101,83 +97,13 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
         
         //DEBUG ONLY
         debugText.text = nextState.name.ToUpper();
-        //
+        
         lastState = currentState;
         currentState = nextState;
         currentState?.SetReference(this);
         currentState?.InitializeState();
     }
 
-    public void SetPositionBeforeMoving()
-    {
-        if (enemyPosBeforeMoving == Vector3.zero)
-            enemyPosBeforeMoving = transform.position;
-    }
-
-    //----------------------------Hear FUNCTIONS-----------------------------
-    
-    public void HeardSound(Vector3 soundPoint, bool isObject)
-    {
-        if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f 
-            || isChasingPlayer || currentState == attackState || currentState == charmState) 
-            return;
-
-        SetPositionBeforeMoving();
-        
-        soundPos = soundPoint;
-        soundPos.y = transform.position.y;
-
-        if (!soundWasAnObject && !isObject && !inPlayerHearState) 
-        {
-            SwitchToNextState(lookAtState);
-            return;
-        }
-
-        soundWasAnObject = isObject;
-        SwitchToNextState(hearState);
-    }
-    //----------------------------BackStab FUNCTIONS-----------------------------
-
-    public void SetWeakSpot(bool active)
-    {
-        weakSpotRenderer.SetActive(active);
-    }
-
-    public void Backstab()
-    {
-        Destroy(gameObject);
-    }
-    
-    //----------------------------SEEN HUD FUNCTIONS-----------------------------
-    public void ActivateSeenArrow()
-    {
-        eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
-    }
-    public void UpdateSeenAmount(float amount, float maxAmount)
-    {
-        eHUD.UpdateArrowFillAmount(gameObject.GetInstanceID(), amount, maxAmount);
-    }
-    public void HideArrow()
-    {
-        if (lastState == seenState || currentState == seenState)
-            eHUD.HideArrow(gameObject.GetInstanceID());
-    }
-
-    public void ShowExclamation()
-    {
-        eHUD.ShowExclamation(gameObject.GetInstanceID());
-    }
-
-    public void ActivateExclamation()
-    {
-        if (exclamationShown) return;
-        exclamationShown = true;
-        
-        if (lastState != seenState)
-            ActivateSeenArrow();
-        ShowExclamation();
-    }
-   
     //---------------------------GENERAL FUNCTIONS-------------------------------
     public bool IsCharmed() => currentState == charmState;
     public bool IsAttacking() => currentState == attackState;
@@ -187,16 +113,35 @@ public class EnemyController : MonoBehaviour, IEnemyInteractions, IVisible
     public void SwitchToAttackState() => SwitchToNextState(attackState);
     public void SwitchToChaseState() => SwitchToNextState(chaseState);
     public void SwitchToSeenState() => SwitchToNextState(seenState);
+    public void SwitchToLookAtState() => SwitchToNextState(lookAtState);
+    public void SwitchToHearState() => SwitchToNextState(hearState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> getWayPoints() => waypoints;
-    public Vector3 GetPosition() => transform.position;
-    public Transform GetTransform() => transform;
+    private void OnDestroy() => pController.RemoveVisible(this);
+    
+    //----------------------------VISION FUNCTIONS-----------------------------
     public void SetVisiblity(bool active) => heart.SetActive(active);
     public Vector3 GetVisionPosition() => transform.position;
-    private void OnDestroy()
+    
+    //----------------------------SEEN HUD FUNCTIONS-----------------------------
+    public void ActivateSeenArrow() => eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
+    public void UpdateSeenAmount(float amount, float maxAmount) => eHUD.UpdateArrowFillAmount(gameObject.GetInstanceID(), amount, maxAmount);
+    public void HideArrow()
     {
-        pController.RemoveEnemy(this);
-        pController.RemoveVisible(this);
+        if (lastState == seenState || currentState == seenState)
+            eHUD.HideArrow(gameObject.GetInstanceID());
+    }
+    
+    public void ShowExclamation() => eHUD.ShowExclamation(gameObject.GetInstanceID());
+    
+    public void ActivateExclamation()
+    {
+        if (exclamationShown) return;
+        exclamationShown = true;
+        
+        if (lastState != seenState)
+            ActivateSeenArrow();
+        ShowExclamation();
     }
 }
 

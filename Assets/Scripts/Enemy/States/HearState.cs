@@ -21,12 +21,12 @@ public class HearState : State
         eController.HideArrow();
         eController.Renderer.ChangeMaterial(material);
 
-        if (!eController.soundWasAnObject)
-            eController.inPlayerHearState = true;
+        if (!eController.Hear.soundWasAnObject)
+            eController.Hear.inPlayerHearState = true;
         else
             eController.Vision.ignorePlayerInMinVision = true;
          
-        targetPos = eController.soundPos;
+        targetPos = eController.Hear.soundPos;
         
         //SI el path esta muy lejos para llegar, ingoramos el sonido
         if(eController.Movement.GetPathLength(targetPos) > maxDistanceToIgnore)
@@ -40,9 +40,9 @@ public class HearState : State
     {
         if (eController.Movement.RotateEnemy(targetDir, hearRotationSpeed))
         {
-            eController.inPlayerHearState = false;
+            eController.Hear.inPlayerHearState = false;
             eController.Vision.ignorePlayerInMinVision = false;
-            if (eController.soundWasAnObject)
+            if (eController.Hear.soundWasAnObject)
                 return goToState;
             return lookAtState;
         }

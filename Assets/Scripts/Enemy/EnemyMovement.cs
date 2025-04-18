@@ -14,6 +14,8 @@ public class EnemyMovement : MonoBehaviour
     private int waypointIndex;
     [SerializeField] private float minAngleDiffToRotate = 5f;    
     [SerializeField] private float minDistanceToArrive = 0.3f;
+    
+    [HideInInspector] public Vector3 enemyPosBeforeMoving;
 
     public void SetMovement(EnemyController enemyController)
     {
@@ -21,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
         waypoints = eController.getWayPoints();
         pController = GameManager.GetInstance().GetPlayerController();
         meshAgent = GetComponent<NavMeshAgent>();
+        enemyPosBeforeMoving = Vector3.zero;
     }
     
     //WAYPOINTS
@@ -98,14 +101,14 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 GoToSoundSource()
     {
-        meshAgent.SetDestination(eController.soundPos);
-        return eController.soundPos;
+        meshAgent.SetDestination(eController.Hear.soundPos);
+        return eController.Hear.soundPos;
     }
 
     public Vector3 GoToPreviousPosition()
     {
-        meshAgent.SetDestination(eController.enemyPosBeforeMoving);
-        return eController.enemyPosBeforeMoving;
+        meshAgent.SetDestination(enemyPosBeforeMoving);
+        return enemyPosBeforeMoving;
     }
 
     public Vector3 GoToPlayerPosition()
@@ -129,6 +132,12 @@ public class EnemyMovement : MonoBehaviour
         //Si aun nos queda por girar seguimos 
         transform.rotation = Quaternion.Slerp(transform.rotation, targetDir, Time.deltaTime * rotationSpeed);
         return false;
+    }
+    
+    public void SetPositionBeforeMoving()
+    {
+        if (enemyPosBeforeMoving == Vector3.zero)
+            enemyPosBeforeMoving = transform.position;
     }
 }
 

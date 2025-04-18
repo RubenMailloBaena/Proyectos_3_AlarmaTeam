@@ -32,7 +32,7 @@ public class ReturnState : State
     {
         if (eController.Movement.ArrivedToPosition(targetPos))
         {
-            eController.enemyPosBeforeMoving = Vector3.zero;
+            eController.Movement.enemyPosBeforeMoving = Vector3.zero;
             return idleState;
         }
         return this;

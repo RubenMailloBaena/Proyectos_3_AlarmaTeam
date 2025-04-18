@@ -21,7 +21,7 @@ public class CheckState : State
     public override void InitializeState()
     {
         eController.Renderer.ChangeMaterial(material);
-        eController.soundWasAnObject = true; //RESTART PLAYER HEAR
+        eController.Hear.soundWasAnObject = true; //RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
         eController.Movement.StopAgent();
 

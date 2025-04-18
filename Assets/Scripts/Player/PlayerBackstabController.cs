@@ -16,7 +16,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
     [SerializeField] private float maxViewAngle = 60;
     [SerializeField] private LayerMask enemyLayer;
 
-    private IEnemyInteractions target;
+    private IEnemyBackstab target;
     private Vector3 sphereOffset = new Vector3(0f, 1f, 0f);
     private void Awake()
     {
@@ -35,10 +35,10 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
         float bestDot = -1f;
         target = null;
         
-        foreach (IEnemyInteractions enemy in pController.GetEnemies())
+        foreach (IEnemyBackstab enemy in pController.GetBackstabEnemies())
         {
             enemy.SetWeakSpot(false);
-            if (pController.GetDistance(enemy.GetPosition()) > attackRange) continue;
+            if (pController.GetDistance(enemy.GetTransform().position) > attackRange) continue;
             
             Transform enemyTransform = enemy.GetTransform();
 

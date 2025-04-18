@@ -1253,6 +1253,8 @@ GameObject:
   - component: {fileID: 1616027638105557089}
   - component: {fileID: 6868808229459138712}
   - component: {fileID: 5017602444377308105}
+  - component: {fileID: 3454077713477411559}
+  - component: {fileID: 8154569931047084528}
   - component: {fileID: 4210055942558311745}
   - component: {fileID: 7355355081283214536}
   m_Layer: 9
@@ -1294,7 +1296,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugText: {fileID: 9088748697047975570}
   seenExclamationPos: {fileID: 4326708774793196384}
-  weakSpotRenderer: {fileID: 27192882656951439}
   heart: {fileID: 27192882656951439}
   idleState: {fileID: 1875053179892342218}
   hearState: {fileID: 3617487205632319562}
@@ -1312,13 +1313,9 @@ MonoBehaviour:
   - rotateEnemy: 1
     waitTime: 3
     waypoint: {fileID: 4005170822320818172}
-  soundWasAnObject: 0
-  inPlayerHearState: 1
   isChasingPlayer: 0
   killingPlayer: 0
   exclamationShown: 0
-  soundPos: {x: 0, y: 0, z: 0}
-  enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
 --- !u!114 &3604509806120283806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,6 +1382,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAngleDiffToRotate: 1
   minDistanceToArrive: 0.3
+  enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
+--- !u!114 &3454077713477411559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034548957631012766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 512af05a32062b4459e7915293ff5c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weakSpotRenderer: {fileID: 27192882656951439}
+--- !u!114 &8154569931047084528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034548957631012766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bffe5f49c83421443bd32ac1106357e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundWasAnObject: 1
+  soundPos: {x: 0, y: 0, z: 0}
+  inPlayerHearState: 1
 --- !u!136 &4210055942558311745
 CapsuleCollider:
   m_ObjectHideFlags: 0

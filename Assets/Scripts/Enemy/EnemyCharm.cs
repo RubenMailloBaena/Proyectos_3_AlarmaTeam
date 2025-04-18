@@ -62,7 +62,7 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
     {
         targetLever = lever;
         SetLockedVisual(true);
-        eController.SetPositionBeforeMoving();
+        eController.Movement.SetPositionBeforeMoving();
         eController.SwitchToCharmState();
         SetTargetVisual(false);
     }

@@ -122,7 +122,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsCrouching || input == Vector2.zero || pController.IsPlayerDead) return;
         
-        foreach (IEnemyInteractions enemy in pController.GetEnemies())
+        foreach (IEnemyHear enemy in pController.GetHearEnemies())
         {
             if(pController.GetDistance(enemy.GetPosition()) <= finalRange)
                 enemy.HeardSound(transform.position, false);

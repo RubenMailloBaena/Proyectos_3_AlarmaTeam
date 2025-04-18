@@ -100,14 +100,19 @@ public class PlayerController : MonoBehaviour
 
     // ------------------ ENEMIGOS Y VISION ------------------
 
-    private HashSet<IEnemyInteractions> enemies = new HashSet<IEnemyInteractions>();
+    private HashSet<IEnemyHear> hearEnemies = new HashSet<IEnemyHear>();
+    private HashSet<IEnemyBackstab> backstabsEnemies = new HashSet<IEnemyBackstab>();
     private HashSet<IVisible> visionObjects = new HashSet<IVisible>();
 
     public void AddVisible(IVisible visible) => visionObjects.Add(visible);
     public void RemoveVisible(IVisible visible) => visionObjects.Remove(visible);
     public HashSet<IVisible> GetVisionObjects() => visionObjects;
 
-    public void AddEnemy(IEnemyInteractions enemy) => enemies.Add(enemy);
-    public void RemoveEnemy(IEnemyInteractions enemy) => enemies.Remove(enemy);
-    public HashSet<IEnemyInteractions> GetEnemies() => enemies;
+    public void AddHearEnemy(IEnemyHear enemy) => hearEnemies.Add(enemy);
+    public void RemoveHearEnemy(IEnemyHear enemy) => hearEnemies.Remove(enemy);
+    public HashSet<IEnemyHear> GetHearEnemies() => hearEnemies;
+    
+    public void AddBackstabEnemy(IEnemyBackstab enemy) => backstabsEnemies.Add(enemy);
+    public void RemoveBackstabEnemy(IEnemyBackstab enemy) => backstabsEnemies.Remove(enemy);
+    public HashSet<IEnemyBackstab> GetBackstabEnemies() => backstabsEnemies;
 }

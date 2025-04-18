@@ -59,7 +59,7 @@ public class EnemyVision : MonoBehaviour
         if (!Physics.Raycast(enemyPos, directionToPlayer, distanceToPlayer, groundLayer))
         {
             isPlayerInVision = true;
-            eController.SetPositionBeforeMoving();
+            eController.Movement.SetPositionBeforeMoving();
             
             if(distanceToPlayer <= attackDistance && !eController.IsAttacking())
                 eController.SwitchToAttackState();

@@ -67,7 +67,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
 
     private void CheckIfEnemiesCanHear()
     {
-        foreach (IEnemyInteractions enemy in pController.GetEnemies())
+        foreach (IEnemyHear enemy in pController.GetHearEnemies())
         {
             float distance = Vector3.Distance(transform.position, enemy.GetPosition());
             if(distance <= soundRadius)

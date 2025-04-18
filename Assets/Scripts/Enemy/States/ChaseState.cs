@@ -62,6 +62,6 @@ public class ChaseState : State
     private void SetSoundPosition()
     {
         playerPos = eController.Movement.GoToPlayerPosition();
-        eController.soundPos = playerPos;
+        eController.Hear.soundPos = playerPos;
     }
 }
