@@ -65,7 +65,6 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
 
     public bool InPlayerHearState
     {
-        get => inPlayerHearState;
         set => inPlayerHearState = value;
     }
     

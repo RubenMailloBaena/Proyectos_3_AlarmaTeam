@@ -125,7 +125,6 @@ public class EnemyController : MonoBehaviour, IVisible
     public float GetMaxViewDis() => Vision.GetMaxViewDis();
     public float GetMinViewDis() => Vision.GetMinViewDis();
     public bool IsPlayerInVision() => Vision.IsPlayerInVision;
-    public bool IgnorePlayerInMinVision() => Vision.IgnorePlayerInMinVision;
     public bool SetIgnorePlayerInMinVision(bool b) => Vision.IgnorePlayerInMinVision = b;
     
     //----------------------------IVISION FUNCTIONS-----------------------------
@@ -137,13 +136,11 @@ public class EnemyController : MonoBehaviour, IVisible
     public Vector3 SetSoundPos(Vector3 soundPos) => Hear.SoundPos = soundPos;
     public bool SoundWasAnObject() => Hear.SoundWasAnObject;
     public bool SetSoundWasAnObject(bool b) => Hear.SoundWasAnObject = b;
-    public bool InPlayerHearState() => Hear.InPlayerHearState;
     public bool SetInPlayerHearState(bool b) => Hear.InPlayerHearState = b;
     
     //----------------------------CHARM FUNCTIONS-----------------------------
     public Vector3 GetLeverPosition() => Charm.GetPosition();
     public void InteractLever() => Charm.InteractLever();
-    public void SetCharmLockedVisual(bool active) => Charm.SetLockedVisual(active);
     
     //----------------------------RENDER FUNCTIONS-----------------------------
     public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);

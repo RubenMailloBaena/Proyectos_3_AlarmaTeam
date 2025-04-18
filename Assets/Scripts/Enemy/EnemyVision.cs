@@ -117,21 +117,13 @@ public class EnemyVision : MonoBehaviour
     public float GetMaxViewDis() => maxViewDistance;
     public float GetMinViewDis() => minViewDistance;
     
-    public float DistanceToPlayer
-    {
-        get => distanceToPlayer;
-        set => distanceToPlayer = value;
-    }
-
     public bool IsPlayerInVision
     {
         get => isPlayerInVision;
-        set => isPlayerInVision = value;
     }
 
     public bool IgnorePlayerInMinVision
     {
-        get => ignorePlayerInMinVision;
         set => ignorePlayerInMinVision = value;
     }
 }

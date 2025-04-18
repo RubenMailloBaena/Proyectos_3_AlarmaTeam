@@ -124,7 +124,6 @@ public class EnemyMovement : MonoBehaviour
 
     public Vector3 EnemyPosBeforeMoving
     {
-        get => enemyPosBeforeMoving;
         set => enemyPosBeforeMoving = value;
     }
 }
