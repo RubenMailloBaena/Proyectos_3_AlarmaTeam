@@ -25,6 +25,7 @@ public class CheckState : State
         eController.isChasingPlayer = false;
         eController.exclamationShown = false;
         eController.SetLight(false);
+        eController.ManualRotation(false);
         eController.StopAgent();
 
         startingForward = transform.forward;
