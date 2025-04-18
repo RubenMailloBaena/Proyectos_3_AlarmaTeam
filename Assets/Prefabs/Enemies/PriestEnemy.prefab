@@ -1304,6 +1304,7 @@ MonoBehaviour:
   chaseState: {fileID: 1869309124396401437}
   attackState: {fileID: 5374991467294882211}
   charmState: {fileID: 155338100445197595}
+  checkState: {fileID: 908810801637645102}
   isIdleEnemy: 0
   enemyType: 0
   waypoints:
@@ -1336,9 +1337,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 448
-  distanceToPlayer: 0
-  isPlayerInVision: 0
-  ignorePlayerInMinVision: 0
 --- !u!114 &1616027638105557089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,7 +1380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAngleDiffToRotate: 1
   minDistanceToArrive: 0.3
-  enemyPosBeforeMoving: {x: 0, y: 0, z: 0}
 --- !u!114 &3454077713477411559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,9 +1405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bffe5f49c83421443bd32ac1106357e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundWasAnObject: 1
-  soundPos: {x: 0, y: 0, z: 0}
-  inPlayerHearState: 1
 --- !u!136 &4210055942558311745
 CapsuleCollider:
   m_ObjectHideFlags: 0

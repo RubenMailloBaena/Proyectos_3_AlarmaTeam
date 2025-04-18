@@ -15,10 +15,8 @@ public class LookAtState : State
     
     public override void InitializeState()
     {
-        eController.exclamationShown = false;
         eController.ChangeMaterial(material);
-        if(!eController.isChasingPlayer)
-            eController.SetAgentSpeed(goToSpeed);
+        eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();
 
         if (eController.IsPointInVision(targetPos))

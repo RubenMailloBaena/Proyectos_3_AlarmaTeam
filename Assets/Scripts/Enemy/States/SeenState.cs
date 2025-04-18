@@ -22,10 +22,12 @@ public class SeenState : State
     public override void InitializeState()
     {
         eController.ChangeMaterial(material);
-        eController.ActivateSeenArrow();
         if (eController.isChasingPlayer)
+        {
             eController.SwitchToNextState(chaseState);
-        
+            return;
+        }
+        eController.ActivateSeenArrow();
         eController.SetAgentSpeed(seenSpeed);
         currentFillValue = baseFillPerSecond;
     }

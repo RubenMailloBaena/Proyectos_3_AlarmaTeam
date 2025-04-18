@@ -15,9 +15,13 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
     {
         eController = enemyController;
         inPlayerHearState = true;
+    }
+
+    private void Start()
+    {
         GameManager.GetInstance().GetPlayerController().AddHearEnemy(this);
     }
-    
+
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
         if (!isObject && Mathf.Abs(soundPoint.y - transform.position.y) > 0.3f 

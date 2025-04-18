@@ -21,11 +21,15 @@ public class EnemyMovement : MonoBehaviour
     {
         eController = enemyController;
         waypoints = eController.getWayPoints();
-        pController = GameManager.GetInstance().GetPlayerController();
         meshAgent = GetComponent<NavMeshAgent>();
         enemyPosBeforeMoving = Vector3.zero;
     }
-    
+
+    private void Start()
+    {
+        pController = GameManager.GetInstance().GetPlayerController();
+    }
+
     //WAYPOINTS
     public float GetWaitTime()
     {

@@ -40,7 +40,7 @@ public class CharmState : State
             if (eController.ArrivedToPosition(targetPos))
             {
                 eController.InteractLever();
-                eController.SetLockedVisual(false);
+                eController.SetCharmLockedVisual(false);
                 return checkState;
             }
         }

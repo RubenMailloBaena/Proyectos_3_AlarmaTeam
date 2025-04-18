@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public event Action onGodMode;
     public event Action OnVaultCrouched;
     public event Action<float> OnTakeDamage;
+    public event Action OnPlayerTP;
 
 
     private void Awake()
@@ -66,6 +67,7 @@ public class PlayerController : MonoBehaviour
     public float GetDistance(Vector3 targetPos) => Vector3.Distance(transform.position, targetPos);
     public void TakeDamage(float damage) => OnTakeDamage?.Invoke(damage);
     public void SwapGodMode() => onGodMode?.Invoke();
+    public void PlayerTP() => OnPlayerTP?.Invoke();
 
     // ------------------ HUD ------------------
 

@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour, IVisible
     [SerializeField] private ChaseState chaseState;
     [SerializeField] private AttackState attackState;
     [SerializeField] private CharmState charmState;
+    [SerializeField] private CheckState checkState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
@@ -71,8 +72,8 @@ public class EnemyController : MonoBehaviour, IVisible
 
     void Start()
     {
-        GameManager.GetInstance().GetPlayerController().AddVisible(this);
         pController = GameManager.GetInstance().GetPlayerController();
+        pController.AddVisible(this);
         eHUD = GameManager.GetInstance().GetEnemySeenHUD();
     }
 
@@ -139,8 +140,9 @@ public class EnemyController : MonoBehaviour, IVisible
     public bool SetInPlayerHearState(bool b) => Hear.InPlayerHearState = b;
     
     //----------------------------CHARM FUNCTIONS-----------------------------
-    public Vector3 GetLeverPosition() => Charm.GetPosition();
+    public Vector3 GetLeverPosition() => Charm.GetLeverPosition();
     public void InteractLever() => Charm.InteractLever();
+    public void SetCharmLockedVisual(bool active) => Charm.SetLockedVisual(active);
     
     //----------------------------RENDER FUNCTIONS-----------------------------
     public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);
@@ -154,7 +156,6 @@ public class EnemyController : MonoBehaviour, IVisible
     public Vector3 GetLookDirection() => Movement.GetLookDirection();
     public bool ArrivedToPosition(Vector3 position) => Movement.ArrivedToPosition(position);
     public void IncrementIndex() => Movement.IncrementIndex();
-    public void SetAgentSpeed(float speed) => Movement.SetAgentSpeed(speed);
     public void StopAgent() => Movement.StopAgent();
     public Vector3 GetEnemyVelocity() => Movement.GetEnemyVelocity();
     public void ManualRotation(bool active) => Movement.ManualRotation(active);
@@ -166,6 +167,11 @@ public class EnemyController : MonoBehaviour, IVisible
     public bool RotateEnemy(Vector3 lookDir, float rotationSpeed) => Movement.RotateEnemy(lookDir, rotationSpeed);
     public void SetPositionBeforeMoving() => Movement.SetPositionBeforeMoving();
     public Vector3 SetEnemyPosBeforeMoving(Vector3 pos) => Movement.EnemyPosBeforeMoving = pos;
+    public void SetAgentSpeed(float speed)
+    {
+        if (isChasingPlayer) return;
+        Movement.SetAgentSpeed(speed);
+    }
     
     //----------------------------SEEN HUD FUNCTIONS-----------------------------
     public void ActivateSeenArrow() => eHUD.SetNewArrow(seenExclamationPos, gameObject.GetInstanceID());
@@ -177,7 +183,6 @@ public class EnemyController : MonoBehaviour, IVisible
             eHUD.HideArrow(gameObject.GetInstanceID());
     }
     
-    
     public void ActivateExclamation()
     {
         if (exclamationShown) return;
@@ -187,8 +192,22 @@ public class EnemyController : MonoBehaviour, IVisible
             ActivateSeenArrow();
         ShowExclamation();
     }
+    
+    //----------------------------PLAYER TP WHILE CHASING FUNCTIONS-----------------------------
+
+    private void SwapToCheckIfTP()
+    {
+        if (IsChasing() || IsAttacking())
+            SwitchToNextState(checkState);
+    }
+    
+    private void OnEnable()
+    {
+        GameManager.GetInstance().GetPlayerController().OnPlayerTP += SwapToCheckIfTP;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.GetInstance().GetPlayerController().OnPlayerTP -= SwapToCheckIfTP;
+    }
 }
-
-
-
-

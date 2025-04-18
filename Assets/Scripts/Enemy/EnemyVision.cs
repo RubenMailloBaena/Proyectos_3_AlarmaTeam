@@ -27,9 +27,13 @@ public class EnemyVision : MonoBehaviour
     public void SetVision(EnemyController enemyController)
     {
         eController = enemyController;
+    }
+
+    private void Start()
+    {
         pController = GameManager.GetInstance().GetPlayerController();
     }
-    
+
     private void Update()
     {
         CanSeePlayer();
@@ -65,7 +69,8 @@ public class EnemyVision : MonoBehaviour
                 eController.SwitchToAttackState();
             else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance && !eController.IsChasing())
                 eController.SwitchToChaseState();
-            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && !eController.IsChasing() && !eController.InSeenState())
+            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && !eController.IsChasing() 
+                    && !eController.InSeenState() && !eController.IsAttacking())
                 eController.SwitchToSeenState();
         }
     }

@@ -23,6 +23,7 @@ public class CheckState : State
         eController.ChangeMaterial(material);
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
+        eController.exclamationShown = false;
         eController.StopAgent();
 
         startingForward = transform.forward;

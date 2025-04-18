@@ -114,7 +114,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             transform.rotation = currentStatue.GetTPRotation();
         }
             
-
+        pController.PlayerTP();
         pController.SetTeleporting(false);
     }
 
