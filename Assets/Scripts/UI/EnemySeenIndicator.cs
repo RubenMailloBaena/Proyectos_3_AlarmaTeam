@@ -105,9 +105,6 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
     private Vector2 GetClampedScreenPosition(Vector3 screenPoint)
     {
         Vector2 corrected = GetCorrectedScreenPoint(screenPoint);
-        print(Mathf.Clamp(corrected.y, screenEdgeBuffer, Screen.height - screenEdgeBuffer));
-        print(Mathf.Clamp(corrected.x, screenEdgeBuffer, Screen.width - screenEdgeBuffer));
-        
         return new Vector2(
             Mathf.Clamp(corrected.x, screenEdgeBuffer, Screen.width - screenEdgeBuffer),
             Mathf.Clamp(corrected.y, screenEdgeBuffer, Screen.height - screenEdgeBuffer)
