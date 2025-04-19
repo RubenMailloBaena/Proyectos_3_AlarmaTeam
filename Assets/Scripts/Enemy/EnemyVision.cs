@@ -131,7 +131,6 @@ public class EnemyVision : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
     }
 
-    public float GetAttackDis() => attackDistance;
     public float GetMaxViewDis() => maxViewDistance;
     public float GetMinViewDis() => minViewDistance;
     public float GetExitAttackRange() => exitAttackDistance;
