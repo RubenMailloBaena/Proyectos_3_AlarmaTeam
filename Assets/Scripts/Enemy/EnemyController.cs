@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public enum EnemyType{
     Priest,
@@ -32,6 +33,7 @@ public class EnemyController : MonoBehaviour, IVisible
     [SerializeField] private AttackState attackState;
     [SerializeField] private CharmState charmState;
     [SerializeField] private CheckState checkState;
+    [SerializeField] private DieState dieState;
 
     [Header("ENEMY OPTIONS")] 
     public bool isIdleEnemy;
@@ -44,6 +46,7 @@ public class EnemyController : MonoBehaviour, IVisible
     [HideInInspector] public bool isChasingPlayer;
     [HideInInspector] public bool killingPlayer;
     [HideInInspector] public bool exclamationShown;
+    [HideInInspector] public bool enemyIsDead;
     
     
     //ENEMY COMPONENTS
@@ -52,6 +55,7 @@ public class EnemyController : MonoBehaviour, IVisible
     private EnemyCharm Charm { get; set; }
     private EnemyVision Vision { get; set; }
     private EnemyHear Hear { get; set; }
+    private EnemyBackstab Backstab { get; set; }
 
     void Awake()
     {
@@ -60,12 +64,14 @@ public class EnemyController : MonoBehaviour, IVisible
         Charm = GetComponent<EnemyCharm>();
         Vision = GetComponent<EnemyVision>();
         Hear = GetComponent<EnemyHear>();
+        Backstab = GetComponent<EnemyBackstab>();
 
         Movement.SetMovement(this);
         Renderer.SetRenderer();
         Charm.SetCharm(this);
         Vision.SetVision(this);
         Hear.SetHear(this);
+        Backstab.SetBackstab(this);
         
         SwitchToNextState(idleState);
     }
@@ -94,11 +100,11 @@ public class EnemyController : MonoBehaviour, IVisible
 
     public void SwitchToNextState(State nextState)
     {
-        if (killingPlayer) return;
+        if (killingPlayer || enemyIsDead) return;
         
         //DEBUG ONLY
+        //Debug.LogError(nextState.name.ToUpper());
         debugText.text = nextState.name.ToUpper();
-        Debug.LogError(nextState.name.ToUpper());
         
         lastState = currentState;
         currentState = nextState;
@@ -119,10 +125,10 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SwitchToSeenState() => SwitchToNextState(seenState);
     public void SwitchToLookAtState() => SwitchToNextState(lookAtState);
     public void SwitchToHearState() => SwitchToNextState(hearState);
+    public void SwitchToDieState() => SwitchToNextState(dieState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> GetWayPoints() => waypoints;
     public PlayerController GetPlayerController() => pController;
-    private void OnDestroy() => pController.RemoveVisible(this);
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
@@ -167,6 +173,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);
     public void SetTargetVisualActive(bool active) => Renderer.SetTargetVisualActive(active);
     public void SetLockedVisual(bool active) => Renderer.SetLockedVisual(active);
+    public void SetRenderActive(bool active) => Renderer.SetRenderActive(active);
     public void SetLight(bool active) => Renderer.SetLight(active);
     #endregion
     

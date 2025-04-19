@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
 {
+    private EnemyController eController;
     [SerializeField] private GameObject weakSpotRenderer;
-
+    
+    public void SetBackstab(EnemyController enemyController)
+    {
+        eController = enemyController;
+    }
+    
     private void Start()
     {
         GameManager.GetInstance().GetPlayerController().AddBackstabEnemy(this);
@@ -19,13 +25,8 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
 
     public void Backstab()
     {
-        Destroy(gameObject);
+        eController.SwitchToDieState();
     }
 
     public Transform GetTransform() => transform;
-
-    private void OnDestroy()
-    {
-        GameManager.GetInstance().GetPlayerController().RemoveBackstabEnemy(this);
-    }
 }
