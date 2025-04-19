@@ -19,6 +19,7 @@ public class HearState : State
     public override void InitializeState()
     {
         eController.HideArrow();
+        eController.ManualRotation(false);
         eController.ChangeMaterial(material);
 
         if (!eController.SoundWasAnObject())

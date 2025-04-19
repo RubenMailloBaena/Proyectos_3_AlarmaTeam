@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class SeenState : State
 {
+    
     [Header("SEEN ATTRIBUTES")]
     [SerializeField] private float seenSpeed = 1f;
+    [SerializeField] private float seenRotationSpeed = 5f;
     [SerializeField] private float substractPerSecond = 2f;
     [SerializeField] private float baseFillPerSecond = 5f;
     [SerializeField] private float maxFillPerSecond = 10f;
@@ -28,6 +30,7 @@ public class SeenState : State
             return;
         }
         eController.ActivateSeenArrow();
+        eController.ManualRotation(true);
         eController.SetAgentSpeed(seenSpeed);
         currentFillValue = baseFillPerSecond;
     }
@@ -38,6 +41,9 @@ public class SeenState : State
         {
             playerPos = eController.GoToPlayerPosition();
             float distanceToPlayer = Vector3.Distance(playerPos, transform.position);
+
+            Vector3 dir = (playerPos - transform.position).normalized;
+            eController.RotateEnemy(dir, seenRotationSpeed);
 
             fillRate = MapFunction(distanceToPlayer, eController.GetMaxViewDis(), eController.GetMinViewDis(),baseFillPerSecond,maxFillPerSecond);
             currentFillValue += fillRate * Time.deltaTime;
@@ -54,6 +60,7 @@ public class SeenState : State
             if (currentFillValue <= 0.0f)
             {
                 eController.HideArrow();
+                eController.ManualRotation(false);
                 return checkState;
             }
         }

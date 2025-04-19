@@ -120,7 +120,8 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SwitchToLookAtState() => SwitchToNextState(lookAtState);
     public void SwitchToHearState() => SwitchToNextState(hearState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
-    public List<Waypoint> getWayPoints() => waypoints;
+    public List<Waypoint> GetWayPoints() => waypoints;
+    public PlayerController GetPlayerController() => pController;
     private void OnDestroy() => pController.RemoveVisible(this);
     #endregion
     

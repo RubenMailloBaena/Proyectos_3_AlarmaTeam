@@ -25,7 +25,7 @@ public class AttackState : State
         eController.ChangeMaterial(material);
         eController.ManualRotation(true);
         eController.isChasingPlayer = false;
-        pController = GameManager.GetInstance().GetPlayerController();
+        pController = eController.GetPlayerController();
         
         if (eController.enemyType == EnemyType.Knight)
             StartCoroutine(KillPlayer());

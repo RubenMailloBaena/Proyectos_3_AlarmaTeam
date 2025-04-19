@@ -19,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
     public void SetMovement(EnemyController enemyController)
     {
         eController = enemyController;
-        waypoints = eController.getWayPoints();
+        waypoints = eController.GetWayPoints();
         meshAgent = GetComponent<NavMeshAgent>();
         enemyPosBeforeMoving = Vector3.zero;
     }
