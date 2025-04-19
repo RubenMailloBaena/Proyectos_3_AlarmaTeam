@@ -103,7 +103,6 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         while (elapsed < holdTime)
         {
             elapsed += Time.deltaTime;
-            Debug.Log(elapsed);
             pController.UpdateProgressBar(elapsed);
             yield return null;
         }

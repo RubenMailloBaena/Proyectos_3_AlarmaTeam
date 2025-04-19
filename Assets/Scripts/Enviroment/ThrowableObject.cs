@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
 {
@@ -11,7 +12,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material selectMaterial;
 
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer itemRenderer;
 
     [SerializeField] private float throwForce = 5f;
     [SerializeField] private float soundRadius = 10f;
@@ -40,9 +41,9 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         if (thrown) return;
 
         if (select)
-            renderer.material = selectMaterial;
+            itemRenderer.material = selectMaterial;
         else
-            renderer.material = defaultMaterial;
+            itemRenderer.material = defaultMaterial;
     }
 
     public  void Interact()
@@ -50,7 +51,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         if (thrown) return;
         
         thrown = true;
-        renderer.material = defaultMaterial;
+        itemRenderer.material = defaultMaterial;
         rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
     }
 
@@ -92,8 +93,8 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         thrown = false;
         done = false;
 
-        if (renderer != null)
-            renderer.material = defaultMaterial;
+        if (itemRenderer != null)
+            itemRenderer.material = defaultMaterial;
 
         if (rb != null)
         {
@@ -105,9 +106,9 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
     public void SetVisiblity(bool active)
     {
         if (active)
-            renderer.material = visualMaterial;
+            itemRenderer.material = visualMaterial;
         else
-            renderer.material = defaultMaterial;
+            itemRenderer.material = defaultMaterial;
     }
 
     public Vector3 GetVisionPosition()

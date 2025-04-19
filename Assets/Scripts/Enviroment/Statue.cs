@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Statue : MonoBehaviour, IStatue, IVisible
 {
     [Tooltip("Punto en el que se produce el tp")]
     [SerializeField] private Transform teleportPoint;
 
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer statueRenderer;
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material selectMaterial;
@@ -19,9 +20,9 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     public void ShowUI(bool show)
     {
         if (show)
-            renderer.material = selectMaterial;
+            statueRenderer.material = selectMaterial;
         else
-            renderer.material = defaultMaterial;
+            statueRenderer.material = defaultMaterial;
     }
 
     public Vector3 GetTPPoint()
@@ -37,9 +38,9 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     public void SetVisiblity(bool active)
     {
         if (active)
-            renderer.material = visualMaterial;
+            statueRenderer.material = visualMaterial;
         else
-            renderer.material = defaultMaterial;
+            statueRenderer.material = defaultMaterial;
     }
 
     public Vector3 GetVisionPosition()

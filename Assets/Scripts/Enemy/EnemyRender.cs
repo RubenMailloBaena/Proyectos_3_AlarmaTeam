@@ -11,14 +11,14 @@ public class EnemyRender : MonoBehaviour
     [SerializeField] private Renderer targetVisual;
     [SerializeField] private Material lockedMat;
     [SerializeField] private GameObject lightSource;
-    private CapsuleCollider collider;
+    private CapsuleCollider enemyCollider;
 
     private Material previousMat;
 
     public void SetRenderer()
     {
         previousMat = targetVisual.material;
-        collider = GetComponent<CapsuleCollider>();
+        enemyCollider = GetComponent<CapsuleCollider>();
     }
 
     public void ChangeMaterial(Material material)
@@ -43,7 +43,7 @@ public class EnemyRender : MonoBehaviour
     public void SetRenderActive(bool active)
     {
         renderGameObject.SetActive(active);
-        collider.enabled = active;
+        enemyCollider.enabled = active;
     }
     
     public void SetLight(bool active) => lightSource.SetActive(active);

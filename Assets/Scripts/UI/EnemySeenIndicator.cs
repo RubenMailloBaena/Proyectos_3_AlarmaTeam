@@ -26,7 +26,7 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
     private float screenEdgeBuffer;
     [Tooltip("Porcentage del borde de la pantalla")]
     [SerializeField] private float screenEdgePercentage = 0.05f;
-    [SerializeField] private float smoothPositionSpeed = 15f;
+    //[SerializeField] private float smoothPositionSpeed = 15f;
 
     public bool IsActive { get; set; }
     private Coroutine hideExclamationCorutine;
