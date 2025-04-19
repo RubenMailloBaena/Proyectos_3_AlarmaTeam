@@ -44,7 +44,7 @@ public class AttackState : State
         Vector3 dir = (playerPos - transform.position).normalized;
         eController.RotateEnemy(dir, rotationSpeed);
         
-        if (eController.IsPlayerInVision() && distanceToPlayer <= eController.GetAttackDis())
+        if (eController.IsPlayerInVision() && distanceToPlayer <= eController.GetExitAttackRange())
         {
             eController.SetLight(true);
             pController.TakeDamage(damage);

@@ -98,6 +98,7 @@ public class EnemyController : MonoBehaviour, IVisible
         
         //DEBUG ONLY
         debugText.text = nextState.name.ToUpper();
+        Debug.LogError(nextState.name.ToUpper());
         
         lastState = currentState;
         currentState = nextState;
@@ -127,9 +128,9 @@ public class EnemyController : MonoBehaviour, IVisible
 
     #region Vision Functions
     public bool IsPointInVision(Vector3 target) => Vision.IsPointInVision(target);
-    public float GetAttackDis() => Vision.GetAttackDis();
     public float GetMaxViewDis() => Vision.GetMaxViewDis();
     public float GetMinViewDis() => Vision.GetMinViewDis();
+    public float GetExitAttackRange() => Vision.GetExitAttackRange();
     public bool IsPlayerInVision() => Vision.IsPlayerInVision;
     public bool SetIgnorePlayerInMinVision(bool b) => Vision.IgnorePlayerInMinVision = b;
     #endregion

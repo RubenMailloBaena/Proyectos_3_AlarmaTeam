@@ -42,7 +42,6 @@ public class PlayerHealthController : MonoBehaviour
         if (isGodMode) return;
         
         currentHealth -= damage * Time.deltaTime;
-        Debug.Log(currentHealth);
         timeTillLastDamage = cooldownToHealPlayer;
 
         if (currentHealth <= 0.0f)

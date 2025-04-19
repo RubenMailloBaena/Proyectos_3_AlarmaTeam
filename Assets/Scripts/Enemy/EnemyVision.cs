@@ -13,6 +13,7 @@ public class EnemyVision : MonoBehaviour
     [SerializeField] private float maxViewDistance = 15f;   
     [SerializeField] private float minViewDistance = 10f; 
     [SerializeField] private float attackDistance = 5f; 
+    [SerializeField] private float exitAttackDistance = 12f; 
     [Tooltip("los grados minimos para que cuando rotamos con lerp, llegue al target Rotation instantaneo. (si quedan 5 graods para llegar, hara TP a la rotacion final)")]
     [SerializeField] private Vector3 enemyEyesOffset = new Vector3(0f, 1f, 0f);
     private Vector3 enemyPos;
@@ -65,12 +66,21 @@ public class EnemyVision : MonoBehaviour
             isPlayerInVision = true;
             eController.SetPositionBeforeMoving();
             
-            if(distanceToPlayer <= attackDistance && !eController.IsAttacking())
-                eController.SwitchToAttackState();
-            else if(distanceToPlayer <= minViewDistance && distanceToPlayer > attackDistance && !eController.IsChasing())
-                eController.SwitchToChaseState();
-            else if(!ignorePlayerInMinVision && distanceToPlayer > minViewDistance && !eController.IsChasing() 
-                    && !eController.InSeenState() && !eController.IsAttacking())
+            bool isAttacking = eController.IsAttacking();
+            bool isChasing = eController.IsChasing();
+            bool isSeen = eController.InSeenState();
+            
+            if (distanceToPlayer <= attackDistance)
+            {
+                if (!isAttacking)
+                    eController.SwitchToAttackState();
+            }
+            else if (distanceToPlayer <= minViewDistance)
+            {
+                if (!isChasing && !isAttacking)
+                    eController.SwitchToChaseState();
+            }
+            else if (!ignorePlayerInMinVision && !isChasing && !isAttacking && !isSeen)
                 eController.SwitchToSeenState();
         }
     }
@@ -109,6 +119,9 @@ public class EnemyVision : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
         
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, exitAttackDistance);
+        
         //VISION CONE
         Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2f, 0) * transform.forward * maxViewDistance;
         Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2f, 0) * transform.forward * maxViewDistance;
@@ -121,6 +134,7 @@ public class EnemyVision : MonoBehaviour
     public float GetAttackDis() => attackDistance;
     public float GetMaxViewDis() => maxViewDistance;
     public float GetMinViewDis() => minViewDistance;
+    public float GetExitAttackRange() => exitAttackDistance;
     
     public bool IsPlayerInVision
     {
