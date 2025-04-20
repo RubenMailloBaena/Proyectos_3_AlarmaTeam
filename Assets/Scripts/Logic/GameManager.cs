@@ -2,36 +2,56 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     
-    [SerializeField] private GameObject GameOverPanel;
-
     private PlayerController pController;
     private PlayerHUDController pHud;
     private EnemySeenHUD eHud;
     private HashSet<IInteractable> levers = new HashSet<IInteractable>();
+
+    public int TestInt = -1;
     
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+        else
+            Destroy(gameObject);
     }
 
     public void PlayerDead()
     {
-        GameOverPanel.SetActive(true);
+        pHud.SetGameOverPanelActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
     
-    #region Getters & Setters
+    
+    // SCENE MANAGMENT
+    public void ChangeScene(String name)
+    {
+        TestInt = 2;
+        SceneManager.LoadScene(name);
+    }
 
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    
+    #region Getters & Setters
     public void AddInteractable(IInteractable interactable) => levers.Add(interactable);
     public HashSet<IInteractable> GetInteractables() => levers;
     public static GameManager GetInstance() => instance;

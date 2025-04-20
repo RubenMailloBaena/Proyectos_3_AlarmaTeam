@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerBody;
 
     private IPlayerComponent HUDActivator; // Componente que activó el texto de inputs
+    
+    private HashSet<IEnemyHear> hearEnemies = new HashSet<IEnemyHear>();
+    private HashSet<IEnemyBackstab> backstabsEnemies = new HashSet<IEnemyBackstab>();
+    private HashSet<IVisible> visionObjects = new HashSet<IVisible>();
 
     // ------------------ ESTADOS ------------------
 
@@ -102,9 +106,7 @@ public class PlayerController : MonoBehaviour
 
     // ------------------ ENEMIGOS Y VISION ------------------
 
-    private HashSet<IEnemyHear> hearEnemies = new HashSet<IEnemyHear>();
-    private HashSet<IEnemyBackstab> backstabsEnemies = new HashSet<IEnemyBackstab>();
-    private HashSet<IVisible> visionObjects = new HashSet<IVisible>();
+    
 
     public void AddVisible(IVisible visible) => visionObjects.Add(visible);
     public void RemoveVisible(IVisible visible) => visionObjects.Remove(visible);

@@ -36,6 +36,11 @@ public class PlayerHUDController : MonoBehaviour
     [Header("Player Charm Visuals")]
     [SerializeField] private RawImage playerCharmingImage;
 
+    [Header("GameLogic UI")] 
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button exitButton;
+
     private void Awake()
     {
         GameManager.GetInstance().SetPlayerHUD(this);
@@ -45,13 +50,13 @@ public class PlayerHUDController : MonoBehaviour
     {
         pController = GameManager.GetInstance().GetPlayerController();
         playerInput = pController.GetPlayerInput();
+        SetButtons();
     }
     
     private void Update()
     {
         HandleSoundVisuals();
     }
-
 
     #region Sound Functions
 
@@ -134,5 +139,17 @@ public class PlayerHUDController : MonoBehaviour
     public void SetHurtVisualColor(Color color) => playerHurtPanel.color = color;
     public Color GetHurtVisualColor() => playerHurtPanel.color;
 
+    #endregion
+
+    #region GameOverVisual
+    private void SetButtons()
+    {
+        restartButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
+        
+        restartButton.onClick.AddListener(GameManager.GetInstance().RestartScene);
+        exitButton.onClick.AddListener(GameManager.GetInstance().ExitGame);
+    }
+    public void SetGameOverPanelActive(bool active) => gameOverPanel.SetActive(active);
     #endregion
 }
