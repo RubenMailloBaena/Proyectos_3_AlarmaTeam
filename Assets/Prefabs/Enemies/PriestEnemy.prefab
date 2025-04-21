@@ -1332,6 +1332,7 @@ GameObject:
   - component: {fileID: 5017602444377308105}
   - component: {fileID: 3454077713477411559}
   - component: {fileID: 8154569931047084528}
+  - component: {fileID: 8474788007545060638}
   - component: {fileID: 4210055942558311745}
   - component: {fileID: 7355355081283214536}
   m_Layer: 9
@@ -1383,6 +1384,7 @@ MonoBehaviour:
   charmState: {fileID: 155338100445197595}
   checkState: {fileID: 908810801637645102}
   dieState: {fileID: 1273354699764932560}
+  returnState: {fileID: 1899071911990194964}
   isIdleEnemy: 0
   enemyType: 0
   waypoints:
@@ -1484,6 +1486,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bffe5f49c83421443bd32ac1106357e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8474788007545060638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034548957631012766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2abd300d6adc3394fb52dc12b0031d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &4210055942558311745

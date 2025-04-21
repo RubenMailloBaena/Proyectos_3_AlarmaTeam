@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private OnlyOneInstance directionalLight;
     private OnlyOneInstance eventSystem;
 
+    private List<IRestartable> restartObjects = new List<IRestartable>();
+
     
     void Awake()
     {
@@ -25,17 +27,50 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
+        }
+    }
+
     public void PlayerDead()
     {
-        pHud.SetGameOverPanelActive(true);
-        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     
-    
-    public void RestartScene()
+    public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        RestartGameOverValues();
+        foreach (IRestartable restartable in restartObjects)
+        {
+            restartable.RestartGame();
+        }
+    }
+
+    public void RestartFromCheckpoint()
+    {
+        RestartGameOverValues();
+        foreach (IRestartable restartable in restartObjects)
+        {
+            restartable.RestartFromCheckPoint();
+        }
+    }
+    
+    private void RestartGameOverValues()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void SetCheckpoint()
+    {
+        foreach (IRestartable restartable in restartObjects)
+        {
+            restartable.SetCheckPoint();
+        }
     }
 
     public void ExitGame()
@@ -44,6 +79,7 @@ public class GameManager : MonoBehaviour
     }
     
     #region Getters & Setters
+    public void AddRestartable(IRestartable restartable) => restartObjects.Add(restartable);
     public void AddInteractable(IInteractable interactable) => levers.Add(interactable);
     public HashSet<IInteractable> GetInteractables() => levers;
     public static GameManager GetInstance() => instance;

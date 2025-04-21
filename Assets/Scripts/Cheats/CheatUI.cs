@@ -90,6 +90,8 @@ public class CheatUI : MonoBehaviour
         AddCommand(new TimeScaleCommand());
         AddCommand(new GhostCommand());
         AddCommand(new GodModeCommand());
+        AddCommand(new CheckpointCommand());
+        AddCommand(new RestartFromCheckpointCommand());
         //AddCommand(new ResetVaseCommand());
     }
 }

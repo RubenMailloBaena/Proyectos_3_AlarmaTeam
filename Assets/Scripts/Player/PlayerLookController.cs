@@ -71,13 +71,21 @@ public class PlayerLookController : MonoBehaviour
         else UnlockCursor();
     }
 
+    public void RestartRotation()
+    {
+        xRotation = 0.0f;
+        pitchController.localRotation = Quaternion.identity;
+    }
+
     private void OnEnable()
     {
         pController.OnCameraLockChange += ChangeCameraLock;
+        pController.onRestart += RestartRotation;
     }
 
     private void OnDisable()
     {
         pController.OnCameraLockChange -= ChangeCameraLock;
+        pController.onRestart -= RestartRotation;
     }
 }

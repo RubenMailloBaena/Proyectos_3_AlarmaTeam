@@ -38,6 +38,7 @@ public class PlayerHUDController : MonoBehaviour
 
     [Header("GameLogic UI")] 
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Button checkpointButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button exitButton;
 
@@ -147,11 +148,13 @@ public class PlayerHUDController : MonoBehaviour
     #region GameOverVisual
     private void SetButtons()
     {
+        checkpointButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
         
-        restartButton.onClick.AddListener(GameManager.GetInstance().RestartScene);
-        exitButton.onClick.AddListener(GameManager.GetInstance().ExitGame);
+        checkpointButton.onClick.AddListener(GameManager.GetInstance().RestartFromCheckpoint);
+        restartButton.onClick.AddListener(GameManager.GetInstance().RestartGame);
+        exitButton.onClick.AddListener(LevelChangeManager.GetInstance().GoToMainMenu);
     }
     public void SetGameOverPanelActive(bool active) => gameOverPanel.SetActive(active);
     #endregion

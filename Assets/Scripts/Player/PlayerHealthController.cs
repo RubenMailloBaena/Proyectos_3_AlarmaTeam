@@ -47,9 +47,11 @@ public class PlayerHealthController : MonoBehaviour
         if (currentHealth <= 0.0f)
         {
             pController.SetIsPlayerDead(true);
+            pController.ShowGameOverHUD(true);
             GameManager.GetInstance().PlayerDead();
         }
     }
+    
 
     private void HealPlayer()
     {
@@ -79,6 +81,14 @@ public class PlayerHealthController : MonoBehaviour
         pController.SetHurtVisualColor(newColor);
     }
 
+    public void Respawn()
+    {
+        pController.ShowGameOverHUD(false);
+        pController.SetIsPlayerDead(false);
+        currentHealth = secondsThatCanTakeDamage;
+        UpdateHUD();
+    }
+
     private void GodMode()
     {
         isGodMode = !isGodMode;
@@ -88,12 +98,14 @@ public class PlayerHealthController : MonoBehaviour
     private void OnEnable()
     {
         pController.OnTakeDamage += TakeDamage;
+        pController.onRestart += Respawn;
         pController.onGodMode += GodMode;
     }
 
     private void OnDisable()
     {
         pController.OnTakeDamage -= TakeDamage;
-        pController.onGodMode += GodMode;
+        pController.onRestart -= Respawn;
+        pController.onGodMode -= GodMode;
     }
 }

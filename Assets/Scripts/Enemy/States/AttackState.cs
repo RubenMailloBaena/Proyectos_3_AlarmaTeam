@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,14 +27,9 @@ public class AttackState : State
         eController.ManualRotation(true);
         eController.isChasingPlayer = false;
         pController = eController.GetPlayerController();
-        
-        if (eController.enemyType == EnemyType.Knight)
-            StartCoroutine(KillPlayer());
-        else
-        {
-            eController.SetAgentSpeed(priestSpeed);
-            playerPos = eController.GoToPlayerPosition();
-        }
+
+        eController.SetAgentSpeed(priestSpeed);
+        playerPos = eController.GoToPlayerPosition();
     }
 
     public override State RunCurrentState()
@@ -49,32 +45,11 @@ public class AttackState : State
             eController.SetLight(true);
             pController.TakeDamage(damage);
             if (pController.IsPlayerDead)
-                StartCoroutine(KillPlayer());
+            {
+                eController.KillPlayer();
+            }
             return this;
         }
         return chaseState;
-    }
-
-    private IEnumerator KillPlayer()
-    {
-        Transform playerTrans = GameManager.GetInstance().GetPlayerController().GetPlayerTransform();
-        eController.killingPlayer = true;
-        eController.StopAgent();
-
-        Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
-        directionToEnemy.y = 0f;
-
-        Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
-        float rotationSpeed = 5f;
-
-        while (Quaternion.Angle(playerTrans.rotation, targetRotation) > 0.3f)
-        {
-            playerTrans.rotation = Quaternion.Slerp(playerTrans.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-            yield return null;
-        }
-        playerTrans.rotation = targetRotation;
-
-        Debug.LogError("PLAYER DEAD");
-        yield return null;
     }
 }

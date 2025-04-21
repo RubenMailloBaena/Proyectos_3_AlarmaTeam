@@ -6,5 +6,5 @@ public interface IRestartable
 {
     void RestartGame();
     void RestartFromCheckPoint();
-    void SetCheckPoint(Transform checkpoint);
+    void SetCheckPoint();
 }

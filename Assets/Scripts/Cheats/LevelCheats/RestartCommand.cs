@@ -9,6 +9,6 @@ public class RestartCommand : ICheatCommand
 
     public void Execute(string[] args)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.GetInstance().RestartGame();
     }
 }

@@ -48,6 +48,8 @@ public class EnemyController : MonoBehaviour, IVisible
     [HideInInspector] public bool exclamationShown;
     [HideInInspector] public bool enemyIsDead;
     
+    //CHECKPOINTS
+    private Coroutine killPlayerCoroutine;
     
     //ENEMY COMPONENTS
     private EnemyMovement Movement { get; set; }
@@ -56,6 +58,7 @@ public class EnemyController : MonoBehaviour, IVisible
     private EnemyVision Vision { get; set; }
     private EnemyHear Hear { get; set; }
     private EnemyBackstab Backstab { get; set; }
+    private EnemyRestart Restart { get; set; }
 
     void Awake()
     {
@@ -65,6 +68,7 @@ public class EnemyController : MonoBehaviour, IVisible
         Vision = GetComponent<EnemyVision>();
         Hear = GetComponent<EnemyHear>();
         Backstab = GetComponent<EnemyBackstab>();
+        Restart = GetComponent<EnemyRestart>();
 
         Movement.SetMovement(this);
         Renderer.SetRenderer();
@@ -72,6 +76,7 @@ public class EnemyController : MonoBehaviour, IVisible
         Vision.SetVision(this);
         Hear.SetHear(this);
         Backstab.SetBackstab(this);
+        Restart.SetRestart(this);
         
         SwitchToNextState(idleState);
     }
@@ -126,6 +131,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SwitchToLookAtState() => SwitchToNextState(lookAtState);
     public void SwitchToHearState() => SwitchToNextState(hearState);
     public void SwitchToDieState() => SwitchToNextState(dieState);
+    public void SwitchToIdleState() => SwitchToNextState(idleState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> GetWayPoints() => waypoints;
     public PlayerController GetPlayerController() => pController;
@@ -196,6 +202,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public bool RotateEnemy(Vector3 lookDir, float rotationSpeed) => Movement.RotateEnemy(lookDir, rotationSpeed);
     public void SetPositionBeforeMoving() => Movement.SetPositionBeforeMoving();
     public Vector3 SetEnemyPosBeforeMoving(Vector3 pos) => Movement.EnemyPosBeforeMoving = pos;
+    public void RestartIndex() => Movement.RestartIndex();
     public void SetAgentSpeed(float speed)
     {
         if (isChasingPlayer) return;
@@ -246,4 +253,41 @@ public class EnemyController : MonoBehaviour, IVisible
     }
     #endregion
 
+    //-------------------KILL PLAYER---------------------------
+
+    public void KillPlayer()
+    {
+        killPlayerCoroutine = StartCoroutine(KillPlayerAnimation());
+    }
+
+    public void StopKillCoroutine()
+    {
+        killingPlayer = false;
+
+        if(killPlayerCoroutine != null)
+            StopCoroutine(killPlayerCoroutine);
+    }
+    
+    private IEnumerator KillPlayerAnimation()
+    {
+        Transform playerTrans = pController.GetPlayerTransform();
+        killingPlayer = true;
+        StopAgent();
+        
+
+        Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
+        directionToEnemy.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToEnemy);
+        float rotationSpeed = 5f;
+
+        while (Quaternion.Angle(playerTrans.rotation, targetRotation) > 0.3f)
+        {
+            playerTrans.rotation = Quaternion.Slerp(playerTrans.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            yield return null;
+        }
+        playerTrans.rotation = targetRotation;
+
+        yield return null;
+    }
 }
