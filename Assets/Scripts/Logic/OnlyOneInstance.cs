@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class OnlyOneInstance : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         if(GameManager.GetInstance().LevelHasNoEventSystem())
             GameManager.GetInstance().SetEventSystem(this);

@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     
     private void RestartGameOverValues()
     {
+        eHud.HideAllArrows();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

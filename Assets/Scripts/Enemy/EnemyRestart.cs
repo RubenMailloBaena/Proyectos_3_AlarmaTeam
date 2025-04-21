@@ -64,7 +64,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
 
     private void RestartInstructions()
     {
-        eController.HideArrow();
+        eController.exclamationShown = false;
         eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);

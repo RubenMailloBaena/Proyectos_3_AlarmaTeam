@@ -150,6 +150,13 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
             hideExclamationCorutine = StartCoroutine(HideExclamation());
     }
 
+    public void StopAll()
+    {
+        if(hideExclamationCorutine != null)
+            StopCoroutine(hideExclamationCorutine);
+        SetActive(false);
+    }
+
     public static float Remap(float value, float fromMin, float fromMax, float toMin, float toMax)
     {
         return toMin + (value - fromMin) * (toMax - toMin) / (fromMax - fromMin);
@@ -157,6 +164,7 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
 
     private IEnumerator HideExclamation()
     {
+        print("HERER");
         yield return new WaitForSeconds(waitTimeToDisspear);
         SetActive(false);
     }

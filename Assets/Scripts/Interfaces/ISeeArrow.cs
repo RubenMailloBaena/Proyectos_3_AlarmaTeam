@@ -9,4 +9,5 @@ public interface ISeeArrow
     void SetActive(bool show);
     void UpdateArrow(float amount, float maxCapacity);
     void PlayerSeen();
+    void StopAll();
 }

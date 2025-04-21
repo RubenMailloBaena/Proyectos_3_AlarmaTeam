@@ -51,6 +51,12 @@ public class CPoolElement
         return null;
     }
 
+    public void HideAllArrows()
+    {
+        foreach (ISeeArrow arrow in pool)
+            arrow.StopAll();
+    }
+
     private bool AllArrowsInUse()
     {
         foreach (var arrow in pool)

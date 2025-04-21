@@ -43,10 +43,16 @@ public class EnemySeenHUD : MonoBehaviour
         arrows[enemyID].SetActive(false);
         arrows.Remove(enemyID);
     }
-
+    
     public void ShowExclamation(int enemyID)
     {
         arrows[enemyID].PlayerSeen();
         arrows.Remove(enemyID);
+    }
+
+    public void HideAllArrows()
+    {
+        arrowPool.HideAllArrows();
+        arrows.Clear();
     }
 }

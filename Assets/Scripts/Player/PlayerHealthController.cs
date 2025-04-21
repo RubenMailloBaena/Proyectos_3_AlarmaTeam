@@ -35,6 +35,7 @@ public class PlayerHealthController : MonoBehaviour
         }
         HealPlayer();
         UpdateHUD();
+        print(currentHealth);
     }
     
     public void TakeDamage(float damage)
