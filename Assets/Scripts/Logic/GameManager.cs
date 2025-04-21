@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -12,18 +13,24 @@ public class GameManager : MonoBehaviour
     private PlayerHUDController pHud;
     private EnemySeenHUD eHud;
     private HashSet<IInteractable> levers = new HashSet<IInteractable>();
+    private OnlyOneInstance directionalLight;
+    private OnlyOneInstance eventSystem;
 
-    public int TestInt = -1;
     
     void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         else
             Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
+        }
     }
 
     public void PlayerDead()
@@ -37,7 +44,6 @@ public class GameManager : MonoBehaviour
     // SCENE MANAGMENT
     public void ChangeScene(String name)
     {
-        TestInt = 2;
         SceneManager.LoadScene(name);
     }
 
@@ -61,5 +67,10 @@ public class GameManager : MonoBehaviour
     public void SetPlayerHUD(PlayerHUDController pHud) => this.pHud = pHud;
     public EnemySeenHUD GetEnemySeenHUD() => eHud;
     public void SetEnemySeenHUD(EnemySeenHUD hud) => eHud = hud;
+    public void SetLight(OnlyOneInstance light) => directionalLight = light;
+    public bool LevelHasNoLight() => directionalLight == null;
+    public void SetEventSystem(OnlyOneInstance eventS) => eventSystem = eventS;
+    public bool LevelHasNoEventSystem() => eventSystem == null;
+
     #endregion
 }

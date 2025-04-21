@@ -43,7 +43,10 @@ public class PlayerHUDController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().SetPlayerHUD(this);
+        if(GameManager.GetInstance().GetPlayerHUD() == null)
+            GameManager.GetInstance().SetPlayerHUD(this);
+        else
+            Destroy(transform.parent.gameObject);
     }
 
     private void Start()

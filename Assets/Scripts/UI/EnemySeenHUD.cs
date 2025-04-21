@@ -14,7 +14,8 @@ public class EnemySeenHUD : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().SetEnemySeenHUD(this);
+        if(GameManager.GetInstance().GetEnemySeenHUD() == null)
+            GameManager.GetInstance().SetEnemySeenHUD(this);
         arrowPool = new CPoolElement(spawnAmount, arrowPrefab, transform);
     }
 

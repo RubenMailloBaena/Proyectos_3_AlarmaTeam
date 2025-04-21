@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -44,7 +45,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().SetPlayerController(this);
+        if (GameManager.GetInstance().GetPlayerController() == null)
+            GameManager.GetInstance().SetPlayerController(this);
+        else
+            Destroy(gameObject);
         playerInput = GetComponent<PlayerInput>();
     }
 
