@@ -30,7 +30,6 @@ public class IdleState : State
     
     public override State RunCurrentState()
     {
-        print(waitTime);
         if(lookDir != Vector3.zero) 
             eController.RotateEnemy(lookDir, idleRotationSpeed);
         
@@ -48,5 +47,5 @@ public class IdleState : State
     }
 
     public float GetCurrentWaitTime() => waitTime;
-    public void AddCurrentWaitTime(float time) => waitTime -= time;
+    public void AddCurrentWaitTime(float time) => waitTime = time;
 }
