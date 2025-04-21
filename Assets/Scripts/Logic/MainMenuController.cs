@@ -6,34 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private SceneField startbButtonScene;
-    
-    private AsyncOperation loadLogicScene;
+    [SerializeField] private SceneField startButtonScene;
     private GameManager gm;
     
     private void Awake()
     {
-        loadLogicScene = SceneManager.LoadSceneAsync("Logic - Persistent", LoadSceneMode.Additive);
-        StartCoroutine(LoadingDone());
-    }
-
-    private IEnumerator LoadingDone()
-    {
-        while (!loadLogicScene.isDone)
+        if (GameManager.GetInstance() == null)
         {
-            print(loadLogicScene.progress);
-            yield return null;
+            Debug.LogError("----------- YOU MUST ENTER FROM BOOT SCENE! --------------");
+            return;
         }
-
         gm = GameManager.GetInstance();
     }
 
     public void StartGame()
     {
-        //gm.ChangeScene(startbButtonScene);
-        SceneManager.LoadSceneAsync("Gameplay - Persistent", LoadSceneMode.Additive);
-        SceneManager.LoadSceneAsync(startbButtonScene, LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("MainMenu");
+        gm.StartGame(startButtonScene);
     }
 
     public void ExitGame()

@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool movedPos;
+    
     // ------------------ REFERENCIAS ------------------
 
     private PlayerHUDController pHUD;
@@ -48,13 +50,24 @@ public class PlayerController : MonoBehaviour
         if (GameManager.GetInstance().GetPlayerController() == null)
             GameManager.GetInstance().SetPlayerController(this);
         else
+        {
+            GameManager.GetInstance().GetPlayerController().SetPlayerPosition(transform);
             Destroy(gameObject);
+        }
         playerInput = GetComponent<PlayerInput>();
     }
 
     private void Start()
     {
         pHUD = GameManager.GetInstance().GetPlayerHUD();
+    }
+
+    public void SetPlayerPosition(Transform targetPos)
+    {
+        if (movedPos) return;
+        movedPos = true;
+        transform.position = targetPos.position;
+        transform.rotation = targetPos.rotation;
     }
 
     // ------------------ SETTERS ESTADOS ------------------
