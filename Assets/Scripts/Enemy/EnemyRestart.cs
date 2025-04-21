@@ -9,6 +9,9 @@ public class EnemyRestart : MonoBehaviour, IRestartable
     
     private Vector3 startingPos, checkpointPos;
     private Quaternion startingRotation, checkpointRotation;
+    private State checkpointState, startingState;
+    private int checkpointIndex;
+    private float checkpointWaitTime;
 
     public void SetRestart(EnemyController enemyController)
     {
@@ -23,22 +26,32 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         checkpointPos = startingPos;
         startingRotation = transform.rotation;
         checkpointRotation = startingRotation;
+        startingState = eController.GetCurrentState();
+        checkpointState = startingState;
+        checkpointIndex = eController.GetIndex();
+        checkpointWaitTime = eController.GetCurrentWaitTime();
     }
     
     public void RestartGame()
     {
         RestartInstructions();
         
+        eController.RestartIndex();
+        eController.SwitchToNextState(startingState);
+
         eController.ManualRotation(true);
         transform.position = startingPos;
         transform.rotation = startingRotation;
         eController.ManualRotation(false);
-
     }
 
     public void RestartFromCheckPoint()
     {
         RestartInstructions();
+        
+        eController.SetIndex(checkpointIndex);
+        eController.SwitchToNextState(checkpointState);
+        eController.AddCurrentWaitTime(checkpointWaitTime);
         
         eController.ManualRotation(true);
         transform.position = checkpointPos;
@@ -48,16 +61,16 @@ public class EnemyRestart : MonoBehaviour, IRestartable
 
     private void RestartInstructions()
     {
+        eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);
-        eController.RestartIndex();
-        eController.StopAgent();
-        eController.SwitchToIdleState();
     }
-
     
     public void SetCheckPoint()
     {
+        checkpointState = eController.GetCurrentState();
+        checkpointIndex = eController.GetIndex();
+        checkpointWaitTime = eController.GetCurrentWaitTime();
         checkpointPos = transform.position;
         checkpointRotation = transform.rotation;
     }

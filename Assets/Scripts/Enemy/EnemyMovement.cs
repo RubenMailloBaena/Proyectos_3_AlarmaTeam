@@ -64,6 +64,9 @@ public class EnemyMovement : MonoBehaviour
         waypointIndex = 0;
     }
 
+    public int GetIndex() => waypointIndex;
+    public void SetIndex(int index) => waypointIndex = index;
+
     //MESH AGENT CHANGES
     public void SetAgentSpeed(float speed) => meshAgent.speed = speed;
 

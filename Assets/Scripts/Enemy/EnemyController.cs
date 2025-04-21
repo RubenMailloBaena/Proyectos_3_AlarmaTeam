@@ -120,6 +120,7 @@ public class EnemyController : MonoBehaviour, IVisible
     //---------------------------GENERAL FUNCTIONS-------------------------------
 
     #region General Functions
+    public State GetCurrentState() => currentState;
     public bool IsCharmed() => currentState == charmState;
     public bool IsAttacking() => currentState == attackState;
     public bool IsChasing() => currentState == chaseState;
@@ -131,10 +132,21 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SwitchToLookAtState() => SwitchToNextState(lookAtState);
     public void SwitchToHearState() => SwitchToNextState(hearState);
     public void SwitchToDieState() => SwitchToNextState(dieState);
-    public void SwitchToIdleState() => SwitchToNextState(idleState);
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> GetWayPoints() => waypoints;
     public PlayerController GetPlayerController() => pController;
+    public float GetCurrentWaitTime()
+    {
+        if (currentState == idleState)
+            return idleState.GetCurrentWaitTime();
+        return 0.0f;
+    }
+
+    public void AddCurrentWaitTime(float time)
+    {
+        if (currentState == idleState)
+            idleState.AddCurrentWaitTime(time);
+    }
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
@@ -203,6 +215,8 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SetPositionBeforeMoving() => Movement.SetPositionBeforeMoving();
     public Vector3 SetEnemyPosBeforeMoving(Vector3 pos) => Movement.EnemyPosBeforeMoving = pos;
     public void RestartIndex() => Movement.RestartIndex();
+    public int GetIndex() => Movement.GetIndex();
+    public void SetIndex(int indx) => Movement.SetIndex(indx);
     public void SetAgentSpeed(float speed)
     {
         if (isChasingPlayer) return;
@@ -273,7 +287,6 @@ public class EnemyController : MonoBehaviour, IVisible
         Transform playerTrans = pController.GetPlayerTransform();
         killingPlayer = true;
         StopAgent();
-        
 
         Vector3 directionToEnemy = (transform.position - playerTrans.position).normalized;
         directionToEnemy.y = 0f;
