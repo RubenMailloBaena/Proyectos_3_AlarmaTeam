@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SceneManager.UnloadSceneAsync("Level1-Test");
+        }
     }
 
     public void PlayerDead()
@@ -42,9 +46,9 @@ public class GameManager : MonoBehaviour
     
     
     // SCENE MANAGMENT
-    public void ChangeScene(String name)
+    public void ChangeScene(SceneField scene)
     {
-        SceneManager.LoadScene(name);
+        SceneManager.LoadScene(scene);
     }
 
     public void RestartScene()

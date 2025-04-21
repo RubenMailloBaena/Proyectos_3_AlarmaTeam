@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField] private SceneField startbButtonScene;
+    
     private AsyncOperation loadLogicScene;
     private GameManager gm;
     
@@ -26,9 +28,12 @@ public class MainMenuController : MonoBehaviour
         gm = GameManager.GetInstance();
     }
 
-    public void StartGame(string scene)
+    public void StartGame()
     {
-        gm.ChangeScene(scene);
+        //gm.ChangeScene(startbButtonScene);
+        SceneManager.LoadSceneAsync("Gameplay - Persistent", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(startbButtonScene, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("MainMenu");
     }
 
     public void ExitGame()
