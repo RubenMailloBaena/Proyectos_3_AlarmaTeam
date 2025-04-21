@@ -474,18 +474,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbb2bc8f0f73d94c83d450d62728140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu:
-    m_SceneAsset: {fileID: 102900000, guid: 9893a163dbdb687409d7a7bc061edbc4, type: 3}
-    m_SceneName: MainMenu
-  Level1:
-    m_SceneAsset: {fileID: 102900000, guid: 0c07ffb5bfef8a048a0d84ac4970e7c2, type: 3}
-    m_SceneName: Level1-Test
-  Level2:
-    m_SceneAsset: {fileID: 102900000, guid: eb0787d90b57c17489b18efa7e6c319c, type: 3}
-    m_SceneName: Level2-Test
   gameplayScene:
     m_SceneAsset: {fileID: 102900000, guid: 7db071f31be740b4fb9b152caafb51a3, type: 3}
     m_SceneName: Gameplay - Persistent
+  mainMenu:
+    m_SceneAsset: {fileID: 102900000, guid: 9893a163dbdb687409d7a7bc061edbc4, type: 3}
+    m_SceneName: MainMenu
+  gameLevels:
+  - m_SceneAsset: {fileID: 102900000, guid: 0c07ffb5bfef8a048a0d84ac4970e7c2, type: 3}
+    m_SceneName: Level1-Test
+  - m_SceneAsset: {fileID: 102900000, guid: eb0787d90b57c17489b18efa7e6c319c, type: 3}
+    m_SceneName: Level2-Test
 --- !u!1 &6075101576454026009
 GameObject:
   m_ObjectHideFlags: 0

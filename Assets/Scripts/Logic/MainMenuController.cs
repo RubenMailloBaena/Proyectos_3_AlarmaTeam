@@ -6,26 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private SceneField startButtonScene;
-    private GameManager gm;
-    
     private void Awake()
     {
-        if (GameManager.GetInstance() == null)
-        {
-            Debug.LogError("----------- YOU MUST ENTER FROM BOOT SCENE! --------------");
-            return;
-        }
-        gm = GameManager.GetInstance();
+        if(GameManager.GetInstance() == null)
+            ShowMessage();
     }
 
-    public void StartGame()
+    public void StartGame(int levelNumber)
     {
-        gm.StartGame(startButtonScene);
+        LevelChangeManager.GetInstance().StartGame(levelNumber);
     }
 
     public void ExitGame()
     {
-        gm.ExitGame();
+        GameManager.GetInstance().ExitGame();
+    }
+
+    private void ShowMessage()
+    {
+        //POR SI EMPEZAMOS DESDE EL MAIN MENU
+        Debug.LogError("------- SHOULD START FROM BOOT SCENE! -----------");
+        SceneManager.LoadScene("-BootScene-");
     }
 }

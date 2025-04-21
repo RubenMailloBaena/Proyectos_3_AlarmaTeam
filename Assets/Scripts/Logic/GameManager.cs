@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    private LevelChangeManager levelManager;
     
     private PlayerController pController;
     private PlayerHUDController pHud;
@@ -21,24 +20,9 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-            levelManager = GetComponent<LevelChangeManager>();
-        }
         else
             Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SceneManager.UnloadSceneAsync("Level1-Test");
-        }
     }
 
     public void PlayerDead()
@@ -49,17 +33,6 @@ public class GameManager : MonoBehaviour
     }
     
     
-    // SCENE MANAGMENT
-    public void ChangeScene(SceneField scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
-
-    public void StartGame(SceneField scene)
-    {
-        levelManager.StartGame(scene);
-    }
-
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

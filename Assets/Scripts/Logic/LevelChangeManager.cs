@@ -6,18 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class LevelChangeManager : MonoBehaviour
 {
-    [Header("SCENES")] 
-    [SerializeField] private SceneField mainMenu;
-    [SerializeField] private SceneField Level1;
-    [SerializeField] private SceneField Level2;
+    private static LevelChangeManager instance;
     
     [Header("Persistent")]
     [SerializeField] private SceneField gameplayScene;
     
-    public void StartGame(SceneField scene)
+    [Header("SCENES")] 
+    [SerializeField] private SceneField mainMenu;
+    [SerializeField] private List<SceneField> gameLevels;
+
+    private int currentLevel = -1;
+
+    private void Awake()
     {
+        if (instance == null)
+            instance = this;
+    }
+
+    public static LevelChangeManager GetInstance() => instance;
+
+    public void StartGame(int levelIndex)
+    {
+        currentLevel = levelIndex - 1;
         SceneManager.UnloadSceneAsync(mainMenu);
         SceneManager.LoadSceneAsync(gameplayScene, LoadSceneMode.Additive);
-        SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
     }
 }

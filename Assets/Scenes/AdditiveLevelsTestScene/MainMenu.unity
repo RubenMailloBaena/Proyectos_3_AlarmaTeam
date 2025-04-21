@@ -409,11 +409,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1654625017}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: StartGame
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: Level1-Test
           m_BoolArgument: 0
@@ -1218,9 +1218,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05c936e3709b06e4c86939d26b02d7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startButtonScene:
-    m_SceneAsset: {fileID: 102900000, guid: 0c07ffb5bfef8a048a0d84ac4970e7c2, type: 3}
-    m_SceneName: Level1-Test
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
