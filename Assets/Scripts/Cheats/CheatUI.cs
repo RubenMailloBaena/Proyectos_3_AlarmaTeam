@@ -92,6 +92,6 @@ public class CheatUI : MonoBehaviour
         AddCommand(new GodModeCommand());
         AddCommand(new CheckpointCommand());
         AddCommand(new RestartFromCheckpointCommand());
-        //AddCommand(new ResetVaseCommand());
+        AddCommand(new MainMenuCommand());
     }
 }

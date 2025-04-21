@@ -111,6 +111,7 @@ public class EnemyMovement : MonoBehaviour
         
         //Miramos si ya estamos alineados 
         float angleDiff = Quaternion.Angle(transform.rotation, targetDir);
+        
         if (angleDiff < minAngleDiffToRotate)
         {
             transform.rotation = targetDir;

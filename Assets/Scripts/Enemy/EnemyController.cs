@@ -165,6 +165,7 @@ public class EnemyController : MonoBehaviour, IVisible
     #region IVision
     public void SetVisiblity(bool active) => heart.SetActive(active);
     public Vector3 GetVisionPosition() => transform.position;
+    private void OnDestroy() => pController.RemoveVisible(this);
     #endregion
     
     //----------------------------HEAR FUNCTIONS-----------------------------

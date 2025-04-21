@@ -47,4 +47,6 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     {
         return transform.position;
     }
+    
+    private void OnDestroy() => GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
 }

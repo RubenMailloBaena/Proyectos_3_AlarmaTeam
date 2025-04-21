@@ -80,4 +80,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         checkpointRotation = transform.rotation;
         enemyWasDead = eController.enemyIsDead;
     }
+
+    private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);
+
 }

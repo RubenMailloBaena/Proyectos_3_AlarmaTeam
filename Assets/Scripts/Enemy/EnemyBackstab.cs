@@ -20,7 +20,8 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
 
     public void SetWeakSpot(bool active)
     {
-        weakSpotRenderer.SetActive(active);
+        if(weakSpotRenderer != null)
+            weakSpotRenderer.SetActive(active);
     }
 
     public void Backstab()
@@ -29,4 +30,9 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
     }
 
     public Transform GetTransform() => transform;
+
+    private void OnDestroy()
+    {
+        GameManager.GetInstance().GetPlayerController().RemoveBackstabEnemy(this);
+    }
 }

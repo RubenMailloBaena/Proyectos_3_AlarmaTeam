@@ -146,6 +146,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     // ------------------ ENEMIGOS Y VISION ------------------
 
     public void AddVisible(IVisible visible) => visionObjects.Add(visible);
+    public void RemoveVisible(IVisible visible) => visionObjects.Remove(visible);
     public HashSet<IVisible> GetVisionObjects() => visionObjects;
 
     public void AddHearEnemy(IEnemyHear enemy) => hearEnemies.Add(enemy);
@@ -153,6 +154,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public HashSet<IEnemyHear> GetHearEnemies() => hearEnemies;
     
     public void AddBackstabEnemy(IEnemyBackstab enemy) => backstabsEnemies.Add(enemy);
+    public void RemoveBackstabEnemy(IEnemyBackstab enemy) => backstabsEnemies.Remove(enemy);
     public HashSet<IEnemyBackstab> GetBackstabEnemies() => backstabsEnemies;
     
     
@@ -176,4 +178,6 @@ public class PlayerController : MonoBehaviour, IRestartable
         checkpointPos = transform.position;
         checkpointRotation = transform.rotation;
     }
+
+    private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);
 }

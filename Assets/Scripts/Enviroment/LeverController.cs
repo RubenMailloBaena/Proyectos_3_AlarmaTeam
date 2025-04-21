@@ -103,6 +103,12 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     }
     
     public Vector3 GetPosition() => transform.position;
-    
+
+    private void OnDestroy()
+    { 
+        GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
+        GameManager.GetInstance().RemoveInteractable(this);
+    } 
+
 }
     

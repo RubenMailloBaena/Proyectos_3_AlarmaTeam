@@ -81,7 +81,9 @@ public class GameManager : MonoBehaviour
     
     #region Getters & Setters
     public void AddRestartable(IRestartable restartable) => restartObjects.Add(restartable);
+    public void RemoveRestartable(IRestartable restartable) => restartObjects.Remove(restartable);
     public void AddInteractable(IInteractable interactable) => levers.Add(interactable);
+    public void RemoveInteractable(IInteractable interactable) => levers.Remove(interactable);
     public HashSet<IInteractable> GetInteractables() => levers;
     public static GameManager GetInstance() => instance;
     public PlayerController GetPlayerController() => pController;

@@ -34,11 +34,11 @@ public class HearState : State
             eController.ReturnToLastState();
 
         eController.StopAgent();
-        targetDir = (targetPos - transform.position).normalized;
     }
 
     public override State RunCurrentState()
     {
+        targetDir = (targetPos - transform.position).normalized;
         if (eController.RotateEnemy(targetDir, hearRotationSpeed))
         {
             eController.SetInPlayerHearState(false);

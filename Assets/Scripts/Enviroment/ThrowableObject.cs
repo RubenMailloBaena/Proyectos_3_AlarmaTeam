@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
+public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestartable
 {
     private PlayerController pController;
 
@@ -19,11 +19,17 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
     [SerializeField] private LayerMask enemyLayer;
     
     [Space(10)] [SerializeField] private float interactDistance;
+
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
 
     private bool thrown, done; 
     private Rigidbody rb;
+    
+    //RESTART
+    private Vector3 startingPos, checkpointPos;
+    private Quaternion startingRotation, checkpointRotation;
+    private bool wasUsed;
     
     private void Awake()
     {
@@ -34,6 +40,12 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
     {
         pController = GameManager.GetInstance().GetPlayerController();
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
+        GameManager.GetInstance().AddRestartable(this);
+
+        startingPos = transform.position;
+        checkpointPos = startingPos;
+        startingRotation = transform.rotation;
+        checkpointRotation = startingRotation;
     }
 
     public void SelectObject(bool select)
@@ -63,6 +75,8 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         {
             done = true;
             CheckIfEnemiesCanHear();
+            //LO CAMBIAMOS DE LAYER PARA NO PODER VOLVER A INTERACTUAR
+            gameObject.layer = LayerMask.NameToLayer("Logic");
         }
     }
 
@@ -116,4 +130,40 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible
         return transform.position;
     }
     #endregion
+    
+    //CHECKPOINTS
+    public void RestartGame()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Default");
+        transform.position = startingPos;
+        transform.rotation = startingRotation;
+        thrown = false;
+        done = false;
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        transform.position = checkpointPos;
+        transform.rotation = checkpointRotation;
+        thrown = wasUsed;
+        done = wasUsed;
+        if (!wasUsed)
+            gameObject.layer = LayerMask.NameToLayer("Default");
+    }
+
+    public void SetCheckPoint()
+    {
+        checkpointPos = transform.position;
+        checkpointRotation = transform.rotation;
+        wasUsed = thrown;
+    }
+    
+    private void OnDestroy()
+    { 
+        GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
+        GameManager.GetInstance().RemoveInteractable(this);
+        GameManager.GetInstance().RemoveRestartable(this);
+    }
+    
+    
 }
