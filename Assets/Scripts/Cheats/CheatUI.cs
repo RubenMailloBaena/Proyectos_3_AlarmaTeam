@@ -93,5 +93,6 @@ public class CheatUI : MonoBehaviour
         AddCommand(new CheckpointCommand());
         AddCommand(new RestartFromCheckpointCommand());
         AddCommand(new MainMenuCommand());
+        AddCommand(new KillEnemiesCommand());
     }
 }
