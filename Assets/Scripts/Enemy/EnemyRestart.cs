@@ -39,12 +39,20 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         
         eController.enemyIsDead = false;
         eController.RestartIndex();
+        eController.SetLockedVisual(false);
         eController.SwitchToNextState(startingState);
 
         eController.ManualRotation(true);
-        transform.position = startingPos;
+        eController.WarpAgent(startingPos);
         transform.rotation = startingRotation;
         eController.ManualRotation(false);
+
+        checkpointPos = startingPos;
+        checkpointRotation = startingRotation;
+        enemyWasDead = false;
+        checkpointIndex = 0;
+        checkpointWaitTime = eController.GetCurrentWaitTime();
+        checkpointState = startingState;
     }
 
     public void RestartFromCheckPoint()
@@ -57,7 +65,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.AddCurrentWaitTime(checkpointWaitTime);
         
         eController.ManualRotation(true);
-        transform.position = checkpointPos;
+        eController.WarpAgent(checkpointPos);
         transform.rotation = checkpointRotation;
         eController.ManualRotation(false);
     }

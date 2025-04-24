@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CurtainAdapter : MonoBehaviour, IObjects
+public class CurtainAdapter : MonoBehaviour, IObjects, IRestartable
 {
     [SerializeField] private Transform cablePosition;
     [SerializeField] private List<Curtain> curtains;
 
     public IInteractable lever { get; set; }
     public Material lockedMaterial { get; set; }
+
+    private void Start()
+    {
+        GameManager.GetInstance().AddRestartable(this);
+    }
 
     public void Interact()
     {
@@ -22,14 +27,32 @@ public class CurtainAdapter : MonoBehaviour, IObjects
         foreach (Curtain curtain in curtains)
             curtain.ShowInteract(interact, locked, lockedMaterial);
     }
-    
-    public void SetLocked(bool active)
-    {
-        throw new System.NotImplementedException();
-    }
 
     public Vector3 GetCablePosition()
     {
         return cablePosition.position;
+    }
+
+    public void RestartGame()
+    {
+        foreach (Curtain curtain in curtains)
+            curtain.RestartGame();
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        foreach (Curtain curtain in curtains)
+            curtain.RestartFromCheckPoint();
+    }
+
+    public void SetCheckPoint()
+    {
+        foreach (Curtain curtain in curtains)
+            curtain.SetCheckPoint();
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.GetInstance().RemoveRestartable(this);
     }
 }

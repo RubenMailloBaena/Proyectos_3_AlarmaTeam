@@ -76,6 +76,8 @@ public class EnemyMovement : MonoBehaviour
     
     public void ManualRotation(bool active) => meshAgent.updateRotation = !active;
 
+    public void WarpAgent(Vector3 position) => meshAgent.Warp(position);
+    
     public Vector3 GoToDestination(Vector3 target)
     {
         meshAgent.SetDestination(target);

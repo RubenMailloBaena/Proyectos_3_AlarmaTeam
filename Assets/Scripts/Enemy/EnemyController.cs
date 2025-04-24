@@ -207,6 +207,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public void StopAgent() => Movement.StopAgent();
     public Vector3 GetEnemyVelocity() => Movement.GetEnemyVelocity();
     public void ManualRotation(bool active) => Movement.ManualRotation(active);
+    public void WarpAgent(Vector3 position) => Movement.WarpAgent(position);
     public Vector3 GoToLever() => Movement.GoToDestination(Charm.GetLeverPosition());
     public Vector3 GoToSoundSource() => Movement.GoToDestination(Hear.SoundPos);
     public Vector3 GoToPreviousPosition() => Movement.GoToPreviousPosition();

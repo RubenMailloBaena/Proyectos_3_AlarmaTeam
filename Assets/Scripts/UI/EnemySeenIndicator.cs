@@ -164,7 +164,6 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
 
     private IEnumerator HideExclamation()
     {
-        print("HERER");
         yield return new WaitForSeconds(waitTimeToDisspear);
         SetActive(false);
     }

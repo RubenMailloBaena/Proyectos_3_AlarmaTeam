@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Doors : MonoBehaviour, IObjects
+public class Doors : MonoBehaviour, IObjects, IRestartable
 {
     [SerializeField] private Transform moveObject;
     [SerializeField] private Transform cablePosition;
@@ -15,14 +16,17 @@ public class Doors : MonoBehaviour, IObjects
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
 
-    private Vector3 startingPos, finalPos;
-    private bool isMoving;
+    private Vector3 startingPos, finalPos, restartPosition;
+    private bool isMoving, wasMoving;
     
     public IInteractable lever { get; set; }
     public Material lockedMaterial { get; set; }
     void Start()
     {
+        GameManager.GetInstance().AddRestartable(this);
+        
         startingPos = moveObject.position;
+        restartPosition = startingPos;
         finalPos = startingPos + moveObject.forward * distance;
     }
     
@@ -57,15 +61,34 @@ public class Doors : MonoBehaviour, IObjects
             doorRenderer.material = defaultMaterial;
     }
     
-    public void SetLocked(bool active)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public Vector3 GetCablePosition()
     {
         return cablePosition.position;
     }
 
-    
+
+    public void RestartGame()
+    {
+        moveObject.position = startingPos;
+        restartPosition = startingPos;
+        isMoving = false;
+        wasMoving = false;
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        moveObject.position = restartPosition;
+        isMoving = wasMoving;
+    }
+
+    public void SetCheckPoint()
+    {
+        restartPosition = moveObject.position;
+        wasMoving = isMoving;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.GetInstance().RemoveRestartable(this);
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,6 +30,8 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     private List<IInteractable> interactables = new List<IInteractable>();
     private List<ICharmEnemy> charmedEnemies = new List<ICharmEnemy>();
     private List<IInteractable> charmedInteractables = new List<IInteractable>();
+    private List<ICharmEnemy> checkpointEnemeis = new List<ICharmEnemy>();
+    private List<IInteractable> checkpointInteractables = new List<IInteractable>();
     private bool isCharming;
 
     private void Awake()
@@ -256,6 +259,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     
     private void HandleCharmedEnemies()
     {
+        print("HERE");
         for (int i = charmedEnemies.Count - 1; i >= 0; i--)
         {
             var enemy = charmedEnemies[i];
@@ -302,18 +306,56 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         return Physics.Raycast(leanParent.position, leanParent.forward, out hit, range, allLayers);
     }
 
+    private void RestartGame()
+    {
+        ExitCharmingMode();
+        checkpointEnemeis.Clear();
+        charmedInteractables.Clear();
+    }
+
+    private void RestartFromCheckpoint()
+    {
+        ExitCharmingMode();
+
+        if (checkpointEnemeis.Count != 0)
+        {
+            for (int i = 0; i < checkpointEnemeis.Count; i++)
+            {
+                checkpointEnemeis[i].SetCharmedState(checkpointInteractables[i]);
+            }
+        }
+            
+        
+        charmedEnemies = new List<ICharmEnemy>(checkpointEnemeis);
+        charmedInteractables = new List<IInteractable>(checkpointInteractables);
+    }
+
+    private void SetCheckpoint()
+    {
+        checkpointEnemeis = new List<ICharmEnemy>(charmedEnemies);
+        checkpointInteractables = new List<IInteractable>(charmedInteractables);
+        print("checkpointEnemeis " + checkpointEnemeis.Count);
+        print("charmedEnemies " + charmedEnemies.Count);
+    }
+
     #endregion
     
     private void OnEnable()
     {
         charmInput.action.Enable();
         attackInput.action.Enable();
+        pController.onRestart += RestartGame;
+        pController.onSetCheckpoint += SetCheckpoint;
+        pController.onRestartFromCheckpoint += RestartFromCheckpoint;
     }
 
     private void OnDisable()
     {
         charmInput.action.Disable();
         attackInput.action.Disable();
+        pController.onRestart -= RestartGame;
+        pController.onSetCheckpoint -= SetCheckpoint;
+        pController.onRestartFromCheckpoint -= RestartFromCheckpoint;
     }
 
     private void OnDrawGizmosSelected()

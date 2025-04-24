@@ -14,12 +14,13 @@ public class Curtain : MonoBehaviour
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
 
-    private Vector3 startingPos, finalPos, targetPos;
-    private bool isMoving;
+    private Vector3 startingPos, finalPos, targetPos, restartPosition;
+    private bool isMoving, wasMoving;
     
     void Start()
     {
         startingPos = moveObject.position;
+        restartPosition = startingPos;
         finalPos = startingPos + moveObject.forward * distance;
     }
     
@@ -52,5 +53,25 @@ public class Curtain : MonoBehaviour
         }
         else
             curtainRenderer.material = defaultMaterial;
+    }
+    
+    public void RestartGame()
+    {
+        moveObject.position = startingPos;
+        restartPosition = startingPos;
+        isMoving = false;
+        wasMoving = false;
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        moveObject.position = restartPosition;
+        isMoving = wasMoving;
+    }
+
+    public void SetCheckPoint()
+    {
+        restartPosition = moveObject.position;
+        wasMoving = isMoving;
     }
 }

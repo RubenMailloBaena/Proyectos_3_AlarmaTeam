@@ -99,6 +99,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         pController.OnTakeDamage += TakeDamage;
         pController.onRestart += Respawn;
+        pController.onRestartFromCheckpoint += Respawn;
         pController.onGodMode += GodMode;
     }
 
@@ -106,6 +107,7 @@ public class PlayerHealthController : MonoBehaviour
     {
         pController.OnTakeDamage -= TakeDamage;
         pController.onRestart -= Respawn;
+        pController.onRestartFromCheckpoint -= Respawn;
         pController.onGodMode -= GodMode;
     }
 }

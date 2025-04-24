@@ -137,8 +137,11 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         gameObject.layer = LayerMask.NameToLayer("Default");
         transform.position = startingPos;
         transform.rotation = startingRotation;
+        checkpointPos = startingPos;
+        checkpointRotation = startingRotation;
         thrown = false;
         done = false;
+        wasUsed = false;
     }
 
     public void RestartFromCheckPoint()
@@ -164,6 +167,4 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         GameManager.GetInstance().RemoveInteractable(this);
         GameManager.GetInstance().RemoveRestartable(this);
     }
-    
-    
 }

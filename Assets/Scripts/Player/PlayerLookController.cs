@@ -81,11 +81,13 @@ public class PlayerLookController : MonoBehaviour
     {
         pController.OnCameraLockChange += ChangeCameraLock;
         pController.onRestart += RestartRotation;
+        pController.onRestartFromCheckpoint += RestartRotation;
     }
 
     private void OnDisable()
     {
         pController.OnCameraLockChange -= ChangeCameraLock;
         pController.onRestart -= RestartRotation;
+        pController.onRestartFromCheckpoint -= RestartRotation;
     }
 }

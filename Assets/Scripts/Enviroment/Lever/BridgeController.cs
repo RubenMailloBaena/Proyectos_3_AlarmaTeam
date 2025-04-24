@@ -91,11 +91,6 @@ public class BridgeController : MonoBehaviour, IObjects
             bridgeRenderer.material = defaultMaterial;
     }
     
-    public void SetLocked(bool active)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public Vector3 GetCablePosition()
     {
         return cablePosition.position;

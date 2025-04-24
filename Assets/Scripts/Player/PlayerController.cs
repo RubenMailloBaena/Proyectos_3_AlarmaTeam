@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     public event Action OnVaultCrouched;
     public event Action<float> OnTakeDamage;
     public event Action onRestart;
+    public event Action onRestartFromCheckpoint;
+    public event Action onSetCheckpoint;
     public event Action OnPlayerTP;
 
 
@@ -163,6 +165,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     {
         transform.position = startingPos;
         transform.rotation = startingRotation;
+        checkpointPos = startingPos;
+        checkpointRotation = startingRotation;
         onRestart?.Invoke();
     }
 
@@ -170,13 +174,14 @@ public class PlayerController : MonoBehaviour, IRestartable
     {
         transform.position = checkpointPos;
         transform.rotation = checkpointRotation;
-        onRestart?.Invoke();
+        onRestartFromCheckpoint?.Invoke();
     }
 
     public void SetCheckPoint()
     {
         checkpointPos = transform.position;
         checkpointRotation = transform.rotation;
+        onSetCheckpoint?.Invoke();
     }
 
     private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverController : MonoBehaviour, IInteractable, IVisible
+public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestartable
 {
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
@@ -21,6 +21,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
 
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
+    private bool wasLocked;
 
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
     {
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
         GameManager.GetInstance().AddInteractable(this);
+        GameManager.GetInstance().AddRestartable(this);
     }
     
     public void SelectObject(bool select)
@@ -97,18 +99,33 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible
         baseRenderer.material = mat;
     }
 
-    public Vector3 GetVisionPosition()
+    public Vector3 GetVisionPosition() => transform.position;
+    
+
+    public void RestartGame()
     {
-        return transform.position;
+        isLocked = false;
+        wasLocked = false;
+        SelectObject(false);
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        isLocked = wasLocked;
+    }
+
+    public void SetCheckPoint()
+    {
+        wasLocked = isLocked;
     }
     
-    public Vector3 GetPosition() => transform.position;
-
     private void OnDestroy()
     { 
         GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
         GameManager.GetInstance().RemoveInteractable(this);
-    } 
-
+        GameManager.GetInstance().RemoveRestartable(this);
+    }
+    
+    public Vector3 GetPosition() => transform.position;
 }
     

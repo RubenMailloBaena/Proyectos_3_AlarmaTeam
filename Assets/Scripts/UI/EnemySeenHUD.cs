@@ -40,12 +40,14 @@ public class EnemySeenHUD : MonoBehaviour
 
     public void HideArrow(int enemyID)
     {
+        if (!arrows.ContainsKey(enemyID)) return;
         arrows[enemyID].SetActive(false);
         arrows.Remove(enemyID);
     }
     
     public void ShowExclamation(int enemyID)
     {
+        if (!arrows.ContainsKey(enemyID)) return;
         arrows[enemyID].PlayerSeen();
         arrows.Remove(enemyID);
     }
