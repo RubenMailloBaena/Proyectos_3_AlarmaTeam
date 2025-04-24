@@ -41,6 +41,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.RestartIndex();
         eController.SetLockedVisual(false);
         eController.SwitchToNextState(startingState);
+        eController.SetRenderActive(true);
 
         eController.ManualRotation(true);
         eController.WarpAgent(startingPos);
@@ -63,6 +64,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.SetIndex(checkpointIndex);
         eController.SwitchToNextState(checkpointState);
         eController.AddCurrentWaitTime(checkpointWaitTime);
+        eController.SetRenderActive(!enemyWasDead);
         
         eController.ManualRotation(true);
         eController.WarpAgent(checkpointPos);
@@ -76,7 +78,6 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);
-        eController.SetRenderActive(!enemyWasDead);
     }
     
     public void SetCheckPoint()

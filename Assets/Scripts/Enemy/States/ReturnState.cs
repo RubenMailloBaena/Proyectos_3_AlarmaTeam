@@ -25,11 +25,11 @@ public class ReturnState : State
         }
         
         eController.SetAgentSpeed(returnSpeed);
-        targetPos = eController.GoToPreviousPosition();
     }
 
     public override State RunCurrentState()
     {
+        targetPos = eController.GoToPreviousPosition();
         if (eController.ArrivedToPosition(targetPos))
         {
             eController.SetEnemyPosBeforeMoving(Vector3.zero);

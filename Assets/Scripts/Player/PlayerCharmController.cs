@@ -259,7 +259,6 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     
     private void HandleCharmedEnemies()
     {
-        print("HERE");
         for (int i = charmedEnemies.Count - 1; i >= 0; i--)
         {
             var enemy = charmedEnemies[i];

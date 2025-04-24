@@ -17,11 +17,11 @@ public class GoToState : State
     {
         eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
-        targetPos = eController.GoToSoundSource();
     }
 
     public override State RunCurrentState()
     {
+        targetPos = eController.GoToSoundSource();
         if (eController.ArrivedToPosition(targetPos))
             return checkState;
         return this;
