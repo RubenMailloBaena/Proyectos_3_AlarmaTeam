@@ -56,7 +56,6 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
             else
                 doorRenderer.material = visualMaterial;
         }
-            
         else
             doorRenderer.material = defaultMaterial;
     }

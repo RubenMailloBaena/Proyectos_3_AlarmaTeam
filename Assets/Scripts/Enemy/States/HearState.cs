@@ -38,6 +38,7 @@ public class HearState : State
 
     public override State RunCurrentState()
     {
+        targetPos = eController.SoundPos();
         targetDir = (targetPos - transform.position).normalized;
         if (eController.RotateEnemy(targetDir, hearRotationSpeed))
         {

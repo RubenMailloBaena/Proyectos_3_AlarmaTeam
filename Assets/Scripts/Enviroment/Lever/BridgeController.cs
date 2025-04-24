@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-public class BridgeController : MonoBehaviour, IObjects
+public class BridgeController : MonoBehaviour, IObjects, IRestartable
 {
     [SerializeField] private GameObject meshBlock1;
     [SerializeField] private GameObject meshBlock2;
@@ -16,19 +16,21 @@ public class BridgeController : MonoBehaviour, IObjects
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
 
-    private Vector3 startingPos, finalPos;
-    private bool isMoving;
+    private Vector3 startingPos, finalPos, restartPosition;
+    private bool isMoving, wasMoving;
     private bool isExtending; 
 
     private float distanceToConsiderArrive = 0.1f; 
     
     public IInteractable lever { get; set; }
     public Material lockedMaterial { get; set; }
-
-
+    
     void Start()
     {
+        GameManager.GetInstance().AddRestartable(this);
+        
         startingPos = movingObject.position;
+        restartPosition = startingPos;
         finalPos = startingPos + movingObject.forward * distance;
         
         meshBlock1.SetActive(true);
@@ -94,5 +96,30 @@ public class BridgeController : MonoBehaviour, IObjects
     public Vector3 GetCablePosition()
     {
         return cablePosition.position;
+    }
+
+    public void RestartGame()
+    {
+        movingObject.position = startingPos;
+        restartPosition = startingPos;
+        isMoving = false;
+        wasMoving = false;
+    }
+
+    public void RestartFromCheckPoint()
+    {
+        movingObject.position = restartPosition;
+        isMoving = wasMoving;
+    }
+
+    public void SetCheckPoint()
+    {
+        restartPosition = movingObject.position;
+        wasMoving = isMoving;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.GetInstance().RemoveRestartable(this);
     }
 }

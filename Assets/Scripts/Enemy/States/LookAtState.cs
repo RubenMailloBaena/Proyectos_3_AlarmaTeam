@@ -18,7 +18,7 @@ public class LookAtState : State
         eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();
-
+        
         if (eController.IsPointInVision(targetPos))
         {
             eController.StopAgent();
@@ -28,6 +28,8 @@ public class LookAtState : State
 
     public override State RunCurrentState()
     {
+        targetPos = eController.GoToSoundSource();
+
         if (eController.IsPointInVision(targetPos) || eController.GetEnemyVelocity() == Vector3.zero)
             return checkState;
         return this;

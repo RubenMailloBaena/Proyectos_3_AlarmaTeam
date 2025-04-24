@@ -247,17 +247,22 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     //ENSEÑAMOS EL VISUAL EN ROJO SEGUN SI ESTAN CHARMEADOS O NO 
     private void HandleCharmedObjects()
     {
+        CheckIfCanRemove();
+        
         if (!isCharming)
         {
             TurnOffCharmedObjects();
             return;
         }
 
-        HandleCharmedEnemies();
-        HandleCharmedInteractables();
+        foreach (var enemy in charmedEnemies)
+            enemy.SetTargetVisual(true);
+
+        foreach (var interactable in charmedInteractables)
+            interactable.SelectObject(true);
     }
-    
-    private void HandleCharmedEnemies()
+
+    private void CheckIfCanRemove()
     {
         for (int i = charmedEnemies.Count - 1; i >= 0; i--)
         {
@@ -267,13 +272,8 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
                 enemy.SetTargetVisual(false);
                 charmedEnemies.RemoveAt(i);
             }
-            else
-                enemy.SetTargetVisual(true);
         }
-    }
-    
-    private void HandleCharmedInteractables()
-    {
+
         for (int i = charmedInteractables.Count - 1; i >= 0; i--)
         {
             var interactable = charmedInteractables[i];
@@ -282,11 +282,9 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
                 interactable.SelectObject(false);
                 charmedInteractables.RemoveAt(i);
             }
-            else
-                interactable.SelectObject(true);
         }
     }
-
+    
     private void TurnOffCharmedObjects()
     {
         foreach (var enemy in charmedEnemies)

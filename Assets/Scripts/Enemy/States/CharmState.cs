@@ -22,14 +22,15 @@ public class CharmState : State
         eController.ChangeMaterial(material);
         eController.StopAgent();
         eController.SetAgentSpeed(charmSpeed);
-        targetPos = eController.GetLeverPosition();
-        targetPos.y = transform.position.y;
-        direction = (targetPos - transform.position).normalized;
         setDestination = false;
     }
 
     public override State RunCurrentState()
     {
+        targetPos = eController.GetLeverPosition();
+        targetPos.y = transform.position.y;
+        direction = (targetPos - transform.position).normalized;
+        
         if (eController.RotateEnemy(direction, rotateSpeed))
         {
             if (!setDestination)
