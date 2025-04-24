@@ -24,8 +24,6 @@ public class EnemyHear : MonoBehaviour, IEnemyHear
 
     public void HeardSound(Vector3 soundPoint, bool isObject)
     {
-        Debug.Log($"Enemy Y: {transform.position.y}, Sound Y: {soundPoint.y}, Diff: {Mathf.Abs(soundPoint.y - transform.position.y)}");
-        
         if (Mathf.Abs(soundPoint.y - transform.position.y) > 1.0f 
             || eController.isChasingPlayer || eController.IsAttacking() || eController.IsCharmed()) 
             return;
