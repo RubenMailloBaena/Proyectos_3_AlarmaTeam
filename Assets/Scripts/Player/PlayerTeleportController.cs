@@ -41,6 +41,12 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private void HandleStatueDetection()
     {
+        if (pController.CanVault || pController.IsVaulting)
+        {
+            ClearTarget();
+            return;
+        }
+
         Ray ray = new Ray(leanParent.position, leanParent.forward);
        
         if (Physics.Raycast(ray, out RaycastHit hit, teleportRange, allLayers))

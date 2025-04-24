@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public bool IsLeaning { get; private set; }
     public bool IsGrounded { get; private set; }
     public bool IsVaulting { get; private set; }
+    public bool CanVault { get; private set; }
     public bool IsTeleporting { get; private set; }
     public bool IsUsingVision { get; private set; }
     public bool IsPlayerDead { get; private set; }
@@ -99,6 +100,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public void SetCrouching(bool crouching) => IsCrouching = crouching;
     public void SetGrounded(bool grounded) => IsGrounded = grounded;
     public void SetVaulting(bool vaulting) => IsVaulting = vaulting;
+    public void SetCanVault(bool vaulting) => CanVault = vaulting;
     public void SetTeleporting(bool teleporting) => IsTeleporting = teleporting;
     public void SetUsingVision(bool vision) => IsUsingVision = vision;
     public void SetIsPlayerDead(bool dead) => IsPlayerDead = dead;

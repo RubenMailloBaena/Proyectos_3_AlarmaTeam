@@ -37,6 +37,9 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
         
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, vaultCheckRayDistance, vaultLayer))
         {
+
+            pController.SetCanVault(true);
+
             if (jumpInput.action.triggered) //Perform Vault
             {
                 if (pController.IsCrouching && standUpWhenVaulting)
@@ -52,7 +55,11 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
             pController.CanInteract(jumpInput, InputType.Press, this);
         }
         else
+        {
             pController.HideInteract(this);
+            pController.SetCanVault(false);
+        }
+            
     }
 
     private IEnumerator PerformVault(Vector3 targetPosition)
