@@ -181,9 +181,13 @@ public class PlayerController : MonoBehaviour, IRestartable
 
     public void SetCheckPoint()
     {
-        checkpointPos = transform.position;
-        checkpointRotation = transform.rotation;
         onSetCheckpoint?.Invoke();
+    }
+
+    public void SetPlayerRespawnPos(Transform respawnPosition)
+    {
+        checkpointPos = respawnPosition.position;
+        checkpointRotation = respawnPosition.rotation;
     }
 
     private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);
