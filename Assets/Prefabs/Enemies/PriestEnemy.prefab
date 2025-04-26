@@ -278,6 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693947760163632215}
   - component: {fileID: 6453058877178055726}
+  - component: {fileID: 5640507488872461192}
   m_Layer: 9
   m_Name: PriestEnemy
   m_TagString: Enemy
@@ -321,6 +322,19 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &5640507488872461192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135148330418635968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e956341b9f01334eafecb1c8ae5873b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 2988693754222058349}
 --- !u!1 &1926215700694551087
 GameObject:
   m_ObjectHideFlags: 0

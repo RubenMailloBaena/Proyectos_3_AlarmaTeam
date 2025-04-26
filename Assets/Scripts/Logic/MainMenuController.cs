@@ -25,7 +25,7 @@ public class MainMenuController : MonoBehaviour
     private void ShowMessage()
     {
         //POR SI EMPEZAMOS DESDE EL MAIN MENU
-        Debug.LogError("------- SHOULD START FROM BOOT SCENE! -----------");
+        Debug.LogError("------- SHOULD START FROM BOOT SCENE! --------");
         SceneManager.LoadScene("-BootScene-");
     }
 }

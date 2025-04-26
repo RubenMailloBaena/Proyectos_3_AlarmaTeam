@@ -8,13 +8,13 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private Transform playerRespawnPlayer;
-    [SerializeField] private List<EnemyController> enemiesInZone;
+    [SerializeField] private List<EnemyCheckpointAdapter> enemiesInZone;
     private bool isPlayerInside, checkpointSeted;
 
     private void Start()
     {
         if(enemiesInZone.Count == 0)
-            Debug.LogError("------- CHECK POINT WITH NO ENEMIES IN THE LIST: " + gameObject.name + " ---------------");
+            Debug.LogError("------- CHECK POINT WITH NO ENEMIES IN THE LIST: " + gameObject.name + " -------");
     }
 
     private void Update()
@@ -32,7 +32,7 @@ public class Checkpoint : MonoBehaviour
 
     private bool IsSafeZone()
     {
-        return enemiesInZone.All(enemy => enemy.enemyIsDead);
+        return enemiesInZone.All(enemy => enemy.isEnemyDead());
     }
 
     private void SetCheckpoint()
