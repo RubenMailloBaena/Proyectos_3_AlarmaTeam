@@ -8,14 +8,8 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private Transform playerRespawnPlayer;
-    [SerializeField] private List<EnemyCheckpointAdapter> enemiesInZone;
+    [SerializeField] private List<EnemyCheckpointAdapter> enemiesInZone = new List<EnemyCheckpointAdapter>();
     private bool isPlayerInside, checkpointSeted;
-
-    private void Start()
-    {
-        if(enemiesInZone.Count == 0)
-            Debug.LogError("------- CHECK POINT WITH NO ENEMIES IN THE LIST: " + gameObject.name + " -------");
-    }
 
     private void Update()
     {
@@ -37,7 +31,7 @@ public class Checkpoint : MonoBehaviour
 
     private void SetCheckpoint()
     {
-        Debug.LogWarning("CHECKPOINT SETTED");
+        print("CHECKPOINT SAVED");
         checkpointSeted = true;
         GameManager.GetInstance().GetPlayerController().SetPlayerRespawnPos(playerRespawnPlayer);
         GameManager.GetInstance().SetCheckpoint();

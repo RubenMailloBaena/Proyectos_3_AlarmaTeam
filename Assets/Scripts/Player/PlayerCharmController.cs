@@ -331,8 +331,6 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     {
         checkpointEnemeis = new List<ICharmEnemy>(charmedEnemies);
         checkpointInteractables = new List<IInteractable>(charmedInteractables);
-        print("checkpointEnemeis " + checkpointEnemeis.Count);
-        print("charmedEnemies " + charmedEnemies.Count);
     }
 
     #endregion
