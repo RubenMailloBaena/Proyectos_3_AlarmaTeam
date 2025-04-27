@@ -160,6 +160,13 @@ public class EnemyController : MonoBehaviour, IVisible
         if (currentState == idleState)
             idleState.AddCurrentWaitTime(time);
     }
+
+    private void OnDestroy()
+    {
+        pController.RemoveVisible(this);
+        if(!enemyIsDead) GameManager.GetInstance().RemoveEnemieAlive();
+    }
+
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
@@ -178,7 +185,6 @@ public class EnemyController : MonoBehaviour, IVisible
     #region IVision
     public void SetVisiblity(bool active) => heart.SetActive(active);
     public Vector3 GetVisionPosition() => transform.position;
-    private void OnDestroy() => pController.RemoveVisible(this);
     #endregion
     
     //----------------------------HEAR FUNCTIONS-----------------------------

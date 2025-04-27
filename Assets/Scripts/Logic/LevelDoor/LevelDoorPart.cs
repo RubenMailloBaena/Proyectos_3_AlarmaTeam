@@ -47,7 +47,7 @@ public class LevelDoorPart : MonoBehaviour, IInteractable
     {
         if (!canInteract) return;
         
-        door.OpenDoor();
+        door.ToggleDoor();
     }
     
     public Vector3 GetPosition() => transform.position;

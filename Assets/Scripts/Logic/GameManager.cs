@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
         }
-
-        print(enemiesAlive);
     }
 
     #region WinCondition
