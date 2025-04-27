@@ -40,7 +40,8 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
                 {
                     target = interactable;
                     target.SelectObject(true);
-                    pController.CanInteract(attackInput, InputType.Press, this);
+                    if(interactable.canInteract)
+                        pController.CanInteract(attackInput, InputType.Press, this);
                 }
                 else ClearTarget();
             }

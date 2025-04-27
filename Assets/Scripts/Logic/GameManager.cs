@@ -21,7 +21,10 @@ public class GameManager : MonoBehaviour
     
     //LEVEL LOGIC
     private List<IRestartable> restartObjects = new List<IRestartable>();
-
+    
+    //WIN CONDITION
+    private int enemiesAlive = 0;
+    private LevelDoor finalDoor;
     
     void Awake()
     {
@@ -38,11 +41,23 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
         }
+
+        print(enemiesAlive);
     }
 
     #region WinCondition
-
-    //TODO
+    public void AddEnemyAlive() => enemiesAlive++;
+    public void RemoveEnemieAlive()
+    {
+        enemiesAlive--;
+        if(enemiesAlive <= 0)
+            finalDoor.UnlockDoor();
+    } 
+    public void SetFinalDoor(LevelDoor finalDoor)
+    {
+        this.finalDoor = finalDoor;
+        finalDoor.LockDoor();
+    }
 
     #endregion
 

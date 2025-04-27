@@ -40,7 +40,6 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         
         eController.enemyIsDead = false;
         eController.RestartIndex();
-        eController.SetLockedVisual(false);
         eController.SwitchToNextState(startingState);
         eController.SetRenderActive(true);
 
@@ -80,6 +79,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);
+        eController.SetLockedVisual(false);
     }
     
     //FOR THE WIN CONDITION AND CHECKPOINTS;

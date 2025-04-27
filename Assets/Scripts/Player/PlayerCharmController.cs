@@ -306,6 +306,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     private void RestartGame()
     {
         ExitCharmingMode();
+        TurnOffCharmedObjects();
         checkpointEnemeis.Clear();
         charmedInteractables.Clear();
     }
@@ -313,6 +314,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     private void RestartFromCheckpoint()
     {
         ExitCharmingMode();
+        TurnOffCharmedObjects();
 
         if (checkpointEnemeis.Count != 0)
         {
@@ -321,7 +323,6 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
                 checkpointEnemeis[i].SetCharmedState(checkpointInteractables[i]);
             }
         }
-            
         
         charmedEnemies = new List<ICharmEnemy>(checkpointEnemeis);
         charmedInteractables = new List<IInteractable>(checkpointInteractables);

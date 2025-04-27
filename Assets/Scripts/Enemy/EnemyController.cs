@@ -140,13 +140,13 @@ public class EnemyController : MonoBehaviour, IVisible
     {
         enemyIsDead = true;
         checkpointAdapter.EnemyDead();
-        print("Enemy DEAD");
+        if (lastState == charmState)
+            SetCharmLockedVisual(false);
     }
 
     public void EnemyRespawn()
     {
         checkpointAdapter.EnemyRespawn();
-        print("Enemy Respawn");
     }
     public float GetCurrentWaitTime()
     {

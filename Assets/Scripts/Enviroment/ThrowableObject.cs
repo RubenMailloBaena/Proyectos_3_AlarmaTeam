@@ -22,6 +22,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
+    public bool canInteract { get; set; }
 
     private bool thrown, done; 
     private Rigidbody rb;
@@ -34,6 +35,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        canInteract = true;
     }
 
     private void Start()
@@ -164,7 +166,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     private void OnDestroy()
     { 
         GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
-        GameManager.GetInstance().RemoveInteractable(this);
         GameManager.GetInstance().RemoveRestartable(this);
     }
 }

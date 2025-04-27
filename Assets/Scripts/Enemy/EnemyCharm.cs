@@ -73,7 +73,7 @@ public class EnemyCharm : MonoBehaviour, ICharmEnemy
         targetLever.isLocked = active;
         eController.SetLockedVisual(active);
     }
-    
+
     public bool IsCharmed() => eController.IsCharmed();
 
     public Vector3 GetPosition() => transform.position;

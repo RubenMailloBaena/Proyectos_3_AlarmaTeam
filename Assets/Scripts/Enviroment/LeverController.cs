@@ -21,10 +21,12 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
+    public bool canInteract { get; set; }
     private bool wasLocked;
 
     private void Awake()
     {
+        canInteract = true;
         lineRender = GetComponent<LineRenderer>();
         lineRenderPreviousMat = lineRender.material;
         
