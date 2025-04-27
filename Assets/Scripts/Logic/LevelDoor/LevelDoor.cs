@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelDoor : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class LevelDoor : MonoBehaviour
     private bool doorIsLocked;
     private bool isOpen = false;
     private bool isMoving = false;
+    private bool unloadPreviousLvl;
     
     private void Awake()
     {
@@ -58,9 +60,16 @@ public class LevelDoor : MonoBehaviour
         rightHinge.localRotation = Quaternion.Lerp(rightHinge.localRotation, targetRight, Time.deltaTime * openDoorSpeed);
 
         // Si ya estamos cerca del destino, paramos el movimiento
-        if (Quaternion.Angle(leftHinge.localRotation, targetLeft) < 0.5f 
+        if (Quaternion.Angle(leftHinge.localRotation, targetLeft) < 0.5f
             && Quaternion.Angle(rightHinge.localRotation, targetRight) < 0.5f)
+        {
             isMoving = false;
+            if (unloadPreviousLvl)
+            {
+                unloadPreviousLvl = false;
+                LevelChangeManager.GetInstance().UnloadPreviousLevel();
+            }
+        }
     }
 
     public void SelectObjects(bool select)
@@ -78,6 +87,8 @@ public class LevelDoor : MonoBehaviour
 
     private void ChangeSelected(bool selected)
     {
+        if (leftDoor == null || rightDoor == null) return;
+        
         leftDoor.ChangeSelected(selected);
         rightDoor.ChangeSelected(selected);
     }
@@ -91,28 +102,31 @@ public class LevelDoor : MonoBehaviour
     
     public void PlayerOnTrigger()
     {
-        LockDoor();
         isOpen = false;
         isMoving = true;
+
+        if (!isFinalDoor)
+            unloadPreviousLvl = true;
     }
 
     public void ToggleDoor()
     {
         isOpen = !isOpen;
         isMoving = true;
+
+        if (isOpen && isFinalDoor)
+            LevelChangeManager.GetInstance().LoadNextLevel();
     }
 
     public void UnlockDoor()
     { 
         doorIsLocked = false;
-        Debug.LogWarning("DOOR UNLOCKED");
     }
 
     public void LockDoor()
     {
         doorIsLocked = true;
-        Debug.LogWarning("DOOR LOOOOOOOCKED");
-
     } 
+    
 
 }

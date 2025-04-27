@@ -15,7 +15,7 @@ public class LevelChangeManager : MonoBehaviour
     [SerializeField] private SceneField mainMenu;
     [SerializeField] private List<SceneField> gameLevels;
 
-    private int currentLevel = -1;
+    private int currentLevel = 0;
 
     private void Awake()
     {
@@ -31,6 +31,26 @@ public class LevelChangeManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(mainMenu);
         SceneManager.LoadSceneAsync(gameplayScene, LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
+    }
+
+    public void LoadNextLevel()
+    {
+        if (currentLevel + 1 >= gameLevels.Count)
+        {
+            Debug.LogWarning("THERE ARE NOT MORE LEVELS");
+            return;
+        }
+        
+        currentLevel++;
+        SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
+    }
+
+    public void UnloadPreviousLevel()
+    {
+        if (currentLevel - 1 < 0) return;
+
+        if(IsSceneLoaded(gameLevels[currentLevel - 1]))
+            SceneManager.UnloadSceneAsync(gameLevels[currentLevel - 1]);
     }
 
     public void GoToMainMenu()
