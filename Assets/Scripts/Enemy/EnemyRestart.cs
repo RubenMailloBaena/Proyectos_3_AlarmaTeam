@@ -36,6 +36,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
     public void RestartGame()
     {
         RestartInstructions();
+        CheckpointRestartLogic(false);
         
         eController.enemyIsDead = false;
         eController.RestartIndex();
@@ -59,6 +60,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
     public void RestartFromCheckPoint()
     {
         RestartInstructions();
+        CheckpointRestartLogic(true);
 
         eController.enemyIsDead = enemyWasDead;
         eController.SetIndex(checkpointIndex);
@@ -78,6 +80,21 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);
+    }
+    
+    //FOR THE WIN CONDITION AND CHECKPOINTS;
+    private void CheckpointRestartLogic(bool fromCheckpoint)
+    {
+        if (fromCheckpoint) //RESTART FROM CHECKPOINT
+        {
+            if (eController.enemyIsDead != enemyWasDead)
+                eController.EnemyRespawn();
+        }
+        else //RESTART FROM BEGINNING
+        {
+            if(eController.enemyIsDead)
+                eController.EnemyRespawn();
+        }
     }
     
     public void SetCheckPoint()

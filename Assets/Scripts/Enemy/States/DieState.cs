@@ -6,7 +6,7 @@ public class DieState : State
 {
     public override void InitializeState()
     {
-        eController.enemyIsDead = true;
+        eController.EnemyDead();
         eController.StopAgent();
         eController.SetRenderActive(false);
     }

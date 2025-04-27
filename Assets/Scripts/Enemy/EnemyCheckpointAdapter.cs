@@ -5,10 +5,22 @@ using UnityEngine;
 
 public class EnemyCheckpointAdapter : MonoBehaviour
 {
-    [SerializeField] private EnemyController enemy;
+    private Checkpoint levelCheckpoin;
 
-    public bool isEnemyDead()
+    public void SetEnemyAdapter(Checkpoint checkpoint)
     {
-        return enemy.enemyIsDead;
+        levelCheckpoin = checkpoint;
+    }
+
+    public void EnemyDead()
+    {
+        if (levelCheckpoin != null)
+            levelCheckpoin.EnemyDead();
+    }
+
+    public void EnemyRespawn()
+    {
+        if (levelCheckpoin != null)
+            levelCheckpoin.EnemyRespawn();
     }
 }

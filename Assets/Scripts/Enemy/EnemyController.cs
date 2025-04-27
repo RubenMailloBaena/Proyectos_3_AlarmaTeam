@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour, IVisible
     [Header("REFERENCES")]
     [SerializeField] public Transform seenExclamationPos;
     [SerializeField] private GameObject heart;
+    [SerializeField] private EnemyCheckpointAdapter checkpointAdapter;
 
     [Header("STATES")]
     [SerializeField] private IdleState idleState;
@@ -135,6 +136,18 @@ public class EnemyController : MonoBehaviour, IVisible
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> GetWayPoints() => waypoints;
     public PlayerController GetPlayerController() => pController;
+    public void EnemyDead()
+    {
+        enemyIsDead = true;
+        checkpointAdapter.EnemyDead();
+        print("Enemy DEAD");
+    }
+
+    public void EnemyRespawn()
+    {
+        checkpointAdapter.EnemyRespawn();
+        print("Enemy Respawn");
+    }
     public float GetCurrentWaitTime()
     {
         if (currentState == idleState)

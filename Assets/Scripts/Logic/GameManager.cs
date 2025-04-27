@@ -9,13 +9,17 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     
+    //REFERENCES
     private PlayerController pController;
     private PlayerHUDController pHud;
     private EnemySeenHUD eHud;
+    
+    //INSTANCES
     private HashSet<IInteractable> levers = new HashSet<IInteractable>();
     private OnlyOneInstance directionalLight;
     private OnlyOneInstance eventSystem;
-
+    
+    //LEVEL LOGIC
     private List<IRestartable> restartObjects = new List<IRestartable>();
 
     
@@ -26,7 +30,8 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
+    
+    //DEBUG
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -35,6 +40,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region WinCondition
+
+    //TODO
+
+    #endregion
+
+    #region Level Logic
     public void PlayerDead()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -73,11 +85,12 @@ public class GameManager : MonoBehaviour
             restartable.SetCheckPoint();
         }
     }
-
+    
     public void ExitGame()
     {
         Application.Quit();
     }
+    #endregion
     
     #region Getters & Setters
     public void AddRestartable(IRestartable restartable) => restartObjects.Add(restartable);
