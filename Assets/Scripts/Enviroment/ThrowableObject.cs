@@ -26,7 +26,10 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     private bool thrown, done; 
     private Rigidbody rb;
-    
+
+    public GameObject notFractured;
+    public GameObject fractured;
+
     //RESTART
     private Vector3 startingPos, checkpointPos;
     private Quaternion startingRotation, checkpointRotation;
@@ -75,13 +78,17 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         
         if (other.transform.CompareTag("Ground"))
         {
+            Instantiate(fractured, transform.position, Quaternion.identity);
+            fractured.SetActive(true);
+            Destroy(notFractured);
+            
             done = true;
             CheckIfEnemiesCanHear();
             //LO CAMBIAMOS DE LAYER PARA NO PODER VOLVER A INTERACTUAR
             gameObject.layer = LayerMask.NameToLayer("Logic");
+
         }
     }
-
     private void CheckIfEnemiesCanHear()
     {
         foreach (IEnemyHear enemy in pController.GetHearEnemies())
