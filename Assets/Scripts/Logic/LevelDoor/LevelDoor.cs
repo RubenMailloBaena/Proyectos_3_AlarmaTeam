@@ -128,5 +128,5 @@ public class LevelDoor : MonoBehaviour
         doorIsLocked = true;
     } 
     
-
+    private void OnDestroy() => GameManager.GetInstance().RemoveFinalDoor();
 }

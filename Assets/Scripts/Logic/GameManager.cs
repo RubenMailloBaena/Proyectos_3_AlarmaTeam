@@ -48,14 +48,17 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemieAlive()
     {
         enemiesAlive--;
-        if(enemiesAlive <= 0)
+        if(enemiesAlive <= 0 && finalDoor != null)
             finalDoor.UnlockDoor();
     } 
+    
     public void SetFinalDoor(LevelDoor finalDoor)
     {
         this.finalDoor = finalDoor;
         finalDoor.LockDoor();
     }
+
+    public void RemoveFinalDoor() => finalDoor = null;
 
     #endregion
 
