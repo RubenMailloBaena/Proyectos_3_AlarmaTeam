@@ -28,6 +28,7 @@ public class LevelChangeManager : MonoBehaviour
 
     public void StartGame(int levelIndex)
     {
+        Time.timeScale = 1.0f;
         currentLevel = levelIndex - 1;
         if (IsSceneLoaded(mainMenu))
             SceneManager.UnloadSceneAsync(mainMenu);
@@ -59,6 +60,7 @@ public class LevelChangeManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        Time.timeScale = 1.0f;
         GameManager.GetInstance().SetCursorVisible(true);
         SceneManager.LoadSceneAsync(mainMenu, LoadSceneMode.Additive);
         UnloadAllGameLevels();

@@ -39,10 +39,14 @@ public class PlayerHUDController : MonoBehaviour
 
     [Header("GameLogic UI")] 
     [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject pausePanel;
     [SerializeField] private Button checkpointButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button exitButton;
+    
+    [Space(10)]
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button pauseExitButton;
+
 
     private void Awake()
     {
@@ -153,10 +157,12 @@ public class PlayerHUDController : MonoBehaviour
         checkpointButton.onClick.RemoveAllListeners();
         restartButton.onClick.RemoveAllListeners();
         exitButton.onClick.RemoveAllListeners();
+        pauseExitButton.onClick.RemoveAllListeners();
         
         checkpointButton.onClick.AddListener(GameManager.GetInstance().RestartFromCheckpoint);
         restartButton.onClick.AddListener(GameManager.GetInstance().RestartGame);
         exitButton.onClick.AddListener(LevelChangeManager.GetInstance().GoToMainMenu);
+        pauseExitButton.onClick.AddListener(LevelChangeManager.GetInstance().GoToMainMenu);
     }
     public void SetGameOverPanelActive(bool active) => gameOverPanel.SetActive(active);
     #endregion
@@ -165,16 +171,21 @@ public class PlayerHUDController : MonoBehaviour
 
     public void SetPauseMenu(bool active)
     {
+        pausePanel.SetActive(active);
+        Cursor.visible = active;
+        
         if (active)
             Time.timeScale = 0f;
         else
             Time.timeScale = 1.0f;
-        
-        pausePanel.SetActive(active);
-        Cursor.visible = active;
+    }
+
+    public void RestartFromPauseMenu()
+    {
+        SetPauseMenu(false);
+        GameManager.GetInstance().RestartGame();
     }
     
-   
 
     #endregion
 }

@@ -1171,10 +1171,11 @@ MonoBehaviour:
   playerHurtPanel: {fileID: 8714035485854515917}
   playerCharmingImage: {fileID: 6065012534877923108}
   gameOverPanel: {fileID: 2535990863107482299}
-  pausePanel: {fileID: 4078836589623687330}
   checkpointButton: {fileID: 6576101795394651455}
   restartButton: {fileID: 3778721451781924015}
   exitButton: {fileID: 7341586199416458794}
+  pausePanel: {fileID: 4078836589623687330}
+  pauseExitButton: {fileID: 2013213982058742599}
 --- !u!222 &292989420658480791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2110,7 +2111,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7814975598439258636}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2207764609339842809}
+        m_TargetAssemblyTypeName: PlayerHUDController, Assembly-CSharp
+        m_MethodName: RestartFromPauseMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5315372868964011159
 GameObject:
   m_ObjectHideFlags: 0

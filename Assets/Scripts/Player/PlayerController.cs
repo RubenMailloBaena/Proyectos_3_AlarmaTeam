@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour, IRestartable
     private PlayerHUDController pHUD;
     private PlayerInput playerInput;
 
-    [SerializeField] private InputActionReference pauseAction;
     [SerializeField] private Transform playerEyes;
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
@@ -68,11 +67,6 @@ public class PlayerController : MonoBehaviour, IRestartable
         playerInput = GetComponent<PlayerInput>();
     }
 
-    private void Update()
-    {
-        SetPauseMenu();
-    } 
-    
     private void Start()
     {
         pHUD = GameManager.GetInstance().GetPlayerHUD();
@@ -133,14 +127,9 @@ public class PlayerController : MonoBehaviour, IRestartable
         pHUD.HideInteract();
     }
     
-    private void SetPauseMenu()
+    public void SetPauseMenu()
     {
-        print("HERE1111");
-        if (pauseAction.action.triggered)
-        {
-            print("HERE");
-            showPauseMenu = !showPauseMenu;
-        }
+        showPauseMenu = !showPauseMenu;
         GameManager.GetInstance().SetCursorVisible(showPauseMenu);
         pHUD.SetPauseMenu(showPauseMenu);
     }
@@ -205,8 +194,4 @@ public class PlayerController : MonoBehaviour, IRestartable
     }
 
     private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);
-
-    private void OnEnable() => pauseAction.action.Enable();
-
-    private void OnDisable() => pauseAction.action.Disable();
 }
