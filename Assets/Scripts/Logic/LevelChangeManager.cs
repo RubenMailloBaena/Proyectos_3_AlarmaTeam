@@ -13,6 +13,7 @@ public class LevelChangeManager : MonoBehaviour
     
     [Header("SCENES")] 
     [SerializeField] private SceneField mainMenu;
+    [SerializeField] private SceneField levelSelector;
     [SerializeField] private List<SceneField> gameLevels;
 
     private int currentLevel = 0;
@@ -28,7 +29,10 @@ public class LevelChangeManager : MonoBehaviour
     public void StartGame(int levelIndex)
     {
         currentLevel = levelIndex - 1;
-        SceneManager.UnloadSceneAsync(mainMenu);
+        if (IsSceneLoaded(mainMenu))
+            SceneManager.UnloadSceneAsync(mainMenu);
+        else
+            SceneManager.UnloadSceneAsync(levelSelector);
         SceneManager.LoadSceneAsync(gameplayScene, LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
     }
@@ -55,9 +59,19 @@ public class LevelChangeManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        GameManager.GetInstance().SetCursorVisible(true);
         SceneManager.LoadSceneAsync(mainMenu, LoadSceneMode.Additive);
         UnloadAllGameLevels();
-        SceneManager.UnloadSceneAsync(gameplayScene);
+        if (IsSceneLoaded(gameplayScene))
+            SceneManager.UnloadSceneAsync(gameplayScene);
+        if (IsSceneLoaded(levelSelector))
+            SceneManager.UnloadSceneAsync(levelSelector);
+    }
+
+    public void GoToLevelSelector()
+    {
+        SceneManager.LoadSceneAsync(levelSelector, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(mainMenu);
     }
 
     private void UnloadAllGameLevels()

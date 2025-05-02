@@ -1,30 +1,23 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuController : MonoBehaviour
+public class LevelSelectorController : MonoBehaviour
 {
     private void Awake()
     {
-        if(GameManager.GetInstance() == null)
+        if (GameManager.GetInstance() == null)
             ShowMessage();
     }
-
     public void StartGame(int levelNumber)
     {
         LevelChangeManager.GetInstance().StartGame(levelNumber);
     }
 
-    public void ExitGame()
+    public void ReturnToMainMenu()
     {
-        GameManager.GetInstance().ExitGame();
-    }
-
-    public void GoToLevelSelector()
-    {
-        LevelChangeManager.GetInstance().GoToLevelSelector();
+        LevelChangeManager.GetInstance().GoToMainMenu();
     }
 
     private void ShowMessage()

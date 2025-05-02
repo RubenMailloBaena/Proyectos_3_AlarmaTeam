@@ -1,22 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IRestartable
 {
     private bool movedPos;
+    private bool showPauseMenu;
     
     // ------------------ REFERENCIAS ------------------
 
     private PlayerHUDController pHUD;
     private PlayerInput playerInput;
 
+    [SerializeField] private InputActionReference pauseAction;
     [SerializeField] private Transform playerEyes;
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
@@ -71,6 +68,11 @@ public class PlayerController : MonoBehaviour, IRestartable
         playerInput = GetComponent<PlayerInput>();
     }
 
+    private void Update()
+    {
+        SetPauseMenu();
+    } 
+    
     private void Start()
     {
         pHUD = GameManager.GetInstance().GetPlayerHUD();
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour, IRestartable
         startingRotation = targetPos.rotation;
         checkpointRotation = startingRotation;
     }
-
+    
     // ------------------ SETTERS ESTADOS ------------------
 
     public void SetLeaning(bool leaning) => IsLeaning = leaning;
@@ -129,6 +131,18 @@ public class PlayerController : MonoBehaviour, IRestartable
         if (playerComponent != HUDActivator) return;
         HUDActivator = null;
         pHUD.HideInteract();
+    }
+    
+    private void SetPauseMenu()
+    {
+        print("HERE1111");
+        if (pauseAction.action.triggered)
+        {
+            print("HERE");
+            showPauseMenu = !showPauseMenu;
+        }
+        GameManager.GetInstance().SetCursorVisible(showPauseMenu);
+        pHUD.SetPauseMenu(showPauseMenu);
     }
 
     public void UpdateProgressBar(float progress) => pHUD.UpdateProgressBar(progress);
@@ -191,4 +205,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     }
 
     private void OnDestroy() => GameManager.GetInstance().RemoveRestartable(this);
+
+    private void OnEnable() => pauseAction.action.Enable();
+
+    private void OnDisable() => pauseAction.action.Disable();
 }

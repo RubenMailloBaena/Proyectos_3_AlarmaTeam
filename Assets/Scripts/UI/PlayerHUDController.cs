@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -38,6 +39,7 @@ public class PlayerHUDController : MonoBehaviour
 
     [Header("GameLogic UI")] 
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject pausePanel;
     [SerializeField] private Button checkpointButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button exitButton;
@@ -157,5 +159,22 @@ public class PlayerHUDController : MonoBehaviour
         exitButton.onClick.AddListener(LevelChangeManager.GetInstance().GoToMainMenu);
     }
     public void SetGameOverPanelActive(bool active) => gameOverPanel.SetActive(active);
+    #endregion
+
+    #region PauseMenu
+
+    public void SetPauseMenu(bool active)
+    {
+        if (active)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1.0f;
+        
+        pausePanel.SetActive(active);
+        Cursor.visible = active;
+    }
+    
+   
+
     #endregion
 }
