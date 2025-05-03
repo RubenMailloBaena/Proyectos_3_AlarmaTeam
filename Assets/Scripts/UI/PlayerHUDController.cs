@@ -45,6 +45,7 @@ public class PlayerHUDController : MonoBehaviour
     
     [Space(10)]
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] private Button pauseRestartButton;
     [SerializeField] private Button pauseExitButton;
 
 
@@ -168,7 +169,6 @@ public class PlayerHUDController : MonoBehaviour
     #endregion
 
     #region PauseMenu
-
     public void SetPauseMenu(bool active)
     {
         pausePanel.SetActive(active);
@@ -179,13 +179,13 @@ public class PlayerHUDController : MonoBehaviour
         else
             Time.timeScale = 1.0f;
     }
-
+    
     public void RestartFromPauseMenu()
     {
         SetPauseMenu(false);
         GameManager.GetInstance().RestartGame();
     }
-    
 
+    public void DisableRestartLevel(bool active) => pauseRestartButton.interactable = !active;
     #endregion
 }

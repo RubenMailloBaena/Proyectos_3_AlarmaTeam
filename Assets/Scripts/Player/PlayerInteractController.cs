@@ -65,7 +65,7 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     
     private void PerformInteraction()
     {
-        if (target != null && attackInput.action.triggered)
+        if (target != null && attackInput.action.triggered && !pController.IsGamePaused)
         {
             target.Interact();
             ClearTarget();
@@ -74,10 +74,10 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
 
     private void SetPauseMenu()
     {
-        if(pauseInput.action.triggered)
+        if(pauseInput.action.triggered && !pController.IsPlayerDead && !pController.IsVaulting)
             pController.SetPauseMenu();
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

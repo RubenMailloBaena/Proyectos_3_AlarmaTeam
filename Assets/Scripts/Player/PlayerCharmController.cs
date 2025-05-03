@@ -66,11 +66,11 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
 
     private void HandleInput() //INPUT DEL PLAYER
     {
-        if (IsCharmPressed())
+        if (IsCharmPressed() && !pController.IsGamePaused)
             SwapMode();
 
         //SI HAY UN HOVERED Y APRETAMOS EL INPUT; LO ASIGNAMOS AL CHARMED TARGET
-        if (IsAttackPressed() && charmedTarget == null && hoveredTarget != null) 
+        if (IsAttackPressed() && charmedTarget == null && hoveredTarget != null && !pController.IsGamePaused) 
         {
             charmedTarget = hoveredTarget;
             hoveredTarget = null;
@@ -232,7 +232,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         
         pController.CanInteract(attackInput, InputType.Press, this);
 
-        if (IsAttackPressed() && interactables.Contains(interactable))
+        if (IsAttackPressed() && interactables.Contains(interactable) && !pController.IsGamePaused)
         {
             charmedTarget.SetCharmedState(interactable);
             

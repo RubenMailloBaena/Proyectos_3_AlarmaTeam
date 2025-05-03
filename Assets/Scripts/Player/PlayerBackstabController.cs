@@ -62,7 +62,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
             }
         }
 
-        if (target != null)
+        if (target != null && !target.IsEnemyDead())
         {
             target.SetWeakSpot(true);
             pController.CanInteract(attackInput.action, InputType.Press, this);
@@ -73,7 +73,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
 
     private void PerformBackstab()
     {
-        if (target != null && attackInput.action.triggered)
+        if (target != null && attackInput.action.triggered && !pController.IsGamePaused)
         {
             target.Backstab();
             target.SetWeakSpot(false);

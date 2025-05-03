@@ -48,6 +48,7 @@ public class LevelChangeManager : MonoBehaviour
         
         currentLevel++;
         SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
+        GameManager.GetInstance().GetPlayerHUD().DisableRestartLevel(true);
     }
 
     public void UnloadPreviousLevel()
@@ -56,6 +57,7 @@ public class LevelChangeManager : MonoBehaviour
 
         if(IsSceneLoaded(gameLevels[currentLevel - 1]))
             SceneManager.UnloadSceneAsync(gameLevels[currentLevel - 1]);
+        GameManager.GetInstance().GetPlayerHUD().DisableRestartLevel(false);
     }
 
     public void GoToMainMenu()
