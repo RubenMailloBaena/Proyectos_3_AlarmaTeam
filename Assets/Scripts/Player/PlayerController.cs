@@ -1,16 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IRestartable
 {
     private bool movedPos;
+    private bool showPauseMenu;
     
     // ------------------ REFERENCIAS ------------------
 
@@ -44,6 +40,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public bool IsTeleporting { get; private set; }
     public bool IsUsingVision { get; private set; }
     public bool IsPlayerDead { get; private set; }
+    public bool IsGamePaused { get; private set; }
 
     public event Action<bool> OnCameraLockChange;
     public event Action onGodMode;
@@ -93,7 +90,7 @@ public class PlayerController : MonoBehaviour, IRestartable
         startingRotation = targetPos.rotation;
         checkpointRotation = startingRotation;
     }
-
+    
     // ------------------ SETTERS ESTADOS ------------------
 
     public void SetLeaning(bool leaning) => IsLeaning = leaning;
@@ -130,6 +127,14 @@ public class PlayerController : MonoBehaviour, IRestartable
         HUDActivator = null;
         pHUD.HideInteract();
     }
+    
+    public void SetPauseMenu()
+    {
+        showPauseMenu = !showPauseMenu;
+        GameManager.GetInstance().SetCursorVisible(showPauseMenu);
+        pHUD.SetPauseMenu(showPauseMenu);
+        IsGamePaused = showPauseMenu;
+    }
 
     public void UpdateProgressBar(float progress) => pHUD.UpdateProgressBar(progress);
     public void HideProgressBar() => pHUD.HideProgressBar();
@@ -165,6 +170,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     // ----------------- CHECKPOINTS ------------------
     public void RestartGame()
     {
+        showPauseMenu = false;
+        IsGamePaused = false;
         transform.position = startingPos;
         transform.rotation = startingRotation;
         checkpointPos = startingPos;

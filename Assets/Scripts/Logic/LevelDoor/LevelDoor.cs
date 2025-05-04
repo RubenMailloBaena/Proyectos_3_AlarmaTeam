@@ -18,6 +18,7 @@ public class LevelDoor : MonoBehaviour
     [SerializeField] private Material selectedMat;
 
     [Header("ATTRIBUTES")]
+    [SerializeField] private bool alwaysOpened;
     [SerializeField] private float openDoorAngle = 75f;
     [SerializeField] private float openDoorSpeed = 2f;
     [SerializeField] private float angleToInteract = 80f;
@@ -74,11 +75,12 @@ public class LevelDoor : MonoBehaviour
 
     public void SelectObjects(bool select)
     {
-        if (isMoving || doorIsLocked)
+        if (isMoving || (doorIsLocked && !alwaysOpened))
         {
             ChangeSelected(false);
             return;
         }
+
         if (select && CanInteract())
             ChangeSelected(true);
         else
@@ -111,12 +113,15 @@ public class LevelDoor : MonoBehaviour
 
     public void ToggleDoor()
     {
+        if (doorIsLocked && !alwaysOpened) return;
+
         isOpen = !isOpen;
         isMoving = true;
 
         if (isOpen && isFinalDoor)
             LevelChangeManager.GetInstance().LoadNextLevel();
     }
+
 
     public void UnlockDoor()
     { 
@@ -126,7 +131,5 @@ public class LevelDoor : MonoBehaviour
     public void LockDoor()
     {
         doorIsLocked = true;
-    } 
-    
-    private void OnDestroy() => GameManager.GetInstance().RemoveFinalDoor();
+    }
 }

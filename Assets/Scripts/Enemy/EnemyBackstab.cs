@@ -30,6 +30,7 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
     }
 
     public Transform GetTransform() => transform;
+    public bool IsEnemyDead() => eController.enemyIsDead;
 
     private void OnDestroy()
     {

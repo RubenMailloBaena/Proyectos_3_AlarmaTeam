@@ -56,8 +56,8 @@ public class PlayerCrouchController : MonoBehaviour
     private void CrouchInput()
     {
         if (pController.IsPlayerDead) return;
-        
-        if (crouchInput.action.triggered)
+
+        if (crouchInput.action.triggered && !pController.IsGamePaused)
         {
             if (!isCrouching)
                 SetCrouchTargets();

@@ -8,8 +8,10 @@ public class Curtain : MonoBehaviour
 
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material defaultMaterial2;
 
     [SerializeField] private Renderer curtainRenderer;
+    [SerializeField] private Renderer curtainRenderer2;
 
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
@@ -47,12 +49,24 @@ public class Curtain : MonoBehaviour
         if (interact)
         {
             if(locked)
-                curtainRenderer.material = lockedMat;
+                ChangeMats(lockedMat);
             else 
-                curtainRenderer.material = visualMaterial;
+                ChangeMats(visualMaterial);
         }
         else
-            curtainRenderer.material = defaultMaterial;
+            ChangeMatsToDefault();
+    }
+
+    private void ChangeMats(Material mat)
+    {
+        curtainRenderer.material = mat;
+        curtainRenderer2.material = mat;
+    }
+
+    private void ChangeMatsToDefault()
+    {
+        curtainRenderer.material = defaultMaterial;
+        curtainRenderer2.material = defaultMaterial2;
     }
     
     public void RestartGame()

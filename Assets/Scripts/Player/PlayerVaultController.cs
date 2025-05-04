@@ -40,7 +40,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
 
             pController.SetCanVault(true);
 
-            if (jumpInput.action.triggered) //Perform Vault
+            if (jumpInput.action.triggered && !pController.IsGamePaused) //Perform Vault
             {
                 if (pController.IsCrouching && standUpWhenVaulting)
                 {

@@ -22,6 +22,11 @@ public class MainMenuController : MonoBehaviour
         GameManager.GetInstance().ExitGame();
     }
 
+    public void GoToLevelSelector()
+    {
+        LevelChangeManager.GetInstance().GoToLevelSelector();
+    }
+
     private void ShowMessage()
     {
         //POR SI EMPEZAMOS DESDE EL MAIN MENU

@@ -28,7 +28,8 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     private Rigidbody rb;
 
     public GameObject notFractured;
-    public GameObject fractured;
+    public GameObject fracturedPrefab;
+    private GameObject fracturedInstance;
 
     //RESTART
     private Vector3 startingPos, checkpointPos;
@@ -78,10 +79,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         
         if (other.transform.CompareTag("Ground"))
         {
-            Instantiate(fractured, transform.position, Quaternion.identity);
-            fractured.SetActive(true);
-            Destroy(notFractured);
-            
+            ShowFractured(true);
             done = true;
             CheckIfEnemiesCanHear();
             //LO CAMBIAMOS DE LAYER PARA NO PODER VOLVER A INTERACTUAR
@@ -96,6 +94,22 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             float distance = Vector3.Distance(transform.position, enemy.GetPosition());
             if(distance <= soundRadius)
                 enemy.HeardSound(transform.position, true);
+        }
+    }
+
+    private void ShowFractured(bool active)
+    {
+        if (active)
+        {
+            notFractured.SetActive(false);
+            fracturedInstance = Instantiate(fracturedPrefab, transform.position, transform.rotation);
+            fracturedInstance.SetActive(true);
+        }
+        else
+        {
+            if (fracturedInstance != null)
+                Destroy(fracturedInstance);
+            notFractured.SetActive(true);
         }
     }
 
@@ -144,6 +158,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     public void RestartGame()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
+        ShowFractured(false);
         transform.position = startingPos;
         transform.rotation = startingRotation;
         checkpointPos = startingPos;
@@ -160,7 +175,10 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         thrown = wasUsed;
         done = wasUsed;
         if (!wasUsed)
+        {
             gameObject.layer = LayerMask.NameToLayer("Default");
+            ShowFractured(false);
+        }
     }
 
     public void SetCheckPoint()

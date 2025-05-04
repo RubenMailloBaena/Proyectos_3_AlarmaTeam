@@ -43,6 +43,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetCursorVisible(bool active)
+    {
+        if(active)
+            Cursor.lockState = CursorLockMode.None;
+        else
+            Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = active;
+    }
+
     #region WinCondition
     public void AddEnemyAlive() => enemiesAlive++;
     public void RemoveEnemieAlive()
@@ -57,16 +66,12 @@ public class GameManager : MonoBehaviour
         this.finalDoor = finalDoor;
         finalDoor.LockDoor();
     }
-
-    public void RemoveFinalDoor() => finalDoor = null;
-
     #endregion
 
     #region Level Logic
     public void PlayerDead()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        SetCursorVisible(true);
     }
     
     public void RestartGame()
@@ -90,8 +95,7 @@ public class GameManager : MonoBehaviour
     private void RestartGameOverValues()
     {
         eHud.HideAllArrows();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetCursorVisible(false);
     }
 
     public void SetCheckpoint()

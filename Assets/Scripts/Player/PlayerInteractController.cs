@@ -10,6 +10,7 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     private PlayerController pController;
     
     [SerializeField] private InputActionReference attackInput;
+    [SerializeField] private InputActionReference pauseInput;
     [SerializeField] private Transform leanParent;
     
     [Header("Interact Attributes")] 
@@ -27,6 +28,7 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     {
         CanInteract();
         PerformInteraction();
+        SetPauseMenu();
     }
     
     private void CanInteract()
@@ -63,13 +65,19 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     
     private void PerformInteraction()
     {
-        if (target != null && attackInput.action.triggered)
+        if (target != null && attackInput.action.triggered && !pController.IsGamePaused)
         {
             target.Interact();
             ClearTarget();
         }
     }
-    
+
+    private void SetPauseMenu()
+    {
+        if(pauseInput.action.triggered && !pController.IsPlayerDead && !pController.IsVaulting)
+            pController.SetPauseMenu();
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -79,10 +87,12 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     private void OnEnable()
     {
         attackInput.action.Enable();
+        pauseInput.action.Enable();
     }
 
     private void OnDisable()
     {
         attackInput.action.Disable();
+        pauseInput.action.Disable();
     }
 }

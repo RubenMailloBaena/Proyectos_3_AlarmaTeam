@@ -84,7 +84,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
        
         input = teleportAction.action.ReadValue<float>();
         
-        if (input>0 && !pController.IsTeleporting)
+        if (input>0 && !pController.IsTeleporting && !pController.IsGamePaused)
             teleportCoroutine = StartCoroutine(TeleportAfterHold());
         
         else if(input == 0 && pController.IsTeleporting)
