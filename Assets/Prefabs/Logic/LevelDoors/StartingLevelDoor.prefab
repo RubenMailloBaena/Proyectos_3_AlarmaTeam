@@ -80,8 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFinalDoor: 0
-  leftDoor: {fileID: 0}
-  rightDoor: {fileID: 0}
+  leftDoor: {fileID: 3283630044728002050}
+  rightDoor: {fileID: 1066421547850357896}
   leftHinge: {fileID: 4595354205686902588}
   rightHinge: {fileID: 9069538337727474617}
   selectedMat: {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
@@ -159,6 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorRenders:
+  - {fileID: 2758460533522543873}
+  - {fileID: 4931203660907997368}
+  - {fileID: 7715926426767820755}
 --- !u!1 &3511141977694865749
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorRenders:
+  - {fileID: 2239016840239536091}
+  - {fileID: 3615946735052808184}
+  - {fileID: 2022952125808223490}
 --- !u!1 &8430583700948166539
 GameObject:
   m_ObjectHideFlags: 0
