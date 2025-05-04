@@ -95,6 +95,24 @@ public class PlayerHUDController : MonoBehaviour
 
     public void SetInteractionText(InputAction input, InputType type)
     {
+        string displayString = GetKeyOrButtonName(input);
+
+        string result = "";
+        result = type == InputType.Press ? "Press '" : "Hold '";
+        
+        result += displayString + "' to interact";
+        UIText.enabled = true;
+        UIText.text = result;
+    }
+
+    public void SetTutorialCrouchText(InputAction input)
+    {
+        UIText.enabled = true;
+        UIText.text = "Press '" + GetKeyOrButtonName(input) + "' to Crouch";
+    }
+
+    private string GetKeyOrButtonName(InputAction input)
+    {
         string currentControl = playerInput.currentControlScheme;
         string bindingPath = "";
         
@@ -103,15 +121,8 @@ public class PlayerHUDController : MonoBehaviour
         else
             bindingPath = input.bindings[1].effectivePath;
 
-        string displayString = InputControlPath.ToHumanReadableString(bindingPath,
+        return InputControlPath.ToHumanReadableString(bindingPath,
             InputControlPath.HumanReadableStringOptions.OmitDevice);
-
-        string result = "";
-        result = type == InputType.Press ? "Press '" : "Hold '";
-        
-        result += displayString + "' to interact";
-        UIText.enabled = true;
-        UIText.text = result;
     }
 
     public void HideInteract()
