@@ -9,6 +9,8 @@ public class LightController : MonoBehaviour
     private bool playerInLight;
     public LayerMask allLayer;
     public float damage;
+    
+    private Vector3 offset = new Vector3(0, 0.20f, 0);
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class LightController : MonoBehaviour
     private void LightPlayer()
     {
         if (!playerInLight) return;
-        if(PerformRaycast(pController.GetPlayerPosition())) return;
+        if (PerformRaycast(pController.GetPlayerPosition() + offset)) return;
         if (PerformRaycast(pController.GetPlayerBodyPosition())) return;
         PerformRaycast(pController.GetPlayerHeadPosition());
     }
@@ -34,9 +36,11 @@ public class LightController : MonoBehaviour
         
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, allLayer))
         {
+            print("HITTING PLAYER: " + hit.collider.name);
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             if (hit.collider.CompareTag("Player"))
             {
+                
                 pController.TakeDamage(damage);
                 return true;
             }
