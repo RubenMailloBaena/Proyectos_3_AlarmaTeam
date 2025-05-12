@@ -40,6 +40,7 @@ public class PlayerHealthController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (isGodMode) return;
+        pController.SetDamaging(true);
         
         currentHealth -= damage * Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
@@ -55,6 +56,7 @@ public class PlayerHealthController : MonoBehaviour
 
     private void HealPlayer()
     {
+        pController.SetDamaging(false);
         if (timeTillLastDamage <= 0.0f)
         {
             currentHealth += Time.deltaTime;

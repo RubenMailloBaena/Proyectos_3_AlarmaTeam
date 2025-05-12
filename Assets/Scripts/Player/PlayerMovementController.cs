@@ -76,7 +76,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (pController.IsLeaning) return leaningSpeed;
         if (pController.IsCrouching) return crouchSpeed;
-        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision)
+        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged)
         {
             finalRange = runningSoundRange;
             pController.SetIsRunning(true);
