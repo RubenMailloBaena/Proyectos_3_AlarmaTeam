@@ -44,8 +44,6 @@ public class PlayerHealthController : MonoBehaviour
         currentHealth -= damage * Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
 
-        pController.SetDamaging(true);
-
         if (currentHealth <= 0.0f)
         {
             pController.SetIsPlayerDead(true);
@@ -61,7 +59,6 @@ public class PlayerHealthController : MonoBehaviour
         {
             currentHealth += Time.deltaTime;
             currentHealth = Mathf.Clamp(currentHealth, 0, secondsThatCanTakeDamage);
-            pController.SetDamaging(false);
         }
         else
             timeTillLastDamage -= Time.deltaTime;

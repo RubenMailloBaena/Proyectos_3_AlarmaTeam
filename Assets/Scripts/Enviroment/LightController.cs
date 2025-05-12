@@ -40,11 +40,12 @@ public class LightController : MonoBehaviour
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             if (hit.collider.CompareTag("Player"))
             {
-                
+                pController.SetDamaging(true);
                 pController.TakeDamage(damage);
                 return true;
             }
         }
+        pController.SetDamaging(false);
         return false;
     }
 
