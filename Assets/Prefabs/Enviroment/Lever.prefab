@@ -101,7 +101,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3cce3ded055f5024eb5bf92574116f76, type: 2}
+  - {fileID: 2100000, guid: 86bbfd18d81fb6547bddd4738ef849a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,7 +124,6 @@ LineRenderer:
   m_SortingOrder: 140
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 1.0137149, y: 0, z: 10.45102}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -132,14 +131,23 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0019378662
-        value: 0.10565567
+        time: 0
+        value: 0.30191422
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.20128478
+        value: 0.2990654
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -176,13 +184,13 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
   m_UseWorldSpace: 1
-  m_Loop: 1
+  m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!114 &1464774691676582084
 MonoBehaviour:
