@@ -8,11 +8,12 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     [Tooltip("Punto en el que se produce el tp")]
     [SerializeField] private Transform teleportPoint;
 
-    [SerializeField] private Renderer statueRenderer;
-    [SerializeField] private Material visualMaterial;
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectMaterial;
+    [SerializeField] private Color visualColor;
+    [SerializeField] private Color selectColor;
+    [SerializeField] private Outline outlineScript;
 
+    private bool selecting;
+    
     void Start()
     {
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
@@ -20,9 +21,17 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     public void ShowUI(bool show)
     {
         if (show)
-            statueRenderer.material = selectMaterial;
+        {
+            outlineScript.OutlineMode = Outline.Mode.OutlineAll;
+            outlineScript.OutlineColor = selectColor;
+            outlineScript.enabled = true;
+            selecting = true;
+        }
         else
-            statueRenderer.material = defaultMaterial;
+        {
+            outlineScript.enabled = false;
+            selecting = false;
+        }
     }
 
     public Vector3 GetTPPoint()
@@ -37,10 +46,16 @@ public class Statue : MonoBehaviour, IStatue, IVisible
 
     public void SetVisiblity(bool active)
     {
+        if (selecting) return;
+        
         if (active)
-            statueRenderer.material = visualMaterial;
+        {
+            outlineScript.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+            outlineScript.OutlineColor = visualColor;
+            outlineScript.enabled = true;
+        }
         else
-            statueRenderer.material = defaultMaterial;
+            outlineScript.enabled = false;
     }
 
     public Vector3 GetVisionPosition()

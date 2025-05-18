@@ -6,12 +6,8 @@ public class Curtain : MonoBehaviour
 {
     [SerializeField] private Transform moveObject;
 
-    [SerializeField] private Material visualMaterial;
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material defaultMaterial2;
-
-    [SerializeField] private Renderer curtainRenderer;
-    [SerializeField] private Renderer curtainRenderer2;
+    [SerializeField] private Color visualColor;
+    [SerializeField] private Outline outlineScript;
 
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
@@ -42,33 +38,22 @@ public class Curtain : MonoBehaviour
         isMoving = !isMoving;
     }
 
-    public void ShowInteract(bool interact, bool locked, Material lockedMat)
+    public void ShowInteract(bool interact, bool locked, Color lockedColor)
     {
         if (moveObject.position != targetPos)
             interact = false;
         if (interact)
         {
-            if(locked)
-                ChangeMats(lockedMat);
-            else 
-                ChangeMats(visualMaterial);
+            outlineScript.enabled = true;
+            if (locked)
+                outlineScript.OutlineColor = lockedColor;
+            else
+                outlineScript.OutlineColor = visualColor;
         }
         else
-            ChangeMatsToDefault();
+            outlineScript.enabled = false;
     }
 
-    private void ChangeMats(Material mat)
-    {
-        curtainRenderer.material = mat;
-        curtainRenderer2.material = mat;
-    }
-
-    private void ChangeMatsToDefault()
-    {
-        curtainRenderer.material = defaultMaterial;
-        curtainRenderer2.material = defaultMaterial2;
-    }
-    
     public void RestartGame()
     {
         moveObject.position = startingPos;

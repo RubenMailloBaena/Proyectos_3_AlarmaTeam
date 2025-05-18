@@ -159,10 +159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportPoint: {fileID: 1026355180032973472}
-  statueRenderer: {fileID: 2397078089630829808}
-  visualMaterial: {fileID: 2100000, guid: 6209d04f02106b44caab88f368dc34ea, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: ffb89d8b855c04b4baed55c756e7bf68, type: 2}
-  selectMaterial: {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
+  visualColor: {r: 0.5379696, g: 0.25987896, b: 0.754717, a: 1}
+  selectColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineScript: {fileID: 2421349246988444804}
 --- !u!136 &1546871357391980872
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -254,12 +253,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91dad302ad03f3541bf7fdf6f1581611, type: 3}
---- !u!23 &2397078089630829808 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5511925060501514569, guid: 91dad302ad03f3541bf7fdf6f1581611,
+--- !u!114 &2421349246988444804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5521473883849523517, guid: 91dad302ad03f3541bf7fdf6f1581611,
     type: 3}
   m_PrefabInstance: {fileID: 7870721435693835705}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3535058589834983327 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6644329521839067686, guid: 91dad302ad03f3541bf7fdf6f1581611,

@@ -60,7 +60,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         if (select)
         {
             outlineScript.enabled = true;
-            outlineScript.OutlineMode = Outline.Mode.OutlineVisible;
+            outlineScript.OutlineMode = Outline.Mode.OutlineAll;
             outlineScript.OutlineColor = selectColor;
             selecting = true;
         }

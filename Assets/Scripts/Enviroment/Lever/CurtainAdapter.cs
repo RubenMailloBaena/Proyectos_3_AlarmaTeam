@@ -24,8 +24,8 @@ public class CurtainAdapter : MonoBehaviour, IObjects, IRestartable
 
     public void ShowInteract(bool interact, bool locked)
     {
-        // foreach (Curtain curtain in curtains)
-        //     curtain.ShowInteract(interact, locked, lockedMaterial);
+        foreach (Curtain curtain in curtains)
+            curtain.ShowInteract(interact, locked, lockedColor);
     }
 
     public Vector3 GetCablePosition()
