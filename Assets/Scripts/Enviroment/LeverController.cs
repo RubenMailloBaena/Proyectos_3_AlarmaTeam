@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestartable
 {
-    [Header("References")]
-    [SerializeField] private Material visualMaterial;
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material lockedMaterial;
+    [Header("References")] 
+    [SerializeField] private Color visualColor;
+    [SerializeField] private Color selectColor;
+    [SerializeField] private Color lockedColor;
     private Material lineRenderPreviousMat;
 
-    [SerializeField] private Renderer leverRenderer;
     [SerializeField] private Transform stickTrans;
-    [SerializeField] private Renderer baseRenderer;
+    [SerializeField] private Outline baseOutline;
+    [SerializeField] private Outline stickOutline;
 
     [Header("Attributes")] 
     [SerializeField] private float animationRotateAngle = 40f;
@@ -28,7 +28,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     public bool isLocked { get; set; }
     public bool canInteract { get; set; }
     private bool wasLocked;
-    private bool isMoving;
+    private bool isMoving, selecting;
     private float targetZ;
 
     private void Awake()
@@ -41,7 +41,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
             if (objectsToActivate[i].TryGetComponent(out IObjects item))
             {
                 item.lever = this;
-                item.lockedMaterial = lockedMaterial;
+                //item.lockedMaterial = lockedMaterial;
                 objects.Add(item);
             }
 
@@ -76,6 +76,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     public void SelectObject(bool select)
     {
+        selecting = select;
         SetVisiblity(select);
         lineRender.enabled = select;
         foreach (IObjects item in objects)
@@ -122,23 +123,43 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         {
             if (isLocked)
             {
-                ChangeMaterial(lockedMaterial);
-                lineRender.material = lockedMaterial;
+                ChangeMaterial(lockedColor, true);
+                //lineRender.material = lockedMaterial;
             }
             else
             {
-                ChangeMaterial(visualMaterial);
-                lineRender.material = lineRenderPreviousMat;
+                if (selecting)
+                    ChangeMaterial(selectColor, false);
+                else
+                    ChangeMaterial(visualColor, true);
+                //lineRender.material = lineRenderPreviousMat;
             }
         }
         else  
-            ChangeMaterial(defaultMaterial);
+            TurnOffOutline();
     }
 
-    private void ChangeMaterial(Material mat)
+    private void ChangeMaterial(Color color, bool isVision)
     {
-        leverRenderer.material = mat;
-        baseRenderer.material = mat;
+        baseOutline.enabled = true;
+        stickOutline.enabled = true;
+
+        baseOutline.OutlineMode = Outline.Mode.OutlineAll;
+        stickOutline.OutlineMode = Outline.Mode.OutlineAll;
+        if (isVision)
+        {
+            baseOutline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+            stickOutline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+        }
+        
+        baseOutline.OutlineColor = color;
+        stickOutline.OutlineColor = color;
+    }
+
+    private void TurnOffOutline()
+    {
+        baseOutline.enabled = false;
+        stickOutline.enabled = false;
     }
 
     public Vector3 GetVisionPosition() => transform.position;

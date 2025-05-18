@@ -40,6 +40,9 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
                 float distance = Vector3.Distance(hit.point, transform.position);
                 if (distance <= interactable.InteractDistance)
                 {
+                    if (target != null && target != interactable) //SI PASAMOS DE UNO A OTRO DIRECTAMENTE
+                        ClearTarget();
+                    
                     target = interactable;
                     target.SelectObject(true);
                     if(interactable.canInteract)
