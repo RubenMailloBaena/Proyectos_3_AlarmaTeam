@@ -121,19 +121,16 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         if (active)
         {
-            if (isLocked)
-            {
+            print(selecting + " " + isLocked);
+            
+            if (selecting)
+                ChangeMaterial(selectColor, false);
+            else if (isLocked)
                 ChangeMaterial(lockedColor, true);
                 //lineRender.material = lockedMaterial;
-            }
             else
-            {
-                if (selecting)
-                    ChangeMaterial(selectColor, false);
-                else
-                    ChangeMaterial(visualColor, true);
+                ChangeMaterial(visualColor, true);
                 //lineRender.material = lineRenderPreviousMat;
-            }
         }
         else  
             TurnOffOutline();

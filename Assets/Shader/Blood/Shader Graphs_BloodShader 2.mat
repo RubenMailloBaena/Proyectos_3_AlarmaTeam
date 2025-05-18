@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_BloodShader
+  m_Name: Shader Graphs_BloodShader 2
   m_Shader: {fileID: -6465566751694194690, guid: e4a4677260b793442b6099a37b82d3e1,
     type: 3}
   m_Parent: {fileID: 0}
@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: a3f79d624518c134d9bb91f321c62e10, type: 3}
+        m_Texture: {fileID: 2800000, guid: 931c0138b252aba42bc03935daefa09a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -55,16 +55,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Glosiness: 1
-    - _NoiseAmount: 0.17
+    - _Glosiness: 10
+    - _NoiseAmount: 0.1
     - _NoiseScale: 1
     - _NormalOffset: 0.8
     - _NormalStrength: 2
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Specular: 0.015
+    - _Specular: 0.01
     m_Colors:
     - _Color: {r: 6.678209, g: 6.678209, b: 6.678209, a: 1}
-    - _NormalSpeed: {r: 1, g: 1, b: 0, a: 0}
+    - _NormalSpeed: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _Specular: {r: 0.4113207, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

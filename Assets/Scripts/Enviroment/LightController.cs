@@ -36,7 +36,6 @@ public class LightController : MonoBehaviour
         
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, allLayer))
         {
-            print("HITTING PLAYER: " + hit.collider.name);
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             if (hit.collider.CompareTag("Player"))
             {
