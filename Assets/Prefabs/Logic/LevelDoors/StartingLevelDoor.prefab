@@ -84,7 +84,7 @@ MonoBehaviour:
   rightDoor: {fileID: 1066421547850357896}
   leftHinge: {fileID: 4595354205686902588}
   rightHinge: {fileID: 9069538337727474617}
-  selectedMat: {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
+  selectedColor: {r: 1, g: 1, b: 1, a: 1}
   alwaysOpened: 0
   openDoorAngle: 80
   openDoorSpeed: 1
@@ -159,10 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorRenders:
-  - {fileID: 2758460533522543873}
-  - {fileID: 4931203660907997368}
-  - {fileID: 7715926426767820755}
+  outlineScript: {fileID: 2303541754814249355}
 --- !u!1 &3511141977694865749
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +425,7 @@ GameObject:
   - component: {fileID: 2662337252102835337}
   - component: {fileID: 1458994019663993406}
   - component: {fileID: 2239016840239536091}
+  - component: {fileID: 3964073503806440075}
   m_Layer: 0
   m_Name: Cylinder076
   m_TagString: Untagged
@@ -500,6 +498,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3964073503806440075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780655789446806191}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &7248108002270568242
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,10 +751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorRenders:
-  - {fileID: 2239016840239536091}
-  - {fileID: 3615946735052808184}
-  - {fileID: 2022952125808223490}
+  outlineScript: {fileID: 3964073503806440075}
 --- !u!1 &8430583700948166539
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +763,7 @@ GameObject:
   - component: {fileID: 4159341351742728743}
   - component: {fileID: 1539761099398292304}
   - component: {fileID: 2758460533522543873}
+  - component: {fileID: 2303541754814249355}
   m_Layer: 0
   m_Name: Cylinder075
   m_TagString: Untagged
@@ -822,6 +836,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2303541754814249355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8430583700948166539}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9174592614710586017
 GameObject:
   m_ObjectHideFlags: 0

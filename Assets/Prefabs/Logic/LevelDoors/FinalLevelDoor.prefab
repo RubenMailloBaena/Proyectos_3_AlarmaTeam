@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7763227944993684999}
   - component: {fileID: 7437134120286954462}
   - component: {fileID: 2675791132771080382}
+  - component: {fileID: 4327414755857711537}
   m_Layer: 0
   m_Name: Cylinder075
   m_TagString: Untagged
@@ -83,6 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4327414755857711537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325408960172331598}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1272268553410203646
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,8 +335,9 @@ GameObject:
   - component: {fileID: 650770639560226255}
   - component: {fileID: 4972004709747631906}
   - component: {fileID: 2004425649335204858}
+  - component: {fileID: 8967242286886940900}
   m_Layer: 0
-  m_Name: Cylinder076
+  m_Name: Puerta Frente
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -388,6 +408,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8967242286886940900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378097637670133826}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2414581610146973448
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,10 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorRenders:
-  - {fileID: 2004425649335204858}
-  - {fileID: 3757316225838786330}
-  - {fileID: 1382510800701328120}
+  outlineScript: {fileID: 8967242286886940900}
 --- !u!1 &4282441937315375016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,7 +1081,7 @@ MonoBehaviour:
   rightDoor: {fileID: 3456620793093393353}
   leftHinge: {fileID: 5915910333090471438}
   rightHinge: {fileID: 209152405943218785}
-  selectedMat: {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
+  selectedColor: {r: 1, g: 1, b: 1, a: 1}
   alwaysOpened: 0
   openDoorAngle: 80
   openDoorSpeed: 1
@@ -1124,10 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e0645d07e7919468d8b9e605269fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorRenders:
-  - {fileID: 2675791132771080382}
-  - {fileID: 7431782012278581633}
-  - {fileID: 8574056023612041174}
+  outlineScript: {fileID: 4327414755857711537}
 --- !u!1 &7247986228331457750
 GameObject:
   m_ObjectHideFlags: 0

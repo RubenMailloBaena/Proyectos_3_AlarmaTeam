@@ -10,25 +10,15 @@ public class LevelDoorPart : MonoBehaviour, IInteractable
     public bool canInteract { get; set; }
 
     private LevelDoor door;
-    private Material selectedMat;
+    [SerializeField] private Outline outlineScript;
 
-    [SerializeField] private List<Renderer> doorRenders;
-    private List<Material> defaultMats = new List<Material>();
-
-    private void Awake()
-    {
-        for (int i = 0; i < doorRenders.Count; i++)
-            defaultMats.Add(doorRenders[i].material);
-    }
-
-    public void SetDoorPart(LevelDoor door, float interactiDistance, Material selectedMat)
+    public void SetDoorPart(LevelDoor door, float interactiDistance, Color selectedColor)
     {
         InteractDistance = interactiDistance;
         canInteract = false;
-        this.selectedMat = selectedMat;
+        outlineScript.OutlineColor = selectedColor;
         this.door = door;
     }
-
 
     public void SelectObject(bool select)
     {
@@ -47,14 +37,12 @@ public class LevelDoorPart : MonoBehaviour, IInteractable
 
     private void SetSelectedMat()
     {
-        for (int i = 0; i < doorRenders.Count; i++)
-            doorRenders[i].material = selectedMat;
+        outlineScript.enabled = true;
     }
 
     private void SetDefaultMat()
     {
-        for (int i = 0; i < doorRenders.Count; i++)
-            doorRenders[i].material = defaultMats[i];
+        outlineScript.enabled = false;
     }
     public void Interact()
     {

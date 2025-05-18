@@ -14,8 +14,8 @@ public class LevelDoor : MonoBehaviour
     [SerializeField] private Transform leftHinge;
     [SerializeField] private Transform rightHinge;
     
-    [Header("MATERIALS")]
-    [SerializeField] private Material selectedMat;
+    [Header("COLORS")]
+    [SerializeField] private Color selectedColor;
 
     [Header("ATTRIBUTES")]
     [SerializeField] private bool alwaysOpened;
@@ -37,8 +37,8 @@ public class LevelDoor : MonoBehaviour
         if(isFinalDoor)
             GameManager.GetInstance().SetFinalDoor(this);
         
-        leftDoor.SetDoorPart(this, interactDistance, selectedMat);
-        rightDoor.SetDoorPart(this, interactDistance, selectedMat);
+        leftDoor.SetDoorPart(this, interactDistance, selectedColor);
+        rightDoor.SetDoorPart(this, interactDistance, selectedColor);
     }
 
     private void Start()
