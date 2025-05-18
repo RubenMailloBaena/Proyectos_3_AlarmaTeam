@@ -9,7 +9,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     [SerializeField] private Color visualColor;
     [SerializeField] private Color selectColor;
     [SerializeField] private Color lockedColor;
-    private Material lineRenderPreviousMat;
+    private Material lineRenderMat;
 
     [SerializeField] private Transform stickTrans;
     [SerializeField] private Outline baseOutline;
@@ -35,7 +35,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         canInteract = true;
         lineRender = GetComponent<LineRenderer>();
-        lineRenderPreviousMat = lineRender.material;
+        lineRenderMat = lineRender.material;
         
         for(int i=0; i < objectsToActivate.Count; i++)
             if (objectsToActivate[i].TryGetComponent(out IObjects item))
@@ -121,19 +121,31 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         if (active)
         {
-            print(selecting + " " + isLocked);
-            
-            if (selecting)
-                ChangeMaterial(selectColor, false);
-            else if (isLocked)
+            ChangeLineRendererColor(false);
+            if (isLocked)
+            {
                 ChangeMaterial(lockedColor, true);
-                //lineRender.material = lockedMaterial;
+                ChangeLineRendererColor(true);
+            }
             else
-                ChangeMaterial(visualColor, true);
-                //lineRender.material = lineRenderPreviousMat;
+            {
+                if (selecting)
+                    ChangeMaterial(selectColor, false);
+                else
+                    ChangeMaterial(visualColor, true);
+            }
         }
         else  
             TurnOffOutline();
+    }
+
+    private void ChangeLineRendererColor(bool locked)
+    {
+        if (locked)
+            lineRenderMat.color = Color.red;
+        else
+            lineRenderMat.color = Color.white;
+        lineRender.material = lineRenderMat;
     }
 
     private void ChangeMaterial(Color color, bool isVision)
