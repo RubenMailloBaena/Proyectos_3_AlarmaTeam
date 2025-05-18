@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestartable
 {
+    [Header("References")]
     [SerializeField] private Material visualMaterial;
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material lockedMaterial;
     private Material lineRenderPreviousMat;
 
     [SerializeField] private Renderer leverRenderer;
+    [SerializeField] private Transform stickTrans;
     [SerializeField] private Renderer baseRenderer;
 
+    [Header("Attributes")] 
+    [SerializeField] private float animationRotateAngle = 40f;
+    [SerializeField] private float animationSpeed = 5;
     [SerializeField] private float interactDistance;
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
     
@@ -23,6 +28,8 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     public bool isLocked { get; set; }
     public bool canInteract { get; set; }
     private bool wasLocked;
+    private bool isMoving;
+    private float targetZ;
 
     private void Awake()
     {
@@ -59,8 +66,14 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         GameManager.GetInstance().GetPlayerController().AddVisible(this);
         GameManager.GetInstance().AddInteractable(this);
         GameManager.GetInstance().AddRestartable(this);
+        targetZ = stickTrans.localEulerAngles.z;
     }
-    
+
+    private void Update()
+    {
+        UpdateAnimation();
+    }
+
     public void SelectObject(bool select)
     {
         SetVisiblity(select);
@@ -71,8 +84,35 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     public void Interact()
     {
+        PlayAnimation();    
         foreach (IObjects item in objects)
             item.Interact();
+    }
+
+    private void PlayAnimation()
+    {
+        isMoving = !isMoving;
+        targetZ = isMoving ? -animationRotateAngle : animationRotateAngle;
+    }
+
+    private void UpdateAnimation()
+    {
+        float currentZ = NormalizeAngle(stickTrans.localEulerAngles.z);
+
+        float newZ = Mathf.Lerp(currentZ, targetZ, animationSpeed * Time.deltaTime);
+
+        stickTrans.localEulerAngles = new Vector3(
+            stickTrans.localEulerAngles.x,
+            stickTrans.localEulerAngles.y,
+            newZ
+        );
+    }
+
+    private float NormalizeAngle(float angle)
+    {
+        angle %= 360f;
+        if (angle > 180f) angle -= 360f;
+        return angle;
     }
 
     //VISION
@@ -104,6 +144,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     public Vector3 GetVisionPosition() => transform.position;
     
 
+    //CHECKPOINTS
     public void RestartGame()
     {
         isLocked = false;
