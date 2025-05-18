@@ -48,10 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 794c0d8d6fb44584fab0e8b897f6bf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualMaterial: {fileID: 2100000, guid: 3d656a0b5fd37474fa1f541a6d6b8ed8, type: 2}
-  defaultMaterial: {fileID: 2100000, guid: bcf36bf49642cae488b6c7bf652d86bb, type: 2}
-  selectMaterial: {fileID: 2100000, guid: e24debb7426903243bf57153c6693900, type: 2}
-  itemRenderer: {fileID: 1262340694603666415}
+  visionColor: {r: 0, g: 0.45842028, b: 1, a: 1}
+  selectColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineScript: {fileID: 5707648554453484004}
   throwForce: 5
   soundRadius: 10
   enemyLayer:
@@ -186,6 +185,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1906146127688369991, guid: 5f5fe6908bb86324dadf42da2da473ad,
+        type: 3}
+      propertyPath: outlineMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2802912070999983453, guid: 5f5fe6908bb86324dadf42da2da473ad,
         type: 3}
       propertyPath: m_Name
@@ -196,18 +200,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f5fe6908bb86324dadf42da2da473ad, type: 3}
---- !u!23 &1262340694603666415 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4954775423700292940, guid: 5f5fe6908bb86324dadf42da2da473ad,
-    type: 3}
-  m_PrefabInstance: {fileID: 6144697505979483811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5587489243958420180 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1787056101915092087, guid: 5f5fe6908bb86324dadf42da2da473ad,
     type: 3}
   m_PrefabInstance: {fileID: 6144697505979483811}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5707648554453484004 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1906146127688369991, guid: 5f5fe6908bb86324dadf42da2da473ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 6144697505979483811}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8332688998857769982}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8332688998857769982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2802912070999983453, guid: 5f5fe6908bb86324dadf42da2da473ad,

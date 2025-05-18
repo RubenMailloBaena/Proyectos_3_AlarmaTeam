@@ -8,11 +8,10 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
 {
     private PlayerController pController;
 
-    [SerializeField] private Material visualMaterial;
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material selectMaterial;
+    [SerializeField] private Color visionColor;
+    [SerializeField] private Color selectColor;
 
-    [SerializeField] private Renderer itemRenderer;
+    [SerializeField] private Outline outlineScript;
 
     [SerializeField] private float throwForce = 5f;
     [SerializeField] private float soundRadius = 10f;
@@ -24,7 +23,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     public bool isLocked { get; set; }
     public bool canInteract { get; set; }
 
-    private bool thrown, done; 
+    private bool thrown, done, selecting; 
     private Rigidbody rb;
 
     public GameObject notFractured;
@@ -59,9 +58,17 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         if (thrown) return;
 
         if (select)
-            itemRenderer.material = selectMaterial;
+        {
+            outlineScript.enabled = true;
+            outlineScript.OutlineMode = Outline.Mode.OutlineVisible;
+            outlineScript.OutlineColor = selectColor;
+            selecting = true;
+        }
         else
-            itemRenderer.material = defaultMaterial;
+        {
+            outlineScript.enabled = false;
+            selecting = false;
+        }
     }
 
     public  void Interact()
@@ -69,7 +76,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         if (thrown) return;
         
         thrown = true;
-        itemRenderer.material = defaultMaterial;
+        outlineScript.enabled = false;
         rb.AddForce(transform.forward * throwForce, ForceMode.Impulse);
     }
 
@@ -121,39 +128,27 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     }
     
     public Vector3 GetPosition() => transform.position;
-
-
-    #region Cheat
     
-    public void ResetObject()
-    {
-        thrown = false;
-        done = false;
-
-        if (itemRenderer != null)
-            itemRenderer.material = defaultMaterial;
-
-        if (rb != null)
-        {
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-    }
-
+    //VISION
     public void SetVisiblity(bool active)
     {
+        if (selecting) return;
+        
         if (active)
-            itemRenderer.material = visualMaterial;
+        {
+            outlineScript.enabled = true;
+            outlineScript.OutlineColor = visionColor;
+            outlineScript.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+        }
         else
-            itemRenderer.material = defaultMaterial;
+            outlineScript.enabled = false;
     }
 
     public Vector3 GetVisionPosition()
     {
         return transform.position;
     }
-    #endregion
-    
+
     //CHECKPOINTS
     public void RestartGame()
     {
