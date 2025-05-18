@@ -9,7 +9,7 @@ public class CurtainAdapter : MonoBehaviour, IObjects, IRestartable
     [SerializeField] private List<Curtain> curtains;
 
     public IInteractable lever { get; set; }
-    public Material lockedMaterial { get; set; }
+    public Color lockedColor { get; set; }
 
     private void Start()
     {
@@ -24,8 +24,8 @@ public class CurtainAdapter : MonoBehaviour, IObjects, IRestartable
 
     public void ShowInteract(bool interact, bool locked)
     {
-        foreach (Curtain curtain in curtains)
-            curtain.ShowInteract(interact, locked, lockedMaterial);
+        // foreach (Curtain curtain in curtains)
+        //     curtain.ShowInteract(interact, locked, lockedMaterial);
     }
 
     public Vector3 GetCablePosition()

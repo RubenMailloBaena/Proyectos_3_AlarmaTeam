@@ -23,7 +23,7 @@ public class BridgeController : MonoBehaviour, IObjects, IRestartable
     private float distanceToConsiderArrive = 0.1f; 
     
     public IInteractable lever { get; set; }
-    public Material lockedMaterial { get; set; }
+    public Color lockedColor { get; set; }
     
     void Start()
     {
@@ -84,10 +84,10 @@ public class BridgeController : MonoBehaviour, IObjects, IRestartable
     {
         if (interact)
         {
-            if (locked)
-                bridgeRenderer.material = lockedMaterial;
-            else
-                bridgeRenderer.material = visualMaterial;
+            // if (locked)
+            //     bridgeRenderer.material = lockedMaterial;
+            // else
+            //     bridgeRenderer.material = visualMaterial;
         }
         else
             bridgeRenderer.material = defaultMaterial;

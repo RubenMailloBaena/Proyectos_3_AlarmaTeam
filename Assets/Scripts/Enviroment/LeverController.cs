@@ -41,7 +41,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
             if (objectsToActivate[i].TryGetComponent(out IObjects item))
             {
                 item.lever = this;
-                //item.lockedMaterial = lockedMaterial;
+                item.lockedColor = lockedColor;
                 objects.Add(item);
             }
 
@@ -142,7 +142,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     private void ChangeLineRendererColor(bool locked)
     {
         if (locked)
-            lineRenderMat.color = Color.red;
+            lineRenderMat.color = lockedColor;
         else
             lineRenderMat.color = Color.white;
         lineRender.material = lineRenderMat;

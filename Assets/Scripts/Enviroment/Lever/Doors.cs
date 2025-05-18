@@ -8,10 +8,8 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
     [SerializeField] private Transform moveObject;
     [SerializeField] private Transform cablePosition;
 
-    [SerializeField] private Material visualMaterial;
-    [SerializeField] private Material defaultMaterial;
-
-    [SerializeField] private Renderer doorRenderer;
+    [SerializeField] private Color visualColor;
+    [SerializeField] private Outline outlineScript;
 
     [SerializeField] private float distance = 5f; 
     [SerializeField] private float speed = 5f;
@@ -20,7 +18,7 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
     private bool isMoving, wasMoving;
     
     public IInteractable lever { get; set; }
-    public Material lockedMaterial { get; set; }
+    public Color lockedColor { get; set; }
     void Start()
     {
         GameManager.GetInstance().AddRestartable(this);
@@ -51,13 +49,14 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
     {
         if (interact)
         {
-            if(locked)
-                doorRenderer.material = lockedMaterial;
+            outlineScript.enabled = true;
+            if (locked)
+                outlineScript.OutlineColor = lockedColor;
             else
-                doorRenderer.material = visualMaterial;
+                outlineScript.OutlineColor = visualColor;
         }
         else
-            doorRenderer.material = defaultMaterial;
+            outlineScript.enabled = false;
     }
     
     public Vector3 GetCablePosition()
