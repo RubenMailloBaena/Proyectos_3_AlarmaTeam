@@ -914,7 +914,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 1.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -967,7 +967,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1233,7 +1233,7 @@ ParticleSystem:
     gravitySource: 0
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 0
+    size3D: 1
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -1661,10 +1661,10 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1672,21 +1672,21 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
+          value: 0.08850098
           inSlope: 0
-          outSlope: 1
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
+          value: 0.9873567
+          inSlope: -0.44194627
+          outSlope: -0.44194627
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.33435798
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1696,7 +1696,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.34156492
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -1704,20 +1704,29 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          time: 0.4276212
+          value: 0.4901221
+          inSlope: 0.64561665
+          outSlope: 0.64561665
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1.0478612
+          outSlope: 1.0478612
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.89663965
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1770,7 +1779,7 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 1
+      minMaxState: 2
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1823,10 +1832,10 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -1879,7 +1888,7 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -1932,9 +1941,9 @@ ParticleSystem:
         m_RotationOrder: 4
     curve:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0.7853982
-      minScalar: 0.7853982
+      minMaxState: 3
+      scalar: -1.5707963
+      minScalar: 1.5707963
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5441,6 +5450,74 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &608148734
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.08982712
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.701378
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70137805
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.08982701
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 165.403
+      objectReference: {fileID: 0}
+    - target: {fileID: 1661230606212803058, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2037369499130426184, guid: 9809395574f3b8f4da45e8ca9bf92723,
+        type: 3}
+      propertyPath: m_Name
+      value: Antorcha Variant
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9809395574f3b8f4da45e8ca9bf92723, type: 3}
 --- !u!1 &702930500 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7855866945808751386, guid: 38ec597a6d40aa94698ac6016c123616,
@@ -8005,3 +8082,4 @@ SceneRoots:
   - {fileID: 280973938}
   - {fileID: 7638987457034527949}
   - {fileID: 1908850926}
+  - {fileID: 608148734}
