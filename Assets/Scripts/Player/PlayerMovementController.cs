@@ -14,6 +14,12 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private InputActionReference moveInput;
     [SerializeField] private InputActionReference runInput;
     [SerializeField] private InputActionReference jumpInput;
+
+    [Header("Camera Attributes")] 
+    [SerializeField] private float cameraNormalFov = 60f;
+    [SerializeField] private float cameraRunFov = 70f;
+    [SerializeField] private float fovSpeed = 5f;
+    private Camera playerCamera;
     
     [Header("Movement Attributes")] 
     [SerializeField] private float runSpeed = 8f;
@@ -47,11 +53,13 @@ public class PlayerMovementController : MonoBehaviour
     {
         charController = GetComponent<CharacterController>();
         pController = GetComponent<PlayerController>();
+        playerCamera = Camera.main;
     }
 
     private void Update()
     {
         PlayerMovement();
+        HandleCameraFOV();
         PlayerJump();
         PlayerGravity();
         PlayerSound();
@@ -85,6 +93,16 @@ public class PlayerMovementController : MonoBehaviour
         finalRange = walkingSoundRange;
         pController.SetIsRunning(false);
         return walkSpeed;
+    }
+
+    private void HandleCameraFOV()
+    {
+        float targetFOV = pController.IsRunning ? cameraRunFov : cameraNormalFov;
+
+        if (Mathf.Approximately(playerCamera.fieldOfView, targetFOV))
+            return;
+
+        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovSpeed);
     }
 
     private void PlayerJump()

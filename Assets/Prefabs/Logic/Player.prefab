@@ -679,6 +679,9 @@ MonoBehaviour:
     type: 3}
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  cameraNormalFov: 60
+  cameraRunFov: 70
+  fovSpeed: 3
   runSpeed: 6
   walkSpeed: 4
   leaningSpeed: 2
@@ -917,6 +920,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BrazosSeparados
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679072723546551962, guid: 036ed3c71a4bde54281d9cae7eb285ed,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2019463190281874464, guid: 036ed3c71a4bde54281d9cae7eb285ed,
         type: 3}
