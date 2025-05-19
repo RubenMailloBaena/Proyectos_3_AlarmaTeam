@@ -361,8 +361,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5448091118180242944}
   - component: {fileID: 7559750605224137656}
-  - component: {fileID: 5904741305050889926}
   - component: {fileID: 1109807197618876803}
+  - component: {fileID: 7957367928023497810}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -436,14 +436,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &5904741305050889926
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6643357551134063999}
-  m_Enabled: 1
 --- !u!114 &1109807197618876803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +480,20 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &7957367928023497810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643357551134063999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &6838082588607779258
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +549,6 @@ GameObject:
   - component: {fileID: 7568944375523593208}
   - component: {fileID: 1978913200047557522}
   - component: {fileID: 1454362342495625663}
-  - component: {fileID: 7071093872928940514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -909,20 +914,6 @@ MonoBehaviour:
   m_IgnoreFromBuild: 1
   m_ApplyToChildren: 1
   m_AffectedAgents: ffffffff
---- !u!114 &7071093872928940514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7808489718877402067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!1001 &5073090272487394788
 PrefabInstance:
   m_ObjectHideFlags: 0
