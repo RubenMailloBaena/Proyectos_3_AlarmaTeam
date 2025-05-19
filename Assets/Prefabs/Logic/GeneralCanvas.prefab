@@ -1228,36 +1228,32 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 991c981d8dab0794bb9132dacb7044df, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: right trigger
+    icon: {fileID: 21300000, guid: 8060b6647fe4ca84799523028b44c24d, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: right shoulder
+    icon: {fileID: 21300000, guid: a3c2651ac2fc88d4e9d822397e1cd5f0, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: left shoulder
+    icon: {fileID: 21300000, guid: 77899c1112157dc41ba17e1d8fab0043, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: button east
+    icon: {fileID: 21300000, guid: 249ab610ea0e1da4e8819bfc149df4a5, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: button south
+    icon: {fileID: 21300000, guid: d679fa35850e59b4385f45f0670aeb3f, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: left stick press
+    icon: {fileID: 21300000, guid: 3808c32df8d435542a286f4688959eb2, type: 3}
     inputTypeText: 
     actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
-    inputTypeText: 
-    actionTypeText: 
-  - keyName: 
-    icon: {fileID: 0}
+  - keyName: button north
+    icon: {fileID: 21300000, guid: 29e7cc400fba02d4c88b5b92beb7a81f, type: 3}
     inputTypeText: 
     actionTypeText: 
 --- !u!222 &292989420658480791
@@ -1934,7 +1930,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -183.2}
+  m_AnchoredPosition: {x: 0, y: -174}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6511120502484979881
@@ -1965,7 +1961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 16070b1c372cca348a8952b4846a674e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0da7c7eec0468bd429f887bc52fb3f59, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2567,7 +2563,7 @@ RectTransform:
   m_GameObject: {fileID: 6853319763999489800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.76437163, y: 0.76437163, z: 0.76437163}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8246318138322594105}
@@ -2577,7 +2573,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -54}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7043251765298849403
