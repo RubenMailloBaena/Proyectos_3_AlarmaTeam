@@ -12,6 +12,14 @@ public enum InputType {
     Hold
 }
 
+public enum ActionType {
+    Default,
+    Vault,
+    Teleport,
+    Backstab,
+    Crouch
+}
+
 public class PlayerHUDController : MonoBehaviour
 {
     private PlayerController pController;
@@ -23,9 +31,12 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private RawImage UIImage;
 
     [Header("Interactions Text")] 
-    [SerializeField] private TextMeshProUGUI UIText;
+    [SerializeField] private TextMeshProUGUI UIinputTypeText;
+    [SerializeField] private TextMeshProUGUI UIactionTypeText;
+    [SerializeField] private Image UIIconSprite;
     [SerializeField] private InputActionReference testInput;
     private PlayerInput playerInput;
+    private InteractionIconsRepo iconsRepo;
 
     [Header("Teleport Bar")]
     [SerializeField] private GameObject UIFatherBar;
@@ -55,6 +66,8 @@ public class PlayerHUDController : MonoBehaviour
             GameManager.GetInstance().SetPlayerHUD(this);
         else
             Destroy(transform.parent.gameObject);
+
+        iconsRepo = GetComponent<InteractionIconsRepo>();
     }
 
     private void Start()
@@ -93,41 +106,34 @@ public class PlayerHUDController : MonoBehaviour
 
     #region InteractionTexts
 
-    public void SetInteractionText(InputAction input, InputType type)
+    public void SetInteractionText(InputAction input, InputType type, ActionType actionType)
     {
-        string displayString = GetKeyOrButtonName(input);
+        KeySpritePair display = iconsRepo.GetInputText(input, type, actionType, playerInput);
 
-        string result = "";
-        result = type == InputType.Press ? "Press '" : "Hold '";
-        
-        result += displayString + "' to interact";
-        UIText.enabled = true;
-        UIText.text = result;
+        UIIconSprite.sprite = iconsRepo.GetCorrespondingSprite(display.keyName);
+        UIinputTypeText.text = display.inputTypeText;
+        UIactionTypeText.text =display.actionTypeText;
+        UIinputTypeText.enabled = true;
+        UIactionTypeText.enabled = true;
+        UIIconSprite.enabled = true;
+
     }
 
     public void SetTutorialCrouchText(InputAction input)
     {
-        UIText.enabled = true;
-        UIText.text = "Press '" + GetKeyOrButtonName(input) + "' to Crouch";
-    }
-
-    private string GetKeyOrButtonName(InputAction input)
-    {
-        string currentControl = playerInput.currentControlScheme;
-        string bindingPath = "";
-        
-        if(currentControl.Equals("Keyboard&Mouse"))
-            bindingPath = input.bindings[0].effectivePath;
-        else
-            bindingPath = input.bindings[1].effectivePath;
-
-        return InputControlPath.ToHumanReadableString(bindingPath,
-            InputControlPath.HumanReadableStringOptions.OmitDevice);
+        UIIconSprite.sprite = iconsRepo.GetCorrespondingSprite("crouch");
+        UIinputTypeText.text = iconsRepo.GetInputTypeString(InputType.Press);
+        UIactionTypeText.text = iconsRepo.GetActionTypeString(ActionType.Crouch);
+        UIinputTypeText.enabled = true;
+        UIactionTypeText.enabled = true;
+        UIIconSprite.enabled = true;
     }
 
     public void HideInteract()
     {
-        UIText.enabled = false;
+        UIinputTypeText.enabled = false;
+        UIactionTypeText.enabled = false;
+        UIIconSprite.enabled = false;
     }
 
     #endregion

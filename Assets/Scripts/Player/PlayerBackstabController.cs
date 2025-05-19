@@ -65,7 +65,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
         if (target != null && !target.IsEnemyDead())
         {
             target.SetWeakSpot(true);
-            pController.CanInteract(attackInput.action, InputType.Press, this);
+            pController.CanInteract(attackInput.action, InputType.Press, this, ActionType.Backstab);
         }
         else
             pController.HideInteract(this);

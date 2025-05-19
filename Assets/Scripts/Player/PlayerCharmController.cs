@@ -122,7 +122,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
                 ClearHoveredTarget();
                 hoveredTarget = enemy;
                 hoveredTarget.SetTargetVisual(true);
-                pController.CanInteract(attackInput, InputType.Press, this);
+                pController.CanInteract(attackInput, InputType.Press, this, ActionType.Default);
             }
         }
         else
@@ -230,7 +230,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     {
         if (interactable.isLocked) return;
         
-        pController.CanInteract(attackInput, InputType.Press, this);
+        pController.CanInteract(attackInput, InputType.Press, this, ActionType.Default);
 
         if (IsAttackPressed() && interactables.Contains(interactable) && !pController.IsGamePaused)
         {

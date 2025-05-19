@@ -118,11 +118,11 @@ public class PlayerController : MonoBehaviour, IRestartable
 
     // ------------------ HUD ------------------
 
-    public void CanInteract(InputAction input, InputType inputType, IPlayerComponent playerComponent)
+    public void CanInteract(InputAction input, InputType inputType, IPlayerComponent playerComponent, ActionType actionType)
     {
         if (HUDActivator != null) return;
         HUDActivator = playerComponent;
-        pHUD.SetInteractionText(input, inputType);
+        pHUD.SetInteractionText(input, inputType, actionType);
     }
 
     public void HideInteract(IPlayerComponent playerComponent)

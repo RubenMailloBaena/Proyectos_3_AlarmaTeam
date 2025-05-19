@@ -52,7 +52,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
                     StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
             }
 
-            pController.CanInteract(jumpInput, InputType.Press, this);
+            pController.CanInteract(jumpInput, InputType.Press, this, ActionType.Vault);
         }
         else
         {

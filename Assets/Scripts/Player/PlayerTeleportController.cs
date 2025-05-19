@@ -55,7 +55,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             {
                 currentStatue = statue;
                 currentStatue.ShowUI(true);
-                pController.CanInteract(teleportAction, InputType.Hold, this);
+                pController.CanInteract(teleportAction, InputType.Hold, this, ActionType.Teleport);
             }
             else
                ClearTarget();
