@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Statue : MonoBehaviour, IStatue, IVisible
 {
@@ -10,7 +9,7 @@ public class Statue : MonoBehaviour, IStatue, IVisible
 
     [SerializeField] private Color visualColor;
     [SerializeField] private Color selectColor;
-    [SerializeField] private Outline outlineScript;
+    [SerializeField] private List<Outline> outlines = new List<Outline>();
 
     private bool selecting;
     
@@ -22,14 +21,13 @@ public class Statue : MonoBehaviour, IStatue, IVisible
     {
         if (show)
         {
-            outlineScript.OutlineMode = Outline.Mode.OutlineAll;
-            outlineScript.OutlineColor = selectColor;
-            outlineScript.enabled = true;
+            ChangeOutlineMode(true);
+            EnableOutline(true);
             selecting = true;
         }
         else
         {
-            outlineScript.enabled = false;
+            EnableOutline(false);
             selecting = false;
         }
     }
@@ -50,12 +48,37 @@ public class Statue : MonoBehaviour, IStatue, IVisible
         
         if (active)
         {
-            outlineScript.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-            outlineScript.OutlineColor = visualColor;
-            outlineScript.enabled = true;
+            ChangeOutlineMode(false);
+            EnableOutline(true);
         }
         else
-            outlineScript.enabled = false;
+            EnableOutline(false);
+    }
+
+    private void ChangeOutlineMode(bool select)
+    {
+        if (select)
+        {
+            foreach (Outline script in outlines)
+            {
+                script.OutlineMode = Outline.Mode.OutlineAll;
+                script.OutlineColor = selectColor;
+            }
+        }
+        else
+        {
+            foreach (Outline script in outlines)
+            {
+                script.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                script.OutlineColor = visualColor;
+            }
+        }
+    }
+
+    private void EnableOutline(bool active)
+    {
+        foreach (Outline script in outlines)
+            script.enabled = active;
     }
 
     public Vector3 GetVisionPosition()
