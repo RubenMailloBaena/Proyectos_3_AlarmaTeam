@@ -70,3 +70,18 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# === FMOD for Unity ===
+# Nunca ignores los DLLs en la subcarpeta lib de FMOD:
+!/[Aa]ssets/Plugins/FMOD/**/*/lib/*
+
+# Asegúrate de incluir imágenes y gizmos usados por FMOD en el Editor de Unity:
+!/[Aa]ssets/Gizmos/FMOD/*
+!/[Aa]ssets/Editor Default Resources/FMOD/*
+
+# Ignora la carpeta Cache (se genera localmente):
+/[Aa]ssets/Plugins/FMOD/Cache/*
+
+# Ignora los bancos de audio (.bank) y sus metadatos en StreamingAssets:
+/[Aa]ssets/StreamingAssets/**/*.bank
+/[Aa]ssets/StreamingAssets/**/*.bank.meta
