@@ -42,7 +42,6 @@ public class InteractionIconsRepo : MonoBehaviour
     
     private string GetKeyOrButtonName(InputAction input, PlayerInput playerInput)
     {
-        print("Here");
         string currentControl = playerInput.currentControlScheme;
         string bindingPath = "";
         
