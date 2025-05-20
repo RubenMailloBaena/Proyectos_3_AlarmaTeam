@@ -4,3 +4,6 @@
 # FMOD for Unity – forzar finales LF en bundles y en Info.plist
 Assets/Plugins/FMOD/**/*.bundle text eol=lf
 Assets/Plugins/FMOD/**/Info.plist text eol=lf
+
+# Treat all .bundle files in the project as binary
+*.bundle binary
