@@ -23,6 +23,8 @@ public class IdleState : State
 
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Idle, false);
+        
         waitTime = eController.GetWaitTime();
         lookDir = eController.GetLookDirection();
         eController.ChangeMaterial(material);

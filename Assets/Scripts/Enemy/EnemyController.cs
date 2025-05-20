@@ -175,7 +175,7 @@ public class EnemyController : MonoBehaviour, IVisible
 
     #region Animation Functions
     
-    //TODO
+    public void SetAnimation(AnimationType animation, bool setBool) => Animations.SetAnimation(animation, setBool);
     
     #endregion
     

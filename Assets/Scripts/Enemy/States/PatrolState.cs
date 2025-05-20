@@ -16,6 +16,8 @@ public class PatrolState : State
 
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Walk, false);
+        
         eController.SetAgentSpeed(patrolSpeed);
         eController.ChangeMaterial(material);
     }
