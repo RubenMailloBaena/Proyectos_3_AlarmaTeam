@@ -1,5 +1,3 @@
-using FMOD.Studio;
-using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -93,11 +91,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             CheckIfEnemiesCanHear();
             //LO CAMBIAMOS DE LAYER PARA NO PODER VOLVER A INTERACTUAR
             gameObject.layer = LayerMask.NameToLayer("Logic");
-            EventInstance instance = RuntimeManager.CreateInstance("event:/Ambiente/ambiente_jarron_romper");
-            instance.start();
-            instance.release();
-            Debug.Log("Evento creado manualmente");
-
         }
     }
     private void CheckIfEnemiesCanHear()
