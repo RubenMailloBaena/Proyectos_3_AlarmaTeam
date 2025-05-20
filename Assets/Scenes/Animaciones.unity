@@ -9200,6 +9200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IdleControllMental
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e8022b02a984fdf4a98fb942f61946dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4050034158705360531, guid: e8022b02a984fdf4a98fb942f61946dc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -9557,6 +9562,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Walk+look
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b21516df7b5f99245b446813bab57b67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4050034158705360531, guid: b21516df7b5f99245b446813bab57b67,
         type: 3}
@@ -18458,6 +18468,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Backstab
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: de1d638b22c3f53449ea8d88e4e686c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4050034158705360531, guid: de1d638b22c3f53449ea8d88e4e686c8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -22575,6 +22590,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: caabee08efbeca641a73482c3fe6c977,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4050034158705360531, guid: caabee08efbeca641a73482c3fe6c977,
         type: 3}
@@ -37466,8 +37486,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2006648491}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4a301c8f48fc5824996909ad3c820387, type: 2}
+  m_Avatar: {fileID: 9000000, guid: c61b7b07d413b1c47a5812bb039426d3, type: 3}
+  m_Controller: {fileID: 9100000, guid: 8565c2255a910ae4cba44612bf63aa9d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -37866,6 +37886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Run+ look
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ee91f1e7a6f76c341b24f4b7266b2d2f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4050034158705360531, guid: ee91f1e7a6f76c341b24f4b7266b2d2f,
         type: 3}
