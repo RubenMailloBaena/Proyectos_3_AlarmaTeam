@@ -1,48 +1,66 @@
+using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
-using UnityEngine;
-using System.Collections;
+using System;
 
 public class AudioManager : MonoBehaviour
 {
-    // Referencia al bus de música
-    private Bus musicBus;
+    public static AudioManager Instance;
 
-    void Start()
+    private void Awake()
     {
-        // Carga bloqueante del banco Maestro
-        RuntimeManager.LoadBank("Master Bank", true);
-        // (Opcional) carga el banco de strings si lo usas para nombres dinámicos
-        RuntimeManager.LoadBank("Master Bank.strings", true);
-
-        // Una vez cargados, obtenemos el bus por su ruta exacta
-        musicBus = RuntimeManager.GetBus("bus:/Buses/Music");
-
-        // Comprueba que existe
-        if (musicBus.isValid())
-        {
-            Debug.Log("Bus de música cargado correctamente.");
-        }
+        if (Instance != null) Destroy(gameObject);
         else
         {
-            Debug.LogError("No se encontró el bus de música. Revisa la ruta y que el banco esté compilado.");
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
-        // Por ejemplo, hacer un fade
-        StartCoroutine(FadeBusVolume(0f, 1f, 2f));
     }
 
-    IEnumerator FadeBusVolume(float from, float to, float duration)
+    public void PlayOneShot(string path, Vector3 position)
     {
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            float vol = Mathf.Lerp(from, to, elapsed / duration);
-            musicBus.setVolume(vol);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        musicBus.setVolume(to);
+        RuntimeManager.PlayOneShot(path, position);
     }
+
+    public EventInstance PlayEventInstance(string path)
+    {
+        EventInstance instance = RuntimeManager.CreateInstance(path);
+        instance.start();
+        return instance;
+    }
+
+    public void StopEvent(EventInstance instance)
+    {
+        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        instance.release();
+    }
+    private void OnEnable()
+    {
+        AudioEvents.OnPlaySound3D += HandlePlaySound3D;
+        AudioEvents.OnPlaySound2D += HandlePlaySound2D;
+    }
+
+    private void OnDisable()
+    {
+        AudioEvents.OnPlaySound3D -= HandlePlaySound3D;
+        AudioEvents.OnPlaySound2D -= HandlePlaySound2D;
+    }
+
+    void HandlePlaySound3D(string path, Vector3 pos)
+    {
+        PlayOneShot(path, pos);
+    }
+
+    void HandlePlaySound2D(string path)
+    {
+        PlayOneShot(path, Vector3.zero); // o algún sistema de 2D
+    }
+
+}
+
+public static class AudioEvents
+{
+    public static Action<string, Vector3> OnPlaySound3D;
+    public static Action<string> OnPlaySound2D;
 }
 
