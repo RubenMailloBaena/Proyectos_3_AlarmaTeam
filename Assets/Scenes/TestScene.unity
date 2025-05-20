@@ -13034,12 +13034,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4674131568072945107, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: Banks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674131568072945107, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: Banks.Array.data[1]
+      value: Desktop/Master Bank
+      objectReference: {fileID: 0}
     - target: {fileID: 7337033605945225333, guid: 15d61c184c7185b4797358fcbbc67f2b,
         type: 3}
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Path
+      value: event:/Ambiente/ambiente_jarron_romper
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -1694503366
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1299324276
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 1875730875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 566734511
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7369248233872699095, guid: 15d61c184c7185b4797358fcbbc67f2b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
