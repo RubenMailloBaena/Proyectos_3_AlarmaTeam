@@ -1233,6 +1233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8167465397700286712}
   - component: {fileID: 2988693754222058349}
+  - component: {fileID: 7894479647807556867}
   - component: {fileID: 3604509806120283806}
   - component: {fileID: 1616027638105557089}
   - component: {fileID: 6868808229459138712}
@@ -1305,6 +1306,19 @@ MonoBehaviour:
   killingPlayer: 0
   exclamationShown: 0
   enemyIsDead: 0
+--- !u!114 &7894479647807556867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034548957631012766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c517dc37d7e76e04d972f1db8eb51c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7947574647915804177}
 --- !u!114 &3604509806120283806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1814,6 +1828,12 @@ PrefabInstance:
 --- !u!4 &255001943630254572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1764754704863211947, guid: b0e903044601ba24eb31c086f071f19d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2014333784028061767}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7947574647915804177 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8484549631133636182, guid: b0e903044601ba24eb31c086f071f19d,
     type: 3}
   m_PrefabInstance: {fileID: 2014333784028061767}
   m_PrefabAsset: {fileID: 0}

@@ -60,6 +60,7 @@ public class EnemyController : MonoBehaviour, IVisible
     private EnemyHear Hear { get; set; }
     private EnemyBackstab Backstab { get; set; }
     private EnemyRestart Restart { get; set; }
+    private EnemyAnimations Animations { get; set; }
 
     void Awake()
     {
@@ -70,6 +71,7 @@ public class EnemyController : MonoBehaviour, IVisible
         Hear = GetComponent<EnemyHear>();
         Backstab = GetComponent<EnemyBackstab>();
         Restart = GetComponent<EnemyRestart>();
+        Animations = GetComponent<EnemyAnimations>();
 
         Movement.SetMovement(this);
         Renderer.SetRenderer();
@@ -167,6 +169,14 @@ public class EnemyController : MonoBehaviour, IVisible
         if(!enemyIsDead) GameManager.GetInstance().RemoveEnemieAlive();
     }
 
+    #endregion
+    
+    //----------------------------ENEMY VISION FUNCTIONS-----------------------------
+
+    #region Animation Functions
+    
+    //TODO
+    
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
