@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
     public void PlayerDead()
     {
         SetCursorVisible(true);
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_quemado_loop", true);
     }
     
     public void RestartGame()

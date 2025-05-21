@@ -85,6 +85,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     public void Interact()
     {
+        AudioManager.Instance.HandlePlaySound3D("event:/Ambiente/ambiente_palanca",transform.position);
         PlayAnimation();    
         foreach (IObjects item in objects)
             item.Interact();

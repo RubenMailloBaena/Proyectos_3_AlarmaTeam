@@ -23,11 +23,21 @@ public class AudioManager : MonoBehaviour
     {
         if (activeEvents.TryGetValue(path, out var existingInstance))
         {
+            if (existingInstance.isValid())
+            {
+                existingInstance.getPlaybackState(out PLAYBACK_STATE state);
+                if (state == PLAYBACK_STATE.PLAYING)
+                {
+                    existingInstance.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
+                    return;
+                }
+            }
+
             existingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             existingInstance.release();
             activeEvents.Remove(path);
         }
-        
+
         EventInstance instance = RuntimeManager.CreateInstance(path);
         instance.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
         instance.start();
@@ -35,10 +45,20 @@ public class AudioManager : MonoBehaviour
         activeEvents[path] = instance;
     }
 
-    public void HandlePlaySound2D(string path)
+
+public void HandlePlaySound2D(string path)
     {
         if (activeEvents.TryGetValue(path, out var existingInstance))
         {
+            if (existingInstance.isValid())
+            {
+                existingInstance.getPlaybackState(out PLAYBACK_STATE state);
+                if (state == PLAYBACK_STATE.PLAYING)
+                {
+                    return;
+                }
+            }
+
             existingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             existingInstance.release();
             activeEvents.Remove(path);
@@ -49,23 +69,29 @@ public class AudioManager : MonoBehaviour
 
         activeEvents[path] = instance;
     }
+        public void HandleStopSound(string path, bool immediate)
+        {
+            if (!activeEvents.TryGetValue(path, out var instance))
+                return;
 
-    public void HandleStopSound(string path, bool immediate)
-    {
-        if (immediate)
-        {
-            if (activeEvents.TryGetValue(path, out var instance))
+            if (instance.isValid())
             {
-                instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                instance.release();
-                activeEvents.Remove(path);
+                instance.getPlaybackState(out PLAYBACK_STATE state);
+                if (state != PLAYBACK_STATE.PLAYING)
+                {
+                    instance.release();
+                    activeEvents.Remove(path);
+                    return;
+                }
             }
-        }
-        if (activeEvents.TryGetValue(path, out var instanceFade))
-        {
-            instanceFade.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            instanceFade.release();
+
+            var mode = immediate
+                ? FMOD.Studio.STOP_MODE.IMMEDIATE
+                : FMOD.Studio.STOP_MODE.ALLOWFADEOUT;
+
+            instance.stop(mode);
+            instance.release();
             activeEvents.Remove(path);
         }
+
     }
-}
