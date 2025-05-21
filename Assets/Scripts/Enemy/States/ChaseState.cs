@@ -21,6 +21,8 @@ public class ChaseState : State
     
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Run, false);
+        
         eController.ActivateExclamation();
         eController.ChangeMaterial(material);
         eController.ManualRotation(false);

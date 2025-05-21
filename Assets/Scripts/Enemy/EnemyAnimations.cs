@@ -28,6 +28,9 @@ public class EnemyAnimations : MonoBehaviour
 
     public void SetAnimation(AnimationType animationType, bool setBool)
     {
+        animator.SetBool("Dead",false);
+        animator.SetBool("Attack", false);
+        
         switch (animationType)
         {
             case AnimationType.Idle: 
@@ -58,6 +61,7 @@ public class EnemyAnimations : MonoBehaviour
 
     private void SetBlendTreeSpeed(float speed)
     {
+        //QUIZAS SE PUEDE AÑADIR UN LERP RAPIDO PARA QUE SEA MAS SUAVE
         animator.SetFloat("Speed", speed);
     }
 }

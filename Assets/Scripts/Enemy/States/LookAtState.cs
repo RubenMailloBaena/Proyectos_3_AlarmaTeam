@@ -15,6 +15,11 @@ public class LookAtState : State
     
     public override void InitializeState()
     {
+        if(eController.isChasingPlayer)
+            eController.SetAnimation(AnimationType.Run, false);
+        else
+            eController.SetAnimation(AnimationType.Walk, false);
+        
         eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();

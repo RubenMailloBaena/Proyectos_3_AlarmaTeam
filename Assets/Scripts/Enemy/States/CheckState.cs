@@ -20,6 +20,9 @@ public class CheckState : State
     
     public override void InitializeState()
     {
+        //TODO: CHANGE IN FUTURE
+        eController.SetAnimation(AnimationType.Idle, false);
+        
         eController.ChangeMaterial(material);
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
         eController.isChasingPlayer = false;

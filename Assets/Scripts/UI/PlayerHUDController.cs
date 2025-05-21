@@ -121,7 +121,7 @@ public class PlayerHUDController : MonoBehaviour
 
     public void SetTutorialCrouchText(InputAction input)
     {
-        UIIconSprite.sprite = iconsRepo.GetCorrespondingSprite("crouch");
+        UIIconSprite.sprite = iconsRepo.GetCorrespondingSprite("control");
         UIinputTypeText.text = iconsRepo.GetInputTypeString(InputType.Press);
         UIactionTypeText.text = iconsRepo.GetActionTypeString(ActionType.Crouch);
         UIinputTypeText.enabled = true;

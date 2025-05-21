@@ -22,6 +22,8 @@ public class AttackState : State
     
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Attack, true);
+        
         eController.ActivateExclamation();
         eController.ChangeMaterial(material);
         eController.ManualRotation(true);

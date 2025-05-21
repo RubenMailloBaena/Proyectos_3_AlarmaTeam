@@ -17,6 +17,8 @@ public class ReturnState : State
     
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Walk, false);
+        
         eController.ChangeMaterial(material);
         if (!eController.isIdleEnemy)
         {

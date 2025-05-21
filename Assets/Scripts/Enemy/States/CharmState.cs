@@ -17,6 +17,8 @@ public class CharmState : State
     
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Charm, true);
+        
         eController.HideArrow();
         eController.ManualRotation(false);
         eController.ChangeMaterial(material);
@@ -41,6 +43,9 @@ public class CharmState : State
 
             if (eController.ArrivedToPosition(targetPos))
             {
+                //TODO: PONER UNA CORRUTINA PARA COORDINARLO
+                eController.SetAnimation(AnimationType.Charm, false);
+                
                 eController.InteractLever();
                 eController.SetCharmLockedVisual(false);
                 return checkState;

@@ -14,6 +14,8 @@ public class DebugStatesTextRotate : MonoBehaviour
 
     void Update()
     {
+        if (player == null) return;
+        
         transform.LookAt(transform.position + player.forward);
     }
 }

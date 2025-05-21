@@ -18,6 +18,9 @@ public class HearState : State
 
     public override void InitializeState()
     {
+        //TODO: CHANGE IN FUTURE
+        eController.SetAnimation(AnimationType.Idle, false);
+        
         eController.HideArrow();
         eController.ManualRotation(false);
         eController.ChangeMaterial(material);

@@ -77,6 +77,7 @@ public class InteractionIconsRepo : MonoBehaviour
 
     public Sprite GetCorrespondingSprite(string key)
     {
+        print(key);
         interactionIcons.TryGetValue(key, out KeySpritePair result);
         return result.icon;
     }

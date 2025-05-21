@@ -15,6 +15,8 @@ public class GoToState : State
     
     public override void InitializeState()
     {
+        eController.SetAnimation(AnimationType.Walk, false);
+        
         eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
     }
