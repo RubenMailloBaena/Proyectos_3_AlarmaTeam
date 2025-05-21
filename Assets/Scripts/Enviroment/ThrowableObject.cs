@@ -88,7 +88,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         {
             ShowFractured(true);
             done = true;
-            AudioManager.Instance.HandlePlaySound3D("event:/Ambiente/ambiente_jarron_romper", transform.position);
+            AudioEvents.OnPlaySound3D?.Invoke("event:/Ambiente/ambiente_jarron_romper", transform.position);
             CheckIfEnemiesCanHear();
             //LO CAMBIAMOS DE LAYER PARA NO PODER VOLVER A INTERACTUAR
             gameObject.layer = LayerMask.NameToLayer("Logic");
