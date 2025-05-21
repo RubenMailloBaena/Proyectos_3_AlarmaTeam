@@ -31,11 +31,11 @@ public class Curtain : MonoBehaviour
     {
         targetPos = isMoving ? finalPos : startingPos;
         moveObject.position = Vector3.MoveTowards(moveObject.position, targetPos, Time.deltaTime * speed);
-        AudioManager.Instance.HandlePlaySound3D("event:/Ambiente/ambiente_cortina_abriendo", transform.position);
     }
     
     public void Interact()
     {
+        AudioManager.Instance.HandlePlaySound3D("event:/Ambiente/ambiente_cortina_abriendo", transform.position);
         isMoving = !isMoving;
     }
 

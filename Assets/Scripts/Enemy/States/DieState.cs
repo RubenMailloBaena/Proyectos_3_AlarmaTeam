@@ -82,6 +82,7 @@ public class DieState : State
 
         yield return new WaitForSeconds(waitTimeFromPlacementToKill);
 
+        AudioManager.Instance.HandlePlaySound3D("event:/Enemigo/enemigo_backstab", transform.position);
         player.ShakeCamera(shakeDuration, shakeMagnitude);
         bloodParticles.Play();
         eController.SetWeakSpot(false);
