@@ -94,6 +94,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private void CancelTeleport()
     {
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", false);
         if (teleportCoroutine != null)
         {
             StopCoroutine(teleportCoroutine);
