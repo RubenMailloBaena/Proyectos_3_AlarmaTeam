@@ -66,6 +66,8 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     {
         pController.SetVaulting(true);
 
+        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_escalar_paret",transform.position);
+
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
         float duration = Vector3.Distance(startPosition, targetPosition) / vaultSpeed; 
@@ -79,6 +81,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
 
         transform.position = targetPosition; 
         pController.SetVaulting(false);
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_escalar_paret");
     }
 
     private void OnDrawGizmosSelected()

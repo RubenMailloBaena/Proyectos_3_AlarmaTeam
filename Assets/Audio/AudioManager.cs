@@ -2,14 +2,18 @@ using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using System;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    private Dictionary<string, EventInstance> activeEvents = new Dictionary<string, EventInstance>();
+
     private void Awake()
     {
-        if (Instance != null) Destroy(gameObject);
+        if (Instance != null) 
+            Destroy(gameObject);
         else
         {
             Instance = this;
@@ -17,50 +21,49 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayOneShot(string path, Vector3 position)
+    public void HandlePlaySound3D(string path, Vector3 pos)
     {
-        RuntimeManager.PlayOneShot(path, position);
+        if(activeEvents.TryGetValue(path, out var existingInstance))
+        {
+            existingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            existingInstance.release();
+            activeEvents.Remove(path);
+        }
+        
+        EventInstance instance = RuntimeManager.CreateInstance(path);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(pos));
+        instance.start();
+
+        activeEvents[path] = instance;
     }
 
-    public EventInstance PlayEventInstance(string path)
+    public void HandlePlaySound2D(string path)
     {
+        if (activeEvents.TryGetValue(path, out var existingInstance))
+        {
+            existingInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            existingInstance.release();
+            activeEvents.Remove(path);
+        }
+
         EventInstance instance = RuntimeManager.CreateInstance(path);
         instance.start();
-        return instance;
+
+        activeEvents[path] = instance;
     }
 
-    public void StopEvent(EventInstance instance)
-    {
-        instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        instance.release();
-    }
-    private void OnEnable()
-    {
-        AudioEvents.OnPlaySound3D += HandlePlaySound3D;
-        AudioEvents.OnPlaySound2D += HandlePlaySound2D;
-    }
 
-    private void OnDisable()
+    public void HandleStopSound(string path)
     {
-        AudioEvents.OnPlaySound3D -= HandlePlaySound3D;
-        AudioEvents.OnPlaySound2D -= HandlePlaySound2D;
-    }
-
-    void HandlePlaySound3D(string path, Vector3 pos)
-    {
-        PlayOneShot(path, pos);
-    }
-
-    void HandlePlaySound2D(string path)
-    {
-        PlayOneShot(path, Vector3.zero); // o algún sistema de 2D
+        if (activeEvents.TryGetValue(path, out var instance))
+        {
+            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.release();
+            activeEvents.Remove(path);
+        }
     }
 
 }
 
-public static class AudioEvents
-{
-    public static Action<string, Vector3> OnPlaySound3D;
-    public static Action<string> OnPlaySound2D;
-}
+
 
