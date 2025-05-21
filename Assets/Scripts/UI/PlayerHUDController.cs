@@ -49,6 +49,7 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private RawImage playerCharmingImage;
 
     [Header("GameLogic UI")] 
+    [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private Button checkpointButton;
     [SerializeField] private Button restartButton;
@@ -80,6 +81,11 @@ public class PlayerHUDController : MonoBehaviour
     private void Update()
     {
         HandleSoundVisuals();
+    }
+
+    public void ShowCrossHair(bool show)
+    {
+        crosshair.SetActive(show);
     }
 
     #region Sound Functions

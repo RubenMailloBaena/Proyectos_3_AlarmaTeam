@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     [SerializeField] private Transform playerEyes;
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
+    [SerializeField] private MeshRenderer playerRender;
+    [SerializeField] private CameraShake cameraShake;
 
     private IPlayerComponent HUDActivator; // Componente que activó el texto de inputs
     
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     private void Start()
     {
         pHUD = GameManager.GetInstance().GetPlayerHUD();
+        playerRender.enabled = false;
     }
 
     private void ChangePlayerPos(Transform targetPos)
@@ -156,6 +159,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public Vector3 GetPlayerPosition() => transform.position;
     public Transform GetPlayerTransform() => transform;
     public PlayerInput GetPlayerInput() => playerInput;
+    public void ShakeCamera(float duration, float magnitude) => cameraShake.ShakeCamera(duration, magnitude);
 
     // ------------------ ENEMIGOS Y VISION ------------------
 

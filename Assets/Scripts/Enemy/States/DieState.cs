@@ -7,14 +7,19 @@ public class DieState : State
 {
     [SerializeField] private float placmentDuration = 0.4f;
     [SerializeField] private float waitTimeFromPlacementToKill = 0.5f;
+    [SerializeField] private float acercarse = 1.5f;
+    [SerializeField] private float shakeDuration = 0.5f;
+    [SerializeField] private float shakeMagnitude = 0.5f;
     [SerializeField] private ParticleSystem bloodParticles;
     
     private PlayerController player;
+    private PlayerHUDController hud;
     private Coroutine killAnimationC;
     
     public override void InitializeState()
     {
         player = GameManager.GetInstance().GetPlayerController();
+        hud = GameManager.GetInstance().GetPlayerHUD();
         
         eController.EnemyDead();
         eController.StopAgent();
@@ -33,12 +38,13 @@ public class DieState : State
     private IEnumerator KillAnimation()
     {
         eController.SetAnimation(AnimationType.Idle, true);
+        hud.ShowCrossHair(false);
 
         Transform playerTransform = player.transform;
 
         // Dirección hacia adelante del enemigo (ya alineado hacia adelante por animación)
         Vector3 dirToEnemy = transform.forward;
-        Vector3 posToMovePlayer = transform.position - dirToEnemy * 1.5f;
+        Vector3 posToMovePlayer = transform.position - dirToEnemy * acercarse;
         Quaternion lookRotation = Quaternion.LookRotation(dirToEnemy);
 
         float duration = placmentDuration;
@@ -63,6 +69,7 @@ public class DieState : State
 
         yield return new WaitForSeconds(waitTimeFromPlacementToKill);
         
+        player.ShakeCamera(shakeDuration, shakeMagnitude);
         bloodParticles.Play();
         eController.SetWeakSpot(false);
         eController.SetAnimation(AnimationType.Dead, true);
@@ -70,5 +77,6 @@ public class DieState : State
 
         player.SetBackstabing(false);
         killAnimationC = null;
+        hud.ShowCrossHair(true);
     }
 }

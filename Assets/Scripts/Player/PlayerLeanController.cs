@@ -40,13 +40,13 @@ public class PlayerLeanController : MonoBehaviour
 
     private void SetLeanTarget()
     {
-        if (!pController.IsGrounded || pController.IsPlayerDead || pController.isBackstabing) return;
-
+        if (!pController.IsGrounded || pController.IsPlayerDead) return;
+        
         targetPosition = originalPosition;
         targetRotation = originalRotation;
         pController.SetLeaning(false);
-
-        if (pController.IsVaulting) return; //SI VAULTEAMOS QUITAMOS EL LEAN
+        
+        if (pController.IsVaulting ||pController.isBackstabing) return; //SI VAULTEAMOS QUITAMOS EL LEAN
         
         input = leanInput.action.ReadValue<float>();
         
