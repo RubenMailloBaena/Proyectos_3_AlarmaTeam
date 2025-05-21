@@ -41,11 +41,25 @@ public class DieState : State
         hud.ShowCrossHair(false);
 
         Transform playerTransform = player.transform;
-
-        // Dirección hacia adelante del enemigo (ya alineado hacia adelante por animación)
         Vector3 dirToEnemy = transform.forward;
-        Vector3 posToMovePlayer = transform.position - dirToEnemy * acercarse;
+
+        Vector3 intendedPosition = transform.position - dirToEnemy * acercarse;
         Quaternion lookRotation = Quaternion.LookRotation(dirToEnemy);
+
+        Vector3 startCheck = transform.position;
+        float checkRadius = 0.3f;
+        LayerMask wallMask = LayerMask.GetMask("Ground", "Vault"); 
+
+        RaycastHit hit;
+        bool wallDetected = Physics.SphereCast(startCheck, checkRadius, -dirToEnemy, out hit, acercarse, wallMask);
+
+        Vector3 finalPosition = intendedPosition;
+
+        if (wallDetected)
+        {
+            float safeDistance = hit.distance - 0.05f;
+            finalPosition = transform.position - dirToEnemy * Mathf.Max(0f, safeDistance);
+        }
 
         float duration = placmentDuration;
         float timer = 0f;
@@ -53,27 +67,25 @@ public class DieState : State
         Vector3 startPos = playerTransform.position;
         Quaternion startRot = playerTransform.rotation;
 
-        // Movimiento + rotación simultáneos
         while (timer < duration)
         {
             timer += Time.deltaTime;
             float t = timer / duration;
 
-            playerTransform.position = Vector3.Lerp(startPos, posToMovePlayer, t);
+            playerTransform.position = Vector3.Lerp(startPos, finalPosition, t);
             playerTransform.rotation = Quaternion.Slerp(startRot, lookRotation, t);
             yield return null;
         }
-        
-        playerTransform.position = posToMovePlayer;
+
+        playerTransform.position = finalPosition;
         playerTransform.rotation = lookRotation;
 
         yield return new WaitForSeconds(waitTimeFromPlacementToKill);
-        
+
         player.ShakeCamera(shakeDuration, shakeMagnitude);
         bloodParticles.Play();
         eController.SetWeakSpot(false);
         eController.SetAnimation(AnimationType.Dead, true);
-
 
         player.SetBackstabing(false);
         killAnimationC = null;
