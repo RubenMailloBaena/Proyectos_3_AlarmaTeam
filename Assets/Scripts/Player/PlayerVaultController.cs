@@ -65,6 +65,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     private IEnumerator PerformVault(Vector3 targetPosition)
     {
         pController.SetVaulting(true);
+        AudioManager.Instance.HandlePlaySound3D("hola",transform.position);
 
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
