@@ -65,7 +65,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     private IEnumerator PerformVault(Vector3 targetPosition)
     {
         pController.SetVaulting(true);
-        AudioManager.Instance.HandlePlaySound3D("hola",transform.position);
+        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_escalar_paret", transform.position);
 
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
@@ -78,7 +78,8 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
             yield return null; 
         }
 
-        transform.position = targetPosition; 
+        transform.position = targetPosition;
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_escalar_paret",true);
         pController.SetVaulting(false);
     }
 

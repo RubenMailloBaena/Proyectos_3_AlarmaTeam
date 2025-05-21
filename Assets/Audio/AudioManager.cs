@@ -50,12 +50,21 @@ public class AudioManager : MonoBehaviour
         activeEvents[path] = instance;
     }
 
-    public void HandleStopSound(string path)
+    public void HandleStopSound(string path, bool immediate)
     {
-        if (activeEvents.TryGetValue(path, out var instance))
+        if (immediate)
         {
-            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            instance.release();
+            if (activeEvents.TryGetValue(path, out var instance))
+            {
+                instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                instance.release();
+                activeEvents.Remove(path);
+            }
+        }
+        if (activeEvents.TryGetValue(path, out var instanceFade))
+        {
+            instanceFade.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instanceFade.release();
             activeEvents.Remove(path);
         }
     }

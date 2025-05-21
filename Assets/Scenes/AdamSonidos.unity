@@ -10254,11 +10254,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6643357551134063999, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2030804210}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee7f14a95eb9854ca9cbf32e33968bc, type: 3}
 --- !u!1001 &418138346
 PrefabInstance:
@@ -27433,6 +27429,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Path
+      value: event:/Jugador/jugador_escalar_paret
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 744731026
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1276397501
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 841344904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8761414216230387234, guid: 15d61c184c7185b4797358fcbbc67f2b,
+        type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: -1905362824
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49384,26 +49405,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af67785d09cba1843a9dec320345f1ca, type: 3}
---- !u!1 &2030804206 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6643357551134063999, guid: 9ee7f14a95eb9854ca9cbf32e33968bc,
-    type: 3}
-  m_PrefabInstance: {fileID: 415983744}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2030804210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030804206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonRigidbodyVelocity: 0
-  attenuationObject: {fileID: 0}
 --- !u!1001 &2033175141
 PrefabInstance:
   m_ObjectHideFlags: 0
