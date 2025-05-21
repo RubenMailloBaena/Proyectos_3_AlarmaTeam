@@ -7,6 +7,7 @@ public class CharmState : State
     [Header("Charm Attributes")] 
     [SerializeField] private float charmSpeed = 2f;
     [SerializeField] private float rotateSpeed = 3f;
+    [SerializeField] private float kickAnimationDuration = 0.5f;
     private Vector3 targetPos, direction;
     private bool setDestination;
 
@@ -14,10 +15,19 @@ public class CharmState : State
     public CheckState checkState;
 
     public Material material;
+
+    private Coroutine performingKick;
+    private bool kickDone;
     
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Charm, true);
+        kickDone = false;
+        if (performingKick != null)
+        {
+            StopCoroutine(performingKick);
+            performingKick = null;
+        }
         
         eController.HideArrow();
         eController.ManualRotation(false);
@@ -38,20 +48,29 @@ public class CharmState : State
             if (!setDestination)
             {
                 setDestination = true;
-                //eController.SetAnimation(AnimationType.CharmWalk, false);
+                eController.SetAnimation(AnimationType.CharmWalk, false);
                 eController.GoToLever();
             }
 
-            if (eController.ArrivedToPosition(targetPos))
+            if (eController.ArrivedToLever(targetPos))
             {
-                //TODO: PONER UNA CORRUTINA PARA COORDINARLO
-                eController.SetAnimation(AnimationType.Charm, false);
-                
-                eController.InteractLever();
-                eController.SetCharmLockedVisual(false);
-                return checkState;
+                eController.StopAgent();
+                if(performingKick == null)
+                    performingKick = StartCoroutine(PerformKick());                
+                if(kickDone)
+                    return checkState;
             }
         }
         return this;
+    }
+
+    private IEnumerator PerformKick()
+    {
+        eController.SetAnimation(AnimationType.Charm, false);
+        print(kickAnimationDuration);
+        yield return new WaitForSeconds(kickAnimationDuration);
+        eController.InteractLever();
+        eController.SetCharmLockedVisual(false);
+        kickDone = true;
     }
 }

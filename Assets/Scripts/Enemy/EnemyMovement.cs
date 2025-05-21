@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private int waypointIndex;
     [SerializeField] private float minAngleDiffToRotate = 5f;    
     [SerializeField] private float minDistanceToArrive = 0.3f;
+    [SerializeField] private float minDistanceToArriveToLever = 1f;
     
     private Vector3 enemyPosBeforeMoving;
 
@@ -50,6 +51,11 @@ public class EnemyMovement : MonoBehaviour
     public bool ArrivedToPosition(Vector3 position)
     {
         return Vector3.Distance(transform.position, position) <= minDistanceToArrive;
+    }
+    
+    public bool ArrivedToLever(Vector3 position)
+    {
+        return Vector3.Distance(transform.position, position) <= minDistanceToArriveToLever;
     }
     
     public void IncrementIndex()

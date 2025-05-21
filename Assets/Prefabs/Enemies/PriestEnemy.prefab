@@ -698,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charmSpeed: 2
   rotateSpeed: 3
+  kickAnimationDuration: 0.85
   checkState: {fileID: 908810801637645102}
   material: {fileID: 2100000, guid: 5cd168ce4eb869948a9653f4d1a39f49, type: 2}
 --- !u!1 &3603757996701612577
@@ -1319,6 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7947574647915804177}
+  speedLerpRate: 5
 --- !u!114 &3604509806120283806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,6 +1386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minAngleDiffToRotate: 1
   minDistanceToArrive: 0.3
+  minDistanceToArriveToLever: 1.4
 --- !u!114 &3454077713477411559
 MonoBehaviour:
   m_ObjectHideFlags: 0

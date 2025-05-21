@@ -232,6 +232,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public Vector3 GoToWaypoint() => Movement.GoToWaypoint();
     public Vector3 GetLookDirection() => Movement.GetLookDirection();
     public bool ArrivedToPosition(Vector3 position) => Movement.ArrivedToPosition(position);
+    public bool ArrivedToLever(Vector3 position) => Movement.ArrivedToLever(position);
     public void IncrementIndex() => Movement.IncrementIndex();
     public void StopAgent() => Movement.StopAgent();
     public Vector3 GetEnemyVelocity() => Movement.GetEnemyVelocity();
