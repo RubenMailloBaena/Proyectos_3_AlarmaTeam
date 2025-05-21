@@ -39,7 +39,7 @@ public class PlayerHealthController : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
-        if (isGodMode) return;
+        if (isGodMode || pController.isBackstabing) return;
        // AudioManager.Instance.HandlePlaySound2D("event:/Jugador/jugador_quemado_loop");
         currentHealth -= damage * Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
@@ -52,7 +52,7 @@ public class PlayerHealthController : MonoBehaviour
             GameManager.GetInstance().PlayerDead();
         }
     }
-    
+     
 
     private void HealPlayer()
     {

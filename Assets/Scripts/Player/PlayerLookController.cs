@@ -12,6 +12,7 @@ public class PlayerLookController : MonoBehaviour
     [SerializeField] private Transform pitchController;
     
     [Header("Look Attributes")] 
+    [SerializeField] private float smoothCamVelocity = 5f;
     [SerializeField] private float sensitivity_X;
     [SerializeField] private float sensitivity_Y;
     [SerializeField] private float maxTopLook = 80f;
@@ -38,6 +39,12 @@ public class PlayerLookController : MonoBehaviour
 
     private void CameraControl()
     {
+        if (pController.isBackstabing)
+        {
+            SmoothLookToCenter();
+            return;
+        }
+        
         if (cameraLocked || pController.IsVaulting || pController.IsTeleporting || pController.IsPlayerDead) return;
 
         input = mouseInput.action.ReadValue<Vector2>();
@@ -50,6 +57,15 @@ public class PlayerLookController : MonoBehaviour
 
         pitchController.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+    
+    private void SmoothLookToCenter()
+    {
+        xRotation = Mathf.Lerp(xRotation, 0f, Time.deltaTime * smoothCamVelocity);
+        pitchController.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        Quaternion targetRotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * smoothCamVelocity);
     }
 
     public void LockCursor()

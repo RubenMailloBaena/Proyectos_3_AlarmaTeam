@@ -41,9 +41,10 @@ public class PlayerController : MonoBehaviour, IRestartable
     public bool IsUsingVision { get; private set; }
     public bool IsPlayerDead { get; private set; }
     public bool IsGamePaused { get; private set; }
-
+    public bool isBackstabing { get; private set; }
     public bool isDamaged { get; private set; }
 
+    
     public event Action<bool> OnCameraLockChange;
     public event Action onGodMode;
     public event Action OnVaultCrouched;
@@ -105,8 +106,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     public void SetIsPlayerDead(bool dead) => IsPlayerDead = dead;
     public void SetIsIdle(bool idle) => IsIdle = idle;
     public void SetIsRunning(bool running) => IsRunning = running;
-
     public void SetDamaging(bool damaged) => isDamaged = damaged;
+    public void SetBackstabing(bool backstab) => isBackstabing = backstab;
 
     // ------------------ EVENTOS ------------------
     public void LockCamera(bool lockCam) => OnCameraLockChange?.Invoke(lockCam);

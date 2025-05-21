@@ -29,7 +29,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
 
     private void CheckIfCanVault()
     {
-        if (pController.IsVaulting || pController.IsUsingVision)
+        if (pController.IsVaulting || pController.IsUsingVision || pController.isBackstabing)
         {
             pController.HideInteract(this);
             return;

@@ -41,7 +41,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private void HandleStatueDetection()
     {
-        if (pController.CanVault || pController.IsVaulting)
+        if (pController.CanVault || pController.IsVaulting || pController.isBackstabing)
         {
             ClearTarget();
             return;

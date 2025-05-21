@@ -26,6 +26,7 @@ public class PlayerInteractController : MonoBehaviour, IPlayerComponent
     
     private void Update()
     {
+        if (pController.isBackstabing) return;
         CanInteract();
         PerformInteraction();
         SetPauseMenu();

@@ -67,7 +67,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (pController.IsTeleporting || pController.IsPlayerDead) return;
+        if (pController.IsTeleporting || pController.IsPlayerDead || pController.isBackstabing) return;
 
         input = moveInput.action.ReadValue<Vector2>();
 

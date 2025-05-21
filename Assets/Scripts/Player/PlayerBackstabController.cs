@@ -11,6 +11,8 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
     [SerializeField] private InputActionReference attackInput;
 
     [Header("Backstab Attributes")]
+    [SerializeField] private float backstacbAnimationDistance = 2f;
+    [SerializeField] private float backstabAnimationDuration = 2f;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float backstabDotOffset = 0.65f;
     [SerializeField] private float maxViewAngle = 60;
@@ -25,7 +27,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
 
     void Update()
     {
-        if (pController.IsUsingVision) return;
+        if (pController.IsUsingVision || pController.isBackstabing) return;
         CheckIfCanBackstab();
         PerformBackstab();
     }
@@ -75,8 +77,8 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
     {
         if (target != null && attackInput.action.triggered && !pController.IsGamePaused)
         {
+            pController.SetBackstabing(true);
             target.Backstab();
-            target.SetWeakSpot(false);
             target = null;
         }
     }

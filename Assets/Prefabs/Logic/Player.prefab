@@ -663,6 +663,7 @@ MonoBehaviour:
   mouseInput: {fileID: -362946795993568614, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   pitchController: {fileID: 1882158348678663836}
+  smoothCamVelocity: 5
   sensitivity_X: 25
   sensitivity_Y: 25
   maxTopLook: 80
@@ -805,6 +806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  backstacbAnimationDistance: 2
+  backstabAnimationDuration: 2
   attackRange: 3.5
   backstabDotOffset: 0.65
   maxViewAngle: 45

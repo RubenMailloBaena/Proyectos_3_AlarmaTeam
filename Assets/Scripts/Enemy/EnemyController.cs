@@ -165,7 +165,8 @@ public class EnemyController : MonoBehaviour, IVisible
 
     private void OnDestroy()
     {
-        pController.RemoveVisible(this);
+        if(pController != null)
+            pController.RemoveVisible(this);
         if(!enemyIsDead) GameManager.GetInstance().RemoveEnemieAlive();
     }
 
@@ -223,6 +224,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SetLockedVisual(bool active) => Renderer.SetLockedVisual(active);
     public void SetRenderActive(bool active) => Renderer.SetRenderActive(active);
     public void SetLight(bool active) => Renderer.SetLight(active);
+    public void SetWeakSpot(bool active) => Backstab.SetWeakSpot(active);
     #endregion
     
     //----------------------------MOVEMENT FUNCTIONS-----------------------------

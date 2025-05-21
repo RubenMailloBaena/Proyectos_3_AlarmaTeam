@@ -66,6 +66,12 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
 
     private void HandleInput() //INPUT DEL PLAYER
     {
+        if (pController.isBackstabing)
+        {
+            ExitCharmingMode();
+            return;
+        }
+        
         if (IsCharmPressed() && !pController.IsGamePaused)
             SwapMode();
 
