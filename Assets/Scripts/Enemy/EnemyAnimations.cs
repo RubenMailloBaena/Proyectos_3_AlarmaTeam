@@ -10,7 +10,8 @@ public enum AnimationType
     Run,
     Attack,
     Dead,
-    Charm
+    Charm,
+    CharmWalk
 }
 
 public class EnemyAnimations : MonoBehaviour
@@ -21,47 +22,61 @@ public class EnemyAnimations : MonoBehaviour
     private float walkSpeed = 0.5f;
     private float runSpeed = 1f;
 
+    private float currentBlendSpeed = 0f;
+    private float targetBlendSpeed = 0f;
+    [SerializeField] private float speedLerpRate = 5f;
+
     private void Awake()
     {
         SetAnimation(AnimationType.Idle, false);
     }
 
+    private void Update()
+    {
+        // Lerp para suavizar la transición entre velocidades
+        currentBlendSpeed = Mathf.Lerp(currentBlendSpeed, targetBlendSpeed, Time.deltaTime * speedLerpRate);
+        animator.SetFloat("Speed", currentBlendSpeed);
+    }
+
     public void SetAnimation(AnimationType animationType, bool setBool)
     {
-        animator.SetBool("Dead",false);
+        animator.SetBool("Dead", false);
         animator.SetBool("Attack", false);
-        
+
         switch (animationType)
         {
-            case AnimationType.Idle: 
+            case AnimationType.Idle:
                 SetBlendTreeSpeed(idleSpeed);
                 break;
-            
+
             case AnimationType.Walk:
                 SetBlendTreeSpeed(walkSpeed);
                 break;
-            
+
             case AnimationType.Run:
                 SetBlendTreeSpeed(runSpeed);
                 break;
-            
+
             case AnimationType.Attack:
                 animator.SetBool("Attack", setBool);
                 break;
-            
+
             case AnimationType.Dead:
                 animator.SetBool("Dead", setBool);
                 break;
-            
+
             case AnimationType.Charm:
                 animator.SetBool("Charmed", setBool);
+                break;
+            
+            case AnimationType.CharmWalk:
+                animator.SetTrigger("CharmWalk");
                 break;
         }
     }
 
     private void SetBlendTreeSpeed(float speed)
     {
-        //QUIZAS SE PUEDE AÑADIR UN LERP RAPIDO PARA QUE SEA MAS SUAVE
-        animator.SetFloat("Speed", speed);
+        targetBlendSpeed = speed;
     }
 }

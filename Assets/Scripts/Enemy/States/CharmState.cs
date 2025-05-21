@@ -38,6 +38,7 @@ public class CharmState : State
             if (!setDestination)
             {
                 setDestination = true;
+                //eController.SetAnimation(AnimationType.CharmWalk, false);
                 eController.GoToLever();
             }
 
