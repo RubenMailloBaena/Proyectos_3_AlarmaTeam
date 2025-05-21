@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour, IVisible
     
     private PlayerController pController;
     private EnemySeenHUD eHUD;
+    private CapsuleCollider enemyCollider;
 
     [Header("DEBUG TEXT")]
     [SerializeField] private TextMeshProUGUI debugText;
@@ -82,6 +83,8 @@ public class EnemyController : MonoBehaviour, IVisible
         Restart.SetRestart(this);
         
         SwitchToNextState(idleState);
+
+        enemyCollider = GetComponent<CapsuleCollider>();
     }
 
     void Start()
@@ -138,6 +141,7 @@ public class EnemyController : MonoBehaviour, IVisible
     public void ReturnToLastState() => SwitchToNextState(lastState);
     public List<Waypoint> GetWayPoints() => waypoints;
     public PlayerController GetPlayerController() => pController;
+    public void SetCollider(bool active) => enemyCollider.enabled = active;
     public void EnemyDead()
     {
         enemyIsDead = true;
@@ -177,8 +181,6 @@ public class EnemyController : MonoBehaviour, IVisible
     #region Animation Functions
     
     public void SetAnimation(AnimationType animation, bool setBool) => Animations.SetAnimation(animation, setBool);
-
-    public void StopAnimation(bool stop) => Animations.StopAnimation(stop);
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------

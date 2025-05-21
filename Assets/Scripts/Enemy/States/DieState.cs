@@ -87,6 +87,7 @@ public class DieState : State
         bloodParticles.Play();
         eController.SetWeakSpot(false);
         eController.SetAnimation(AnimationType.Dead, true);
+        eController.SetCollider(false);
 
         player.SetBackstabing(false);
         killAnimationC = null;

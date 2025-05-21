@@ -39,6 +39,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         CheckpointRestartLogic(false);
         
         eController.enemyIsDead = false;
+        eController.SetCollider(true);
         eController.RestartIndex();
         eController.SwitchToNextState(startingState);
         eController.SetRenderActive(true);
@@ -62,6 +63,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         CheckpointRestartLogic(true);
 
         eController.enemyIsDead = enemyWasDead;
+        eController.SetCollider(!eController.enemyIsDead);
         eController.SetIndex(checkpointIndex);
         eController.SwitchToNextState(checkpointState);
         eController.AddCurrentWaitTime(checkpointWaitTime);
