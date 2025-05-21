@@ -40,13 +40,13 @@ public class PlayerHealthController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (isGodMode) return;
-        AudioManager.Instance.HandlePlaySound2D("event:/Jugador/jugador_quemado_loop");
+       // AudioManager.Instance.HandlePlaySound2D("event:/Jugador/jugador_quemado_loop");
         currentHealth -= damage * Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
        
         if (currentHealth <= 0.0f)
         {
-            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_quemado_loop", true);
+           // AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_quemado_loop", true);
             pController.SetIsPlayerDead(true);
             pController.ShowGameOverHUD(true);
             GameManager.GetInstance().PlayerDead();
