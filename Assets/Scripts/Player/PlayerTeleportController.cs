@@ -83,6 +83,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         }
        
         input = teleportAction.action.ReadValue<float>();
+            
         
         if (input>0 && !pController.IsTeleporting && !pController.IsGamePaused)
             teleportCoroutine = StartCoroutine(TeleportAfterHold());
@@ -103,6 +104,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private IEnumerator TeleportAfterHold()
     {
+        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_habilidad_paso_sombrio", transform.position);
         pController.SetTeleporting(true);
         float elapsed = 0;
 
@@ -120,6 +122,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         }
             
         pController.PlayerTP();
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", false);
         pController.SetTeleporting(false);
     }
 

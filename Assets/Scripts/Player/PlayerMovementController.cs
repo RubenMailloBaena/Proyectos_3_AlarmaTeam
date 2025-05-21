@@ -72,8 +72,13 @@ public class PlayerMovementController : MonoBehaviour
         input = moveInput.action.ReadValue<Vector2>();
 
         pController.SetIsIdle(false);
-        if(input == Vector2.zero) 
+        if (input == Vector2.zero)
+        {
             pController.SetIsIdle(true);
+            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_pasos_madera_correr", true);
+            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_pasos_madera_andar", true);
+        }
+            
         
         Vector3 moveDir = transform.right * input.x + transform.forward * input.y;
 
@@ -90,6 +95,7 @@ public class PlayerMovementController : MonoBehaviour
             pController.SetIsRunning(true);
             return runSpeed;
         }
+        
         finalRange = walkingSoundRange;
         pController.SetIsRunning(false);
         return walkSpeed;
