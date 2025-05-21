@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d912e30155946e42b1bd57ea4a9e880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodParticles: {fileID: 1032690918039388270}
 --- !u!1 &3024986904091228250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,6 +1939,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85fac21c650ec9e498dc9a9e79b5f4d1, type: 3}
+--- !u!198 &1032690918039388270 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5939799729852321998, guid: 85fac21c650ec9e498dc9a9e79b5f4d1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6645820503268102304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2681052091561183957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8723384677401827957, guid: 85fac21c650ec9e498dc9a9e79b5f4d1,

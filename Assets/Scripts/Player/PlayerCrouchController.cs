@@ -25,6 +25,7 @@ public class PlayerCrouchController : MonoBehaviour
     
     private bool isCrouching;
     private float targetHeight;
+    private float animationCrouchSpeed;
     private Vector3 targetCenter;
     private Vector3 targetCameraPosition;
     
@@ -45,6 +46,7 @@ public class PlayerCrouchController : MonoBehaviour
         targetHeight = initialHeight;
         targetCenter = initialCenter;
         targetCameraPosition = initialCameraPosition;
+        animationCrouchSpeed = crouchSpeed * 2;
     }
 
     private void Update()
@@ -59,8 +61,13 @@ public class PlayerCrouchController : MonoBehaviour
 
         if (pController.isBackstabing)
         {
+            crouchSpeed = animationCrouchSpeed;
             SetStandUpTargets();
             return;
+        }
+        else
+        {
+            crouchSpeed = animationCrouchSpeed / 2;
         }
 
         if (crouchInput.action.triggered && !pController.IsGamePaused)

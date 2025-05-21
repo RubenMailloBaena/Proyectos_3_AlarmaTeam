@@ -177,7 +177,8 @@ public class EnemyController : MonoBehaviour, IVisible
     #region Animation Functions
     
     public void SetAnimation(AnimationType animation, bool setBool) => Animations.SetAnimation(animation, setBool);
-    
+
+    public void StopAnimation(bool stop) => Animations.StopAnimation(stop);
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------

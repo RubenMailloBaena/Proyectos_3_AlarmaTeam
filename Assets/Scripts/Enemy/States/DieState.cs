@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DieState : State
 {
+    [SerializeField] private float placmentDuration = 0.4f;
+    [SerializeField] private float waitTimeFromPlacementToKill = 0.5f;
     [SerializeField] private ParticleSystem bloodParticles;
     
     private PlayerController player;
@@ -30,6 +32,8 @@ public class DieState : State
 
     private IEnumerator KillAnimation()
     {
+        eController.SetAnimation(AnimationType.Idle, true);
+
         Transform playerTransform = player.transform;
 
         // Dirección hacia adelante del enemigo (ya alineado hacia adelante por animación)
@@ -37,7 +41,7 @@ public class DieState : State
         Vector3 posToMovePlayer = transform.position - dirToEnemy * 1.5f;
         Quaternion lookRotation = Quaternion.LookRotation(dirToEnemy);
 
-        float duration = 0.4f;
+        float duration = placmentDuration;
         float timer = 0f;
 
         Vector3 startPos = playerTransform.position;
@@ -57,11 +61,12 @@ public class DieState : State
         playerTransform.position = posToMovePlayer;
         playerTransform.rotation = lookRotation;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(waitTimeFromPlacementToKill);
         
         bloodParticles.Play();
         eController.SetWeakSpot(false);
         eController.SetAnimation(AnimationType.Dead, true);
+
 
         player.SetBackstabing(false);
         killAnimationC = null;

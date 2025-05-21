@@ -79,4 +79,12 @@ public class EnemyAnimations : MonoBehaviour
     {
         targetBlendSpeed = speed;
     }
+    
+    public void StopAnimation(bool stop)
+    {
+        if (stop)
+            animator.speed = 0.0f;
+        else
+            animator.speed = 1f;
+    }
 }
