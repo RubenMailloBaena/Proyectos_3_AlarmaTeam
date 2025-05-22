@@ -11,8 +11,6 @@ public class LookAtState : State
     [Header("STATES")] 
     public CheckState checkState;
 
-    public Material material;
-    
     public override void InitializeState()
     {
         if(eController.isChasingPlayer)
@@ -20,7 +18,6 @@ public class LookAtState : State
         else
             eController.SetAnimation(AnimationType.Walk, false);
         
-        eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
         targetPos = eController.GoToSoundSource();
         

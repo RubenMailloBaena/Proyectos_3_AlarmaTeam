@@ -18,14 +18,11 @@ public class AttackState : State
     private Vector3 playerPos;
     private PlayerController pController;
 
-    public Material material;
-    
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Attack, true);
         
         eController.ActivateExclamation();
-        eController.ChangeMaterial(material);
         eController.ManualRotation(true);
         eController.isChasingPlayer = false;
         pController = eController.GetPlayerController();

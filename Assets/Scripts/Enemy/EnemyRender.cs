@@ -7,43 +7,28 @@ using UnityEngine.Serialization;
 public class EnemyRender : MonoBehaviour
 {
     [SerializeField] private GameObject renderGameObject;
-    [SerializeField] private Renderer enemyMatRender;
-    [SerializeField] private Renderer targetVisual;
-    [SerializeField] private Material lockedMat;
     [SerializeField] private GameObject lightSource;
-    private CapsuleCollider enemyCollider;
+    [SerializeField] private Color selectedColor;
+    [SerializeField] private Color lockedColor;
+    [SerializeField] private List<Outline> outlines;
+    private bool isLocked = false;
 
-    private Material previousMat;
-
-    public void SetRenderer()
+    public void ChangeOutline(bool active)
     {
-        previousMat = targetVisual.material;
-        enemyCollider = GetComponent<CapsuleCollider>();
+        Color color = isLocked ? lockedColor : selectedColor;
+
+        foreach (Outline outline in outlines)
+        {
+            outline.OutlineColor = color;
+            outline.OutlineWidth = active ?  3f : 0.0f;
+        }
     }
 
-    public void ChangeMaterial(Material material)
-    {
-        enemyMatRender.material = material;
-    }
-
-    public void SetTargetVisualActive(bool active)
-    {
-        if (targetVisual == null) return;
-        targetVisual.enabled = active;
-    }
-
-    public void SetLockedVisual(bool active)
-    {
-        if (active)
-            targetVisual.material = lockedMat;
-        else
-            targetVisual.material = previousMat;
-    }
+    public void SetLocked(bool locked) => isLocked = locked;
 
     public void SetRenderActive(bool active)
     {
         renderGameObject.SetActive(active);
-        enemyCollider.enabled = active;
     }
     
     public void SetLight(bool active) => lightSource.SetActive(active);

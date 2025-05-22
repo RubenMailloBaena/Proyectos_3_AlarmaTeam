@@ -12,14 +12,11 @@ public class PatrolState : State
     [Header("STATES")]
     public IdleState idleState;
 
-    public Material material;
-
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Walk, false);
         
         eController.SetAgentSpeed(patrolSpeed);
-        eController.ChangeMaterial(material);
     }
 
     public override State RunCurrentState()

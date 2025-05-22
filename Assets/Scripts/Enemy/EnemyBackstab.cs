@@ -20,6 +20,14 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
 
     public void SetWeakSpot(bool active)
     {
+        if (eController.enemyIsDead) return;
+        
+        if(weakSpotRenderer != null)
+            weakSpotRenderer.SetActive(active);
+    }
+
+    public void KillAnimationHeartController(bool active)
+    {
         if(weakSpotRenderer != null)
             weakSpotRenderer.SetActive(active);
     }

@@ -78,6 +78,7 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
         if (target != null && attackInput.action.triggered && !pController.IsGamePaused && !target.IsEnemyDead())
         {
             pController.SetBackstabing(true);
+            pController.HideInteract(this);
             target.Backstab();
             target = null;
         }

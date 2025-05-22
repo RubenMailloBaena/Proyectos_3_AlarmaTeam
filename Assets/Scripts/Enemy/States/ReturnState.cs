@@ -13,13 +13,10 @@ public class ReturnState : State
     public IdleState idleState;
     public PatrolState patrolState;
 
-    public Material material;
-    
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Walk, false);
         
-        eController.ChangeMaterial(material);
         if (!eController.isIdleEnemy)
         {
             eController.SwitchToNextState(patrolState);

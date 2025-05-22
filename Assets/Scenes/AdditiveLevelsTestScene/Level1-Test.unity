@@ -8884,6 +8884,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 495261351357940983, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1135148330418635968, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: m_Name
@@ -8969,6 +8974,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2400503892314693966, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2988693754222058349, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: isIdleEnemy
@@ -8982,6 +8992,16 @@ PrefabInstance:
     - target: {fileID: 2988693754222058349, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: waypoints.Array.data[1].rotateEnemy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598762103664256943, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5256804741832479153, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8167465397700286712, guid: af67785d09cba1843a9dec320345f1ca,

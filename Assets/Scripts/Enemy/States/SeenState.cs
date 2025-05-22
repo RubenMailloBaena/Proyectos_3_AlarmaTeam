@@ -20,13 +20,11 @@ public class SeenState : State
     public CheckState checkState;
     public ChaseState chaseState;
 
-    public Material material;
     public override void InitializeState()
     {
         //TODO: CHANGE IN FUTURE
         eController.SetAnimation(AnimationType.Idle, false);
         
-        eController.ChangeMaterial(material);
         if (eController.isChasingPlayer)
         {
             eController.SwitchToNextState(chaseState);

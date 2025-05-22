@@ -23,7 +23,6 @@ public class EnemyController : MonoBehaviour, IVisible
 
     [Header("REFERENCES")]
     [SerializeField] public Transform seenExclamationPos;
-    [SerializeField] private GameObject heart;
     [SerializeField] private EnemyCheckpointAdapter checkpointAdapter;
 
     [Header("STATES")]
@@ -75,7 +74,6 @@ public class EnemyController : MonoBehaviour, IVisible
         Animations = GetComponent<EnemyAnimations>();
 
         Movement.SetMovement(this);
-        Renderer.SetRenderer();
         Charm.SetCharm(this);
         Vision.SetVision(this);
         Hear.SetHear(this);
@@ -197,7 +195,8 @@ public class EnemyController : MonoBehaviour, IVisible
     //----------------------------IVISION FUNCTIONS-----------------------------
     
     #region IVision
-    public void SetVisiblity(bool active) => heart.SetActive(active);
+
+    public void SetVisiblity(bool active) => SetWeakSpot(active);
     public Vector3 GetVisionPosition() => transform.position;
     #endregion
     
@@ -222,12 +221,12 @@ public class EnemyController : MonoBehaviour, IVisible
     //----------------------------RENDER FUNCTIONS-----------------------------
 
     #region Render Functions
-    public void ChangeMaterial(Material material) => Renderer.ChangeMaterial(material);
-    public void SetTargetVisualActive(bool active) => Renderer.SetTargetVisualActive(active);
-    public void SetLockedVisual(bool active) => Renderer.SetLockedVisual(active);
+    public void ChangeOutline(bool active) => Renderer.ChangeOutline(active);
+    public void SetLocked(bool locked) => Renderer.SetLocked(locked);
     public void SetRenderActive(bool active) => Renderer.SetRenderActive(active);
     public void SetLight(bool active) => Renderer.SetLight(active);
     public void SetWeakSpot(bool active) => Backstab.SetWeakSpot(active);
+    public void KillAnimationHeartController(bool active) => Backstab.KillAnimationHeartController(active);
     #endregion
     
     //----------------------------MOVEMENT FUNCTIONS-----------------------------

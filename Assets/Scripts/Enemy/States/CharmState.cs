@@ -14,8 +14,6 @@ public class CharmState : State
     [Header("STATES")] 
     public CheckState checkState;
 
-    public Material material;
-
     private Coroutine performingKick;
     private bool kickDone;
     
@@ -31,7 +29,6 @@ public class CharmState : State
         
         eController.HideArrow();
         eController.ManualRotation(false);
-        eController.ChangeMaterial(material);
         eController.StopAgent();
         eController.SetAgentSpeed(charmSpeed);
         setDestination = false;
@@ -67,7 +64,6 @@ public class CharmState : State
     private IEnumerator PerformKick()
     {
         eController.SetAnimation(AnimationType.Charm, false);
-        print(kickAnimationDuration);
         yield return new WaitForSeconds(kickAnimationDuration);
         eController.InteractLever();
         eController.SetCharmLockedVisual(false);

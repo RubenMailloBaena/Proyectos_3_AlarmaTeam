@@ -11,13 +11,9 @@ public class GoToState : State
     [Header("STATES")] 
     public CheckState checkState;
 
-    public Material material;
-    
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Walk, false);
-        
-        eController.ChangeMaterial(material);
         eController.SetAgentSpeed(goToSpeed);
     }
 

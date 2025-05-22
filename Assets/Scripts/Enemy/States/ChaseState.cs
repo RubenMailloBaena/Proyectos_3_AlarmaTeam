@@ -17,14 +17,11 @@ public class ChaseState : State
     public GoToState goToState;
     public LookAtState lookAtState;
 
-    public Material material;
-    
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Run, false);
         
         eController.ActivateExclamation();
-        eController.ChangeMaterial(material);
         eController.ManualRotation(false);
         eController.SetLight(false);
         switch (eController.enemyType)

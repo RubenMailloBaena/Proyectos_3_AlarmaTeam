@@ -81,7 +81,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.StopAgent();
         eController.StopKillCoroutine();
         eController.SetLight(false);
-        eController.SetLockedVisual(false);
+        eController.SetLocked(false);
     }
     
     //FOR THE WIN CONDITION AND CHECKPOINTS;

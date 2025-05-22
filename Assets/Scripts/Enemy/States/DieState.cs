@@ -23,8 +23,8 @@ public class DieState : State
         
         eController.EnemyDead();
         eController.StopAgent();
-        //OPTIONAL
-        eController.SetWeakSpot(true);
+        eController.KillAnimationHeartController(true);
+        
 
         if(killAnimationC == null)
             killAnimationC = StartCoroutine(KillAnimation());
@@ -83,9 +83,9 @@ public class DieState : State
         yield return new WaitForSeconds(waitTimeFromPlacementToKill);
 
         AudioManager.Instance.HandlePlaySound3D("event:/Enemigo/enemigo_backstab", transform.position);
+        eController.KillAnimationHeartController(false);
         player.ShakeCamera(shakeDuration, shakeMagnitude);
         bloodParticles.Play();
-        eController.SetWeakSpot(false);
         eController.SetAnimation(AnimationType.Dead, true);
         eController.SetCollider(false);
 

@@ -14,8 +14,6 @@ public class HearState : State
     public GoToState goToState;
     public LookAtState lookAtState;
 
-    public Material material;
-
     public override void InitializeState()
     {
         //TODO: CHANGE IN FUTURE
@@ -23,7 +21,6 @@ public class HearState : State
         
         eController.HideArrow();
         eController.ManualRotation(false);
-        eController.ChangeMaterial(material);
 
         if (!eController.SoundWasAnObject())
             eController.SetInPlayerHearState(true);
