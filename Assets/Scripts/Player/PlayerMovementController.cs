@@ -38,6 +38,7 @@ public class PlayerMovementController : MonoBehaviour
     
     [Header("Sound Wave Effect")]
     [SerializeField] private Transform soundEffectSphere;
+    [SerializeField] private Transform soundEffectSphereBigOne;
     [SerializeField] private float pulseDuration = 0.5f;
     [SerializeField] private float pulseScale = 14f;
     [SerializeField] private float minPulseScale = 10f;
@@ -117,6 +118,7 @@ public class PlayerMovementController : MonoBehaviour
             {
                 stoppedRunning = false;
                 waveEffectCoroutine = StartCoroutine(PulseWave());
+                StartCoroutine(PulseWaveBigOne());
             }
             return runSpeed;
         }
@@ -201,12 +203,12 @@ public class PlayerMovementController : MonoBehaviour
     {
         while (!stoppedRunning)
         {
-            // Expandir (duración: pulseDuration)
+            // Expandir desde 0 hasta pulseScale
             float timer = 0f;
             while (timer < pulseDuration)
             {
                 float t = timer / pulseDuration;
-                float scale = Mathf.Lerp(minPulseScale, pulseScale, t);
+                float scale = Mathf.Lerp(0f, pulseScale, t);
                 soundEffectSphere.localScale = Vector3.one * scale;
                 timer += Time.deltaTime;
                 yield return null;
@@ -214,34 +216,47 @@ public class PlayerMovementController : MonoBehaviour
                 if (stoppedRunning) break;
             }
 
-            // Contraer (duración: pulseShrinkDuration)
-            timer = 0f;
-            while (timer < pulseShrinkDuration)
-            {
-                float t = timer / pulseShrinkDuration;
-                float scale = Mathf.Lerp(pulseScale, minPulseScale, t);
-                soundEffectSphere.localScale = Vector3.one * scale;
-                timer += Time.deltaTime;
-                yield return null;
-
-                if (stoppedRunning) break;
-            }
-        }
-
-        // Escala suave hasta cero al salir
-        float endTimer = 0f;
-        Vector3 currentScale = soundEffectSphere.localScale;
-
-        while (endTimer < pulseDuration)
-        {
-            float t = endTimer / pulseDuration;
-            soundEffectSphere.localScale = Vector3.Lerp(currentScale, Vector3.zero, t);
-            endTimer += Time.deltaTime;
-            yield return null;
+            
         }
 
         soundEffectSphere.localScale = Vector3.zero;
         waveEffectCoroutine = null;
-    } 
+    }
+    
+    private IEnumerator PulseWaveBigOne()
+    {
+        float expandTimer = 0f;
+        Vector3 startScale = Vector3.zero;
+        Vector3 targetScale = Vector3.one * pulseScale;
+
+        while (expandTimer < pulseDuration)
+        {
+            float t = expandTimer / (pulseDuration / 2);
+            soundEffectSphereBigOne.localScale = Vector3.Lerp(startScale, targetScale, t);
+            expandTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        soundEffectSphereBigOne.localScale = targetScale;
+
+        while (!stoppedRunning)
+        {
+            yield return null;
+        }
+
+        float shrinkTimer = 0f;
+        Vector3 currentScale = soundEffectSphereBigOne.localScale;
+
+        while (shrinkTimer < pulseDuration)
+        {
+            float t = shrinkTimer / (pulseDuration / 2);
+            soundEffectSphereBigOne.localScale = Vector3.Lerp(currentScale, Vector3.zero, t);
+            shrinkTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        soundEffectSphereBigOne.localScale = Vector3.zero;
+        waveEffectCoroutine = null;
+    }
 
 }
