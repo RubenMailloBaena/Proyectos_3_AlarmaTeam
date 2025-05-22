@@ -35,7 +35,16 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float walkingSoundRange = 5f;
     [SerializeField] private float runningSoundRange = 8f;
     [SerializeField] private LayerMask enemyLayer;
+    
+    [Header("Sound Wave Effect")]
+    [SerializeField] private Transform soundEffectSphere;
+    [SerializeField] private float pulseDuration = 0.5f;
+    [SerializeField] private float pulseScale = 14f;
+    [SerializeField] private float minPulseScale = 10f;
+    [SerializeField] private float pulseShrinkDuration = 0.3f;
+    private Coroutine waveEffectCoroutine;
     private float finalRange;
+    private bool stoppedRunning = true;
     
     [Header("Other Attributes")]
     [SerializeField] private float gravity = -9.81f;
@@ -87,16 +96,33 @@ public class PlayerMovementController : MonoBehaviour
 
     private float GetFinalSpeed()
     {
-        if (pController.IsLeaning) return leaningSpeed;
-        if (pController.IsCrouching) return crouchSpeed;
-        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged)
+        if (pController.IsLeaning)
+        {
+            if (!stoppedRunning)
+                stoppedRunning = true;
+            return leaningSpeed;
+        }
+
+        if (pController.IsCrouching)
+        {
+            if (!stoppedRunning)
+                stoppedRunning = true;
+            return crouchSpeed;
+        }
+        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged && !pController.IsIdle && !pController.IsLeaning)
         {
             finalRange = runningSoundRange;
             pController.SetIsRunning(true);
+            if (waveEffectCoroutine == null)
+            {
+                stoppedRunning = false;
+                waveEffectCoroutine = StartCoroutine(PulseWave());
+            }
             return runSpeed;
         }
         
         finalRange = walkingSoundRange;
+        stoppedRunning = true;
         pController.SetIsRunning(false);
         return walkSpeed;
     }
@@ -152,7 +178,7 @@ public class PlayerMovementController : MonoBehaviour
                 enemy.HeardSound(transform.position, false);
         }
     }
-
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -168,4 +194,54 @@ public class PlayerMovementController : MonoBehaviour
     {
         jumpInput.action.Disable();
     }
+    
+    
+    //SOUND EFFECT ANIMATION
+    private IEnumerator PulseWave()
+    {
+        while (!stoppedRunning)
+        {
+            // Expandir (duración: pulseDuration)
+            float timer = 0f;
+            while (timer < pulseDuration)
+            {
+                float t = timer / pulseDuration;
+                float scale = Mathf.Lerp(minPulseScale, pulseScale, t);
+                soundEffectSphere.localScale = Vector3.one * scale;
+                timer += Time.deltaTime;
+                yield return null;
+
+                if (stoppedRunning) break;
+            }
+
+            // Contraer (duración: pulseShrinkDuration)
+            timer = 0f;
+            while (timer < pulseShrinkDuration)
+            {
+                float t = timer / pulseShrinkDuration;
+                float scale = Mathf.Lerp(pulseScale, minPulseScale, t);
+                soundEffectSphere.localScale = Vector3.one * scale;
+                timer += Time.deltaTime;
+                yield return null;
+
+                if (stoppedRunning) break;
+            }
+        }
+
+        // Escala suave hasta cero al salir
+        float endTimer = 0f;
+        Vector3 currentScale = soundEffectSphere.localScale;
+
+        while (endTimer < pulseDuration)
+        {
+            float t = endTimer / pulseDuration;
+            soundEffectSphere.localScale = Vector3.Lerp(currentScale, Vector3.zero, t);
+            endTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        soundEffectSphere.localScale = Vector3.zero;
+        waveEffectCoroutine = null;
+    } 
+
 }
