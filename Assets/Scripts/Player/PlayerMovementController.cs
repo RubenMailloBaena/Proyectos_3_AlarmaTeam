@@ -35,17 +35,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float walkingSoundRange = 5f;
     [SerializeField] private float runningSoundRange = 8f;
     [SerializeField] private LayerMask enemyLayer;
-    
-    [Header("Sound Wave Effect")]
-    [SerializeField] private Transform soundEffectSphere;
-    [SerializeField] private Transform soundEffectSphereBigOne;
-    [SerializeField] private float pulseDuration = 0.5f;
-    [SerializeField] private float pulseScale = 14f;
-    [SerializeField] private float minPulseScale = 10f;
-    [SerializeField] private float pulseShrinkDuration = 0.3f;
-    private Coroutine waveEffectCoroutine;
     private float finalRange;
-    private bool stoppedRunning = true;
     
     [Header("Other Attributes")]
     [SerializeField] private float gravity = -9.81f;
@@ -77,7 +67,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (pController.IsTeleporting || pController.IsPlayerDead || pController.isBackstabing) return;
+        if (pController.IsTeleporting || pController.IsPlayerDead) return;
 
         input = moveInput.action.ReadValue<Vector2>();
 
@@ -97,34 +87,16 @@ public class PlayerMovementController : MonoBehaviour
 
     private float GetFinalSpeed()
     {
-        if (pController.IsLeaning)
-        {
-            if (!stoppedRunning)
-                stoppedRunning = true;
-            return leaningSpeed;
-        }
-
-        if (pController.IsCrouching)
-        {
-            if (!stoppedRunning)
-                stoppedRunning = true;
-            return crouchSpeed;
-        }
-        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged && !pController.IsIdle && !pController.IsLeaning)
+        if (pController.IsLeaning) return leaningSpeed;
+        if (pController.IsCrouching) return crouchSpeed;
+        if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged)
         {
             finalRange = runningSoundRange;
             pController.SetIsRunning(true);
-            if (waveEffectCoroutine == null)
-            {
-                stoppedRunning = false;
-                waveEffectCoroutine = StartCoroutine(PulseWave());
-                StartCoroutine(PulseWaveBigOne());
-            }
             return runSpeed;
         }
         
         finalRange = walkingSoundRange;
-        stoppedRunning = true;
         pController.SetIsRunning(false);
         return walkSpeed;
     }
@@ -180,7 +152,7 @@ public class PlayerMovementController : MonoBehaviour
                 enemy.HeardSound(transform.position, false);
         }
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -196,67 +168,4 @@ public class PlayerMovementController : MonoBehaviour
     {
         jumpInput.action.Disable();
     }
-    
-    
-    //SOUND EFFECT ANIMATION
-    private IEnumerator PulseWave()
-    {
-        while (!stoppedRunning)
-        {
-            // Expandir desde 0 hasta pulseScale
-            float timer = 0f;
-            while (timer < pulseDuration)
-            {
-                float t = timer / pulseDuration;
-                float scale = Mathf.Lerp(0f, pulseScale, t);
-                soundEffectSphere.localScale = Vector3.one * scale;
-                timer += Time.deltaTime;
-                yield return null;
-
-                if (stoppedRunning) break;
-            }
-
-            
-        }
-
-        soundEffectSphere.localScale = Vector3.zero;
-        waveEffectCoroutine = null;
-    }
-    
-    private IEnumerator PulseWaveBigOne()
-    {
-        float expandTimer = 0f;
-        Vector3 startScale = Vector3.zero;
-        Vector3 targetScale = Vector3.one * pulseScale;
-
-        while (expandTimer < pulseDuration)
-        {
-            float t = expandTimer / (pulseDuration / 2);
-            soundEffectSphereBigOne.localScale = Vector3.Lerp(startScale, targetScale, t);
-            expandTimer += Time.deltaTime;
-            yield return null;
-        }
-
-        soundEffectSphereBigOne.localScale = targetScale;
-
-        while (!stoppedRunning)
-        {
-            yield return null;
-        }
-
-        float shrinkTimer = 0f;
-        Vector3 currentScale = soundEffectSphereBigOne.localScale;
-
-        while (shrinkTimer < pulseDuration)
-        {
-            float t = shrinkTimer / (pulseDuration / 2);
-            soundEffectSphereBigOne.localScale = Vector3.Lerp(currentScale, Vector3.zero, t);
-            shrinkTimer += Time.deltaTime;
-            yield return null;
-        }
-
-        soundEffectSphereBigOne.localScale = Vector3.zero;
-        waveEffectCoroutine = null;
-    }
-
 }
