@@ -5,28 +5,33 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestartable
 {
-    [Header("References")] 
+    [Header("References")]
     [SerializeField] private Color visualColor;
     [SerializeField] private Color selectColor;
     [SerializeField] private Color lockedColor;
-    private Material lineRenderMat;
 
+    [Header("Line Rendering")]
+    [Tooltip("Material con la textura de flechas para los cables")]
+    [SerializeField] private Material arrowMaterial;
+    private List<LineRenderer> lines = new List<LineRenderer>();
+
+    [Header("Lever Parts")]
     [SerializeField] private Transform stickTrans;
     [SerializeField] private Outline baseOutline;
     [SerializeField] private Outline stickOutline;
 
-    [Header("Attributes")] 
+    [Header("Attributes")]
     [SerializeField] private float animationRotateAngle = 40f;
-    [SerializeField] private float animationSpeed = 5;
+    [SerializeField] private float animationSpeed = 5f;
     [SerializeField] private float interactDistance;
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
-    
-    private LineRenderer lineRender;
+
     private List<IObjects> objects = new List<IObjects>();
 
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
     public bool canInteract { get; set; }
+
     private bool wasLocked;
     private bool isMoving, selecting;
     private float targetZ;
@@ -34,30 +39,38 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     private void Awake()
     {
         canInteract = true;
-        lineRender = GetComponent<LineRenderer>();
-        lineRenderMat = lineRender.material;
-        
-        for(int i=0; i < objectsToActivate.Count; i++)
-            if (objectsToActivate[i].TryGetComponent(out IObjects item))
+
+        // 1) Recogemos las interfaces IObjects
+        foreach (var go in objectsToActivate)
+        {
+            if (go.TryGetComponent<IObjects>(out var item))
             {
                 item.lever = this;
                 item.lockedColor = lockedColor;
                 objects.Add(item);
             }
-
-        CalculateLineRenderPositions();
-    }
-    
-    private void CalculateLineRenderPositions()
-    {
-        lineRender.positionCount = objects.Count * 2;
-
-        for (int i = 0; i < lineRender.positionCount; i++)
+        }
+        // 2) Creamos un LineRenderer por cada objeto
+        foreach (var obj in objects)
         {
-            if(i%2==0)
-                lineRender.SetPosition(i, transform.position);
-            else
-                lineRender.SetPosition(i, objects[i/2].GetCablePosition());
+            // Creamos un GameObject para el cable
+            var cableGO = new GameObject("CableTo_" + obj.GetCablePosition());
+            cableGO.transform.SetParent(transform, worldPositionStays: true);
+
+            // Añadimos y configuramos el LineRenderer
+            var lr = cableGO.AddComponent<LineRenderer>();
+            lr.material = arrowMaterial;
+            lr.widthMultiplier = 0.308f;
+            lr.positionCount = 2;
+            lr.textureMode = LineTextureMode.Tile;
+            
+
+            // Posicionamos los extremos
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, obj.GetCablePosition());
+
+            lr.enabled = false;  // oculto inicialmente
+            lines.Add(lr);
         }
     }
 
@@ -74,20 +87,30 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         UpdateAnimation();
     }
 
+    // IVisible
     public void SelectObject(bool select)
     {
         selecting = select;
         SetVisiblity(select);
-        lineRender.enabled = select;
-        foreach (IObjects item in objects)
+
+        // mostramos/ocultamos todas las líneas
+        foreach (var lr in lines)
+            lr.enabled = select;
+
+        // notificamos a cada objeto
+        foreach (var item in objects)
             item.ShowInteract(select, isLocked);
     }
 
+    // IInteractable
     public void Interact()
     {
-        AudioManager.Instance.HandlePlaySound3D("event:/Ambiente/ambiente_palanca",transform.position);
-        PlayAnimation();    
-        foreach (IObjects item in objects)
+        AudioManager.Instance.HandlePlaySound3D(
+            "event:/Ambiente/ambiente_palanca",
+            transform.position
+        );
+        PlayAnimation();
+        foreach (var item in objects)
             item.Interact();
     }
 
@@ -100,9 +123,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     private void UpdateAnimation()
     {
         float currentZ = NormalizeAngle(stickTrans.localEulerAngles.z);
-
         float newZ = Mathf.Lerp(currentZ, targetZ, animationSpeed * Time.deltaTime);
-
         stickTrans.localEulerAngles = new Vector3(
             stickTrans.localEulerAngles.x,
             stickTrans.localEulerAngles.y,
@@ -117,12 +138,13 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         return angle;
     }
 
-    //VISION
+    // Visualización / contornos
     public void SetVisiblity(bool active)
     {
         if (active)
         {
             ChangeLineRendererColor(false);
+
             if (isLocked)
             {
                 ChangeMaterial(lockedColor, true);
@@ -136,32 +158,32 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
                     ChangeMaterial(visualColor, true);
             }
         }
-        else  
+        else
+        {
             TurnOffOutline();
+        }
     }
 
     private void ChangeLineRendererColor(bool locked)
     {
-        if (locked)
-            lineRenderMat.color = lockedColor;
-        else
-            lineRenderMat.color = Color.white;
-        lineRender.material = lineRenderMat;
+        Color c = locked ? lockedColor : Color.white;
+        foreach (var lr in lines)
+            lr.material.color = c;
     }
 
     private void ChangeMaterial(Color color, bool isVision)
     {
         baseOutline.enabled = true;
         stickOutline.enabled = true;
-
         baseOutline.OutlineMode = Outline.Mode.OutlineAll;
         stickOutline.OutlineMode = Outline.Mode.OutlineAll;
+
         if (isVision)
         {
             baseOutline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
             stickOutline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
         }
-        
+
         baseOutline.OutlineColor = color;
         stickOutline.OutlineColor = color;
     }
@@ -173,9 +195,8 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     }
 
     public Vector3 GetVisionPosition() => transform.position;
-    
 
-    //CHECKPOINTS
+    // CHECKPOINTS
     public void RestartGame()
     {
         isLocked = false;
@@ -192,14 +213,13 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         wasLocked = isLocked;
     }
-    
+
     private void OnDestroy()
-    { 
+    {
         GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
         GameManager.GetInstance().RemoveInteractable(this);
         GameManager.GetInstance().RemoveRestartable(this);
     }
-    
+
     public Vector3 GetPosition() => transform.position;
 }
-    
