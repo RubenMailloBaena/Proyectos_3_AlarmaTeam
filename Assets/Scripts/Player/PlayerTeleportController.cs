@@ -94,7 +94,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private void CancelTeleport()
     {
-        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", false);
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
         if (teleportCoroutine != null)
         {
             StopCoroutine(teleportCoroutine);
@@ -123,7 +123,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         }
             
         pController.PlayerTP();
-        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", false);
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
         pController.SetTeleporting(false);
     }
 
