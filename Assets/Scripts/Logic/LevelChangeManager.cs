@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class LevelChangeManager : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class LevelChangeManager : MonoBehaviour
             instance = this;
     }
 
+    private void Start()
+    {
+        RuntimeManager.LoadBank("Master", true);
+        RuntimeManager.LoadBank("Master.strings", true);
+    }
     public static LevelChangeManager GetInstance() => instance;
 
     public void StartGame(int levelIndex)

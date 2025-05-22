@@ -19,7 +19,8 @@ public class ChaseState : State
 
     public override void InitializeState()
     {
-        EnemyAudioManager.SetSound(SoundType.Run, transform.position);
+        //EnemyAudioManager.SetSound(SoundType.Run, transform.position);
+        EnemyAudioManager.StopSound();
         eController.SetAnimation(AnimationType.Run, false);
         
         eController.ActivateExclamation();
