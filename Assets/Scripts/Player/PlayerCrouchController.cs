@@ -7,9 +7,13 @@ using UnityEngine.InputSystem;
 public class PlayerCrouchController : MonoBehaviour
 {
     private PlayerController pController;
+    private PlayerHUDController hudController;
     
     [SerializeField] private InputActionReference crouchInput;
     [SerializeField] private Transform pitchController;
+
+    [Header("Crouch UI alpha values")] 
+    [SerializeField] private float maxAlpha = 1f;
 
     [Header("Crouch Attributes")] 
     [SerializeField] private float crouchSpeed = 5f;
@@ -25,6 +29,7 @@ public class PlayerCrouchController : MonoBehaviour
     
     private bool isCrouching;
     private float targetHeight;
+    private float targetAlpha;
     private float animationCrouchSpeed;
     private Vector3 targetCenter;
     private Vector3 targetCameraPosition;
@@ -39,6 +44,8 @@ public class PlayerCrouchController : MonoBehaviour
     
     private void Start()
     {
+        hudController = GameManager.GetInstance().GetPlayerHUD();
+        
         initialHeight = charController.height;
         initialCenter = charController.center;
         initialCameraPosition = pitchController.localPosition;
@@ -87,6 +94,7 @@ public class PlayerCrouchController : MonoBehaviour
         targetHeight = charControllerHeight;
         targetCenter = new Vector3(0, charControllerCrouchCenter, 0);
         targetCameraPosition = initialCameraPosition - new Vector3(0, cameraCrouchAmount, 0);
+        targetAlpha = maxAlpha;
     }
 
     private void SetStandUpTargets()
@@ -97,6 +105,7 @@ public class PlayerCrouchController : MonoBehaviour
         targetHeight = initialHeight;
         targetCenter = initialCenter;
         targetCameraPosition = initialCameraPosition;
+        targetAlpha = 0.0f;
     }
 
     private void PerformCrouch()
@@ -104,6 +113,7 @@ public class PlayerCrouchController : MonoBehaviour
         charController.center = Vector3.Lerp(charController.center, targetCenter, Time.deltaTime * crouchSpeed);
         charController.height = Mathf.Lerp(charController.height, targetHeight, Time.deltaTime * crouchSpeed);
         pitchController.localPosition = Vector3.Lerp(pitchController.localPosition, targetCameraPosition, Time.deltaTime * crouchSpeed);
+        hudController.SetCrouchVisualColor(Mathf.Lerp(hudController.GetCrouchAlphaValue(),targetAlpha, Time.deltaTime * crouchSpeed));
     }
 
     private bool CanStandUp()

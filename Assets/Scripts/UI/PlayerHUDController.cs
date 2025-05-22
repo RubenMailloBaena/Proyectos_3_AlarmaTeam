@@ -45,6 +45,9 @@ public class PlayerHUDController : MonoBehaviour
     [Header("Player Hurt Visuals")]
     [SerializeField] private RawImage playerHurtPanel;
     
+    [Header("Player Crouch Visuals")]
+    [SerializeField] private RawImage playerCrouchVisual;
+    
     [Header("Player Charm Visuals")]
     [SerializeField] private RawImage playerCharmingImage;
 
@@ -169,10 +172,19 @@ public class PlayerHUDController : MonoBehaviour
     #endregion
     
     #region PlayerHurtVisual
-
     public void SetHurtVisualColor(Color color) => playerHurtPanel.color = color;
     public Color GetHurtVisualColor() => playerHurtPanel.color;
 
+    #endregion
+
+    #region PlayerCrouchVisual
+    public void SetCrouchVisualColor(float alphaValue)
+    {
+        Color color = playerCrouchVisual.color;
+        color.a = alphaValue;
+        playerCrouchVisual.color = color;
+    }
+    public float GetCrouchAlphaValue() => playerCrouchVisual.color.a;
     #endregion
 
     #region GameOverVisual
