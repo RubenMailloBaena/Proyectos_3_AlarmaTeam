@@ -83,6 +83,10 @@ public class DieState : State
 
         yield return new WaitForSeconds(waitTimeFromPlacementToKill);
 
+        player.PlayClaws();
+        
+        yield return new WaitForSeconds(0.05f);
+        
         AudioManager.Instance.HandlePlaySound3D("event:/Enemigo/enemigo_backstab", transform.position);
         eController.KillAnimationHeartController(false);
         player.ShakeCamera(shakeDuration, shakeMagnitude);

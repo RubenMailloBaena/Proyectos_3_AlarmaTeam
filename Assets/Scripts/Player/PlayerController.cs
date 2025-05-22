@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class PlayerController : MonoBehaviour, IRestartable
 {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     [SerializeField] private Transform playerBody;
     [SerializeField] private MeshRenderer playerRender;
     [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private List<VisualEffect> claws;
 
     private IPlayerComponent HUDActivator; // Componente que activó el texto de inputs
     
@@ -95,6 +97,14 @@ public class PlayerController : MonoBehaviour, IRestartable
         checkpointPos = startingPos;
         startingRotation = targetPos.rotation;
         checkpointRotation = startingRotation;
+    }
+
+    public void PlayClaws()
+    {
+        foreach (VisualEffect claw in claws)
+        {
+            claw.Play();
+        }
     }
     
     // ------------------ SETTERS ESTADOS ------------------

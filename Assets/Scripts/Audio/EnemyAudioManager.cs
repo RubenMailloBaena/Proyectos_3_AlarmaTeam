@@ -17,8 +17,8 @@ public static class EnemyAudioManager
     private static readonly Dictionary<SoundType, string> clipMap = new Dictionary<SoundType, string>
     {
         { SoundType.Idle,      "event:/Enemigo/enemigo_voz_tranquila"   },
-        { SoundType.Walk,      "event:/Enemigo/enemigo_pasos_madera_andar" },
-        { SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
+        //{ SoundType.Walk,      "event:/Enemigo/enemigo_pasos_madera_andar" },
+        //{ SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
         { SoundType.Attack,    "event:/Enemigo/enemigo_rezo"            },
         { SoundType.Dead,      "event:/Enemigo/enemigo_muerte"     },
         { SoundType.Charm,     "event:/Enemigo/enemigo_charmed"          },
