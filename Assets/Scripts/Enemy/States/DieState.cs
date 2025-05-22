@@ -18,6 +18,7 @@ public class DieState : State
     
     public override void InitializeState()
     {
+        EnemyAudioManager.StopSound();
         player = GameManager.GetInstance().GetPlayerController();
         hud = GameManager.GetInstance().GetPlayerHUD();
         
@@ -92,5 +93,6 @@ public class DieState : State
         player.SetBackstabing(false);
         killAnimationC = null;
         hud.ShowCrossHair(true);
+        EnemyAudioManager.SetSound(SoundType.Dead, transform.position);
     }
 }

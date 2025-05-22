@@ -46,6 +46,7 @@ public class CharmState : State
             if (!setDestination)
             {
                 setDestination = true;
+                EnemyAudioManager.SetSound(SoundType.CharmWalk, transform.position);
                 eController.SetAnimation(AnimationType.CharmWalk, false);
                 eController.GoToLever();
             }

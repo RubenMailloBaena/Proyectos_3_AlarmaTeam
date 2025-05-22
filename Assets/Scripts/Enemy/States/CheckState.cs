@@ -20,7 +20,7 @@ public class CheckState : State
     {
         //TODO: CHANGE IN FUTURE
         eController.SetAnimation(AnimationType.Idle, false);
-        
+        EnemyAudioManager.StopSound();
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
         eController.exclamationShown = false;

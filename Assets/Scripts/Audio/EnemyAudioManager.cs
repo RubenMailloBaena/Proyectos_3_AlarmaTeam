@@ -20,9 +20,9 @@ public static class EnemyAudioManager
         { SoundType.Walk,      "event:/Enemigo/enemigo_pasos_madera_andar" },
         { SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
         { SoundType.Attack,    "event:/Enemigo/enemigo_rezo"            },
-        { SoundType.Dead,      "event:/Enemigo/enemigo_voz_sorpresa"     },
+        { SoundType.Dead,      "event:/Enemigo/enemigo_muerte"     },
         { SoundType.Charm,     "event:/Enemigo/enemigo_charmed"          },
-        { SoundType.CharmWalk, "charm_footsteps"                        }
+        { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar"                        }
     };
 
     private static string currentClip;
@@ -46,7 +46,7 @@ public static class EnemyAudioManager
         currentClip = clipName;
     }
 
-    private static void StopSound()
+    public static void StopSound()
     {
         if (string.IsNullOrEmpty(currentClip))
             return;

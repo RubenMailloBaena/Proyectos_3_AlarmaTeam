@@ -13,6 +13,7 @@ public class GoToState : State
 
     public override void InitializeState()
     {
+        EnemyAudioManager.StopSound();
         eController.SetAnimation(AnimationType.Walk, false);
         eController.SetAgentSpeed(goToSpeed);
     }

@@ -21,6 +21,7 @@ public class IdleState : State
 
     public override void InitializeState()
     {
+        EnemyAudioManager.StopSound();
         eController.SetAnimation(AnimationType.Idle, false);
         
         waitTime = eController.GetWaitTime();

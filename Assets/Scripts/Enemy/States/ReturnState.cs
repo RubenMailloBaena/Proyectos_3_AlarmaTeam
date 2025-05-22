@@ -16,7 +16,7 @@ public class ReturnState : State
     public override void InitializeState()
     {
         eController.SetAnimation(AnimationType.Walk, false);
-        
+        EnemyAudioManager.StopSound();
         if (!eController.isIdleEnemy)
         {
             eController.SwitchToNextState(patrolState);

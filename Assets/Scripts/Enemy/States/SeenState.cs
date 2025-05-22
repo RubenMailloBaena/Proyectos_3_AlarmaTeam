@@ -24,7 +24,7 @@ public class SeenState : State
     {
         //TODO: CHANGE IN FUTURE
         eController.SetAnimation(AnimationType.Idle, false);
-        
+        EnemyAudioManager.StopSound();
         if (eController.isChasingPlayer)
         {
             eController.SwitchToNextState(chaseState);

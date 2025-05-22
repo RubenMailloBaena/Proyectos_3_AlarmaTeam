@@ -85,8 +85,6 @@ public class PlayerMovementController : MonoBehaviour
         if (input == Vector2.zero)
         {
             pController.SetIsIdle(true);
-            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_pasos_madera_correr", true);
-            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_pasos_madera_andar", true);
         }
             
         
