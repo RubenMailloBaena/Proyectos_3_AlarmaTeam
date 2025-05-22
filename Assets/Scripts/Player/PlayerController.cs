@@ -103,7 +103,8 @@ public class PlayerController : MonoBehaviour, IRestartable
     {
         foreach (VisualEffect claw in claws)
         {
-            claw.Play();
+            claw.enabled = false;
+            claw.enabled = true;
         }
     }
     
