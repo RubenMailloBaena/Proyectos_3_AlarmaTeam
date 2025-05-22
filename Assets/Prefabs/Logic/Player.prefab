@@ -662,7 +662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsThatCanTakeDamage: 3
   cooldownToHealPlayer: 3
-  maxHurtAlpha: 0.4
+  maxHurtAlpha: 1
 --- !u!114 &7266428441928830748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,7 +702,7 @@ MonoBehaviour:
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   cameraNormalFov: 60
-  cameraRunFov: 70
+  cameraRunFov: 75
   fovSpeed: 3
   runSpeed: 6
   walkSpeed: 3.5
@@ -757,6 +757,7 @@ MonoBehaviour:
   crouchInput: {fileID: -335817351749785016, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
   pitchController: {fileID: 1882158348678663836}
+  maxAlpha: 1
   crouchSpeed: 5
   cameraCrouchAmount: 0.6
   charControllerHeight: 1
