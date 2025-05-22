@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &140630642655565219
 Transform:
@@ -122,7 +122,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5354660736532207794
 Transform:
@@ -133,8 +133,8 @@ Transform:
   m_GameObject: {fileID: 6501646986801900582}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0.00000034608038, w: 0.00000058859587}
-  m_LocalPosition: {x: 0.3062, y: 3.7593, z: 0.1707}
-  m_LocalScale: {x: -23.9727, y: -20.19546, z: -36.176456}
+  m_LocalPosition: {x: 0.3062, y: 3.7593, z: 0.2104}
+  m_LocalScale: {x: -23.9727, y: -20.19546, z: -36.14412}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6585986067376370211}
@@ -203,7 +203,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6585986067376370211
 Transform:
@@ -215,7 +215,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.92, y: 8.69, z: -4.96}
-  m_LocalScale: {x: 1, y: 1.0728, z: 0.6408227}
+  m_LocalScale: {x: 1, y: 1.0728, z: 0.6842064}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1798304633615106391}
@@ -296,6 +296,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 87c9ec57e8d28c24b86551ca9fbb8411, type: 2}
+    - target: {fileID: -4351163774016115032, guid: 891f388ae531ac84c94474262bc0e9ff,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2536523399855158964, guid: 891f388ae531ac84c94474262bc0e9ff,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: -1283264955281576438, guid: 891f388ae531ac84c94474262bc0e9ff,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -330,6 +340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AbajoBalcon (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 891f388ae531ac84c94474262bc0e9ff,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4176026479864560118, guid: 891f388ae531ac84c94474262bc0e9ff,
         type: 3}
