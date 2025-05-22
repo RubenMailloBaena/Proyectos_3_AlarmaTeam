@@ -19,6 +19,7 @@ public class CharmState : State
     
     public override void InitializeState()
     {
+        EnemyAudioManager.SetSound(SoundType.Charm, transform.position);
         eController.SetAnimation(AnimationType.Charm, true);
         kickDone = false;
         if (performingKick != null)

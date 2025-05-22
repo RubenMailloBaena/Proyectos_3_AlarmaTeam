@@ -38,12 +38,12 @@ public class EnemyAnimations : MonoBehaviour
         animator.SetFloat("Speed", currentBlendSpeed);
     }
 
-    public void SetAnimation(AnimationType animationType, bool setBool)
+    public void SetAnimation(AnimationType soundType, bool setBool)
     {
         animator.SetBool("Dead", false);
         animator.SetBool("Attack", false);
 
-        switch (animationType)
+        switch (soundType)
         {
             case AnimationType.Idle:
                 SetBlendTreeSpeed(idleSpeed);

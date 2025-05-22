@@ -178,7 +178,7 @@ public class EnemyController : MonoBehaviour, IVisible
 
     #region Animation Functions
     
-    public void SetAnimation(AnimationType animation, bool setBool) => Animations.SetAnimation(animation, setBool);
+    public void SetAnimation(AnimationType sound, bool setBool) => Animations.SetAnimation(sound, setBool);
     #endregion
     
     //----------------------------ENEMY VISION FUNCTIONS-----------------------------
