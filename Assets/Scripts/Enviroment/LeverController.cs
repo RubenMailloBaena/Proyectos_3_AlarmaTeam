@@ -9,11 +9,8 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     [SerializeField] private Color visualColor;
     [SerializeField] private Color selectColor;
     [SerializeField] private Color lockedColor;
-
-    [Header("Line Rendering")]
-    [Tooltip("Material con la textura de flechas para los cables")]
-    [SerializeField] private Material arrowMaterial;
-    private List<LineRenderer> lines = new List<LineRenderer>();
+    [SerializeField] private Material lineRenderMat;
+    [SerializeField] private float lineWidth = 0.3f;
 
     [Header("Lever Parts")]
     [SerializeField] private Transform stickTrans;
@@ -27,6 +24,7 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
     private List<IObjects> objects = new List<IObjects>();
+    private List<LineRenderer> lines = new List<LineRenderer>();
 
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
@@ -40,7 +38,6 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         canInteract = true;
 
-        // 1) Recogemos las interfaces IObjects
         foreach (var go in objectsToActivate)
         {
             if (go.TryGetComponent<IObjects>(out var item))
@@ -50,26 +47,24 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
                 objects.Add(item);
             }
         }
-        // 2) Creamos un LineRenderer por cada objeto
-        foreach (var obj in objects)
+        
+        for (int i = 0; i < objects.Count; i++)
         {
-            // Creamos un GameObject para el cable
+            var obj = objects[i];
+
             var cableGO = new GameObject("CableTo_" + obj.GetCablePosition());
             cableGO.transform.SetParent(transform, worldPositionStays: true);
-
-            // Añadimos y configuramos el LineRenderer
             var lr = cableGO.AddComponent<LineRenderer>();
-            lr.material = arrowMaterial;
-            lr.widthMultiplier = 0.308f;
+            
+            lr.widthMultiplier = lineWidth;
+            lr.material = lineRenderMat;
             lr.positionCount = 2;
             lr.textureMode = LineTextureMode.Tile;
-            
 
-            // Posicionamos los extremos
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, obj.GetCablePosition());
 
-            lr.enabled = false;  // oculto inicialmente
+            lr.enabled = false;  
             lines.Add(lr);
         }
     }
@@ -93,11 +88,9 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         selecting = select;
         SetVisiblity(select);
 
-        // mostramos/ocultamos todas las líneas
         foreach (var lr in lines)
             lr.enabled = select;
 
-        // notificamos a cada objeto
         foreach (var item in objects)
             item.ShowInteract(select, isLocked);
     }
@@ -138,7 +131,6 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         return angle;
     }
 
-    // Visualización / contornos
     public void SetVisiblity(bool active)
     {
         if (active)

@@ -8974,11 +8974,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2400503892314693966, guid: af67785d09cba1843a9dec320345f1ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2988693754222058349, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: isIdleEnemy
@@ -8994,15 +8989,15 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[1].rotateEnemy
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4598762103664256943, guid: af67785d09cba1843a9dec320345f1ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5256804741832479153, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6868808229459138712, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: outlines.Array.data[6]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8167465397700286712, guid: af67785d09cba1843a9dec320345f1ca,
         type: 3}
@@ -11171,6 +11166,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 425560176}
   m_SourcePrefab: {fileID: 100100000, guid: 8df7a1252ef581c41b17bc9031d63225, type: 3}
+--- !u!120 &940276810 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 2431799655569437237, guid: e48d2722dd747ab4b9a704905ca9ca1f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2119407819}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &944032568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26160,6 +26161,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 400531182294126957, guid: e48d2722dd747ab4b9a704905ca9ca1f,
+        type: 3}
+      propertyPath: lineRenderer
+      value: 
+      objectReference: {fileID: 940276810}
     - target: {fileID: 400531182294126957, guid: e48d2722dd747ab4b9a704905ca9ca1f,
         type: 3}
       propertyPath: objectsToActivate.Array.data[0]
