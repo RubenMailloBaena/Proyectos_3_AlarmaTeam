@@ -55,31 +55,34 @@ public class Statue : MonoBehaviour, IStatue, IVisible
             EnableOutline(false);
     }
 
+    private void EnableOutline(bool active)
+    {
+        outlines.RemoveAll(o => o == null);
+
+        foreach (Outline script in outlines)
+        {
+            if (script != null)     
+                script.enabled = active;
+        }
+    }
+
     private void ChangeOutlineMode(bool select)
     {
-        if (select)
+        outlines.RemoveAll(o => o == null);
+
+        Outline.Mode mode = select ? Outline.Mode.OutlineAll : Outline.Mode.OutlineAndSilhouette;
+        Color color = select ? selectColor : visualColor;
+
+        foreach (Outline script in outlines)
         {
-            foreach (Outline script in outlines)
+            if (script != null)
             {
-                script.OutlineMode = Outline.Mode.OutlineAll;
-                script.OutlineColor = selectColor;
-            }
-        }
-        else
-        {
-            foreach (Outline script in outlines)
-            {
-                script.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-                script.OutlineColor = visualColor;
+                script.OutlineMode = mode;
+                script.OutlineColor = color;
             }
         }
     }
 
-    private void EnableOutline(bool active)
-    {
-        foreach (Outline script in outlines)
-            script.enabled = active;
-    }
 
     public Vector3 GetVisionPosition()
     {
