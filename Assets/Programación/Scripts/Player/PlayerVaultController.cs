@@ -17,6 +17,8 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     [SerializeField] private float vaultCheckRayDistance = 1f;
     [SerializeField] private LayerMask vaultLayer;
 
+    private ICanVault currentVaultObject;
+
     private void Awake()
     {
         pController = GetComponent<PlayerController>();
@@ -47,9 +49,13 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
                     pController.TryVaultCrouched();
                     return;
                 }
-                
+
                 if (hit.transform.TryGetComponent(out ICanVault vaultObject))
+                {
+                    currentVaultObject = vaultObject;
                     StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
+                }
+                    
             }
 
             pController.CanInteract(jumpInput, InputType.Press, this, ActionType.Vault);
@@ -65,7 +71,25 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     private IEnumerator PerformVault(Vector3 targetPosition)
     {
         pController.SetVaulting(true);
-        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_escalar_paret", transform.position);
+
+        string soundEvent;
+        switch (currentVaultObject.VaultOption)
+        {
+            case VaultOptions.OneVault:
+                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                break;
+            case VaultOptions.CloseOne:
+                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                break;
+            case VaultOptions.FurtherOne:
+                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                break;
+            default:
+                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                break;
+        }
+
+        AudioManager.Instance.HandlePlaySound3D(soundEvent, transform.position);
 
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;

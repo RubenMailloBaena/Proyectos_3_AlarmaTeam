@@ -15,6 +15,8 @@ public class VaultObject : MonoBehaviour, ICanVault
     [SerializeField] private Transform vaultEndPoint1;
     [SerializeField] private Transform vaultEndPoint2;
 
+    public VaultOptions VaultOption => vaultOption;
+
     public Vector3 GetVaultEndPoint(Vector3 playerPosition)
     {
         switch (vaultOption)

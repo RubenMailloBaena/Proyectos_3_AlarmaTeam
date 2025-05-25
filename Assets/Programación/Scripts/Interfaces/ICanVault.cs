@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ICanVault
 {
     public Vector3 GetVaultEndPoint(Vector3 playerPosition);
+    VaultOptions VaultOption { get; }
 }

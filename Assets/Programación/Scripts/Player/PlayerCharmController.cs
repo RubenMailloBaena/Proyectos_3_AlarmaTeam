@@ -96,6 +96,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         isCharming = true;
         pController.SetCharmingVisual(true);
         visionCircle.SetActive(true);
+        //AudioManager.Instance.HandlePlaySound3D("",transform.position);
     }
 
     private void ExitCharmingMode()
@@ -106,6 +107,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         ClearHoveredTarget();
         ClearCharmedTarget();
         ClearVisionTargets();
+        //AudioManager.Instance.HandleStopSound("");
     }
 
     #endregion
