@@ -76,10 +76,10 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
         switch (currentVaultObject.VaultOption)
         {
             case VaultOptions.OneVault:
-                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                soundEvent = "event:/Test/TestLoop";
                 break;
             case VaultOptions.CloseOne:
-                soundEvent = "event:/Jugador/jugador_escalar_paret";
+                soundEvent = "event:/Test/TestOneShot";
                 break;
             case VaultOptions.FurtherOne:
                 soundEvent = "event:/Jugador/jugador_escalar_paret";
@@ -88,7 +88,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
                 soundEvent = "event:/Jugador/jugador_escalar_paret";
                 break;
         }
-
+        
         AudioManager.Instance.HandlePlaySound3D(soundEvent, transform.position);
 
         Vector3 startPosition = transform.position;
@@ -103,7 +103,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
         }
 
         transform.position = targetPosition;
-        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_escalar_paret",true);
+        AudioManager.Instance.HandleStopSound(soundEvent,true);
         pController.SetVaulting(false);
     }
 
