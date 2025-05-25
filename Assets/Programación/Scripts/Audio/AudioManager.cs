@@ -18,15 +18,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    public void HandlePlay3DOneShot(string path, Vector3 pos)
-    {
-        RuntimeManager.PlayOneShot(path, pos);
-    }
 
-    public void HandlePlay2DOneShot(string path)
-    {
-        RuntimeManager.PlayOneShot(path);
-    }
     public void HandlePlaySound3D(string path, Vector3 pos)
     {
         if (activeEvents.TryGetValue(path, out var existingInstance))
