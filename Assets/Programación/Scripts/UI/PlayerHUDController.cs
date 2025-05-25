@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public enum InputType {
@@ -47,10 +48,13 @@ public class PlayerHUDController : MonoBehaviour
     
     [Header("Player Crouch Visuals")]
     [SerializeField] private RawImage playerCrouchVisual;
-    
-    [Header("Player Charm Visuals")]
-    [SerializeField] private RawImage playerCharmingImage;
 
+    [Header("Player Charm Visuals")] 
+    [SerializeField] private Material vampVisionMat;
+    [SerializeField] private ScriptableRendererFeature fullScreenVision;
+
+    private float vignettIntesity, fullScreenIntensity;
+    
     [Header("GameLogic UI")] 
     [SerializeField] private GameObject crosshair;
     [SerializeField] private GameObject gameOverPanel;
@@ -79,39 +83,16 @@ public class PlayerHUDController : MonoBehaviour
         pController = GameManager.GetInstance().GetPlayerController();
         playerInput = pController.GetPlayerInput();
         SetButtons();
+
+        //LERP MATERIAL
+        vignettIntesity = vampVisionMat.GetFloat("_VignettIntesity");
+        fullScreenIntensity = vampVisionMat.GetFloat("_FullScreenIntensity");
     }
     
-    private void Update()
-    {
-        HandleSoundVisuals();
-    }
-
     public void ShowCrossHair(bool show)
     {
         crosshair.SetActive(show);
     }
-
-    #region Sound Functions
-
-    private void HandleSoundVisuals()
-    {
-        if (!pController.IsIdle)
-        {
-            UIImage.enabled = true;
-            UIImage.texture = GetSoundTexture();
-        }
-        else
-            UIImage.enabled = false;
-    }
-
-    private Texture GetSoundTexture()
-    {
-        if (pController.IsCrouching) return sound1;
-        if (!pController.IsRunning) return sound2;
-        return sound3;
-    }
-
-    #endregion
 
     #region InteractionTexts
 
@@ -167,7 +148,13 @@ public class PlayerHUDController : MonoBehaviour
 
     #region CharmingVisual
 
-    public void SetCharmingVisualActive(bool active) => playerCharmingImage.enabled = active;
+    public void SetCharmingVisualActive(bool active) => fullScreenVision.SetActive(active);
+
+    private void LerpShader()
+    {
+        //TODO: HACER LA ANIMACION DEL EFECTO APARECIENDO
+        print(vignettIntesity + " " +fullScreenIntensity);
+    }
 
     #endregion
     
