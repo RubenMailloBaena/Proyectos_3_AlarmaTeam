@@ -57,8 +57,10 @@ public class PlayerMovementController : MonoBehaviour
     private CharacterController charController;
     private Vector2 input;
     private Vector3 velocity, sphereOffset = new Vector3(0f, 1f, 0f);
-    
-    private bool wasGrounded;
+
+    [Header("Fall Sound Attributes")]
+    [SerializeField] private float minAirTime = 0.1f;
+    private float airTime = 0f;
     private bool fallSoundPlaying;
 
     private void Awake()
@@ -66,7 +68,6 @@ public class PlayerMovementController : MonoBehaviour
         charController = GetComponent<CharacterController>();
         pController = GetComponent<PlayerController>();
         playerCamera = Camera.main;
-        wasGrounded = true;
         fallSoundPlaying = false; 
     }
 
@@ -79,22 +80,44 @@ public class PlayerMovementController : MonoBehaviour
         PlayerGravity();
         PlayerSound();
     }
-
-    private void FallJumpSound()
+    public void ResetFallSound()
     {
-        bool isGrounded = IsGrounded();
-        if (wasGrounded && !isGrounded && !fallSoundPlaying && !pController.CanVault && !pController.IsTeleporting)
-        {
-            AudioManager.Instance.HandlePlaySound3D("event:/Test/TestLoop", transform.position);
-            fallSoundPlaying = true;
-        }
-        else if (!wasGrounded && isGrounded && fallSoundPlaying && !pController.CanVault && !pController.IsTeleporting)
+        airTime = 0f;
+
+        if (fallSoundPlaying)
         {
             AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
             fallSoundPlaying = false;
         }
-        wasGrounded = isGrounded;
     }
+
+    private void FallJumpSound()
+    {
+        bool isGrounded = IsGrounded();
+
+        if (!isGrounded)
+        {
+            airTime += Time.deltaTime;
+
+            if (!fallSoundPlaying && airTime > minAirTime && !pController.IsTeleporting && !pController.IsVaulting)
+            {
+                AudioManager.Instance.HandlePlaySound3D("event:/Test/TestLoop", transform.position);
+                fallSoundPlaying = true;
+            }
+        }
+        else
+        {
+            if (fallSoundPlaying)
+            {
+                AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
+                fallSoundPlaying = false;
+            }
+
+            airTime = 0f;
+        }
+    }
+
+
 
     private void PlayerMovement()
     {
