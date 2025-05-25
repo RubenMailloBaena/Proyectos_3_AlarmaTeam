@@ -18,7 +18,7 @@ public class HearState : State
     {
         //TODO: CHANGE IN FUTURE
         eController.SetAnimation(AnimationType.Idle, false);
-        EnemyAudioManager.StopSound();
+        eController.StopSound();
         eController.HideArrow();
         eController.ManualRotation(false);
 

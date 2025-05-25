@@ -20,7 +20,7 @@ public class AttackState : State
 
     public override void InitializeState()
     {
-        EnemyAudioManager.SetSound(SoundType.Attack,transform.position);
+        eController.PlaySound(SoundType.Attack);
         eController.SetAnimation(AnimationType.Attack, true);
         
         eController.ActivateExclamation();

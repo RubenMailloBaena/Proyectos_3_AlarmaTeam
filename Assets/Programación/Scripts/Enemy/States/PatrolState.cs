@@ -14,9 +14,8 @@ public class PatrolState : State
 
     public override void InitializeState()
     {
+        eController.PlaySound(SoundType.Walk);
         eController.SetAnimation(AnimationType.Walk, false);
-        EnemyAudioManager.StopSound();
-        EnemyAudioManager.SetSound(SoundType.Walk, transform.position);
         eController.SetAgentSpeed(patrolSpeed);
     }
 

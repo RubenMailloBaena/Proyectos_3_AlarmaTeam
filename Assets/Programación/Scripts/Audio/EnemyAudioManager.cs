@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public enum SoundType
 {
@@ -12,24 +14,43 @@ public enum SoundType
     CharmWalk
 }
 
-public static class EnemyAudioManager
+public class EnemyAudioManager : MonoBehaviour
 {
+    private void Awake()
+    {
+        controller = GetComponent<EnemyController>();
+    }
+
     private static readonly Dictionary<SoundType, string> clipMap = new Dictionary<SoundType, string>
     {
-        { SoundType.Idle,      "event:/Enemigo/enemigo_voz_tranquila"   },
-        //{ SoundType.Walk,      "event:/Enemigo/enemigo_pasos_madera_andar" },
-        //{ SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
-        { SoundType.Attack,    "event:/Enemigo/enemigo_rezo"            },
-        { SoundType.Dead,      "event:/Enemigo/enemigo_muerte"     },
-        { SoundType.Charm,     "event:/Enemigo/enemigo_charmed"          },
-        { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar"                        }
+        { SoundType.Idle,      "event:/Enemigo/enemigo_voz_tranquila" },
+        { SoundType.Walk,      "event:/Enemigo/enemigo_pasos_madera_andar" },
+        { SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
+        { SoundType.Attack,    "event:/Enemigo/enemigo_rezo" },
+        { SoundType.Dead,      "event:/Enemigo/enemigo_muerte" },
+        { SoundType.Charm,     "event:/Enemigo/enemigo_charmed" },
+        { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar" }
     };
 
-    private static string currentClip;
+    private EventInstance currentInstance;
+    private string currentClip;
+    private EnemyController controller;
 
-    public static void SetSound(SoundType soundType, Vector3 position)
+    private void OnEnable()
     {
-        StopSound();
+        controller.OnPlaySound += SetSound;
+        controller.OnStopSound += StopSound;
+    }
+
+
+    private void OnDisable()
+    {
+        controller.OnPlaySound -= SetSound;
+        controller.OnStopSound -= StopSound;
+    }
+
+    private void SetSound(SoundType soundType)
+    {
         if (!clipMap.TryGetValue(soundType, out var clipName))
         {
             Debug.LogWarning($"[EnemyAudio] No hay clip mapeado para {soundType}");
@@ -38,20 +59,24 @@ public static class EnemyAudioManager
 
         if (currentClip == clipName)
             return;
+        StopSound();
 
-        if (!string.IsNullOrEmpty(currentClip))
-            AudioManager.Instance.HandleStopSound(currentClip, true);
+        currentInstance = RuntimeManager.CreateInstance(clipName);
+        currentInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        RuntimeManager.AttachInstanceToGameObject(currentInstance, transform, GetComponent<Rigidbody>()); // Para que siga al enemigo
+        currentInstance.start();
 
-        AudioManager.Instance.HandlePlaySound3D(clipName, position);
         currentClip = clipName;
     }
 
-    public static void StopSound()
+    public void StopSound()
     {
-        if (string.IsNullOrEmpty(currentClip))
-            return;
+        if (currentInstance.isValid())
+        {
+            currentInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            currentInstance.release();
+        }
 
-        AudioManager.Instance.HandleStopSound(currentClip, true);
         currentClip = null;
     }
 }

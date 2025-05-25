@@ -62,6 +62,10 @@ public class EnemyController : MonoBehaviour, IVisible
     private EnemyRestart Restart { get; set; }
     private EnemyAnimations Animations { get; set; }
 
+    //SOUND
+    public event Action<SoundType> OnPlaySound;
+    public event Action OnStopSound;
+
     void Awake()
     {
         Movement = GetComponent<EnemyMovement>();
@@ -339,4 +343,9 @@ public class EnemyController : MonoBehaviour, IVisible
 
         yield return null;
     }
+   
+    public void PlaySound(SoundType type) => OnPlaySound?.Invoke(type);
+    public void StopSound() => OnStopSound?.Invoke();
+
+
 }
