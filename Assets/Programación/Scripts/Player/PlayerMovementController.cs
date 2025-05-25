@@ -53,26 +53,47 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private float floorDrag = -10f;
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private LayerMask groundMask;
-    
-    
+
     private CharacterController charController;
     private Vector2 input;
     private Vector3 velocity, sphereOffset = new Vector3(0f, 1f, 0f);
     
+    private bool wasGrounded;
+    private bool fallSoundPlaying;
+
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
         pController = GetComponent<PlayerController>();
         playerCamera = Camera.main;
+        wasGrounded = true;
+        fallSoundPlaying = false; 
     }
 
     private void Update()
     {
+        FallJumpSound();
         PlayerMovement();
         HandleCameraFOV();
         PlayerJump();
         PlayerGravity();
         PlayerSound();
+    }
+
+    private void FallJumpSound()
+    {
+        bool isGrounded = IsGrounded();
+        if (wasGrounded && !isGrounded && !fallSoundPlaying && !pController.CanVault && !pController.IsTeleporting)
+        {
+            AudioManager.Instance.HandlePlaySound3D("event:/Test/TestLoop", transform.position);
+            fallSoundPlaying = true;
+        }
+        else if (!wasGrounded && isGrounded && fallSoundPlaying && !pController.CanVault && !pController.IsTeleporting)
+        {
+            AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
+            fallSoundPlaying = false;
+        }
+        wasGrounded = isGrounded;
     }
 
     private void PlayerMovement()
