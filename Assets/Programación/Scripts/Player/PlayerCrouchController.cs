@@ -95,6 +95,8 @@ public class PlayerCrouchController : MonoBehaviour
         targetCenter = new Vector3(0, charControllerCrouchCenter, 0);
         targetCameraPosition = initialCameraPosition - new Vector3(0, cameraCrouchAmount, 0);
         targetAlpha = maxAlpha;
+
+        //AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
     }
 
     private void SetStandUpTargets()
@@ -106,6 +108,8 @@ public class PlayerCrouchController : MonoBehaviour
         targetCenter = initialCenter;
         targetCameraPosition = initialCameraPosition;
         targetAlpha = 0.0f;
+
+        //AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
     }
 
     private void PerformCrouch()
