@@ -232,11 +232,13 @@ public class PlayerMovementController : MonoBehaviour
     private void OnEnable()
     {
         jumpInput.action.Enable();
+        pController.onStopFallSound += ResetFallSound;
     }
 
     private void OnDisable()
     {
         jumpInput.action.Disable();
+        pController.onStopFallSound -= ResetFallSound;
     }
     
     

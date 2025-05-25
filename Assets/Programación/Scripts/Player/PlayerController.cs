@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public event Action onRestartFromCheckpoint;
     public event Action onSetCheckpoint;
     public event Action OnPlayerTP;
+    public event Action onStopFallSound;
 
 
     private void Awake()
@@ -130,6 +131,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public void TakeDamage(float damage) => OnTakeDamage?.Invoke(damage);
     public void SwapGodMode() => onGodMode?.Invoke();
     public void PlayerTP() => OnPlayerTP?.Invoke();
+    public void ResetFallSound() => onStopFallSound?.Invoke();
 
     // ------------------ HUD ------------------
 

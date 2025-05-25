@@ -80,8 +80,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
 
         yield return MoveToTargetPosition(targetPosition);
         yield return SmoothDescentToGround(targetPosition);
-
-        GetComponent<PlayerMovementController>()?.ResetFallSound();
+        pController.ResetFallSound();
         AudioManager.Instance.HandleStopSound(soundEvent, true);
         pController.SetVaulting(false);
     }
