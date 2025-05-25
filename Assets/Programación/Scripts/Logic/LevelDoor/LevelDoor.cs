@@ -118,8 +118,19 @@ public class LevelDoor : MonoBehaviour
         isOpen = !isOpen;
         isMoving = true;
 
-        if (isOpen && isFinalDoor)
-            LevelChangeManager.GetInstance().LoadNextLevel();
+        if (isOpen)
+        {
+            AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
+
+            if (isOpen && isFinalDoor)
+                LevelChangeManager.GetInstance().LoadNextLevel();
+        }
+        else
+        {
+            AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
+        }
+
+        
     }
 
 

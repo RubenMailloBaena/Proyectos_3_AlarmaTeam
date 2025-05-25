@@ -43,6 +43,12 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
     public void Interact()
     {
         isMoving = !isMoving;
+
+        if (isMoving)
+            AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
+        else
+            AudioManager.Instance.HandlePlay3DOneShot("event:/Test/TestOneShot", transform.position);
+
     }
 
     public void ShowInteract(bool interact, bool locked)
