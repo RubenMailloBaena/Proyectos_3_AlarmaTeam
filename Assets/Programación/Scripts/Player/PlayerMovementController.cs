@@ -182,7 +182,7 @@ public class PlayerMovementController : MonoBehaviour
         if (Mathf.Approximately(playerCamera.fieldOfView, targetFOV))
             return;
 
-        //playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovSpeed);
+        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovSpeed);
     }
 
     private void PlayerJump()
