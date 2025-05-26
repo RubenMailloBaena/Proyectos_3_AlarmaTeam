@@ -118,7 +118,6 @@ Transform:
   - {fileID: 7495691534438542424}
   - {fileID: 3283828579086272413}
   - {fileID: 7717768801425855986}
-  - {fileID: 8671469356464979450}
   m_Father: {fileID: 579865797012302666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &978173821536981616
@@ -382,6 +381,7 @@ Transform:
   m_Children:
   - {fileID: 1319432548757243651}
   - {fileID: 8546083993960383726}
+  - {fileID: 8671469356464979450}
   m_Father: {fileID: 579865797012302666}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6611457886344832454
@@ -870,8 +870,6 @@ MonoBehaviour:
   soundEffectSphereBigOne: {fileID: 3283828579086272413}
   pulseDuration: 0.6
   pulseScale: 14
-  minPulseScale: 10
-  pulseShrinkDuration: 0.25
   gravity: -19.62
   fallFromCornerDrag: -2
   floorDrag: -10
@@ -989,8 +987,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackInput: {fileID: -3197373336337715006, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
-  backstacbAnimationDistance: 2
-  backstabAnimationDuration: 2
   attackRange: 3.5
   backstabDotOffset: 0.65
   maxViewAngle: 45
@@ -1317,7 +1313,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5735161584918423698}
+    m_TransformParent: {fileID: 1882158348678663836}
     m_Modifications:
     - target: {fileID: 3958948021994766640, guid: f2e1e982d380c7145b419c620b9cea68,
         type: 3}
@@ -1327,7 +1323,7 @@ PrefabInstance:
     - target: {fileID: 3958948021994766640, guid: f2e1e982d380c7145b419c620b9cea68,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.71500003
+      value: -0.07700002
       objectReference: {fileID: 0}
     - target: {fileID: 3958948021994766640, guid: f2e1e982d380c7145b419c620b9cea68,
         type: 3}
