@@ -23,12 +23,17 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     
     [Header("Animation References & Attributes")]
     [SerializeField] private VisualEffect smokeEffect;
-    private float smokeDefaultClip;
+    [SerializeField] private float minFOV = 50;
+    [SerializeField] private float waitOnMax = 0.2f;
+    private Camera camera;
+    private float smokeDefaultClip, defaultFov;
+    private bool isDissipating = false;
     
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
 
     private Coroutine teleportCoroutine;
+    private Coroutine smokeResetCoroutine;
     private IStatue currentStatue;
     private float input;
 
@@ -36,6 +41,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     {
         pController = GetComponent<PlayerController>();
         smokeDefaultClip = smokeEffect.GetFloat("Clip");
+        camera = Camera.main;
     }
 
     private void Update()
@@ -100,11 +106,20 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     private void CancelTeleport()
     {
         AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
+
         if (teleportCoroutine != null)
         {
             StopCoroutine(teleportCoroutine);
+            teleportCoroutine = null;
             pController.HideProgressBar();
         }
+
+        if (!isDissipating)
+        {
+            if (smokeResetCoroutine != null) StopCoroutine(smokeResetCoroutine);
+            smokeResetCoroutine = StartCoroutine(LerpClipToDefault());
+        }
+
         pController.SetTeleporting(false);
     }
 
@@ -139,7 +154,31 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
         pController.SetTeleporting(false);
 
+        if (smokeResetCoroutine != null) StopCoroutine(smokeResetCoroutine);
+        smokeResetCoroutine = StartCoroutine(LerpClipToDefault());
+    }
+    
+    
+    private IEnumerator LerpClipToDefault()
+    {
+        isDissipating = true;
+        float currentClip = smokeEffect.GetFloat("Clip");
+        
+        yield return new WaitForSeconds(waitOnMax); 
+
+        float elapsed = 0f;
+        float duration = 0.5f; 
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            smokeEffect.SetFloat("Clip", Mathf.Lerp(currentClip, smokeDefaultClip, t));
+            yield return null;
+        }
+
         smokeEffect.SetFloat("Clip", smokeDefaultClip);
+        isDissipating = false; 
     }
 
     private void OnDrawGizmosSelected()

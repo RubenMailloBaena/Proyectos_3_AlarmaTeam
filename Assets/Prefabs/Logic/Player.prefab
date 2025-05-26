@@ -971,8 +971,9 @@ MonoBehaviour:
   allLayers:
     serializedVersion: 2
     m_Bits: 1015
-  smokeEffect: {fileID: 0}
-  teleportSpeed: 5
+  smokeEffect: {fileID: 2756283069758083509}
+  minFOV: 50
+  waitOnMax: 0.2
   leanParent: {fileID: 8546083993960383726}
 --- !u!114 &541859556553828673
 MonoBehaviour:
@@ -1368,6 +1369,66 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Name
+      value: Clip
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Name
+      value: Tex Power
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Name
+      value: Effect Color
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.x
+      value: 0.039546248
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector4f.m_Array.Array.data[0].m_Value.z
+      value: 0.084376216
+      objectReference: {fileID: 0}
     - target: {fileID: 8846963592899998486, guid: f2e1e982d380c7145b419c620b9cea68,
         type: 3}
       propertyPath: m_Name
@@ -1378,6 +1439,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e1e982d380c7145b419c620b9cea68, type: 3}
+--- !u!2083052967 &2756283069758083509 stripped
+VisualEffect:
+  m_CorrespondingSourceObject: {fileID: 7558858726940536191, guid: f2e1e982d380c7145b419c620b9cea68,
+    type: 3}
+  m_PrefabInstance: {fileID: 5667284455715011786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8671469356464979450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3958948021994766640, guid: f2e1e982d380c7145b419c620b9cea68,
