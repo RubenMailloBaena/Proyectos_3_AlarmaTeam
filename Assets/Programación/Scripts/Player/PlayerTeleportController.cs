@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(PlayerController))]
 public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
@@ -19,7 +20,10 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     [Tooltip("Tiempo de canalizaci�n del tp")]
     [SerializeField] private float holdTime = 2f;
     [SerializeField] private LayerMask allLayers;
-
+    
+    [Header("Animation References & Attributes")]
+    [SerializeField] private VisualEffect smokeEffect;
+    private float smokeDefaultClip;
     
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
@@ -31,6 +35,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     private void Awake()
     {
         pController = GetComponent<PlayerController>();
+        smokeDefaultClip = smokeEffect.GetFloat("Clip");
     }
 
     private void Update()
@@ -107,11 +112,19 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     {
         AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_habilidad_paso_sombrio", transform.position);
         pController.SetTeleporting(true);
-        float elapsed = 0;
+
+        float elapsed = 0f;
+
+        float startClip = smokeDefaultClip;
+        float endClip = 0f;
 
         while (elapsed < holdTime)
         {
             elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / holdTime);
+
+            smokeEffect.SetFloat("Clip", Mathf.Lerp(startClip, endClip, t));
+
             pController.UpdateProgressBar(elapsed);
             yield return null;
         }
@@ -121,10 +134,12 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             transform.position = currentStatue.GetTPPoint();
             transform.rotation = currentStatue.GetTPRotation();
         }
-            
+
         pController.PlayerTP();
         AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
         pController.SetTeleporting(false);
+
+        smokeEffect.SetFloat("Clip", smokeDefaultClip);
     }
 
     private void OnDrawGizmosSelected()
