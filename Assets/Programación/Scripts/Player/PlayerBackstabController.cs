@@ -11,8 +11,6 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
     [SerializeField] private InputActionReference attackInput;
 
     [Header("Backstab Attributes")]
-    [SerializeField] private float backstacbAnimationDistance = 2f;
-    [SerializeField] private float backstabAnimationDuration = 2f;
     [SerializeField] private float attackRange = 2f;
     [SerializeField] private float backstabDotOffset = 0.65f;
     [SerializeField] private float maxViewAngle = 60;

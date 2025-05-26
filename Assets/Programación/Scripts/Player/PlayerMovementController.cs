@@ -41,8 +41,6 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private Transform soundEffectSphereBigOne;
     [SerializeField] private float pulseDuration = 0.5f;
     [SerializeField] private float pulseScale = 14f;
-    [SerializeField] private float minPulseScale = 10f;
-    [SerializeField] private float pulseShrinkDuration = 0.3f;
     private Coroutine waveEffectCoroutine;
     private float finalRange;
     private bool stoppedRunning = true;
@@ -121,7 +119,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (pController.IsTeleporting || pController.IsPlayerDead || pController.isBackstabing) return;
+        if (pController.IsTeleporting)
+        {
+            stoppedRunning = true;
+            return;
+        }
+        
+        if (pController.IsPlayerDead || pController.isBackstabing) return;
 
         input = moveInput.action.ReadValue<Vector2>();
 
@@ -178,7 +182,7 @@ public class PlayerMovementController : MonoBehaviour
         if (Mathf.Approximately(playerCamera.fieldOfView, targetFOV))
             return;
 
-        playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovSpeed);
+        //playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, Time.deltaTime * fovSpeed);
     }
 
     private void PlayerJump()
@@ -247,7 +251,6 @@ public class PlayerMovementController : MonoBehaviour
     {
         while (!stoppedRunning)
         {
-            // Expandir desde 0 hasta pulseScale
             float timer = 0f;
             while (timer < pulseDuration)
             {
@@ -259,10 +262,7 @@ public class PlayerMovementController : MonoBehaviour
 
                 if (stoppedRunning) break;
             }
-
-            
         }
-
         soundEffectSphere.localScale = Vector3.zero;
         waveEffectCoroutine = null;
     }

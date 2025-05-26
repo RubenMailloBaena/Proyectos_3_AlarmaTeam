@@ -25,9 +25,9 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     [SerializeField] private VisualEffect smokeEffect;
     [SerializeField] private float minFOV = 50;
     [SerializeField] private float waitOnMax = 0.2f;
-    private Camera camera;
+    private Camera playerCamera;
     private float smokeDefaultClip, defaultFov;
-    private bool isDissipating = false;
+    private bool isDissipating = false, teleported = false;
     
     [Tooltip("Transform de la c�mara que se usa para lanzar el Raycast")]
     public Transform leanParent;
@@ -41,7 +41,8 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
     {
         pController = GetComponent<PlayerController>();
         smokeDefaultClip = smokeEffect.GetFloat("Clip");
-        camera = Camera.main;
+        playerCamera = Camera.main;
+        defaultFov = playerCamera.fieldOfView;
     }
 
     private void Update()
@@ -114,7 +115,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             pController.HideProgressBar();
         }
 
-        if (!isDissipating)
+        if (!isDissipating && !pController.IsRunning && !teleported)
         {
             if (smokeResetCoroutine != null) StopCoroutine(smokeResetCoroutine);
             smokeResetCoroutine = StartCoroutine(LerpClipToDefault());
@@ -125,13 +126,18 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
 
     private IEnumerator TeleportAfterHold()
     {
+        print("TELEPORTING");
+        if (smokeResetCoroutine != null) StopCoroutine(smokeResetCoroutine);
+        teleported = false;
+        isDissipating = false;
         AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_habilidad_paso_sombrio", transform.position);
         pController.SetTeleporting(true);
 
         float elapsed = 0f;
-
         float startClip = smokeDefaultClip;
         float endClip = 0f;
+
+        float initialFOV = playerCamera.fieldOfView;
 
         while (elapsed < holdTime)
         {
@@ -139,6 +145,7 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
             float t = Mathf.Clamp01(elapsed / holdTime);
 
             smokeEffect.SetFloat("Clip", Mathf.Lerp(startClip, endClip, t));
+            playerCamera.fieldOfView = Mathf.Lerp(initialFOV, minFOV, t);
 
             pController.UpdateProgressBar(elapsed);
             yield return null;
@@ -154,17 +161,20 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_habilidad_paso_sombrio", true);
         pController.SetTeleporting(false);
 
-        if (smokeResetCoroutine != null) StopCoroutine(smokeResetCoroutine);
+        teleported = true;
+        yield return new WaitForSeconds(2); 
         smokeResetCoroutine = StartCoroutine(LerpClipToDefault());
     }
     
     
     private IEnumerator LerpClipToDefault()
     {
+        print("CLEARING");
         isDissipating = true;
         float currentClip = smokeEffect.GetFloat("Clip");
+        float initialFOV = playerCamera.fieldOfView;
         
-        yield return new WaitForSeconds(waitOnMax); 
+        //yield return new WaitForSeconds(waitOnMax); 
 
         float elapsed = 0f;
         float duration = 0.5f; 
@@ -173,11 +183,14 @@ public class PlayerTeleportController : MonoBehaviour, IPlayerComponent
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
+
             smokeEffect.SetFloat("Clip", Mathf.Lerp(currentClip, smokeDefaultClip, t));
+            playerCamera.fieldOfView = Mathf.Lerp(initialFOV, defaultFov, t); 
             yield return null;
         }
 
         smokeEffect.SetFloat("Clip", smokeDefaultClip);
+        playerCamera.fieldOfView = defaultFov; 
         isDissipating = false; 
     }
 
