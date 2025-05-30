@@ -852,6 +852,7 @@ MonoBehaviour:
     type: 3}
   jumpInput: {fileID: 8681186743522639307, guid: e49e41b680fb6954ea8256b7b8ee8217,
     type: 3}
+  cameraHeadBobing: {fileID: 6903828580236566413}
   cameraNormalFov: 60
   cameraRunFov: 75
   fovSpeed: 3
@@ -1105,6 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7281315911941767991}
+  - component: {fileID: 6903828580236566413}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -1128,6 +1130,28 @@ Transform:
   - {fileID: 5448091118180242944}
   m_Father: {fileID: 8546083993960383726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6903828580236566413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324868421185790551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9083c99e9009d12468556445020278b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leanAmount: 0.00328
+  leanFrequency: 10
+  leanSmooth: 28.3
+  walkAmount: 0.00508
+  walkFrequency: 11.8
+  walkSmooth: 66.9
+  runAmount: 0.00803
+  runFrequency: 24
+  runSmooth: 69.9
+  returnSpeed: 2
 --- !u!1001 &5073090272487394788
 PrefabInstance:
   m_ObjectHideFlags: 0

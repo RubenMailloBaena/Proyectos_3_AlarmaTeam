@@ -16,6 +16,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private InputActionReference jumpInput;
 
     [Header("Camera Attributes")] 
+    [SerializeField] private CameraHeadBobing cameraHeadBobing;
     [SerializeField] private float cameraNormalFov = 60f;
     [SerializeField] private float cameraRunFov = 70f;
     [SerializeField] private float fovSpeed = 5f;
@@ -115,8 +116,6 @@ public class PlayerMovementController : MonoBehaviour
         }
     }
 
-
-
     private void PlayerMovement()
     {
         if (pController.IsTeleporting)
@@ -133,6 +132,8 @@ public class PlayerMovementController : MonoBehaviour
         if (input == Vector2.zero)
         {
             pController.SetIsIdle(true);
+            cameraHeadBobing.Stop();
+            return;
         }
             
         
@@ -147,6 +148,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (!stoppedRunning)
                 stoppedRunning = true;
+            cameraHeadBobing.BobHead(HeadBobSpeed.Leaning);
             return leaningSpeed;
         }
 
@@ -154,6 +156,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (!stoppedRunning)
                 stoppedRunning = true;
+            cameraHeadBobing.BobHead(HeadBobSpeed.Walk);
             return crouchSpeed;
         }
         if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged && !pController.IsIdle && !pController.IsLeaning)
@@ -166,12 +169,14 @@ public class PlayerMovementController : MonoBehaviour
                 waveEffectCoroutine = StartCoroutine(PulseWave());
                 StartCoroutine(PulseWaveBigOne());
             }
+            cameraHeadBobing.BobHead(HeadBobSpeed.Running);
             return runSpeed;
         }
         
         finalRange = walkingSoundRange;
         stoppedRunning = true;
         pController.SetIsRunning(false);
+        cameraHeadBobing.BobHead(HeadBobSpeed.Walk);
         return walkSpeed;
     }
 
