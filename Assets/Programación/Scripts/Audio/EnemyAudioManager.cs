@@ -28,7 +28,7 @@ public class EnemyAudioManager : MonoBehaviour
         { SoundType.Run,       "event:/Enemigo/enemigo_pasos_madera_correr" },
         { SoundType.Attack,    "event:/Enemigo/enemigo_rezo" },
         { SoundType.Dead,      "event:/Enemigo/enemigo_muerte" },
-        { SoundType.Charm,     "event:/Enemigo/enemigo_charmed" },
+        { SoundType.Charm,     "event:/Jugador/jugador_habilidad_control_mental" },
         { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar" }
     };
 
