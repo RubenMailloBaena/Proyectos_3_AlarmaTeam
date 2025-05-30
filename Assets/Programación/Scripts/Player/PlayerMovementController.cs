@@ -133,9 +133,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             pController.SetIsIdle(true);
             cameraHeadBobing.Stop();
-            return;
         }
-            
         
         Vector3 moveDir = transform.right * input.x + transform.forward * input.y;
 

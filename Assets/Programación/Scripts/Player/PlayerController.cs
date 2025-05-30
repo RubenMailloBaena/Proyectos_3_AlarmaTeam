@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     private PlayerHUDController pHUD;
     private PlayerInput playerInput;
 
+    [SerializeField] private float charmEffectDuration = 1f;
     [SerializeField] private Transform playerEyes;
     [SerializeField] private Transform playerHead;
     [SerializeField] private Transform playerBody;
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour, IRestartable
     public void SetHurtVisualColor(Color color) => pHUD.SetHurtVisualColor(color);
     public Color GetHurtVisualColor() => pHUD.GetHurtVisualColor();
     public void ShowGameOverHUD(bool b) => pHUD.SetGameOverPanelActive(b);
+    public float GetCharmEffectDuration() => charmEffectDuration;
 
     // ------------------ PLAYER REFERENCES ------------------
 

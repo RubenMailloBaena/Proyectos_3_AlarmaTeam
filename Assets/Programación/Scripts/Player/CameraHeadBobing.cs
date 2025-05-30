@@ -50,10 +50,13 @@ public class CameraHeadBobing : MonoBehaviour
     
     private Vector3 startPosition;
     private bool headBob = false;
+
+    private PlayerController pController;
     
     
     private void Start()
     {
+        pController = GameManager.GetInstance().GetPlayerController();
         startPosition = transform.localPosition;
     }
 
@@ -67,7 +70,7 @@ public class CameraHeadBobing : MonoBehaviour
 
     private void Update()
     {
-        if (headBob)
+        if (headBob && !pController.IsIdle  && !pController.IsTeleporting && !pController.IsPlayerDead && !pController.IsVaulting)
         {
             StartHeadBobing();
         }

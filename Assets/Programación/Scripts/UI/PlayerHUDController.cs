@@ -52,7 +52,10 @@ public class PlayerHUDController : MonoBehaviour
     [Header("Player Charm Visuals")] 
     [SerializeField] private Material vampVisionMat;
     [SerializeField] private ScriptableRendererFeature fullScreenVision;
-
+    [SerializeField] private float targetScreenIntesity = 0.6f;
+    [SerializeField] private float targetVinegget = 1.2f;
+    private Coroutine shaderLerpCoroutine;
+    
     private float vignettIntesity, fullScreenIntensity;
     
     [Header("GameLogic UI")] 
@@ -148,12 +151,46 @@ public class PlayerHUDController : MonoBehaviour
 
     #region CharmingVisual
 
-    public void SetCharmingVisualActive(bool active) => fullScreenVision.SetActive(active);
 
-    private void LerpShader()
+    public void SetCharmingVisualActive(bool active)
     {
-        //TODO: HACER LA ANIMACION DEL EFECTO APARECIENDO
-        print(vignettIntesity + " " +fullScreenIntensity);
+        if (shaderLerpCoroutine != null)
+            StopCoroutine(shaderLerpCoroutine);
+
+        shaderLerpCoroutine = StartCoroutine(LerpShaderCoroutine(active));
+    }
+    
+    private IEnumerator LerpShaderCoroutine(bool active)
+    {
+        fullScreenVision.SetActive(true);
+
+        float effectDuration = pController.GetCharmEffectDuration();
+        float elapsed = 0f;
+
+        float startVignette = vampVisionMat.GetFloat("_VignettIntesity");
+        float startFullScreen = vampVisionMat.GetFloat("_FullScreenIntensity");
+
+        float targetVignette = active ? targetVinegget : 0f;
+        float targetFullScreen = active ? targetScreenIntesity : 1f;
+
+        while (elapsed < effectDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / effectDuration;
+
+            float currentVignette = Mathf.Lerp(startVignette, targetVignette, t);
+            float currentFullScreen = Mathf.Lerp(startFullScreen, targetFullScreen, t);
+
+            vampVisionMat.SetFloat("_VignettIntesity", currentVignette);
+            vampVisionMat.SetFloat("_FullScreenIntensity", currentFullScreen);
+
+            yield return null;
+        }
+
+        vampVisionMat.SetFloat("_VignettIntesity", targetVignette);
+        vampVisionMat.SetFloat("_FullScreenIntensity", targetFullScreen);
+        
+        fullScreenVision.SetActive(active);
     }
 
     #endregion
