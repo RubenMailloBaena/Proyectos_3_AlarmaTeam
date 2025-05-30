@@ -27900,7 +27900,42 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 216169202}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d2fb37b7086ba340b9be43b9161c0d3,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 935223706}
   m_SourcePrefab: {fileID: 100100000, guid: 3d2fb37b7086ba340b9be43b9161c0d3, type: 3}
+--- !u!23 &935223705 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3d2fb37b7086ba340b9be43b9161c0d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 935223704}
+  m_PrefabAsset: {fileID: 0}
+--- !u!205 &935223706
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216169198}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.6
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 935223705}
+  - screenRelativeHeight: 0.3
+    fadeTransitionWidth: 0
+    renderers: []
+  - screenRelativeHeight: 0.1
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1001 &937202131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53076,12 +53111,17 @@ PrefabInstance:
     - target: {fileID: 151027537219922088, guid: aba4c4c85fd98ba4485ac3dd920eaeb5,
         type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.8254717
       objectReference: {fileID: 0}
     - target: {fileID: 151027537219922088, guid: aba4c4c85fd98ba4485ac3dd920eaeb5,
         type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.85246634
+      objectReference: {fileID: 0}
+    - target: {fileID: 151027537219922088, guid: aba4c4c85fd98ba4485ac3dd920eaeb5,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 927952453968397606, guid: aba4c4c85fd98ba4485ac3dd920eaeb5,
         type: 3}
