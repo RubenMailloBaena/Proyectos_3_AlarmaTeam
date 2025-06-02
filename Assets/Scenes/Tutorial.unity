@@ -3529,7 +3529,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 17eeb6c27498c894f9d69b399bcab5c1,
+      objectReference: {fileID: 23800000, guid: ab17fc5301768ae4c911113b66987b24,
         type: 2}
     - target: {fileID: 3973154705124691338, guid: 9053e2488c94097428a93c4aefd874dc,
         type: 3}
@@ -15348,27 +15348,27 @@ PrefabInstance:
     - target: {fileID: 5179529821861082363, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
       propertyPath: EventReference.Path
-      value: event:/Enemigo/enemigo_backstab
+      value: event:/Enemigo/enemigo_muerte
       objectReference: {fileID: 0}
     - target: {fileID: 5179529821861082363, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
       propertyPath: EventReference.Guid.Data1
-      value: 1139678061
+      value: 1933860642
       objectReference: {fileID: 0}
     - target: {fileID: 5179529821861082363, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
       propertyPath: EventReference.Guid.Data2
-      value: 1100162667
+      value: 1286522256
       objectReference: {fileID: 0}
     - target: {fileID: 5179529821861082363, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
       propertyPath: EventReference.Guid.Data3
-      value: 348860313
+      value: 1611714466
       objectReference: {fileID: 0}
     - target: {fileID: 5179529821861082363, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
       propertyPath: EventReference.Guid.Data4
-      value: -216987318
+      value: -1003028839
       objectReference: {fileID: 0}
     - target: {fileID: 8786475996596183781, guid: 51a70161f5ea9124a9406ca204937533,
         type: 3}
@@ -58472,6 +58472,11 @@ PrefabInstance:
         type: 3}
       propertyPath: waypoints.Array.data[2].rotateEnemy
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947574647915804177, guid: af67785d09cba1843a9dec320345f1ca,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
