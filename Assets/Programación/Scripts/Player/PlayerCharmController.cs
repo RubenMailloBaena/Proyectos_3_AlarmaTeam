@@ -96,7 +96,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         isCharming = true;
         pController.SetCharmingVisual(true);
         visionCircle.SetActive(true);
-        AudioManager.Instance.HandlePlaySound3D("event:/Test/TestLoop", transform.position);
+        AudioManager.Instance.HandlePlay3DOneShot("event:/Jugador/jugador_vision_vampirica_activar", transform.position);
     }
 
     private void ExitCharmingMode()
@@ -107,7 +107,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         ClearHoveredTarget();
         ClearCharmedTarget();
         ClearVisionTargets();
-        AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
+        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_vision_vampirica_desactivar", transform.position);
     }
 
     #endregion

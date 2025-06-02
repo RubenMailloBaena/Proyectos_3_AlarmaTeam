@@ -15,7 +15,7 @@ public class PlaySound : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             Debug.Log("Pressing B");
-            var instance = FMODUnity.RuntimeManager.CreateInstance("event:/Jugador/jugador_habilidad_control_mental");
+            var instance = FMODUnity.RuntimeManager.CreateInstance("event:/Enemigo/enemigo_backstab");
             instance.start();
         }
     }
