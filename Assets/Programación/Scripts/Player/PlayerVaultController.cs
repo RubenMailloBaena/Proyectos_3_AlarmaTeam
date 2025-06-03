@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,9 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
     [SerializeField] private float raycastStartHeight = 0.3f;
     [SerializeField] private float raycastMaxDistance = 2f;
     [SerializeField] private float descendTime = 0.2f;
+    
+    [Header("Vault Rotation")]
+    [SerializeField] private Animator cameraAnimator;
 
     private ICanVault currentVaultObject;
 
@@ -58,7 +62,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
                 if (hit.transform.TryGetComponent(out ICanVault vaultObject))
                 {
                     currentVaultObject = vaultObject;
-                    StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position)));
+                    StartCoroutine(PerformVault(vaultObject.GetVaultEndPoint(transform.position), vaultObject.VaultOption));
                 }
             }
 
@@ -70,8 +74,8 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
             pController.SetCanVault(false);
         }
     }
-
-    private IEnumerator PerformVault(Vector3 targetPosition)
+    
+    /*private IEnumerator PerformVault(Vector3 targetPosition)
     {
         pController.SetVaulting(true);
 
@@ -79,6 +83,26 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
         AudioManager.Instance.HandlePlaySound3D(soundEvent, transform.position);
 
         yield return MoveToTargetPosition(targetPosition);
+        yield return SmoothDescentToGround(targetPosition);
+        pController.ResetFallSound();
+        AudioManager.Instance.HandleStopSound(soundEvent, true);
+        pController.SetVaulting(false);
+    }*/
+
+    private IEnumerator PerformVault(Vector3 targetPosition, VaultOptions vaultOption)
+    {
+        pController.SetVaulting(true);
+        
+        if (vaultOption == VaultOptions.OneVault)
+        {
+            cameraAnimator.SetTrigger("StartVault");
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        string soundEvent = GetVaultSoundEvent();
+        AudioManager.Instance.HandlePlaySound3D(soundEvent, transform.position);
+
+        yield return MoveToTargetPosition(targetPosition, vaultOption);
         yield return SmoothDescentToGround(targetPosition);
         pController.ResetFallSound();
         AudioManager.Instance.HandleStopSound(soundEvent, true);
@@ -135,7 +159,7 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
         }
     }
 
-    private IEnumerator MoveToTargetPosition(Vector3 targetPosition)
+    private IEnumerator MoveToTargetPosition(Vector3 targetPosition, VaultOptions vaultOption)
     {
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
@@ -147,6 +171,10 @@ public class PlayerVaultController : MonoBehaviour, IPlayerComponent
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        
+        if(vaultOption == VaultOptions.OneVault)
+            cameraAnimator.SetTrigger("StopVault");
+        
     }
 
     private void OnDrawGizmosSelected()

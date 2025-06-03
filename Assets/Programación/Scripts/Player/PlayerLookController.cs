@@ -39,13 +39,13 @@ public class PlayerLookController : MonoBehaviour
 
     private void CameraControl()
     {
-        if (pController.isBackstabing)
+        if (pController.isBackstabing || pController.IsVaulting)
         {
             SmoothLookToCenter();
             return;
         }
         
-        if (cameraLocked || pController.IsVaulting || pController.IsTeleporting || pController.IsPlayerDead) return;
+        if (cameraLocked || pController.IsTeleporting || pController.IsPlayerDead) return;
 
         input = mouseInput.action.ReadValue<Vector2>();
 
