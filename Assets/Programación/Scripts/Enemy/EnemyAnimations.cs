@@ -11,7 +11,9 @@ public enum AnimationType
     Attack,
     Dead,
     Charm,
-    CharmWalk
+    CharmWalk,
+    TurnRight,
+    TurnLeft
 }
 
 public class EnemyAnimations : MonoBehaviour
@@ -24,6 +26,7 @@ public class EnemyAnimations : MonoBehaviour
 
     private float currentBlendSpeed = 0f;
     private float targetBlendSpeed = 0f;
+    
     [SerializeField] private float speedLerpRate = 5f;
 
     private void Awake()
@@ -71,6 +74,14 @@ public class EnemyAnimations : MonoBehaviour
             
             case AnimationType.CharmWalk:
                 animator.SetTrigger("CharmWalk");
+                break;
+            
+            case AnimationType.TurnLeft:
+                animator.SetTrigger("TurnLeft");
+                break;
+            
+            case AnimationType.TurnRight:
+                animator.SetTrigger("TurnRight");
                 break;
         }
     }

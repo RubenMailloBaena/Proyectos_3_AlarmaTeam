@@ -13,12 +13,13 @@ public class CheckState : State
     [Header("STATES")] 
     public ReturnState returnState;
 
-    private bool lookingLeft, finishedWaiting, returningToStart;
+    private bool lookingLeft, finishedWaiting, returningToStart, animationDone;
     private Vector3 startingForward, rightLookDir, leftLookDir;
 
     public override void InitializeState()
     {
-        //TODO: CHANGE IN FUTURE
+        print("CHECK STATE");
+        
         eController.SetAnimation(AnimationType.Idle, false);
         eController.StopSound();
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
@@ -34,6 +35,7 @@ public class CheckState : State
         
         finishedWaiting = false;
         returningToStart = false;
+        animationDone = false;
 
         StartCoroutine(StartingWaitTime());
     }
@@ -49,21 +51,42 @@ public class CheckState : State
         {
             if (!lookingLeft) //MIRAMOS A LA DERECHA 
             {
+                if (!animationDone)
+                {
+                    animationDone = true;
+                    eController.SetAnimation(AnimationType.TurnRight, false);
+                }
+
                 if (eController.RotateEnemy(rightLookDir, checkRotateSpeed))
+                {
                     lookingLeft = true;
+                    animationDone = false;
+                }
             }
             else //MIRAMOS A LA IZQUIERDA
             {
+                if (!animationDone)
+                {
+                    animationDone = true;
+                    eController.SetAnimation(AnimationType.TurnLeft, false);
+                }
                 if (eController.RotateEnemy(leftLookDir, checkRotateSpeed))
                 {
                     lookingLeft = false;
-                    returningToStart = true; 
+                    returningToStart = true;
+                    animationDone = false;
                 }
             }
         }
         //QUIZAS QUITARLO
         else //CUANDO HEMOS MIRADO A LOS DOS LADOS, VOLVEMOS A MIRAR ADELANTE ANTES DE CAMBIAR DE ESTADO
         {
+            if (!animationDone)
+            {
+                animationDone = true;
+                eController.SetAnimation(AnimationType.TurnRight, false);
+            }
+            
             if (eController.RotateEnemy(startingForward, checkRotateSpeed))
                 return returnState;
         }

@@ -70,7 +70,7 @@ public class CameraHeadBobing : MonoBehaviour
 
     private void Update()
     {
-        if (headBob && !pController.IsIdle  && !pController.IsTeleporting && !pController.IsPlayerDead && !pController.IsVaulting)
+        if (headBob && !pController.IsIdle  && !pController.IsTeleporting && !pController.IsPlayerDead && !pController.IsVaulting && !pController.isBackstabing)
         {
             StartHeadBobing();
         }

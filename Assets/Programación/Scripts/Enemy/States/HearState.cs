@@ -16,8 +16,6 @@ public class HearState : State
 
     public override void InitializeState()
     {
-        //TODO: CHANGE IN FUTURE
-        eController.SetAnimation(AnimationType.Idle, false);
         eController.StopSound();
         eController.HideArrow();
         eController.ManualRotation(false);
@@ -32,7 +30,15 @@ public class HearState : State
         //SI el path esta muy lejos para llegar, ingoramos el sonido
         if(eController.GetPathLength(targetPos) > maxDistanceToIgnore)
             eController.ReturnToLastState();
-
+        
+        Vector3 cross = Vector3.Cross(transform.forward, targetDir);
+        if (cross.y > 0)
+            eController.SetAnimation(AnimationType.TurnLeft, false);
+        else if(cross.y < 0)
+            eController.SetAnimation(AnimationType.TurnRight, false);
+        else
+            eController.SetAnimation(AnimationType.Idle, false);
+        
         eController.StopAgent();
     }
 
