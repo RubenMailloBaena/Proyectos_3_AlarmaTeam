@@ -7,6 +7,8 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
 {
     private EnemyController eController;
     [SerializeField] private GameObject weakSpotRenderer;
+    [SerializeField] private GameObject topVeins;
+    [SerializeField] private GameObject legVeins;
     
     public void SetBackstab(EnemyController enemyController)
     {
@@ -21,15 +23,23 @@ public class EnemyBackstab : MonoBehaviour, IEnemyBackstab
     public void SetWeakSpot(bool active)
     {
         if (eController.enemyIsDead) return;
-        
-        if(weakSpotRenderer != null)
+
+        if (weakSpotRenderer != null)
+        {
             weakSpotRenderer.SetActive(active);
+            topVeins.SetActive(active);
+            legVeins.SetActive(active);
+        }
     }
 
     public void KillAnimationHeartController(bool active)
     {
-        if(weakSpotRenderer != null)
+        if (weakSpotRenderer != null)
+        {
             weakSpotRenderer.SetActive(active);
+            topVeins.SetActive(active);
+            legVeins.SetActive(active);
+        }
     }
 
     public void Backstab()
