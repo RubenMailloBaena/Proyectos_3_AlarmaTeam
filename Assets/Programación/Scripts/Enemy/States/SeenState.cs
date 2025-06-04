@@ -14,26 +14,29 @@ public class SeenState : State
     [SerializeField] private float barMaxCapacity = 100f;
     private float currentFillValue = 0f;
     private float fillRate = 0f;
-    private Vector3 playerPos;
+    private Vector3 playerPos, playerDir;
+    private bool isTurning = false;
     
     [Header("STATES")]
     public CheckState checkState;
     public ChaseState chaseState;
 
-    public override void InitializeState()
+   public override void InitializeState()
     {
-        //TODO: CHANGE IN FUTURE
         eController.SetAnimation(AnimationType.Idle, false);
         eController.StopSound();
+        
         if (eController.isChasingPlayer)
         {
             eController.SwitchToNextState(chaseState);
             return;
         }
+
         eController.ActivateSeenArrow();
         eController.ManualRotation(true);
         eController.SetAgentSpeed(seenSpeed);
         currentFillValue = baseFillPerSecond;
+        isTurning = false;
     }
 
     public override State RunCurrentState()
@@ -42,20 +45,47 @@ public class SeenState : State
         {
             playerPos = eController.GoToPlayerPosition();
             float distanceToPlayer = Vector3.Distance(playerPos, transform.position);
+            playerDir = (playerPos - transform.position).normalized;
 
-            Vector3 dir = (playerPos - transform.position).normalized;
-            eController.RotateEnemy(dir, seenRotationSpeed);
+            if (!eController.RotateEnemy(playerDir, seenRotationSpeed))
+            {
+                if (!isTurning)
+                {
+                    Vector3 cross = Vector3.Cross(transform.forward, playerDir);
+                    if (cross.y > 0)
+                        eController.SetAnimation(AnimationType.TurnRight, false);
+                    else if (cross.y < 0)
+                        eController.SetAnimation(AnimationType.TurnLeft, false);
 
-            fillRate = MapFunction(distanceToPlayer, eController.GetMaxViewDis(), eController.GetMinViewDis(),baseFillPerSecond,maxFillPerSecond);
+                    isTurning = true;
+                }
+            }
+            else
+            {
+                if (isTurning)
+                {
+                    eController.SetAnimation(AnimationType.StopTurn, false);
+                    isTurning = false;
+                }
+            }
+
+            fillRate = MapFunction(distanceToPlayer, eController.GetMaxViewDis(), eController.GetMinViewDis(), baseFillPerSecond, maxFillPerSecond);
             currentFillValue += fillRate * Time.deltaTime;
 
             if (currentFillValue >= barMaxCapacity)
             {
+                eController.ManualRotation(false);
                 return chaseState;
             }
         }
         else
         {
+            if (isTurning)
+            {
+                eController.SetAnimation(AnimationType.StopTurn, false);
+                isTurning = false;
+            }
+
             currentFillValue -= substractPerSecond * Time.deltaTime;
 
             if (currentFillValue <= 0.0f)
@@ -65,7 +95,7 @@ public class SeenState : State
                 return checkState;
             }
         }
-        
+
         eController.UpdateSeenAmount(currentFillValue, barMaxCapacity);
         return this;
     }
