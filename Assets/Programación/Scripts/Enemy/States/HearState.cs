@@ -31,11 +31,12 @@ public class HearState : State
         if(eController.GetPathLength(targetPos) > maxDistanceToIgnore)
             eController.ReturnToLastState();
         
+        targetDir = (targetPos - transform.position).normalized;
         Vector3 cross = Vector3.Cross(transform.forward, targetDir);
         if (cross.y > 0)
-            eController.SetAnimation(AnimationType.TurnLeft, false);
-        else if(cross.y < 0)
             eController.SetAnimation(AnimationType.TurnRight, false);
+        else if(cross.y < 0)
+            eController.SetAnimation(AnimationType.TurnLeft, false);
         else
             eController.SetAnimation(AnimationType.Idle, false);
         
@@ -48,6 +49,7 @@ public class HearState : State
         targetDir = (targetPos - transform.position).normalized;
         if (eController.RotateEnemy(targetDir, hearRotationSpeed))
         {
+            eController.SetAnimation(AnimationType.StopTurn, false);
             eController.SetInPlayerHearState(false);
             eController.SetIgnorePlayerInMinVision(false);
             if (eController.SoundWasAnObject())

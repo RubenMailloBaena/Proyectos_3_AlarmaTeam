@@ -18,8 +18,6 @@ public class CheckState : State
 
     public override void InitializeState()
     {
-        print("CHECK STATE");
-        
         eController.SetAnimation(AnimationType.Idle, false);
         eController.StopSound();
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR

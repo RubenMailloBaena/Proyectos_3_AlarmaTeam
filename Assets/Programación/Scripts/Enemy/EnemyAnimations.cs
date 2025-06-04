@@ -13,7 +13,8 @@ public enum AnimationType
     Charm,
     CharmWalk,
     TurnRight,
-    TurnLeft
+    TurnLeft,
+    StopTurn
 }
 
 public class EnemyAnimations : MonoBehaviour
@@ -82,6 +83,11 @@ public class EnemyAnimations : MonoBehaviour
             
             case AnimationType.TurnRight:
                 animator.SetTrigger("TurnRight");
+                break;
+            
+            case AnimationType.StopTurn:
+                if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.9f)
+                    animator.SetTrigger("StopTurn");
                 break;
         }
     }
