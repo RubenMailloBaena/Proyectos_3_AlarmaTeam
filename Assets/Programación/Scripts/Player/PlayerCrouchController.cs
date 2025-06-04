@@ -90,26 +90,28 @@ public class PlayerCrouchController : MonoBehaviour
 
     private void SetCrouchTargets()
     {
+
+        if (isCrouching) return;
         isCrouching = true;
         targetHeight = charControllerHeight;
         targetCenter = new Vector3(0, charControllerCrouchCenter, 0);
         targetCameraPosition = initialCameraPosition - new Vector3(0, cameraCrouchAmount, 0);
         targetAlpha = maxAlpha;
 
-        //AudioManager.Instance.HandlePlay3DOneShot("event:/Jugador/jugado_agacharse", transform.position);
+        AudioManager.Instance.HandlePlay3DOneShot("crouch", "event:/Jugador/jugador_agacharse", transform.position);
     }
 
     private void SetStandUpTargets()
     {
-        if (!CanStandUp()) return;
-        
+        if (!CanStandUp() || !isCrouching) return;
+
         isCrouching = false;
         targetHeight = initialHeight;
         targetCenter = initialCenter;
         targetCameraPosition = initialCameraPosition;
         targetAlpha = 0.0f;
 
-        //AudioManager.Instance.HandlePlay3DOneShot("event:/Jugador/jugado_agacharse", transform.position);
+        AudioManager.Instance.HandlePlay3DOneShot("crouch", "event:/Jugador/jugador_levantarse", transform.position);
     }
 
     private void PerformCrouch()

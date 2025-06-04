@@ -42,7 +42,6 @@ public class EnemyAudioManager : MonoBehaviour
         controller.OnStopSound += StopSound;
     }
 
-
     private void OnDisable()
     {
         controller.OnPlaySound -= SetSound;
@@ -57,13 +56,19 @@ public class EnemyAudioManager : MonoBehaviour
             return;
         }
 
-        if (currentClip == clipName)
-            return;
-        StopSound();
+        // Si ya está sonando ese clip y aún se está reproduciendo, no hacer nada
+        if (currentClip == clipName && currentInstance.isValid())
+        {
+            currentInstance.getPlaybackState(out PLAYBACK_STATE state);
+            if (state == PLAYBACK_STATE.PLAYING)
+                return;
+        }
+
+        StopSound(); // Cortar cualquier sonido anterior
 
         currentInstance = RuntimeManager.CreateInstance(clipName);
         currentInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-        RuntimeManager.AttachInstanceToGameObject(currentInstance, transform, GetComponent<Rigidbody>()); // Para que siga al enemigo
+        RuntimeManager.AttachInstanceToGameObject(currentInstance, transform, GetComponent<Rigidbody>());
         currentInstance.start();
 
         currentClip = clipName;

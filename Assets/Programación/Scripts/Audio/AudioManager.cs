@@ -8,6 +8,9 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
 
     private Dictionary<string, EventInstance> activeEvents = new Dictionary<string, EventInstance>();
+    private Dictionary<string, float> groupCooldowns = new Dictionary<string, float>();
+    private const float groupCooldown = 0.1f;
+
 
     private void Awake()
     {
@@ -18,9 +21,16 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
-    public void HandlePlay3DOneShot(string path, Vector3 pos)
+    public void HandlePlay3DOneShot(string groupKey, string eventPath, Vector3 pos)
     {
-        RuntimeManager.PlayOneShot(path, pos);
+        if (groupCooldowns.TryGetValue(groupKey, out float lastTime))
+        {
+            if (Time.time - lastTime < groupCooldown)
+                return;
+        }
+
+        RuntimeManager.PlayOneShot(eventPath, pos);
+        groupCooldowns[groupKey] = Time.time;
     }
 
     public void HandlePlay2DOneShot(string path)

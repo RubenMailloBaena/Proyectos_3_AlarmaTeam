@@ -45,9 +45,9 @@ public class Doors : MonoBehaviour, IObjects, IRestartable
         isMoving = !isMoving;
 
         if (isMoving)
-            AudioManager.Instance.HandlePlay3DOneShot("eevent:/Ambiente/ambiente_puerta_metal", transform.position);
+            AudioManager.Instance.HandlePlay3DOneShot("door","event:/Ambiente/ambiente_puerta_metal", transform.position);
         else
-            AudioManager.Instance.HandlePlay3DOneShot("event:/Ambiente/ambiente_puerta_metal", transform.position);
+            AudioManager.Instance.HandlePlay3DOneShot("door", "event:/Ambiente/ambiente_puerta_metal", transform.position);
 
     }
 

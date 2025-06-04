@@ -33,6 +33,7 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
     private List<ICharmEnemy> checkpointEnemeis = new List<ICharmEnemy>();
     private List<IInteractable> checkpointInteractables = new List<IInteractable>();
     private bool isCharming;
+    private bool isExitingCharm = false;
 
     private void Awake()
     {
@@ -96,18 +97,32 @@ public class PlayerCharmController : MonoBehaviour, IPlayerComponent
         isCharming = true;
         pController.SetCharmingVisual(true);
         visionCircle.SetActive(true);
-        AudioManager.Instance.HandlePlay3DOneShot("event:/Jugador/jugador_vision_vampirica_activar", transform.position);
+        AudioManager.Instance.HandlePlay3DOneShot("playerCharm", "event:/Jugador/jugador_vision_vampirica_activar", transform.position);
     }
 
     private void ExitCharmingMode()
     {
+        if (!isCharming || isExitingCharm) return;
+
+        isExitingCharm = true;
         isCharming = false;
+
         pController.SetCharmingVisual(false);
         visionCircle.SetActive(false);
+
         ClearHoveredTarget();
         ClearCharmedTarget();
         ClearVisionTargets();
-        AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_vision_vampirica_desactivar", transform.position);
+
+        AudioManager.Instance.HandlePlay3DOneShot("playerCharm", "event:/Jugador/jugador_vision_vampirica_desactivar", transform.position);
+
+        StartCoroutine(ResetCharmExitFlagNextFrame());
+    }
+
+    private IEnumerator ResetCharmExitFlagNextFrame()
+    {
+        yield return null;
+        isExitingCharm = false;
     }
 
     #endregion
