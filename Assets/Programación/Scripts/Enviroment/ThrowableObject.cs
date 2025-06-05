@@ -111,8 +111,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             notFractured.SetActive(false);
             fracturedInstance = Instantiate(fracturedPrefab, transform.position, transform.rotation);
             fracturedInstance.SetActive(true);
-
-            StartCoroutine(DisableFractureAtTime(fracturedInstance));
         }
         else
         {
@@ -121,25 +119,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             notFractured.SetActive(true);
         }
     }
-
-    private IEnumerator DisableFractureAtTime(GameObject fractured)
-    {
-        yield return new WaitForSeconds(3f);
-
-        Rigidbody[] rigidBodies = fracturedInstance.GetComponentsInChildren<Rigidbody>();
-        foreach (var childBody in rigidBodies)
-        {
-            childBody.isKinematic = true;
-            childBody.useGravity = false;
-        }
-
-        Collider[] colliders = fracturedInstance.GetComponentsInChildren<Collider>();
-        foreach (var childCollider in colliders)
-        {
-            childCollider.enabled = false;
-        }
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
