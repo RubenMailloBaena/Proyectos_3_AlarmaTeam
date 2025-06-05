@@ -89,7 +89,10 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
         SetVisiblity(select);
 
         foreach (var lr in lines)
-            lr.enabled = select;
+        {
+            if(lr != null)
+                lr.enabled = select;
+        }
 
         foreach (var item in objects)
             item.ShowInteract(select, isLocked);
@@ -182,6 +185,8 @@ public class LeverController : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     private void TurnOffOutline()
     {
+        if (baseOutline == null || stickOutline == null) return;
+        
         baseOutline.enabled = false;
         stickOutline.enabled = false;
     }

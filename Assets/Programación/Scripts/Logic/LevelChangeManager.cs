@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using FMODUnity;
+using UnityEngine.UI;
 
 public class LevelChangeManager : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class LevelChangeManager : MonoBehaviour
     [SerializeField] private SceneField mainMenu;
     [SerializeField] private SceneField levelSelector;
     [SerializeField] private List<SceneField> gameLevels;
+
+    [Header("Loading Screen")] 
+    [SerializeField] private Animator loadingScreen;
+    
 
     private int currentLevel = 0;
 
@@ -36,12 +41,27 @@ public class LevelChangeManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         currentLevel = levelIndex - 1;
+        
+        StartCoroutine(LoadStartLevel());
+    }
+
+    private IEnumerator LoadStartLevel()
+    {
+        loadingScreen.SetTrigger("StartScreen");
+
+        yield return new WaitForSeconds(0.5f);
+
         if (IsSceneLoaded(mainMenu))
-            SceneManager.UnloadSceneAsync(mainMenu);
+            yield return SceneManager.UnloadSceneAsync(mainMenu);
         else
-            SceneManager.UnloadSceneAsync(levelSelector);
-        SceneManager.LoadSceneAsync(gameplayScene, LoadSceneMode.Additive);
-        SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
+            yield return SceneManager.UnloadSceneAsync(levelSelector);
+
+        yield return SceneManager.LoadSceneAsync(gameplayScene, LoadSceneMode.Additive);
+        yield return SceneManager.LoadSceneAsync(gameLevels[currentLevel], LoadSceneMode.Additive);
+
+        yield return null;
+
+        loadingScreen.SetTrigger("StopScreen");
     }
 
     public void LoadNextLevel()

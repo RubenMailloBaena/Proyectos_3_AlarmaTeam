@@ -55,7 +55,9 @@ public class EnemySeenIndicator : MonoBehaviour, ISeeArrow
     private void UpdateArrowPosition()
     {
         screenEdgeBuffer = Mathf.Min(Screen.width, Screen.height) * screenEdgePercentage;
-        
+
+        if (targetPosition == null || Camera.main == null) return;
+            
         Vector3 targetScreenPoint = Camera.main.WorldToScreenPoint(targetPosition.position);
         bool isOffscreen = targetScreenPoint.z <= 0 ||
                            targetScreenPoint.x <= screenEdgeBuffer || targetScreenPoint.x >= Screen.width - screenEdgeBuffer ||
