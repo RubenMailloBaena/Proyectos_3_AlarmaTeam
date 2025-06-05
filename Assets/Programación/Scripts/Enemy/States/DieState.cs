@@ -98,5 +98,8 @@ public class DieState : State
         killAnimationC = null;
         hud.ShowCrossHair(true);
         eController.PlaySound(SoundType.Dead);
+
+        yield return new WaitForSeconds(2f);
+        eController.DissolveEnemies();
     }
 }

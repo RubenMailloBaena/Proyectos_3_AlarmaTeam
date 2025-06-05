@@ -84,6 +84,7 @@ public class EnemyController : MonoBehaviour, IVisible
         Hear.SetHear(this);
         Backstab.SetBackstab(this);
         Restart.SetRestart(this);
+        Renderer.SetRender(this);
         
         SwitchToNextState(idleState);
 
@@ -231,6 +232,8 @@ public class EnemyController : MonoBehaviour, IVisible
     public void SetRenderActive(bool active) => Renderer.SetRenderActive(active);
     public void SetLight(bool active) => Renderer.SetLight(active);
     public void SetWeakSpot(bool active) => Backstab.SetWeakSpot(active);
+    public void DissolveEnemies() => Renderer.DissolveEnemie();
+    public void ResetDissolve() => Renderer.ResetDissolve();
     public void KillAnimationHeartController(bool active) => Backstab.KillAnimationHeartController(active);
     #endregion
     

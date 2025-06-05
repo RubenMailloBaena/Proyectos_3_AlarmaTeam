@@ -43,6 +43,7 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.RestartIndex();
         eController.SwitchToNextState(startingState);
         eController.SetRenderActive(true);
+        eController.ResetDissolve();
 
         eController.ManualRotation(true);
         eController.WarpAgent(startingPos);
@@ -73,6 +74,9 @@ public class EnemyRestart : MonoBehaviour, IRestartable
         eController.WarpAgent(checkpointPos);
         transform.rotation = checkpointRotation;
         eController.ManualRotation(false);
+        
+        if(!enemyWasDead)
+            eController.ResetDissolve();
     }
 
     private void RestartInstructions()
