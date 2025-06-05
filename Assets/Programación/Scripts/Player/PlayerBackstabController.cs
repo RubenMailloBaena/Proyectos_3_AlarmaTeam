@@ -54,6 +54,15 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
 
             float minDotView = Mathf.Cos(maxViewAngle * Mathf.Deg2Rad);
             if (dotView < minDotView) continue;
+            
+            Ray ray = new Ray(transform.position + Vector3.up * 1.5f, dirToEnemy); // +1.5f para que salga desde el pecho/cabeza
+            float distance = Vector3.Distance(transform.position, enemyTransform.position);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, distance, LayerMask.GetMask("Ground")))
+            {
+                if (hit.transform != enemyTransform)
+                    continue; // Hay algo bloqueando la línea de visión
+            }
 
             if (dotView > bestDot)
             {
