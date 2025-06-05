@@ -15,6 +15,7 @@ public class PlayerHealthController : MonoBehaviour
     private float currentHealth;
     private float timeTillLastDamage = 0.0f;
     private bool isGodMode;
+    private bool isTakingDamage;
 
     private void Awake()
     {
@@ -36,23 +37,30 @@ public class PlayerHealthController : MonoBehaviour
         HealPlayer();
         UpdateHUD();
     }
-    
+
     public void TakeDamage(float damage)
     {
-        if (isGodMode || pController.isBackstabing) return;
-       // AudioManager.Instance.HandlePlaySound2D("event:/Jugador/jugador_quemado_loop");
+        if (isGodMode || pController.isBackstabing || pController.IsPlayerDead) return; 
+
+        if (!isTakingDamage)
+        {
+            AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_quemado_luz", transform.position);
+            isTakingDamage = true;
+        }
+
         currentHealth -= damage * Time.deltaTime;
         timeTillLastDamage = cooldownToHealPlayer;
-       
+
         if (currentHealth <= 0.0f)
         {
-           // AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_quemado_loop", true);
+            StopDamageSound();  
             pController.SetIsPlayerDead(true);
             pController.ShowGameOverHUD(true);
             GameManager.GetInstance().PlayerDead();
         }
     }
-     
+
+
 
     private void HealPlayer()
     {
@@ -62,17 +70,32 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth = Mathf.Clamp(currentHealth, 0, secondsThatCanTakeDamage);
         }
         else
+        {
             timeTillLastDamage -= Time.deltaTime;
+        }
+    }
+
+    private void StopDamageSound()
+    {
+        AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_quemado_luz", true);
+        isTakingDamage = false;
     }
 
     private void UpdateHUD()
     {
+        if (pController.IsPlayerDead) return; 
+
         float normalizedHealth = Mathf.Clamp01(currentHealth / secondsThatCanTakeDamage);
         float alpha = (1f - normalizedHealth) * maxHurtAlpha;
 
         Color newColor = pController.GetHurtVisualColor();
         newColor.a = alpha;
         pController.SetHurtVisualColor(newColor);
+
+        if (alpha <= Mathf.Epsilon && isTakingDamage)
+        {
+            StopDamageSound();  
+        }
     }
 
     private void SetAlphaToMax()
@@ -106,6 +129,10 @@ public class PlayerHealthController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (isTakingDamage)
+        {
+            StopDamageSound();
+        }
         pController.OnTakeDamage -= TakeDamage;
         pController.onRestart -= Respawn;
         pController.onRestartFromCheckpoint -= Respawn;
