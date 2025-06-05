@@ -59,8 +59,11 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Fall Sound Attributes")]
     [SerializeField] private float minAirTime = 0.1f;
+    [SerializeField] private float walkFootstepInterval = 0.5f;
+    [SerializeField] private float runFootstepInterval = 0.3f;
     private float airTime = 0f;
     private bool fallSoundPlaying;
+    private float footstepTimer;
 
     private void Awake()
     {
@@ -85,7 +88,7 @@ public class PlayerMovementController : MonoBehaviour
 
         if (fallSoundPlaying)
         {
-            AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
+            AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_caída_altura", true);
             fallSoundPlaying = false;
         }
     }
@@ -100,7 +103,7 @@ public class PlayerMovementController : MonoBehaviour
 
             if (!fallSoundPlaying && airTime > minAirTime && !pController.IsTeleporting && !pController.IsVaulting)
             {
-                AudioManager.Instance.HandlePlaySound3D("event:/Test/TestLoop", transform.position);
+                AudioManager.Instance.HandlePlaySound3D("event:/Jugador/jugador_caída_altura", transform.position);
                 fallSoundPlaying = true;
             }
         }
@@ -108,7 +111,7 @@ public class PlayerMovementController : MonoBehaviour
         {
             if (fallSoundPlaying)
             {
-                AudioManager.Instance.HandleStopSound("event:/Test/TestLoop", true);
+                AudioManager.Instance.HandleStopSound("event:/Jugador/jugador_caída_altura", true);
                 fallSoundPlaying = false;
             }
 
@@ -157,26 +160,47 @@ public class PlayerMovementController : MonoBehaviour
             cameraHeadBobing.BobHead(HeadBobSpeed.Walk);
             return crouchSpeed;
         }
+
         if (runInput.action.ReadValue<float>() > 0 && !pController.IsUsingVision && !pController.isDamaged && !pController.IsIdle && !pController.IsLeaning)
         {
             finalRange = runningSoundRange;
             pController.SetIsRunning(true);
+
             if (waveEffectCoroutine == null)
             {
                 stoppedRunning = false;
                 waveEffectCoroutine = StartCoroutine(PulseWave());
                 StartCoroutine(PulseWaveBigOne());
             }
+
             cameraHeadBobing.BobHead(HeadBobSpeed.Running);
+            ReproducirPasos("event:/Jugador/jugador_pasos_madera_correr", runFootstepInterval); 
             return runSpeed;
         }
-        
+
         finalRange = walkingSoundRange;
         stoppedRunning = true;
         pController.SetIsRunning(false);
         cameraHeadBobing.BobHead(HeadBobSpeed.Walk);
+        ReproducirPasos("event:/Jugador/jugador_pasos_madera_andar", walkFootstepInterval); 
         return walkSpeed;
     }
+
+    private void ReproducirPasos(string rutaSonido, float intervalo)
+    {
+        if (!IsGrounded() || input == Vector2.zero || pController.IsCrouching || pController.IsPlayerDead)
+            return;
+
+        footstepTimer -= Time.deltaTime;
+
+        if (footstepTimer <= 0f)
+        {
+            AudioManager.Instance.HandlePlaySound3D(rutaSonido, transform.position);
+            footstepTimer = intervalo;
+        }
+    }
+
+
 
     private void HandleCameraFOV()
     {
