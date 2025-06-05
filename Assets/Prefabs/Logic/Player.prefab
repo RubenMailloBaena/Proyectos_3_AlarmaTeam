@@ -732,6 +732,7 @@ Transform:
   - {fileID: 858038402058695276}
   - {fileID: 5735161584918423698}
   - {fileID: 1882158348678663836}
+  - {fileID: 8783271886820772729}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6958942311931997098
@@ -880,6 +881,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   minAirTime: 0.1
+  walkFootstepInterval: 0.5
+  runFootstepInterval: 0.3
 --- !u!114 &2849905158196457288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -906,6 +909,7 @@ MonoBehaviour:
   raycastStartHeight: 0.3
   raycastMaxDistance: 2
   descendTime: 0.2
+  cameraAnimator: {fileID: 0}
 --- !u!114 &6730785830284631386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,6 +1157,69 @@ MonoBehaviour:
   runFrequency: 22.9
   runSmooth: 67.6
   returnSpeed: 2
+--- !u!1 &8388379570164768681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8783271886820772729}
+  - component: {fileID: 941900186284041717}
+  m_Layer: 0
+  m_Name: AmbienceSoundEmitter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8783271886820772729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388379570164768681}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 579865797012302666}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941900186284041717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388379570164768681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1071004713
+      Data2: 1079052945
+      Data3: -1395810127
+      Data4: -2077994430
+    Path: event:/Ambiente/ambiente_madera_crujiendo
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &5073090272487394788
 PrefabInstance:
   m_ObjectHideFlags: 0
