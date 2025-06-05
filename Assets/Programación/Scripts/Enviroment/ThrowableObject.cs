@@ -18,6 +18,9 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
    
     [SerializeField] private float soundRadius = 10f;
     [SerializeField] private LayerMask enemyLayer;
+
+    private float waitTime = 0.2f;
+    private float currentWaitTime;
     
     [Space(10)] [SerializeField] private float interactDistance;
     public float InteractDistance => interactDistance;
@@ -37,7 +40,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     private Quaternion startingRotation, checkpointRotation;
     private bool wasUsed;
 
-   
+    private Coroutine collisionDelay;
     
     private void Awake()
     {
@@ -55,7 +58,19 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         startingPos = transform.position;
         checkpointPos = startingPos;
         startingRotation = transform.rotation;
-        checkpointRotation = startingRotation;    
+        checkpointRotation = startingRotation;
+
+        currentWaitTime = waitTime;
+    }
+
+    private void Update()
+    {
+        if (!done) return;
+        
+        if (currentWaitTime <= 0.0f)
+            vaseCollider.enabled = false;
+
+        currentWaitTime -= Time.deltaTime;
     }
 
     public void SelectObject(bool select)
@@ -116,8 +131,6 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             notFractured.SetActive(false);
             fracturedInstance = Instantiate(fracturedPrefab, transform.position, transform.rotation);
             fracturedInstance.SetActive(true);
-
-            vaseCollider.enabled = false;
         }
         else
         {
@@ -126,6 +139,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             notFractured.SetActive(true);
         }
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -159,20 +173,22 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
         ShowFractured(false);
-        transform.position = startingPos;
-        transform.rotation = startingRotation;
         checkpointPos = startingPos;
         checkpointRotation = startingRotation;
         thrown = false;
         done = false;
         wasUsed = false;
         vaseCollider.enabled = true;
+        currentWaitTime = waitTime;
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = startingPos;
+        transform.rotation = startingRotation;
     }
 
     public void RestartFromCheckPoint()
     {
-        transform.position = checkpointPos;
-        transform.rotation = checkpointRotation;
         thrown = wasUsed;
         done = wasUsed;
         if (!wasUsed)
@@ -180,7 +196,13 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             gameObject.layer = LayerMask.NameToLayer("Default");
             ShowFractured(false);
             vaseCollider.enabled = true;
+            currentWaitTime = waitTime;
         }
+        
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = checkpointPos;
+        transform.rotation = checkpointRotation;
     }
 
     public void SetCheckPoint()
@@ -192,6 +214,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     
     private void OnDestroy()
     { 
+        ShowFractured(false);
         GameManager.GetInstance().GetPlayerController().RemoveVisible(this);
         GameManager.GetInstance().RemoveRestartable(this);
     }
