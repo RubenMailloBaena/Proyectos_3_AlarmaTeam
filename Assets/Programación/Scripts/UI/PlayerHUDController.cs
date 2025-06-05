@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,6 +74,8 @@ public class PlayerHUDController : MonoBehaviour
 
     [SerializeField] private GameObject panelOptions;
 
+    private Bus masterBus;
+
 
     private void Awake()
     {
@@ -92,6 +96,8 @@ public class PlayerHUDController : MonoBehaviour
         //LERP MATERIAL
         vignettIntesity = vampVisionMat.GetFloat("_VignettIntesity");
         fullScreenIntensity = vampVisionMat.GetFloat("_FullScreenIntensity");
+
+        masterBus = RuntimeManager.GetBus("bus:/");
     }
     
     public void ShowCrossHair(bool show)
@@ -241,11 +247,27 @@ public class PlayerHUDController : MonoBehaviour
         Cursor.visible = active;
         
         if (active)
+        {
             Time.timeScale = 0f;
+            PauseAllSounds();
+        }
         else
+        {
             Time.timeScale = 1.0f;
+            ResumeAllSounds();
+        }
     }
-    
+
+    public void PauseAllSounds()
+    {
+        masterBus.setPaused(true);
+    }
+
+    public void ResumeAllSounds()
+    {
+        masterBus.setPaused(false);
+    }
+
     public void RestartFromPauseMenu()
     {
         SetPauseMenu(false);
