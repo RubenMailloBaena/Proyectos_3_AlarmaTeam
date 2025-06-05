@@ -233,11 +233,6 @@ public class PlayerHUDController : MonoBehaviour
     public void SetPauseMenu(bool active)
     {
         pausePanel.SetActive(active);
-        if (!active)
-        {
-            panelOptions.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked;
-        }
         Cursor.visible = active;
         
         if (active)
@@ -266,7 +261,8 @@ public class PlayerHUDController : MonoBehaviour
     public void RestartFromOptionsMenu()
     {
         panelOptions.SetActive(false);
-        pausePanel.SetActive(true);
+        SetPauseMenu(false);
+        //GameManager.GetInstance().RestartGame();
     }
 
     public void DisableRestartLevel(bool active) => pauseRestartButton.interactable = !active;

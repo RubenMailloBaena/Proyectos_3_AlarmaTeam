@@ -1,6 +1,3 @@
-using FMOD;
-using FMOD.Studio;
-using FMODUnity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -9,36 +6,18 @@ using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown resolutionDropdown;
-    [SerializeField] private Slider sonidoSlider;
-    private Bus masterBus;
+    [SerializeField] private AudioMixer audioMixer;
     private Resolution[] resolutions;
 
     void Start()
     {
-        masterBus = RuntimeManager.GetBus("bus:/");
-
-        float initialDb = 0f;
-        SetVolume(initialDb); 
-        sonidoSlider.value = initialDb; 
-
         SetupResolutionDropdown();
     }
 
-    private void Awake()
+    public void SetVolume(float volume)
     {
-        masterBus = RuntimeManager.GetBus("bus:/");
+        audioMixer.SetFloat("volume", volume);
     }
-    public void SetVolume(float dbVolume)
-    {
-        float linearVolume = Mathf.Pow(10f, dbVolume / 20f);
-
-        linearVolume = Mathf.Clamp(linearVolume, 0.0001f, 1f);
-
-        RESULT result = masterBus.setVolume(linearVolume);
-      
-
-    }
-
 
     private void SetupResolutionDropdown()
     {
