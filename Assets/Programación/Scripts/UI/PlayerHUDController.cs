@@ -70,6 +70,8 @@ public class PlayerHUDController : MonoBehaviour
     [SerializeField] private Button pauseRestartButton;
     [SerializeField] private Button pauseExitButton;
 
+    [SerializeField] private GameObject panelOptions;
+
 
     private void Awake()
     {
@@ -243,6 +245,24 @@ public class PlayerHUDController : MonoBehaviour
     {
         SetPauseMenu(false);
         GameManager.GetInstance().RestartGame();
+    }
+    public void GoToOptionsMenu()
+    {
+        if (pausePanel != null && panelOptions != null)
+        {
+            pausePanel.SetActive(false);
+            panelOptions.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Paneles no asignados en el Inspector!");
+        }
+    }
+    public void RestartFromOptionsMenu()
+    {
+        panelOptions.SetActive(false);
+        SetPauseMenu(false);
+        //GameManager.GetInstance().RestartGame();
     }
 
     public void DisableRestartLevel(bool active) => pauseRestartButton.interactable = !active;
