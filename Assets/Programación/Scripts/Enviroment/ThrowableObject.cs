@@ -13,18 +13,20 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
 
     [SerializeField] private Outline outlineScript;
 
+    [SerializeField] private float throwDelay = 0.1f;
     [SerializeField] private float throwForce = 5f;
+   
     [SerializeField] private float soundRadius = 10f;
     [SerializeField] private LayerMask enemyLayer;
     
     [Space(10)] [SerializeField] private float interactDistance;
-
     public float InteractDistance => interactDistance;
     public bool isLocked { get; set; }
     public bool canInteract { get; set; }
 
     private bool thrown, done, selecting; 
     private Rigidbody rb;
+    private BoxCollider vaseCollider;
 
     public GameObject notFractured;
     public GameObject fracturedPrefab;
@@ -34,10 +36,13 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
     private Vector3 startingPos, checkpointPos;
     private Quaternion startingRotation, checkpointRotation;
     private bool wasUsed;
+
+   
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        vaseCollider = GetComponent<BoxCollider>();
         canInteract = true;
     }
 
@@ -111,6 +116,8 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
             notFractured.SetActive(false);
             fracturedInstance = Instantiate(fracturedPrefab, transform.position, transform.rotation);
             fracturedInstance.SetActive(true);
+
+            vaseCollider.enabled = false;
         }
         else
         {
@@ -159,6 +166,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         thrown = false;
         done = false;
         wasUsed = false;
+        vaseCollider.enabled = true;
     }
 
     public void RestartFromCheckPoint()
@@ -171,6 +179,7 @@ public class ThrowableObject : MonoBehaviour, IInteractable, IVisible, IRestarta
         {
             gameObject.layer = LayerMask.NameToLayer("Default");
             ShowFractured(false);
+            vaseCollider.enabled = true;
         }
     }
 

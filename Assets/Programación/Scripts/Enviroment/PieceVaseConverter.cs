@@ -23,7 +23,9 @@ public class PieceVaseConverter : MonoBehaviour
             if (rigidbody != null)
                 if (rigidbody.velocity == Vector3.zero)
                 {
+                    Debug.Log(rigidbody.velocity);
                     rigidbody.useGravity = false;
+                    rigidbody.isKinematic = true;
                     if (collider != null)
                         collider.enabled = false;
                 }
