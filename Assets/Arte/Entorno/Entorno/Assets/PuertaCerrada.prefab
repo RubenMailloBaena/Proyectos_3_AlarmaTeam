@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2688573690617418140
 Transform:
@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: 7005433234325837085, guid: 854c47dc078a7bf4da42825c7977790c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.2283173
+      value: 1.304
       objectReference: {fileID: 0}
     - target: {fileID: 7005433234325837085, guid: 854c47dc078a7bf4da42825c7977790c,
         type: 3}
@@ -107,6 +107,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candado
       objectReference: {fileID: 0}
+    - target: {fileID: 7670646962932502439, guid: 854c47dc078a7bf4da42825c7977790c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -133,13 +138,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.907804
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.0072086
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.99014187
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1083174
+      value: 1.184
       objectReference: {fileID: 0}
     - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7490897
+      value: 0.337
       objectReference: {fileID: 0}
     - target: {fileID: 8188866271379196852, guid: 892bd6ca6eb1adc48a8687485f4b7214,
         type: 3}
@@ -184,7 +204,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 402899669725244971, guid: 892bd6ca6eb1adc48a8687485f4b7214,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6903294458673396332}
   m_SourcePrefab: {fileID: 100100000, guid: 892bd6ca6eb1adc48a8687485f4b7214, type: 3}
 --- !u!4 &589609351839990734 stripped
 Transform:
@@ -192,6 +216,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8757817820493367418}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8943418738201306705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 402899669725244971, guid: 892bd6ca6eb1adc48a8687485f4b7214,
+    type: 3}
+  m_PrefabInstance: {fileID: 8757817820493367418}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &6903294458673396332
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943418738201306705}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1001 &9086394663053962815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,6 +306,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Arco_Puerta
+      objectReference: {fileID: 0}
+    - target: {fileID: 5417576859289353540, guid: 2798efccc5b75994195dde8689e15f43,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

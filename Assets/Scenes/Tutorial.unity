@@ -32538,34 +32538,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7144060502700734055, guid: 5b45a8f41b4f24a49b28c34124c38d42, type: 3}
---- !u!1 &1091468070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8943418738201306705, guid: a57d132c23e692140a52f16faa114c94,
-    type: 3}
-  m_PrefabInstance: {fileID: 4077992226200942436}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1091468072
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1091468070}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1001 &1097799959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62417,21 +62389,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 398308659087450003, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1337352962687520405, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 1789956621416438511, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 2688573690617418140, guid: a57d132c23e692140a52f16faa114c94,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -62482,64 +62439,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2727215019227837703, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 3246742405612907968, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 3613381991104495780, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 3834325520137802619, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 4248913982353882845, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307519560006392082, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 5350693738189543558, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     - target: {fileID: 8885951351454817007, guid: a57d132c23e692140a52f16faa114c94,
         type: 3}
       propertyPath: m_Name
       value: PuertaCerrada
       objectReference: {fileID: 0}
-    - target: {fileID: 8885951351454817007, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
-    - target: {fileID: 8943418738201306705, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8943418738201306705, guid: a57d132c23e692140a52f16faa114c94,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1091468072}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a57d132c23e692140a52f16faa114c94, type: 3}
 --- !u!1001 &5494302556857444319
 PrefabInstance:
