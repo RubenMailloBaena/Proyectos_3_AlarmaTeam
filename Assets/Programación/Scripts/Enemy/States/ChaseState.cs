@@ -19,6 +19,8 @@ public class ChaseState : State
 
     public override void InitializeState()
     {
+        eController.StopAllSounds();
+        eController.PlaySound(SoundType.Detect);
         eController.PlaySound(SoundType.Run);
         eController.SetAnimation(AnimationType.Run, false);
         

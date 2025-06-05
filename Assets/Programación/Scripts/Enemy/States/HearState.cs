@@ -16,7 +16,7 @@ public class HearState : State
 
     public override void InitializeState()
     {
-        eController.StopSound();
+        eController.StopAllSounds();
         eController.HideArrow();
         eController.ManualRotation(false);
 

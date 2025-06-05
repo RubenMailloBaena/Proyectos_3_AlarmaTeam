@@ -174,7 +174,7 @@ public class PlayerMovementController : MonoBehaviour
             }
 
             cameraHeadBobing.BobHead(HeadBobSpeed.Running);
-            ReproducirPasos("event:/Jugador/jugador_pasos_madera_correr", runFootstepInterval); 
+            ReproducirPasos("event:/Jugador/jugador_pasos_madera_correr_bueno", runFootstepInterval); 
             return runSpeed;
         }
 
@@ -182,7 +182,7 @@ public class PlayerMovementController : MonoBehaviour
         stoppedRunning = true;
         pController.SetIsRunning(false);
         cameraHeadBobing.BobHead(HeadBobSpeed.Walk);
-        ReproducirPasos("event:/Jugador/jugador_pasos_madera_andar", walkFootstepInterval); 
+        ReproducirPasos("event:/Jugador/jugador_pasos_madera_andar_bueno", walkFootstepInterval); 
         return walkSpeed;
     }
 

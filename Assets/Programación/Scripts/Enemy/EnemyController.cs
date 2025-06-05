@@ -64,7 +64,8 @@ public class EnemyController : MonoBehaviour, IVisible
 
     //SOUND
     public event Action<SoundType> OnPlaySound;
-    public event Action OnStopSound;
+    public event Action<SoundType> OnStopSound;
+    public event Action OnStopAllSounds;
 
     void Awake()
     {
@@ -343,9 +344,10 @@ public class EnemyController : MonoBehaviour, IVisible
 
         yield return null;
     }
-   
-    public void PlaySound(SoundType type) => OnPlaySound?.Invoke(type);
-    public void StopSound() => OnStopSound?.Invoke();
+
+    public void PlaySound(SoundType soundType) => OnPlaySound?.Invoke(soundType);
+    public void StopSound(SoundType soundType) => OnStopSound?.Invoke(soundType);
+    public void StopAllSounds() => OnStopAllSounds?.Invoke();
 
 
 }

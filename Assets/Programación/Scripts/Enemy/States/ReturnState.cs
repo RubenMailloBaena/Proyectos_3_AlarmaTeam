@@ -15,6 +15,7 @@ public class ReturnState : State
 
     public override void InitializeState()
     {
+        eController.StopAllSounds();
         eController.SetAnimation(AnimationType.Walk, false);
         eController.PlaySound(SoundType.Walk);
         if (!eController.isIdleEnemy)

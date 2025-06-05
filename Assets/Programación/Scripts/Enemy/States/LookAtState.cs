@@ -13,7 +13,8 @@ public class LookAtState : State
 
     public override void InitializeState()
     {
-        eController.StopSound();
+        eController.StopAllSounds();
+        eController.PlaySound(SoundType.LookAt);
         if(eController.isChasingPlayer)
             eController.SetAnimation(AnimationType.Run, false);
         else

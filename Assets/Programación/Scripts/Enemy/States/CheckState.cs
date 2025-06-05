@@ -18,8 +18,9 @@ public class CheckState : State
 
     public override void InitializeState()
     {
+        eController.StopAllSounds();
         eController.SetAnimation(AnimationType.Idle, false);
-        eController.StopSound();
+        eController.PlaySound(SoundType.LookAt);
         eController.SetSoundWasAnObject(true);//RESTART PLAYER HEAR
         eController.isChasingPlayer = false;
         eController.exclamationShown = false;

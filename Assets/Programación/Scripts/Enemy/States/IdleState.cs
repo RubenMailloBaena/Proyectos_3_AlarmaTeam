@@ -23,7 +23,8 @@ public class IdleState : State
 
     public override void InitializeState()
     {
-        eController.StopSound();
+        eController.StopAllSounds();
+        eController.PlaySound(SoundType.Idle);
         eController.SetAnimation(AnimationType.Idle, false);
         
         waitTime = eController.GetWaitTime();

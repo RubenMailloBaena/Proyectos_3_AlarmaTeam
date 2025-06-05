@@ -19,6 +19,7 @@ public class CharmState : State
     
     public override void InitializeState()
     {
+        eController.StopAllSounds();
         eController.PlaySound(SoundType.Charm);
         eController.SetAnimation(AnimationType.Charm, true);
         kickDone = false;

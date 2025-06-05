@@ -18,7 +18,7 @@ public class DieState : State
     
     public override void InitializeState()
     {
-        eController.StopSound();
+        eController.StopAllSounds();
         player = GameManager.GetInstance().GetPlayerController();
         hud = GameManager.GetInstance().GetPlayerHUD();
         

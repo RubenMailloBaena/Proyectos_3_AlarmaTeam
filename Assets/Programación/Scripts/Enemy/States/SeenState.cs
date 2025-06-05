@@ -23,8 +23,9 @@ public class SeenState : State
 
    public override void InitializeState()
     {
+        eController.StopAllSounds();
         eController.SetAnimation(AnimationType.Idle, false);
-        eController.StopSound();
+        eController.PlaySound(SoundType.Seen);
         
         if (eController.isChasingPlayer)
         {

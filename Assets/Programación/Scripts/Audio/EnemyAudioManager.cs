@@ -11,11 +11,18 @@ public enum SoundType
     Attack,
     Dead,
     Charm,
-    CharmWalk
+    CharmWalk,
+    Seen,
+    Detect,
+    LookAt
 }
 
 public class EnemyAudioManager : MonoBehaviour
 {
+    private Dictionary<SoundType, EventInstance> activeInstances = new Dictionary<SoundType, EventInstance>();
+
+    private EnemyController controller;
+
     private void Awake()
     {
         controller = GetComponent<EnemyController>();
@@ -29,59 +36,84 @@ public class EnemyAudioManager : MonoBehaviour
         { SoundType.Attack,    "event:/Enemigo/enemigo_rezo" },
         { SoundType.Dead,      "event:/Enemigo/enemigo_muerte" },
         { SoundType.Charm,     "event:/Jugador/jugador_habilidad_control_mental" },
-        { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar" }
+        { SoundType.CharmWalk, "event:/Enemigo/enemigo_pasos_madera_andar" },
+        { SoundType.Seen, "event:/Enemigo/enemigo_deteccion_completa" },
+        { SoundType.Detect, "event:/Enemigo/enemigo_deteccion_completa" },
+        { SoundType.LookAt, "event:/Enemigo/enemigo_voz_tranquila" }
     };
 
-    private EventInstance currentInstance;
-    private string currentClip;
-    private EnemyController controller;
+    
 
     private void OnEnable()
     {
         controller.OnPlaySound += SetSound;
         controller.OnStopSound += StopSound;
+        controller.OnStopAllSounds += StopAllSounds;
     }
 
     private void OnDisable()
     {
         controller.OnPlaySound -= SetSound;
         controller.OnStopSound -= StopSound;
+        controller.OnStopAllSounds -= StopAllSounds;
     }
 
-    private void SetSound(SoundType soundType)
+    public void SetSound(SoundType soundType)
     {
+        // Si ya existe una instancia para este sonido y está reproduciéndose, no hacer nada
+        if (activeInstances.TryGetValue(soundType, out var existingInstance) && existingInstance.isValid())
+        {
+            existingInstance.getPlaybackState(out PLAYBACK_STATE state);
+            if (state == PLAYBACK_STATE.PLAYING)
+                return;
+        }
+
         if (!clipMap.TryGetValue(soundType, out var clipName))
         {
             Debug.LogWarning($"[EnemyAudio] No hay clip mapeado para {soundType}");
             return;
         }
 
-        // Si ya está sonando ese clip y aún se está reproduciendo, no hacer nada
-        if (currentClip == clipName && currentInstance.isValid())
+        // Crear nueva instancia
+        var newInstance = RuntimeManager.CreateInstance(clipName);
+        newInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+        RuntimeManager.AttachInstanceToGameObject(newInstance, transform, GetComponent<Rigidbody>());
+        newInstance.start();
+
+        // Guardar o reemplazar la instancia
+        if (activeInstances.ContainsKey(soundType))
         {
-            currentInstance.getPlaybackState(out PLAYBACK_STATE state);
-            if (state == PLAYBACK_STATE.PLAYING)
-                return;
+            activeInstances[soundType].stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            activeInstances[soundType].release();
+            activeInstances[soundType] = newInstance;
         }
-
-        StopSound(); // Cortar cualquier sonido anterior
-
-        currentInstance = RuntimeManager.CreateInstance(clipName);
-        currentInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-        RuntimeManager.AttachInstanceToGameObject(currentInstance, transform, GetComponent<Rigidbody>());
-        currentInstance.start();
-
-        currentClip = clipName;
+        else
+        {
+            activeInstances.Add(soundType, newInstance);
+        }
     }
 
-    public void StopSound()
+    public void StopSound(SoundType soundType)
     {
-        if (currentInstance.isValid())
+        if (activeInstances.TryGetValue(soundType, out var instance) && instance.isValid())
         {
-            currentInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            currentInstance.release();
+            instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            instance.release();
+            activeInstances.Remove(soundType);
         }
+    }
 
-        currentClip = null;
+    public void StopAllSounds()
+    {
+        foreach (var kvp in activeInstances)
+        {
+            if (kvp.Value.isValid())
+            {
+                kvp.Value.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                kvp.Value.release();
+            }
+        }
+        activeInstances.Clear();
     }
 }
+

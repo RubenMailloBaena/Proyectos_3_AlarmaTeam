@@ -20,6 +20,7 @@ public class AttackState : State
 
     public override void InitializeState()
     {
+        eController.StopAllSounds();
         eController.PlaySound(SoundType.Attack);
         eController.SetAnimation(AnimationType.Attack, true);
         

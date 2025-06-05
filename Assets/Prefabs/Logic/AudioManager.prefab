@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4667901993727096314}
   - component: {fileID: 4674131568072945107}
-  - component: {fileID: 8761414216230387234}
   - component: {fileID: 3947750132819787886}
   m_Layer: 0
   m_Name: AudioManager
@@ -52,37 +51,6 @@ MonoBehaviour:
   - Master
   CollisionTag: 
   PreloadSamples: 0
---- !u!114 &8761414216230387234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7337033605945225333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -373085483
-      Data2: 1161236112
-      Data3: 974513558
-      Data4: 237499342
-    Path: event:/Ambiente/ambiente_jarron_romper
-  Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!114 &3947750132819787886
 MonoBehaviour:
   m_ObjectHideFlags: 0
