@@ -47,13 +47,22 @@ public class PlayerBackstabController : MonoBehaviour, IPlayerComponent
             float dotBackstab = Vector3.Dot(enemyTransform.forward, dirFromEnemyToPlayer);
 
             if (dotBackstab > -backstabDotOffset) continue;
-
+            
             //SI ESTA EN NUESTRO CONO DE VISION, Y SI HAY MAS DE UN ENEMIGO, ELEGIMOS AL QUE ESTAMOS MIRANDO
             Vector3 dirToEnemy = (enemyTransform.position - transform.position).normalized;
             float dotView = Vector3.Dot(transform.forward, dirToEnemy);
 
             float minDotView = Mathf.Cos(maxViewAngle * Mathf.Deg2Rad);
             if (dotView < minDotView) continue;
+            
+            Ray ray = new Ray(transform.position + Vector3.up * 1.5f, dirToEnemy); // +1.5f para que salga desde el pecho/cabeza
+            float distance = Vector3.Distance(transform.position, enemyTransform.position);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, distance, LayerMask.GetMask("Ground")))
+            {
+                if (hit.transform != enemyTransform)
+                    continue; // Hay algo bloqueando la línea de visión
+            }
 
             if (dotView > bestDot)
             {
