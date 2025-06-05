@@ -233,6 +233,11 @@ public class PlayerHUDController : MonoBehaviour
     public void SetPauseMenu(bool active)
     {
         pausePanel.SetActive(active);
+        if (!active)
+        {
+            panelOptions.SetActive(false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         Cursor.visible = active;
         
         if (active)
