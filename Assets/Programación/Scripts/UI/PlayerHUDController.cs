@@ -261,8 +261,7 @@ public class PlayerHUDController : MonoBehaviour
     public void RestartFromOptionsMenu()
     {
         panelOptions.SetActive(false);
-        SetPauseMenu(false);
-        //GameManager.GetInstance().RestartGame();
+        pausePanel.SetActive(true);
     }
 
     public void DisableRestartLevel(bool active) => pauseRestartButton.interactable = !active;
