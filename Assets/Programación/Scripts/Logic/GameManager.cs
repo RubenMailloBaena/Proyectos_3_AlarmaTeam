@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     {
         pController.SetBackstabing(true);
         pHud.StartCuttScene();
-        yield return new WaitForSeconds(19.85f);
+        yield return new WaitForSeconds(19.5f);
         pController.SetBackstabing(false);
         LevelChangeManager.GetInstance().GoToMainMenu();
     }
