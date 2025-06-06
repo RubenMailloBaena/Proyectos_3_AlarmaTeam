@@ -84,6 +84,8 @@ public class LevelChangeManager : MonoBehaviour
 
     public void UnloadPreviousLevel()
     {
+        Debug.LogError("UNLOADING");
+        
         if (currentLevel - 1 < 0) return;
 
         if(IsSceneLoaded(gameLevels[currentLevel - 1]))
