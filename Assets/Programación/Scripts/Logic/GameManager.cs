@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     //DEBUG
     private void Update()
     {
+        print(enemiesAlive);
+        
         if (Input.GetKeyDown(KeyCode.P))
         {
             SceneManager.LoadSceneAsync("Level2-Test", LoadSceneMode.Additive);
@@ -57,8 +59,14 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemieAlive()
     {
         enemiesAlive--;
-        if(enemiesAlive <= 0 && finalDoor != null)
-            finalDoor.UnlockDoor();
+        if (enemiesAlive <= 0)
+        {
+            if(finalDoor != null)
+                finalDoor.UnlockDoor();
+            
+            if(LevelChangeManager.GetInstance().isLastLevel())
+                print("CINEAMTIC");
+        }
     } 
     
     public void SetFinalDoor(LevelDoor finalDoor)

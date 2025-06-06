@@ -45,6 +45,11 @@ public class LevelChangeManager : MonoBehaviour
         StartCoroutine(LoadStartLevel());
     }
 
+    public bool isLastLevel()
+    {
+        return currentLevel == gameLevels.Count - 1;
+    }
+
     private IEnumerator LoadStartLevel()
     {
         loadingScreen.SetTrigger("StartScreen");
