@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -63,11 +64,20 @@ public class GameManager : MonoBehaviour
         {
             if(finalDoor != null)
                 finalDoor.UnlockDoor();
-            
-            if(LevelChangeManager.GetInstance().isLastLevel())
-                print("CINEAMTIC");
+
+            if (LevelChangeManager.GetInstance().isLastLevel())
+                StartCoroutine(finalScene());
         }
-    } 
+    }
+
+    private IEnumerator finalScene()
+    {
+        pController.SetBackstabing(true);
+        pHud.StartCuttScene();
+        yield return new WaitForSeconds(19.85f);
+        pController.SetBackstabing(false);
+        LevelChangeManager.GetInstance().GoToMainMenu();
+    }
     
     public void SetFinalDoor(LevelDoor finalDoor)
     {

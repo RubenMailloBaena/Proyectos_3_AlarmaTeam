@@ -74,6 +74,9 @@ public class PlayerHUDController : MonoBehaviour
 
     [SerializeField] private GameObject panelOptions;
 
+    [Header("FINAL ANIMATION")] [SerializeField]
+    private Animator finalScene;
+
     private Bus masterBus;
 
 
@@ -103,6 +106,11 @@ public class PlayerHUDController : MonoBehaviour
     public void ShowCrossHair(bool show)
     {
         crosshair.SetActive(show);
+    }
+
+    public void StartCuttScene()
+    {
+        finalScene.SetTrigger("StartCutscene");
     }
 
     #region InteractionTexts
