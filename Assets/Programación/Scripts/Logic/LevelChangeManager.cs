@@ -47,8 +47,6 @@ public class LevelChangeManager : MonoBehaviour
 
     public bool isLastLevel()
     {
-        print("cLvl: " + currentLevel);
-        print("count: " + gameLevels.Count);
         return currentLevel == gameLevels.Count - 1;
     }
 
