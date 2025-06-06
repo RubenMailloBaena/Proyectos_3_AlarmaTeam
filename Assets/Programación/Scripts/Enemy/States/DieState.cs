@@ -25,6 +25,7 @@ public class DieState : State
         eController.EnemyDead();
         eController.StopAgent();
         eController.KillAnimationHeartController(true);
+        eController.HideArrow();
         
 
         if(killAnimationC == null)
